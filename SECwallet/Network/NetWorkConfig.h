@@ -17,9 +17,9 @@
 #define LocalServerUrl  @"http://103.60.111.204:3000/"
 #define MoreServerUrl   @"https://rinkeby.etherscan.io/tx/"
 
-/**************AppStore链接参数*****************/
-#define APP_URL                  @"http://itunes.apple.com/lookup?id=1246034586"
-#define APP_DownloadUrl          @"http://itunes.apple.com/lookup?id=1246034586"
+
+
+
 /**************友盟统计参数*****************/
 #define KUmengStatisticsKey          @"593617a7734be43d57000899"
 
