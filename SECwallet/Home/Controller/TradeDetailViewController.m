@@ -251,6 +251,7 @@
         NSInteger status = [dic[@"status"] integerValue];
         [self hiddenLoadingView];
         [self hiddenRefreshView];
+        _dataArrays = [NSMutableArray array];
         if (status == 1) {
             NSArray *Chainlist = dic[@"resultInChain"];
             if (Chainlist.count > 0) {

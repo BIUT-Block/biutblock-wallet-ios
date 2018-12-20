@@ -15,9 +15,7 @@
 // 测试服务器
 #define BaseServerUrl   @"http://35.158.171.46:3002/"
 #define LocalServerUrl  @"http://103.60.111.204:3000/"
-#define MoreServerUrl   @"https://rinkeby.etherscan.io/tx/"
-
-
+#define SECBrowserUrl   @"http://scan.secblock.io/tokentxdetails?hash=/"
 
 
 /**************友盟统计参数*****************/

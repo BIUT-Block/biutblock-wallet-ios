@@ -28,6 +28,4 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary walletAddress:(NSString *)walletAddress;
 
-- (instancetype)initWithTransactionInfoPromise:(TransactionInfoPromise *)info walletAddress:(NSString *)walletAddress;
-
 @end

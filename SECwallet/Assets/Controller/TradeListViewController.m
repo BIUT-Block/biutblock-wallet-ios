@@ -176,68 +176,71 @@
     if (isHeaderRefresh == NO) {
         [self createLoadingView:nil];
     }
-//    [HSEther hs_getTransactionListWithToken:nil walletAddress:_walletModel.address block:^(NSArray *arrayList, HSWalletError error) {
-//        [self hiddenLoadingView];
-//        [self hiddenRefreshView];
-//        hasGetDataInfo = YES;
-//        if (error == HSWalletSucLogList && connectNetwork == YES) {
-//            connectNetwork = YES;
-//            _infoTableView.hidden = NO;
-//            _noNetworkView.hidden = YES;
-//            
-//            if (arrayList.count > 0) {
-//                //将arrayList按照时间进行排序
-//                NSArray *sortArray = [arrayList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-//                    TradeModel *pModel1 = obj1;
-//                    TradeModel *pModel2 = obj2;
-//                    if (pModel1.blockNum.integerValue > pModel2.blockNum.integerValue) {
-//                        return NSOrderedAscending;   //升序
-//                    }else if (pModel1.blockNum.integerValue < pModel2.blockNum.integerValue){
-//                        return NSOrderedDescending;  //降序
-//                    }else {
-//                        return NSOrderedSame;       //相等
-//                    }
-//                }];
-//                _dataArrays = [NSMutableArray arrayWithArray:sortArray];
-//                /*************保存交易记录*************/
-//                NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletRecodeList"];
-//                NSMutableData* data = [NSMutableData data];
-//                NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-//                [archiver encodeObject:_dataArrays forKey:@"walletRecodeList"];
-//                [archiver finishEncoding];
-//                [data writeToFile:path atomically:YES];
-//                [_noRemindView removeFromSuperview];
-//                [_infoTableView reloadData];
-//            }else{
-//                _dataArrays = [NSMutableArray array];
-//                [_infoTableView reloadData];
-//                /*************保存交易记录*************/
-//                NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletRecodeList"];
-//                NSMutableData* data = [NSMutableData data];
-//                NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-//                [archiver encodeObject:nil forKey:@"walletRecodeList"];
-//                [archiver finishEncoding];
-//                [data writeToFile:path atomically:YES];
-//                
-//                [_noRemindView removeFromSuperview];
-//                _noRemindView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth -Size(200))/2, (kScreenHeight -Size(220))/2 -KXHeight, Size(200), Size(200))];
-//                _noRemindView.image = [UIImage imageNamed:@"noTradeInfoBkg"];
-//                [_infoTableView addSubview:_noRemindView];
-//            }
-//            
-//        }else if (error == HSWalletErrorLogList) {
-//            [self hudShowWithString:@"数据获取失败" delayTime:1.5];
-//            _dataArrays = [NSMutableArray array];
-//            [_infoTableView reloadData];
-//            [_noRemindView removeFromSuperview];
-//            _noRemindView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth -Size(200))/2, (kScreenHeight -Size(220))/2 -KXHeight, Size(200), Size(200))];
-//            _noRemindView.image = [UIImage imageNamed:@"noTradeInfoBkg"];
-//            [_infoTableView addSubview:_noRemindView];
-//            
-//        }else if (error == HSNoneNetWork) {
-//            [self hiddenRefreshView];
-//        }
-//    }];
+    //地址去掉0x
+    NSString *from = [_walletModel.address componentsSeparatedByString:@"x"].lastObject;
+    AFJSONRPCClient *client = [AFJSONRPCClient clientWithEndpointURL:[NSURL URLWithString:BaseServerUrl]];
+    [client invokeMethod:@"sec_getTransactions" withParameters:@[from] requestId:@(1) success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = responseObject;
+        NSInteger status = [dic[@"status"] integerValue];
+        [self hiddenLoadingView];
+        [self hiddenRefreshView];
+        _dataArrays = [NSMutableArray array];
+        if (status == 1) {
+            NSArray *Chainlist = dic[@"resultInChain"];
+            if (Chainlist.count > 0) {
+                for (NSDictionary *dic in Chainlist) {
+                    TradeModel *model = [[TradeModel alloc]initWithDictionary:dic walletAddress:from];
+                    [_dataArrays addObject:model];
+                }
+            }
+            NSArray *Poollist = dic[@"resultInPool"];
+            if (Poollist.count > 0) {
+                for (NSDictionary *dic in Poollist) {
+                    TradeModel *model = [[TradeModel alloc]initWithDictionary:dic walletAddress:from];
+                    [_dataArrays addObject:model];
+                }
+            }
+            if (_dataArrays.count > 0) {
+                /*************保存交易记录*************/
+                NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletRecodeList"];
+                NSMutableData* data = [NSMutableData data];
+                NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+                [archiver encodeObject:_dataArrays forKey:@"walletRecodeList"];
+                [archiver finishEncoding];
+                [data writeToFile:path atomically:YES];
+                [_noRemindView removeFromSuperview];
+                [_infoTableView reloadData];
+                
+            }else{
+                _dataArrays = [NSMutableArray array];
+                [_infoTableView reloadData];
+                [_noRemindView removeFromSuperview];
+                _noRemindView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth -Size(200))/2, (kScreenHeight -Size(220))/2, Size(200), Size(200))];
+                _noRemindView.image = [UIImage imageNamed:@"noTradeInfoBkg"];
+                [_infoTableView addSubview:_noRemindView];
+            }
+            
+        }else{
+            [self hudShowWithString:@"数据获取失败" delayTime:1.5];
+            _dataArrays = [NSMutableArray array];
+            [_infoTableView reloadData];
+            [_noRemindView removeFromSuperview];
+            _noRemindView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth -Size(200))/2, (kScreenHeight -Size(220))/2 -KXHeight, Size(200), Size(200))];
+            _noRemindView.image = [UIImage imageNamed:@"noTradeInfoBkg"];
+            [_infoTableView addSubview:_noRemindView];
+        }
+        
+        isHeaderRefresh = NO;
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self hudShowWithString:@"数据获取失败" delayTime:1.5];
+        _dataArrays = [NSMutableArray array];
+        [_infoTableView reloadData];
+        [_noRemindView removeFromSuperview];
+        _noRemindView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth -Size(200))/2, (kScreenHeight -Size(220))/2 -KXHeight, Size(200), Size(200))];
+        _noRemindView.image = [UIImage imageNamed:@"noTradeInfoBkg"];
+        [_infoTableView addSubview:_noRemindView];
+    }];
 }
 
 #pragma 切换账户

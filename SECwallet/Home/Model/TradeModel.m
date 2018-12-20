@@ -38,38 +38,15 @@
         NSInteger gas = gasPrice * gasUsed;  //CumulativeGasUsed
         _gas = [NSString stringWithFormat:@"%@ SEC",[NSString decimal:[NSString stringWithFormat:@"%ld",gas] wei:18 withDigit:0]];
         _tradeNum = [NSString jsonUtils:dictionary[@"TxHash"]];
-        _blockNum = [NSString jsonUtils:dictionary[@"BlockNumber"]];
+        if (_status == 2) {
+            _blockNum = @"Not in Block yet";
+        }else{
+           _blockNum = [NSString jsonUtils:dictionary[@"BlockNumber"]];
+        }
+        
+        _tip = [NSString jsonUtils:dictionary[@"InputData"]];
         NSInteger timeNum = [[NSString jsonUtils:dictionary[@"TimeStamp"]] integerValue];
         _time = [NSString convertTimeStampsToString:@(timeNum)];
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithTransactionInfoPromise:(TransactionInfoPromise *)info walletAddress:(NSString *)walletAddress
-{
-    if (self = [super init]) {
-        //收款地址
-        _gatherAddress = [info.value.tokenTo.checksumAddress lowercaseStringWithLocale:[NSLocale currentLocale]];
-        if ([_gatherAddress caseInsensitiveCompare:walletAddress] == NSOrderedSame) {
-            _type = 1;  //转入
-        }else{
-            _type = 2;  //转出
-        }
-        //转账地址
-        _transferAddress = [info.value.fromAddress.checksumAddress lowercaseStringWithLocale:[NSLocale currentLocale]];
-        _sum = [NSString decimal:info.value.tokenValue.decimalString wei:18 withDigit:0];
-        
-        _status = 1;  //拿不到状态值，默认都是成功
-//        //矿工费用转Ether 1Ether=18个0  0.000000000025200000
-//        _gas = [NSString stringWithFormat:@"%@ Ether",[NSString decimal:info.value.gasPrice.decimalString wei:18 withDigit:0]];
-        
-        _tip = @"";
-        _tradeNum = info.value.transactionHash.hexString;
-        _blockNum = [NSString stringWithFormat:@"%ld",info.value.blockNumber];
-        
-        //代币合约地址
-        _tokenAddress = [info.value.toAddress.description lowercaseStringWithLocale:[NSLocale currentLocale]];
     }
     
     return self;

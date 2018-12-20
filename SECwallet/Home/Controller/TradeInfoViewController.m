@@ -90,11 +90,15 @@
     line1.backgroundColor = DIVIDE_LINE_COLOR;
     [self.view addSubview:line1];
     
-//    NSArray *titleArr = @[@"发款方",@"收款方",@"矿工费用",@"备注",@"交易号",@"区块",@"交易时间"];
-    NSArray *titleArr = @[@"发款方",@"收款方",@"矿工费用",@"交易号",@"区块",@"交易时间"];
-    NSArray *contentArr = @[_tradeModel.transferAddress,_tradeModel.gatherAddress,_tradeModel.gas,_tradeModel.tradeNum,_tradeModel.blockNum,_tradeModel.time];
+    NSArray *titleArr = @[@"发款方",@"收款方",@"矿工费用",@"交易号",@"区块",@"备注",@"交易时间"];
+    NSArray *contentArr = @[_tradeModel.transferAddress,_tradeModel.gatherAddress,_tradeModel.gas,_tradeModel.tradeNum,_tradeModel.blockNum,_tradeModel.tip,_tradeModel.time];
+    if (_tradeModel.tip.length == 0) {
+        titleArr = @[@"发款方",@"收款方",@"矿工费用",@"交易号",@"区块",@"交易时间"];
+        contentArr = @[_tradeModel.transferAddress,_tradeModel.gatherAddress,_tradeModel.gas,_tradeModel.tradeNum,_tradeModel.blockNum,_tradeModel.time];
+    }
+    
     for (int i = 0; i< titleArr.count; i++) {
-        UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake(line1.minX, line1.maxY +i*Size(30 +20), kScreenWidth -line1.minX*2, Size(30))];
+        UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake(line1.minX, line1.maxY+Size(5) +i*Size(25 +20), kScreenWidth -line1.minX*2, Size(25))];
         titleLb.font = SystemFontOfSize(16);
         titleLb.textColor = TEXT_DARK_COLOR;
         titleLb.text = titleArr[i];
@@ -109,18 +113,16 @@
         [self.view addSubview:contentLb];
     }
     
-//    if (_tradeModel.status == 1) {
-//        UIButton *moreBT = [[UIButton alloc]initWithFrame:CGRectMake(0, kScreenHeight -Size(40), kScreenWidth, Size(40))];
-//        [moreBT setBackgroundImage:[UIImage imageNamed:@"checkMore"] forState:UIControlStateNormal];
-//        [moreBT addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
-//        [self.view addSubview:moreBT];
-//    }
+    UIButton *moreBT = [[UIButton alloc]initWithFrame:CGRectMake(0, kScreenHeight -Size(40), kScreenWidth, Size(40))];
+    [moreBT setBackgroundImage:[UIImage imageNamed:@"checkMore"] forState:UIControlStateNormal];
+    [moreBT addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:moreBT];
 }
 
 #pragma 查看更多信息
 -(void)moreAction
 {
-    NSURL *jumpURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",MoreServerUrl,_tradeModel.tradeNum]];
+    NSURL *jumpURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",SECBrowserUrl,_tradeModel.tradeNum]];
     [[UIApplication sharedApplication] openURL:jumpURL];
 }
 
