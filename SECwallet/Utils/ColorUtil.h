@@ -12,7 +12,7 @@
 #define COLOR(R,G,B,A)	[UIColor colorWithRed:(CGFloat)R/255 green:(CGFloat)G/255 blue:(CGFloat)B/255 alpha:A]
 
 // app 灰背景色
-#define BACKGROUND_DARK_COLOR    COLOR(230,230,230,1)
+#define BACKGROUND_DARK_COLOR    COLOR(254,255,255,1)
 
 //app导航栏背景色
 #define Navi_COLOR	COLOR(52,152,219,1)
@@ -30,7 +30,7 @@
 #define BLACK_COLOR	[UIColor blackColor]
 
 // 灰色
-#define DARK_COLOR	  COLOR(233,233,233,1)
+#define DARK_COLOR	  COLOR(244,245,246,1)
 
 /***********************字体***********************/
 // 字体黑色

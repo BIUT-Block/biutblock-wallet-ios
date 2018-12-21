@@ -8,7 +8,6 @@
 
 
 #import "AssetsViewController.h"
-#import "TokenCoinListTableViewCell.h"
 #import "WalletModel.h"
 #import "TokenCoinModel.h"
 #import "AssetsSwitchViewController.h"
@@ -21,7 +20,7 @@
 #import "CardPageView.h"
 #import "JXMovableCellTableView.h"
 
-#define kHeaderHeight    Size(180)
+#define kHeaderHeight    Size(200)
 #define USD_to_CNY       6.8872
 
 @interface AssetsViewController ()<JXMovableCellTableViewDataSource,JXMovableCellTableViewDelegate,CardPageViewDelegate>
@@ -49,7 +48,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setNavgationItemTitle:@"我的钱包"];
     self.navigationItem.leftBarButtonItem = nil;
     [self setNavgationRightImage:[UIImage imageNamed:@"more"] withAction:@selector(rightClick)];
     
@@ -70,14 +68,13 @@
     if (_walletList.count > 1) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
     }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationItem.leftBarButtonItem = nil;
-    /**************导航栏布局***************/
-    [self.tabBarController.tabBar setHidden:NO];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         //网络监听
         [self networkManager];
@@ -92,6 +89,12 @@
     if (list.count == 1) {
         [self refreshWallet:0 clearCache:NO];
     }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationShowTabView object:nil];
 }
 
 //刷新页面数据
@@ -126,9 +129,9 @@
     _walletListPageView.delegate = self;
     [self.view addSubview:_walletListPageView];
     
-    _infoTableView = [[JXMovableCellTableView alloc]initWithFrame:CGRectMake(0, _walletListPageView.maxY, kScreenWidth, kScreenHeight-KTabbarHeight-kHeaderHeight) style:UITableViewStyleGrouped];
-    _infoTableView.backgroundColor = COLOR(242, 242, 242, 1);
+    _infoTableView = [[JXMovableCellTableView alloc]initWithFrame:CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight) style:UITableViewStylePlain];
     _infoTableView.showsVerticalScrollIndicator = NO;
+//    _infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
     _infoTableView.longPressGesture.minimumPressDuration = 0.5;
@@ -140,34 +143,48 @@
 {
     return _dataArrays.count;
 }
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0.1f;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 0.1f;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kTableCellHeight;
+    return Size(35);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //代币列表
     static NSString *itemCell = @"cell_item";
-    TokenCoinListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell];
     if (cell == nil)
     {
-        cell = [[TokenCoinListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    TokenCoinModel *model = _dataArrays[indexPath.row];
-    [cell fillCellWithObject:model];
+    cell.textLabel.font = SystemFontOfSize(10);
+    cell.textLabel.textColor = COLOR(0, 209, 70, 1);
+    
+    UIImageView *bkgIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, _infoTableView.width, Size(35))];
+    bkgIV.image = [UIImage imageNamed:@"tokenListBkg"];
+    [cell.contentView addSubview:bkgIV];
+//    TokenCoinModel *model = _dataArrays[indexPath.row];
+//    cell.imageView.image = [UIImage imageNamed:model.icon];
+//    cell.textLabel.text = model.name;
+//    //金额
+//    CGSize size = [model.tokenNum calculateSize:SystemFontOfSize(10) maxWidth:_infoTableView.width/2];
+//    if (size.width < Size(35)) {
+//        size.width = Size(35);
+//    }
+//    UIButton *sumBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(20 +15) -(size.width +Size(10) +Size(15)), Size(35 -16)/2, size.width, Size(16))];
+//    sumBT.layer.borderWidth = Size(0.5);
+//    sumBT.layer.borderColor = COLOR(0, 209, 70, 1).CGColor;
+//    sumBT.layer.cornerRadius = Size(8);
+//    sumBT.titleLabel.font = SystemFontOfSize(10);
+//    [sumBT setTitleColor:COLOR(0, 209, 70, 1) forState:UIControlStateNormal];
+//    [sumBT setTitle:[NSString stringWithFormat:@"%.2f",[model.tokenNum floatValue]] forState:UIControlStateNormal];
+//    [cell.contentView addSubview:sumBT];
     
     return cell;
 }
@@ -175,6 +192,8 @@
 #pragma mark - JXMovableCellTableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
+
     //资产详情
     TradeDetailViewController *viewController = [[TradeDetailViewController alloc]init];
     TokenCoinModel *model = _dataArrays[indexPath.row];
@@ -227,6 +246,8 @@
 #pragma mark - 快捷功能入口点击
 -(void)rightClick
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
+
     AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
     viewController.assetsList = assetsList;
     viewController.hidesBottomBarWhenPushed = YES;
@@ -316,7 +337,6 @@
         model.name = @"SEC";
         model.tokenNum = currentWallet.balance;
         _dataArrays = [NSMutableArray arrayWithObject:model];
-        
         if (assetsList.count == 1) {
             for (UIView *view in self.view.subviews) {
                 [view removeFromSuperview];

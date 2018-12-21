@@ -11,6 +11,8 @@
 #import "CollectionViewCell.h"
 #import "WalletModel.h"
 
+#import "CommonPageControl.h"
+
 #define COUNT  10
 
 @interface CardPageView()<UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate>
@@ -21,7 +23,7 @@
 }
 
 @property (nonatomic,strong) UICollectionView *collectionView;
-@property (nonatomic,strong) UIPageControl *pageControl;
+@property (nonatomic,strong) CommonPageControl *pageControl;
 @property (nonatomic,strong) NSArray *walletArray;
 
 @property (nonatomic,assign) CGRect collectionViewRect;
@@ -36,7 +38,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = COLOR(242, 242, 242, 1);
+        self.backgroundColor = WHITE_COLOR;
+//        self.backgroundColor = DARK_COLOR;
         [self initData];
         cellWidth = self.frame.size.width -Size(25 *2);
         cellHeight = self.frame.size.height -Size(15);
@@ -50,7 +53,7 @@
 
 -(void)initData
 {
-    _collectionViewRect = CGRectMake(0, Size(12), self.frame.size.width, self.frame.size.height -Size(15));
+    _collectionViewRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height -Size(15));
     _pageControlRect = CGRectMake(0, _collectionViewRect.origin.y +_collectionViewRect.size.height -Size(15), kScreenWidth, Size(15));
 }
 
@@ -88,11 +91,11 @@
     }
 }
 
--(UIPageControl*)pageControl{
-    _pageControl = [[UIPageControl alloc]initWithFrame:_pageControlRect];
+-(CommonPageControl*)pageControl{
+    _pageControl = [[CommonPageControl alloc]initWithFrame:_pageControlRect];
     _pageControl.numberOfPages = _walletArray.count > COUNT ? COUNT : _walletArray.count;  //固定
-    [_pageControl setPageIndicatorTintColor:COLOR(216, 206, 193, 1)];
-    [_pageControl setCurrentPageIndicatorTintColor:COLOR(186, 139, 81, 1)];
+    [_pageControl setPageIndicatorTintColor:COLOR(206, 207, 208, 1)];
+    [_pageControl setCurrentPageIndicatorTintColor:COLOR(42, 213, 129, 1)];
     return _pageControl;
 }
 

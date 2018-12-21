@@ -14,6 +14,7 @@
 		1B09859D217835CA00B8E994 /* CardPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B098598217835C900B8E994 /* CardPageView.m */; };
 		1B09859E217835CA00B8E994 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B098599217835C900B8E994 /* CollectionViewCell.m */; };
 		1B0985A221797C9400B8E994 /* JXMovableCellTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0985A121797C9400B8E994 /* JXMovableCellTableView.m */; };
+		1B30B6CF21CC87F2007CB54E /* CommonPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B30B6CE21CC87F2007CB54E /* CommonPageControl.m */; };
 		1B379C18212D533300255EEC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B379C17212D533300255EEC /* Security.framework */; };
 		1B379C1C212D553200255EEC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B379C1B212D553200255EEC /* CFNetwork.framework */; };
 		1B379C1E212D554400255EEC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B379C1D212D554400255EEC /* Foundation.framework */; };
@@ -41,7 +42,6 @@
 		1B65E813212BF5C000BB8DE5 /* TradeListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E6AD212BF5BC00BB8DE5 /* TradeListTableViewCell.m */; };
 		1B65E814212BF5C000BB8DE5 /* TradeDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E6AF212BF5BC00BB8DE5 /* TradeDetailView.m */; };
 		1B65E815212BF5C000BB8DE5 /* TokenCoinSelectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E6B0212BF5BC00BB8DE5 /* TokenCoinSelectTableViewCell.m */; };
-		1B65E816212BF5C000BB8DE5 /* TokenCoinListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E6B1212BF5BC00BB8DE5 /* TokenCoinListTableViewCell.m */; };
 		1B65E818212BF5C000BB8DE5 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B65E6B8212BF5BE00BB8DE5 /* Bugly.framework */; };
 		1B65E81F212BF5C000BB8DE5 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E6C9212BF5BE00BB8DE5 /* UIScrollView+MJRefresh.m */; };
 		1B65E820212BF5C000BB8DE5 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E6CA212BF5BE00BB8DE5 /* MJRefreshConst.m */; };
@@ -106,7 +106,7 @@
 		1B65E860212BF5C100BB8DE5 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E772212BF5BE00BB8DE5 /* ChangePasswordViewController.m */; };
 		1B65E861212BF5C100BB8DE5 /* ImportWalletViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E774212BF5BE00BB8DE5 /* ImportWalletViewController.m */; };
 		1B65E862212BF5C100BB8DE5 /* WalletDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E775212BF5BE00BB8DE5 /* WalletDetailViewController.m */; };
-		1B65E863212BF5C100BB8DE5 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E776212BF5BE00BB8DE5 /* MineViewController.m */; };
+		1B65E863212BF5C100BB8DE5 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E776212BF5BE00BB8DE5 /* SettingViewController.m */; };
 		1B65E864212BF5C100BB8DE5 /* ImportWalletManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E779212BF5BE00BB8DE5 /* ImportWalletManageViewController.m */; };
 		1B65E868212BF5C100BB8DE5 /* WalletListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E783212BF5BE00BB8DE5 /* WalletListTableViewCell.m */; };
 		1B65E869212BF5C100BB8DE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B65E784212BF5BF00BB8DE5 /* Assets.xcassets */; };
@@ -185,6 +185,8 @@
 		1B09859B217835C900B8E994 /* CardPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardPageView.h; sourceTree = "<group>"; };
 		1B0985A021797C9400B8E994 /* JXMovableCellTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXMovableCellTableView.h; sourceTree = "<group>"; };
 		1B0985A121797C9400B8E994 /* JXMovableCellTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXMovableCellTableView.m; sourceTree = "<group>"; };
+		1B30B6CD21CC87F2007CB54E /* CommonPageControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPageControl.h; sourceTree = "<group>"; };
+		1B30B6CE21CC87F2007CB54E /* CommonPageControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommonPageControl.m; sourceTree = "<group>"; };
 		1B379C17212D533300255EEC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1B379C1B212D553200255EEC /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1B379C1D212D554400255EEC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -234,11 +236,9 @@
 		1B65E6AD212BF5BC00BB8DE5 /* TradeListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TradeListTableViewCell.m; sourceTree = "<group>"; };
 		1B65E6AF212BF5BC00BB8DE5 /* TradeDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TradeDetailView.m; sourceTree = "<group>"; };
 		1B65E6B0212BF5BC00BB8DE5 /* TokenCoinSelectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenCoinSelectTableViewCell.m; sourceTree = "<group>"; };
-		1B65E6B1212BF5BC00BB8DE5 /* TokenCoinListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenCoinListTableViewCell.m; sourceTree = "<group>"; };
 		1B65E6B3212BF5BC00BB8DE5 /* TradeListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TradeListTableViewCell.h; sourceTree = "<group>"; };
 		1B65E6B4212BF5BC00BB8DE5 /* TokenCoinSelectTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenCoinSelectTableViewCell.h; sourceTree = "<group>"; };
 		1B65E6B5212BF5BC00BB8DE5 /* TradeDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TradeDetailView.h; sourceTree = "<group>"; };
-		1B65E6B6212BF5BC00BB8DE5 /* TokenCoinListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenCoinListTableViewCell.h; sourceTree = "<group>"; };
 		1B65E6B8212BF5BE00BB8DE5 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		1B65E6C8212BF5BE00BB8DE5 /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
 		1B65E6C9212BF5BE00BB8DE5 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
@@ -367,12 +367,12 @@
 		1B65E76E212BF5BE00BB8DE5 /* ImportWalletManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportWalletManageViewController.h; sourceTree = "<group>"; };
 		1B65E76F212BF5BE00BB8DE5 /* ExportKeyStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportKeyStoreViewController.m; sourceTree = "<group>"; };
 		1B65E770212BF5BE00BB8DE5 /* WalletManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalletManageViewController.m; sourceTree = "<group>"; };
-		1B65E771212BF5BE00BB8DE5 /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
+		1B65E771212BF5BE00BB8DE5 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		1B65E772212BF5BE00BB8DE5 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
 		1B65E773212BF5BE00BB8DE5 /* TradeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TradeListViewController.h; sourceTree = "<group>"; };
 		1B65E774212BF5BE00BB8DE5 /* ImportWalletViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportWalletViewController.m; sourceTree = "<group>"; };
 		1B65E775212BF5BE00BB8DE5 /* WalletDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalletDetailViewController.m; sourceTree = "<group>"; };
-		1B65E776212BF5BE00BB8DE5 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
+		1B65E776212BF5BE00BB8DE5 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		1B65E777212BF5BE00BB8DE5 /* WalletManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalletManageViewController.h; sourceTree = "<group>"; };
 		1B65E778212BF5BE00BB8DE5 /* ExportKeyStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportKeyStoreViewController.h; sourceTree = "<group>"; };
 		1B65E779212BF5BE00BB8DE5 /* ImportWalletManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportWalletManageViewController.m; sourceTree = "<group>"; };
@@ -524,6 +524,13 @@
 			path = JXMovableCellTableView;
 			sourceTree = "<group>";
 		};
+		1B30B6C421CB735C007CB54E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1B65E5E0212BEFAD00BB8DE5 = {
 			isa = PBXGroup;
 			children = (
@@ -644,8 +651,6 @@
 		1B65E6AC212BF5BC00BB8DE5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1B65E6B6212BF5BC00BB8DE5 /* TokenCoinListTableViewCell.h */,
-				1B65E6B1212BF5BC00BB8DE5 /* TokenCoinListTableViewCell.m */,
 				1B65E6B4212BF5BC00BB8DE5 /* TokenCoinSelectTableViewCell.h */,
 				1B65E6B0212BF5BC00BB8DE5 /* TokenCoinSelectTableViewCell.m */,
 				1B65E6B3212BF5BC00BB8DE5 /* TradeListTableViewCell.h */,
@@ -942,7 +947,7 @@
 			isa = PBXGroup;
 			children = (
 				1B65E769212BF5BE00BB8DE5 /* Controller */,
-				1B65E77A212BF5BE00BB8DE5 /* Model */,
+				1B30B6C421CB735C007CB54E /* Model */,
 				1B65E77F212BF5BE00BB8DE5 /* View */,
 			);
 			path = Assets;
@@ -951,8 +956,8 @@
 		1B65E769212BF5BE00BB8DE5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1B65E771212BF5BE00BB8DE5 /* MineViewController.h */,
-				1B65E776212BF5BE00BB8DE5 /* MineViewController.m */,
+				1B65E771212BF5BE00BB8DE5 /* SettingViewController.h */,
+				1B65E776212BF5BE00BB8DE5 /* SettingViewController.m */,
 				1B65E773212BF5BE00BB8DE5 /* TradeListViewController.h */,
 				1B65E76B212BF5BE00BB8DE5 /* TradeListViewController.m */,
 				1B65E777212BF5BE00BB8DE5 /* WalletManageViewController.h */,
@@ -969,13 +974,6 @@
 				1B65E76F212BF5BE00BB8DE5 /* ExportKeyStoreViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		1B65E77A212BF5BE00BB8DE5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		1B65E77F212BF5BE00BB8DE5 /* View */ = {
@@ -1000,6 +998,8 @@
 				1B65E78D212BF5BF00BB8DE5 /* CommonAlertView.m */,
 				1B65E78B212BF5BF00BB8DE5 /* CommonHtmlShowViewController.h */,
 				1B65E787212BF5BF00BB8DE5 /* CommonHtmlShowViewController.m */,
+				1B30B6CD21CC87F2007CB54E /* CommonPageControl.h */,
+				1B30B6CE21CC87F2007CB54E /* CommonPageControl.m */,
 			);
 			path = BaseActivity;
 			sourceTree = "<group>";
@@ -1049,7 +1049,6 @@
 				1B65E7D7212BF5C000BB8DE5 /* DWTagList */,
 				1B65E7DC212BF5C000BB8DE5 /* FDFullscreenPopGesture */,
 				1B65E7DF212BF5C000BB8DE5 /* ImageDown */,
-				1B65E7E7212BF5C000BB8DE5 /* QRCode */,
 				1B65E7EE212BF5C000BB8DE5 /* KPIndicatorView */,
 				1B65E7F5212BF5C000BB8DE5 /* VOSegmentedControl */,
 				1B65E801212BF5C000BB8DE5 /* SGSegmentedControl */,
@@ -1202,61 +1201,6 @@
 				1B65E7E6212BF5C000BB8DE5 /* UINavigationBar+Awesome.m */,
 			);
 			path = ImageDown;
-			sourceTree = "<group>";
-		};
-		1B65E7E7212BF5C000BB8DE5 /* QRCode */ = {
-			isa = PBXGroup;
-			children = (
-				1B65E7E8212BF5C000BB8DE5 /* ZBarSDK */,
-				1B65E7ED212BF5C000BB8DE5 /* libqrencode */,
-			);
-			path = QRCode;
-			sourceTree = "<group>";
-		};
-		1B65E7E8212BF5C000BB8DE5 /* ZBarSDK */ = {
-			isa = PBXGroup;
-			children = (
-				1B65E7E9212BF5C000BB8DE5 /* Resources */,
-				1B65E7EA212BF5C000BB8DE5 /* Headers */,
-			);
-			path = ZBarSDK;
-			sourceTree = "<group>";
-		};
-		1B65E7E9212BF5C000BB8DE5 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		1B65E7EA212BF5C000BB8DE5 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				1B65E7EB212BF5C000BB8DE5 /* ZBarSDK */,
-			);
-			path = Headers;
-			sourceTree = "<group>";
-		};
-		1B65E7EB212BF5C000BB8DE5 /* ZBarSDK */ = {
-			isa = PBXGroup;
-			children = (
-				1B65E7EC212BF5C000BB8DE5 /* zbar */,
-			);
-			path = ZBarSDK;
-			sourceTree = "<group>";
-		};
-		1B65E7EC212BF5C000BB8DE5 /* zbar */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = zbar;
-			sourceTree = "<group>";
-		};
-		1B65E7ED212BF5C000BB8DE5 /* libqrencode */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = libqrencode;
 			sourceTree = "<group>";
 		};
 		1B65E7EE212BF5C000BB8DE5 /* KPIndicatorView */ = {
@@ -1412,7 +1356,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B65E83B212BF5C000BB8DE5 /* IQUITextFieldView+Additions.m in Sources */,
-				1B65E816212BF5C000BB8DE5 /* TokenCoinListTableViewCell.m in Sources */,
 				1B65E828212BF5C000BB8DE5 /* AFJSONRPCClient.m in Sources */,
 				1B65E84F212BF5C000BB8DE5 /* SDWebImageManager.m in Sources */,
 				1B65E83A212BF5C000BB8DE5 /* IQUIWindow+Hierarchy.m in Sources */,
@@ -1443,6 +1386,7 @@
 				1B65E857212BF5C100BB8DE5 /* SDImageCache.m in Sources */,
 				1B65E826212BF5C000BB8DE5 /* UIView+MJExtension.m in Sources */,
 				1B65E824212BF5C000BB8DE5 /* UIScrollView+MJExtension.m in Sources */,
+				1B30B6CF21CC87F2007CB54E /* CommonPageControl.m in Sources */,
 				1B65E897212BF5C100BB8DE5 /* RoundView.m in Sources */,
 				1B65E85B212BF5C100BB8DE5 /* SDFlowImageView.m in Sources */,
 				1B65E831212BF5C000BB8DE5 /* IQTextView.m in Sources */,
@@ -1489,7 +1433,7 @@
 				1B65E68A212BF55D00BB8DE5 /* RootViewController.m in Sources */,
 				1B65E813212BF5C000BB8DE5 /* TradeListTableViewCell.m in Sources */,
 				1B65E82F212BF5C000BB8DE5 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
-				1B65E863212BF5C100BB8DE5 /* MineViewController.m in Sources */,
+				1B65E863212BF5C100BB8DE5 /* SettingViewController.m in Sources */,
 				1B65E875212BF5C100BB8DE5 /* UIButton+Extension.m in Sources */,
 				1B65E853212BF5C000BB8DE5 /* UIImage+GIF.m in Sources */,
 				1B65E896212BF5C100BB8DE5 /* UINavigationBar+Awesome.m in Sources */,

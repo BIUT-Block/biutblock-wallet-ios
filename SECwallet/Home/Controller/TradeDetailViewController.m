@@ -51,7 +51,6 @@
     }else{
         [self requestTransactionHash];
     }
-
 }
 
 #pragma TransferViewControllerDelegate 转账成功事件
@@ -312,11 +311,12 @@
             gatherBT.hidden = NO;
             _noNetworkView.hidden = YES;
         }
-        
         isHeaderRefresh = NO;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取区块详情失败");
+        [self hiddenLoadingView];
+        [self hiddenRefreshView];
     }];
 }
 
