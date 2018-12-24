@@ -39,10 +39,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = WHITE_COLOR;
-//        self.backgroundColor = DARK_COLOR;
         [self initData];
-        cellWidth = self.frame.size.width -Size(25 *2);
-        cellHeight = self.frame.size.height -Size(15);
+        cellWidth = self.frame.size.width -Size(40);
+        cellHeight = self.frame.size.height -Size(20);
         itemSpacing = Size(5);
         _walletArray = walletList;
         
@@ -53,7 +52,7 @@
 
 -(void)initData
 {
-    _collectionViewRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height -Size(15));
+    _collectionViewRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height -Size(20));
     _pageControlRect = CGRectMake(0, _collectionViewRect.origin.y +_collectionViewRect.size.height -Size(15), kScreenWidth, Size(15));
 }
 
@@ -67,8 +66,8 @@
     //自定义UICollectionViewFlowLayout
     UICollectionViewFlowLayout *layout = [[CollectionFlowLayout alloc]init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.minimumLineSpacing = 0;
-    layout.minimumInteritemSpacing = itemSpacing;
+    layout.minimumLineSpacing = Size(10);   //列间距
+    layout.minimumInteritemSpacing = itemSpacing;  //item之间的间距
     layout.itemSize = CGSizeMake(cellWidth, cellHeight);
     //初始化collectionView
     _collectionView = [[UICollectionView alloc] initWithFrame:_collectionViewRect collectionViewLayout:layout];
@@ -79,16 +78,6 @@
     _collectionView.dataSource = self;
     
     return _collectionView;
-}
-
-// 定义每个Section的四边间距
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    
-    if (_walletArray.count == 1) {
-        return UIEdgeInsetsMake(0, Size(25), 0, Size(25));
-    }else{
-        return UIEdgeInsetsMake(0, Size(15), 0, Size(15));
-    }
 }
 
 -(CommonPageControl*)pageControl{
@@ -104,11 +93,20 @@
     return _walletArray.count;
 }
 
+// 定义每个Section的四边间距
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    
+    if (_walletArray.count == 1) {
+        return UIEdgeInsetsMake(0, Size(25), 0, Size(25));
+    }else{
+        return UIEdgeInsetsMake(0, Size(20), 0, Size(20));
+    }
+}
+
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];
     
     WalletModel *model = _walletArray[indexPath.row];
-    
     //随机分配背景
     NSString *bkgStr;
     if (indexPath.row == 0 || (indexPath.row)%3 == 0) {

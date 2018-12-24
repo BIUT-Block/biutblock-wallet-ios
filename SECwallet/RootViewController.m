@@ -68,7 +68,7 @@
     [bkgView addSubview:settingBT];
     
     //下划线
-    bottomLine = [[UIView alloc]initWithFrame:CGRectMake(bkgView.minX +Size(13), bkgView.maxY, bkgView.width/2 -Size(13*2), Size(1.4))];
+    bottomLine = [[UIView alloc]initWithFrame:CGRectMake(bkgView.minX +Size(13), bkgView.maxY, bkgView.width/2 -Size(13*2), Size(1.2))];
     bottomLine.backgroundColor = COLOR(45, 121, 209, 1);
     bottomLine.layer.cornerRadius = Size(2);
     [self.view addSubview:bottomLine];

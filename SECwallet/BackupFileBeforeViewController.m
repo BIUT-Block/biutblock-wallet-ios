@@ -23,7 +23,7 @@
     [self setupUI];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"请勿截图" contentText:@"如果有人获取你的助记词将直接获取你的资产！请抄下助记词并放在安全的地方。" imageName:@"noScreenShort" leftButtonTitle:@"知道了" rightButtonTitle:nil alertViewType:CommonAlertViewType_style2];
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"请勿截图" contentText:@"如果有人获取你的助记词将直接获取你的资产！请抄下助记词并放在安全的地方。" imageName:@"noScreenShort" leftButtonTitle:@"知道了" rightButtonTitle:nil alertViewType:CommonAlertViewType_question_mark];
         [alert show];
     });
 }

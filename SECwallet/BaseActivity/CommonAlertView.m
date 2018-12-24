@@ -8,25 +8,22 @@
 
 #import "CommonAlertView.h"
 
-#define kAlertWidth     Size(270)
+#define kAlertWidth     Size(260)
 
-//标题，内容，左按钮，右按钮
-#define kAlertHeight_style1    Size(170)
-
-//图片、标题，内容，按钮
-#define kAlertHeight_style2    Size(190)
-
-//标题，图片，内容，按钮
-#define kAlertHeight_style3    Size(180)
-
-#define kImageHeight       Size(125)
+#define kAlertHeight_exclamation_mark    Size(230)
+#define kAlertHeight_question_mark       Size(265)
+#define kAlertHeight_Check_mark          Size(230)
+#define kAlertHeight_remind              Size(230)
 
 #define kTitleHeight       Size(25)
 
-#define kContentHeight     Size(50)
+#define kContentHeight_exclamation_mark  Size(50)
+#define kContentHeight_question_mark     Size(90)
+#define kContentHeight_Check_mark        Size(50)
+#define kContentHeight_remind            Size(60)
 
-#define kButtonWidth       Size(130)
-#define kButtonHeight      Size(38)
+#define kButtonWidth       Size(80)
+#define kButtonHeight      Size(40)
 
 @interface CommonAlertView ()
 {
@@ -71,85 +68,29 @@
       alertViewType:(CommonAlertViewType)alertViewType
 {
     if (self = [super init]) {
-        self.layer.cornerRadius = 8.0;
+        self.layer.cornerRadius = Size(12);
         self.backgroundColor = WHITE_COLOR;
         self.alertType = alertViewType;
-        //叉号
-        UIButton *deleteBT = [[UIButton alloc]initWithFrame:CGRectMake(kAlertWidth -Size(15 +15), Size(15), Size(15), Size(15))];
-        [deleteBT setBackgroundImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
-        deleteBT.adjustsImageWhenHighlighted = NO;
-        [deleteBT addTarget:self action:@selector(dismissAlert) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:deleteBT];
         
         _alertViewType = alertViewType;
         
-        if (alertViewType == CommonAlertViewType_style1) {
-            //标题，内容，左按钮，右按钮
-            CGSize size = [content calculateSize:SystemFontOfSize(14) maxWidth:kAlertWidth -Size(20)];
-            
-            _alertViewHeight = kTitleHeight +Size(10) +size.height +size.height/Size(15) *Size(5) +Size(35) +kButtonHeight;
-            
-            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kAlertWidth, kTitleHeight)];
-            _alertTitleLabel.font = BoldSystemFontOfSize(16);
-            _alertTitleLabel.textAlignment = NSTextAlignmentCenter;
-            _alertTitleLabel.textColor = TEXT_BLACK_COLOR;
-            [self addSubview:_alertTitleLabel];
-            _alertTitleLabel.text = title;
-            //虚线
-            UIImageView *line = [[UIImageView alloc]initWithFrame:CGRectMake(0, _alertTitleLabel.maxY, kAlertWidth, Size(0.8))];
-            line.image = [UIImage imageNamed:@"alert_dottedLine"];
-            [self addSubview:line];
-            //内容
-            UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(10), line.maxY +Size(10), kAlertWidth -Size(20), size.height +size.height/Size(15) *Size(5))];
-            msgLb.font = SystemFontOfSize(14);
-            msgLb.textColor = TEXT_BLACK_COLOR;
-            msgLb.numberOfLines = 100;
-            msgLb.text = content;
-            [self addSubview:msgLb];
-            //设置行间距
-            NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:content];
-            NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            paragraphStyle.lineSpacing = Size(5);
-            [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
-            msgLb.attributedText = msgStr;
-            
-            if (rigthTitle.length == 0) {
-                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -kButtonWidth)/2, _alertViewHeight -kButtonHeight -Size(15), kButtonWidth, kButtonHeight)];
-                [_leftBtn goldSmallBtnStyle:leftTitle];
-                [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-                [self addSubview:_leftBtn];
-                
-            }else{
-                int insert = (kAlertWidth/2 -kButtonWidth)/2;
-                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(insert, _alertViewHeight -kButtonHeight -Size(15), kButtonWidth, kButtonHeight)];
-                [_leftBtn goldSmallBtnStyle:leftTitle];
-                [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-                [self addSubview:_leftBtn];
-                
-                _rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(kAlertWidth/2 +insert, _leftBtn.minY, kButtonWidth, kButtonHeight)];
-                [_rightBtn goldSmallBtnStyle:leftTitle];
-                [_rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-                [self addSubview:_rightBtn];
-            }
-        }else if (alertViewType == CommonAlertViewType_style2) {
-            //图片、标题，内容，按钮
-            _alertViewHeight = kAlertHeight_style2;
+        if (alertViewType == CommonAlertViewType_exclamation_mark) {
+            _alertViewHeight = kAlertHeight_exclamation_mark;
             //图片
-            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(42))/2, Size(10), Size(42), Size(42))];
+            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(38))/2, Size(35), Size(38), Size(38))];
             imageIV.image = [UIImage imageNamed:imageName];
             [self addSubview:imageIV];
             
-            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY, kAlertWidth, kTitleHeight)];
-            _alertTitleLabel.font = SystemFontOfSize(18);
-            _alertTitleLabel.textColor = TEXT_BLACK_COLOR;
+            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY +Size(10), kAlertWidth, kTitleHeight)];
+            _alertTitleLabel.font = BoldSystemFontOfSize(11);
+            _alertTitleLabel.textColor = COLOR(230, 0, 44, 1);
             _alertTitleLabel.textAlignment = NSTextAlignmentCenter;
             [self addSubview:_alertTitleLabel];
             _alertTitleLabel.text = title;
             //内容
-            content = @"如果有人获取你的助记词将直接获取你的资产，请抄下助记词并放在安全的地方。";
-            UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(10), _alertTitleLabel.maxY, kAlertWidth -Size(10), kContentHeight)];
+            UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), _alertTitleLabel.maxY, kAlertWidth -Size(30), kContentHeight_exclamation_mark)];
             msgLb.font = SystemFontOfSize(14);
-            msgLb.textColor = TEXT_DARK_COLOR;
+            msgLb.textColor = COLOR(126, 145, 155, 1);
             msgLb.numberOfLines = 2;
             msgLb.text = content;
             [self addSubview:msgLb];
@@ -159,67 +100,125 @@
             paragraphStyle.lineSpacing = Size(3);
             [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
             msgLb.attributedText = msgStr;
+            msgLb.textAlignment = NSTextAlignmentCenter;
             
-            if (rigthTitle.length == 0) {
-                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -kButtonWidth)/2, kAlertHeight_style2 -kButtonHeight -Size(15), kButtonWidth, kButtonHeight)];
-                [_leftBtn goldSmallBtnStyle:leftTitle];
-                [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-                [self addSubview:_leftBtn];
-                
-            }else{
-                int insert = (kAlertWidth/2 -kButtonWidth)/2;
-                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(insert, kAlertHeight_style2 -kButtonHeight -Size(10), kButtonWidth, kButtonHeight)];
-                [_leftBtn goldSmallBtnStyle:leftTitle];
-                [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-                [self addSubview:_leftBtn];
-                
-                _rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(kAlertWidth/2 +insert, _leftBtn.minY, kButtonWidth, kButtonHeight)];
-                [_rightBtn goldSmallBtnStyle:leftTitle];
-                [_rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-                [self addSubview:_rightBtn];
-            }
-        }else if (alertViewType == CommonAlertViewType_style3) {
-            //标题，图片，内容，按钮
-            _alertViewHeight = kAlertHeight_style3;
+            _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -kButtonWidth)/2, kAlertHeight_exclamation_mark -kButtonHeight -Size(30), kButtonWidth, kButtonHeight)];
+            [_leftBtn setTitleColor:COLOR(45, 121, 209, 1) forState:UIControlStateNormal];
+            _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
+            [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
+            [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:_leftBtn];
             
-            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, Size(10), kAlertWidth, kTitleHeight)];
-            _alertTitleLabel.font = BoldSystemFontOfSize(18);
+        }else if (alertViewType == CommonAlertViewType_question_mark) {
+            
+            _alertViewHeight = kAlertHeight_question_mark;
+            //图片
+            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(38))/2, Size(20), Size(38), Size(38))];
+            imageIV.image = [UIImage imageNamed:imageName];
+            [self addSubview:imageIV];
+            
+            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY +Size(10), kAlertWidth, kTitleHeight)];
+            _alertTitleLabel.font = BoldSystemFontOfSize(11);
+            _alertTitleLabel.textColor = COLOR(46, 122, 210, 1);
             _alertTitleLabel.textAlignment = NSTextAlignmentCenter;
-            _alertTitleLabel.textColor = TEXT_BLACK_COLOR;
             [self addSubview:_alertTitleLabel];
             _alertTitleLabel.text = title;
-            //图片
-            UIImageView *img = [[UIImageView alloc]initWithFrame:CGRectMake(Size(30), _alertTitleLabel.maxY +Size(10), kAlertWidth -Size(30 *2), Size(35))];
-            img.image = [UIImage imageNamed:imageName];
-//            [self addSubview:img];
-            //背景
-            UIView *tipView = [[UIView alloc]initWithFrame:CGRectMake(img.minX, img.minY, img.width, img.height)];
-            tipView.backgroundColor = COLOR(240, 118, 118, 1);
-            tipView.layer.cornerRadius = Size(12);
-            tipView.layer.borderWidth = Size(1);
-            tipView.layer.borderColor = COLOR(244, 24, 24, 1).CGColor;
-            [self addSubview:tipView];
-            UILabel *tipLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(5), Size(3), tipView.width -Size(10), tipView.height -Size(6))];
-            tipLb.textColor = WHITE_COLOR;
-            tipLb.font = SystemFontOfSize(11);
-            tipLb.numberOfLines = 2;
-            tipLb.text = @"安全警告：私钥未经加密，导出存在风险，建议使用助记词和Keystore进行备份。";
-            [tipView addSubview:tipLb];
-            
-            //背景
-            UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(img.minX, img.maxY +Size(5), img.width, Size(35))];
-            bkgView.backgroundColor = COLOR(210, 210, 210, 1);
-            bkgView.layer.cornerRadius = Size(5);
-            [self addSubview:bkgView];
             //内容
-            UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(10), Size(2), img.width -Size(10 *2), Size(30))];
-            msgLb.font = SystemFontOfSize(10);
-            msgLb.textColor = TEXT_BLACK_COLOR;
+            UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), _alertTitleLabel.maxY, kAlertWidth -Size(30), kContentHeight_question_mark)];
+            msgLb.font = SystemFontOfSize(14);
+            msgLb.textColor = COLOR(126, 145, 155, 1);
+            msgLb.numberOfLines = 5;
+            msgLb.text = content;
+            [self addSubview:msgLb];
+            //设置行间距
+            NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:content];
+            NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineSpacing = Size(3);
+            [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
+            msgLb.attributedText = msgStr;
+            msgLb.textAlignment = NSTextAlignmentCenter;
+            
+            int insert = (kAlertWidth -kButtonWidth*2)/2;
+            _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(insert, kAlertHeight_question_mark -kButtonHeight -Size(20), kButtonWidth, kButtonHeight)];
+            [_leftBtn setTitleColor:COLOR(126, 145, 155, 1) forState:UIControlStateNormal];
+            _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
+            [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
+            [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:_leftBtn];
+            //中间线
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(_leftBtn.maxX, _leftBtn.minY, Size(0.6), kButtonHeight)];
+            line.backgroundColor = COLOR(198, 200, 201, 1);
+            [self addSubview:line];
+            
+            _rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(line.maxX, _leftBtn.minY, kButtonWidth, kButtonHeight)];
+            [_rightBtn setTitleColor:COLOR(42, 213, 129, 1) forState:UIControlStateNormal];
+            _rightBtn.titleLabel.font = BoldSystemFontOfSize(15);
+            [_rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
+            [_rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:_rightBtn];
+            
+        }else if (alertViewType == CommonAlertViewType_Check_mark) {
+
+            _alertViewHeight = kAlertHeight_Check_mark;
+            //图片
+            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(38))/2, Size(35), Size(38), Size(38))];
+            imageIV.image = [UIImage imageNamed:imageName];
+            [self addSubview:imageIV];
+            
+            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY +Size(10), kAlertWidth, kTitleHeight)];
+            _alertTitleLabel.font = BoldSystemFontOfSize(11);
+            _alertTitleLabel.textColor = COLOR(42, 213, 129, 1);
+            _alertTitleLabel.textAlignment = NSTextAlignmentCenter;
+            [self addSubview:_alertTitleLabel];
+            _alertTitleLabel.text = title;
+            //内容
+            UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), _alertTitleLabel.maxY, kAlertWidth -Size(30), kContentHeight_Check_mark)];
+            msgLb.font = SystemFontOfSize(14);
+            msgLb.textColor = COLOR(126, 145, 155, 1);
             msgLb.numberOfLines = 2;
             msgLb.text = content;
-            [bkgView addSubview:msgLb];
+            [self addSubview:msgLb];
+            //设置行间距
+            NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:content];
+            NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineSpacing = Size(3);
+            [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
+            msgLb.attributedText = msgStr;
+            msgLb.textAlignment = NSTextAlignmentCenter;
             
-            _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(img.minX, _alertViewHeight -kButtonHeight -Size(15), img.width, kButtonHeight)];
+            _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -kButtonWidth)/2, kAlertHeight_Check_mark -kButtonHeight -Size(30), kButtonWidth, kButtonHeight)];
+            [_leftBtn setTitleColor:COLOR(45, 121, 209, 1) forState:UIControlStateNormal];
+            _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
+            [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
+            [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:_leftBtn];
+            
+        }else if (alertViewType == CommonAlertViewType_remind) {
+            //标题，内容，按钮
+            _alertViewHeight = kAlertHeight_remind;
+            
+            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, Size(30), kAlertWidth, kTitleHeight)];
+            _alertTitleLabel.font = BoldSystemFontOfSize(20);
+            _alertTitleLabel.textColor = COLOR(50, 66, 74, 1);
+            _alertTitleLabel.textAlignment = NSTextAlignmentCenter;
+            [self addSubview:_alertTitleLabel];
+            _alertTitleLabel.text = title;
+            //内容
+            UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), _alertTitleLabel.maxY +Size(10), kAlertWidth -Size(30), kContentHeight_remind)];
+            msgLb.font = SystemFontOfSize(10);
+            msgLb.textColor = COLOR(126, 145, 155, 1);
+            msgLb.numberOfLines = 3;
+            msgLb.text = content;
+            [self addSubview:msgLb];
+            //设置行间距
+            NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:content];
+            NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineSpacing = Size(3);
+            [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
+            msgLb.attributedText = msgStr;
+            msgLb.textAlignment = NSTextAlignmentCenter;
+            
+            _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -Size(110))/2, kAlertHeight_remind -Size(40) -Size(30), Size(125), Size(45))];
             [_leftBtn goldSmallBtnStyle:leftTitle];
             [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:_leftBtn];
@@ -252,8 +251,12 @@
 - (void)show
 {
     UIViewController *topVC = [self appRootViewController];
-    self.frame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth)/2, (CGRectGetHeight(topVC.view.bounds) - _alertViewHeight)/2, kAlertWidth, _alertViewHeight);
+    self.frame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - kAlertWidth)/2, (CGRectGetHeight(topVC.view.bounds) - _alertViewHeight)/2 -Size(12), kAlertWidth, _alertViewHeight);
     [topVC.view addSubview:self];
+    
+    if (_alertType == CommonAlertViewType_remind) {
+        self.alpha = 0.9;
+    }
     
     CAKeyframeAnimation* animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
     animation.duration = 0.3f;// 动画时间
@@ -314,7 +317,7 @@
     if (!_backView) {
         _backView = [[UIView alloc] initWithFrame:topVC.view.bounds];
         _backView.backgroundColor = BLACK_COLOR;
-        _backView.alpha = 0.6f;
+        _backView.alpha = 0.0f;
         _backView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
     [topVC.view addSubview:_backView];

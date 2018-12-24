@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
-    CommonAlertViewType_style1    = 0,         //标题，内容，左按钮，右按钮
-    CommonAlertViewType_style2    = 1,         //图片、标题，内容，按钮
-    CommonAlertViewType_style3    = 2,         //标题，图片，内容，按钮
+    //图片、标题，内容，按钮
+    CommonAlertViewType_exclamation_mark  = 0,
+    CommonAlertViewType_question_mark     = 1,
+    CommonAlertViewType_Check_mark        = 2,
+    //标题，内容，按钮
+    CommonAlertViewType_remind            = 3,
+    
 } CommonAlertViewType;
 
 @interface CommonAlertView : UIView

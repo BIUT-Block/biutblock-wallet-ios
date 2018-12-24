@@ -68,6 +68,16 @@
     if (_walletList.count > 1) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
     }
+    
+//    CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"Input Password" contentText:@"Invalid Password.\nPlease Check and try again." imageName:@"exclamation_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_exclamation_mark];
+    
+//    CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"Are you sure" contentText:@"The order of the mnemonics you backed up is verified correctly,\nwhether the mnemonic is removed for the SEC" imageName:@"question_mark" leftButtonTitle:@"Cancel" rightButtonTitle:@"Sure" alertViewType:CommonAlertViewType_question_mark];
+    
+//    CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"Create Wallet" contentText:@"Wallet create successfully" imageName:@"Check_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_Check_mark];
+    
+//    CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"No screenshot，Please!" contentText:@"If someone gets your mnemonic,it will get your assets directly!\nPlease copy the mnemonic and store it in a safe place." imageName:nil leftButtonTitle:@"Got It" rightButtonTitle:nil alertViewType:CommonAlertViewType_remind];
+    
+//    [alert show];
 
 }
 

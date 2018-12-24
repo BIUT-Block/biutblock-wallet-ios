@@ -35,7 +35,7 @@
     self.layer.masksToBounds = YES;
     [self setAdjustsImageWhenHighlighted:NO];
     [self setTitleColor: WHITE_COLOR forState:UIControlStateNormal];
-    self.titleLabel.font = SystemFontOfSize(18);
+    self.titleLabel.font = BoldSystemFontOfSize(13);
     [self setTitle:title forState:UIControlStateNormal];
     [self setBackgroundImage:[UIImage imageNamed:@"goldSmallBtn"] forState:UIControlStateNormal];
 }

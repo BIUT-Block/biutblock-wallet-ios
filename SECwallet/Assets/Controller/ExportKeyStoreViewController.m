@@ -20,7 +20,7 @@
     [self setupUI];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"请勿截图" contentText:@"请确保四周无人及无任何摄像头！勿用截图或拍照的方式保存Keystore文件或对应二维码。" imageName:@"noScreenShort" leftButtonTitle:@"知道了" rightButtonTitle:nil alertViewType:CommonAlertViewType_style2];
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"请勿截图" contentText:@"请确保四周无人及无任何摄像头！勿用截图或拍照的方式保存Keystore文件或对应二维码。" imageName:@"noScreenShort" leftButtonTitle:@"知道了" rightButtonTitle:nil alertViewType:CommonAlertViewType_question_mark];
         [alert show];
     });    
 }

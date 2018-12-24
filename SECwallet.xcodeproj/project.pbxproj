@@ -15,6 +15,7 @@
 		1B09859E217835CA00B8E994 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B098599217835C900B8E994 /* CollectionViewCell.m */; };
 		1B0985A221797C9400B8E994 /* JXMovableCellTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0985A121797C9400B8E994 /* JXMovableCellTableView.m */; };
 		1B30B6CF21CC87F2007CB54E /* CommonPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B30B6CE21CC87F2007CB54E /* CommonPageControl.m */; };
+		1B30B6D221CCCD76007CB54E /* CommonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B30B6D121CCCD76007CB54E /* CommonTableViewCell.m */; };
 		1B379C18212D533300255EEC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B379C17212D533300255EEC /* Security.framework */; };
 		1B379C1C212D553200255EEC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B379C1B212D553200255EEC /* CFNetwork.framework */; };
 		1B379C1E212D554400255EEC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B379C1D212D554400255EEC /* Foundation.framework */; };
@@ -187,6 +188,8 @@
 		1B0985A121797C9400B8E994 /* JXMovableCellTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXMovableCellTableView.m; sourceTree = "<group>"; };
 		1B30B6CD21CC87F2007CB54E /* CommonPageControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPageControl.h; sourceTree = "<group>"; };
 		1B30B6CE21CC87F2007CB54E /* CommonPageControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommonPageControl.m; sourceTree = "<group>"; };
+		1B30B6D021CCCD76007CB54E /* CommonTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonTableViewCell.h; sourceTree = "<group>"; };
+		1B30B6D121CCCD76007CB54E /* CommonTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommonTableViewCell.m; sourceTree = "<group>"; };
 		1B379C17212D533300255EEC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1B379C1B212D553200255EEC /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1B379C1D212D554400255EEC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1000,6 +1003,8 @@
 				1B65E787212BF5BF00BB8DE5 /* CommonHtmlShowViewController.m */,
 				1B30B6CD21CC87F2007CB54E /* CommonPageControl.h */,
 				1B30B6CE21CC87F2007CB54E /* CommonPageControl.m */,
+				1B30B6D021CCCD76007CB54E /* CommonTableViewCell.h */,
+				1B30B6D121CCCD76007CB54E /* CommonTableViewCell.m */,
 			);
 			path = BaseActivity;
 			sourceTree = "<group>";
@@ -1457,6 +1462,7 @@
 				1B65E881212BF5C100BB8DE5 /* ShowBigViewController.m in Sources */,
 				1B65E89F212BF5C100BB8DE5 /* SGImageButton.m in Sources */,
 				1B65E854212BF5C000BB8DE5 /* UIImage+MultiFormat.m in Sources */,
+				1B30B6D221CCCD76007CB54E /* CommonTableViewCell.m in Sources */,
 				1B65E85F212BF5C100BB8DE5 /* WalletManageViewController.m in Sources */,
 				1B098593217703AD00B8E994 /* ManageAddressViewController.m in Sources */,
 				1B65E82B212BF5C000BB8DE5 /* UIRefreshControl+AFNetworking.m in Sources */,

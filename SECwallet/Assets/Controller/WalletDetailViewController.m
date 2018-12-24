@@ -284,7 +284,7 @@
                 return;
             }else{
                 if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
-                    CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"导出私钥" contentText:_walletModel.privateKey imageName:nil leftButtonTitle:@"复制" rightButtonTitle:nil alertViewType:CommonAlertViewType_style3];
+                    CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"导出私钥" contentText:_walletModel.privateKey imageName:nil leftButtonTitle:@"复制" rightButtonTitle:nil alertViewType:CommonAlertViewType_Check_mark];
                     [alert show];
                     alert.leftBlock = ^() {
                         //复制

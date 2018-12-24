@@ -233,54 +233,54 @@
             if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
                 /***************************开始转账****************************/
                 [self createLoadingView:@"正在转账..."];
-                __block Account *a;
-                __block JsonRpcProvider *e = [[JsonRpcProvider alloc]initWithChainId:ChainIdHomestead url:[NSURL URLWithString:BaseServerUrl]];
-                NSData *jsonData = [_walletModel.keyStore dataUsingEncoding:NSUTF8StringEncoding];
-                NSError *err;
-                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                                    options:NSJSONReadingMutableContainers
-                                                                      error:&err];
-                //地址
-                __block NSString *addressStr = [NSString stringWithFormat:@"0x%@",dic[@"address"]];
-                __block Transaction *transaction = [Transaction transactionWithFromAddress:[Address addressWithString:addressStr]];
-                //1 account自己解密
-                NSLog(@"1 开始新建钱包");
-                __block Signature *signature;
-//                NSString *r_str;NSString *s_str;NSString *v_str;
-                [Account decryptSecretStorageJSON:_walletModel.keyStore password:_walletModel.walletPassword callback:^(Account *account, NSError *NSError) {
-                    if (NSError == nil){
-                        a = account;
-                        transaction.nonce = 1;  //????
-                        NSLog(@"4 开始获取gasPrice");
-                        transaction.gasPrice = [BigNumber bigNumberWithDecimalString:@"0"];
-                        transaction.toAddress = [Address addressWithString:addressTF.text];
-                        //转账金额
-                        BigNumber *b = [BigNumber bigNumberWithDecimalString:moneyTF.text];
-                        transaction.value = b;
-                        //如果是eth转账
-                        transaction.gasLimit = [BigNumber bigNumberWithDecimalString:@"0"];
-                        transaction.data = [SecureData secureDataWithCapacity:0].data;
-                        //签名
-                        [a sign:transaction];
-                        //发送
-//                        NSData *signedTransaction = [transaction serialize];
-                        NSLog(@"6 开始转账");
-                        signature = transaction.signature;
-                        NSLog(@"\n%@\n%@\n%d",[SecureData dataToHexString:signature.r],[SecureData dataToHexString:signature.s],signature.v);
-                        
-                    }else{
-                        NSLog(@"密码错误");
-                    }
-                }];
-                
-                
+//                __block Account *a;
+//                __block JsonRpcProvider *e = [[JsonRpcProvider alloc]initWithChainId:ChainIdHomestead url:[NSURL URLWithString:BaseServerUrl]];
+//                NSData *jsonData = [_walletModel.keyStore dataUsingEncoding:NSUTF8StringEncoding];
+//                NSError *err;
+//                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+//                                                                    options:NSJSONReadingMutableContainers
+//                                                                      error:&err];
+//                //地址
+//                __block NSString *addressStr = [NSString stringWithFormat:@"0x%@",dic[@"address"]];
+//                __block Transaction *transaction = [Transaction transactionWithFromAddress:[Address addressWithString:addressStr]];
+//                //1 account自己解密
+//                NSLog(@"1 开始新建钱包");
+//                __block Signature *signature;
+////                NSString *r_str;NSString *s_str;NSString *v_str;
+//                [Account decryptSecretStorageJSON:_walletModel.keyStore password:_walletModel.walletPassword callback:^(Account *account, NSError *NSError) {
+//                    if (NSError == nil){
+//                        a = account;
+//                        transaction.nonce = 1;  //????
+//                        NSLog(@"4 开始获取gasPrice");
+//                        transaction.gasPrice = [BigNumber bigNumberWithDecimalString:@"0"];
+//                        transaction.toAddress = [Address addressWithString:addressTF.text];
+//                        //转账金额
+//                        BigNumber *b = [BigNumber bigNumberWithDecimalString:moneyTF.text];
+//                        transaction.value = b;
+//                        //如果是eth转账
+//                        transaction.gasLimit = [BigNumber bigNumberWithDecimalString:@"0"];
+//                        transaction.data = [SecureData secureDataWithCapacity:0].data;
+//                        //签名
+//                        [a sign:transaction];
+//                        //发送
+////                        NSData *signedTransaction = [transaction serialize];
+//                        NSLog(@"6 开始转账");
+//                        signature = transaction.signature;
+//                        NSLog(@"\n%@\n%@\n%d",[SecureData dataToHexString:signature.r],[SecureData dataToHexString:signature.s],signature.v);
+//
+//                    }else{
+//                        NSLog(@"密码错误");
+//                    }
+//                }];
+//
+//
                 //地址去掉0x
                 NSString *from = [_walletModel.address componentsSeparatedByString:@"x"].lastObject;
                 NSString *to = [addressTF.text componentsSeparatedByString:@"x"].lastObject;
                 NSString *value = [NSString hex_16_StringFromDecimal:[moneyTF.text integerValue]];
                 value = moneyTF.text;
                 NSString *timestamp = [NSString stringWithFormat:@"%0.f",[[NSDate dateWithTimeIntervalSinceNow:0] timeIntervalSince1970]*1000];
-                NSDictionary *data = @{@"v":@(signature.v),@"r":[[SecureData dataToHexString:signature.r] componentsSeparatedByString:@"x"].lastObject,@"s":[[SecureData dataToHexString:signature.s] componentsSeparatedByString:@"x"].lastObject};
+//                NSDictionary *data = @{@"v":@(signature.v),@"r":[[SecureData dataToHexString:signature.r] componentsSeparatedByString:@"x"].lastObject,@"s":[[SecureData dataToHexString:signature.s] componentsSeparatedByString:@"x"].lastObject};
                 NSString *inputData = tipTF.text.length > 0 ? tipTF.text : @"";
                 
                 //            timestamp: 1543457005562, // number
@@ -297,7 +297,7 @@
                 //            s: '54f9ff243b903b7419dd566f277eedadf6aa55161f5d5e42005af29b14577902' // 64 bytes string
                 //            }
                 
-                data = @{@"v":@(28
+                NSDictionary *data = @{@"v":@(28
                              ),@"r":@"f17c29dd068953a474675a65f59c75c6189c426d1c60f43570cc7220ca3616c3",@"s":@"54f9ff243b903b7419dd566f277eedadf6aa55161f5d5e42005af29b14577902"};
                 from = @"fa9461cc20fbb1b0937aa07ec6afc5e660fe2afd";
                 to = @"8df9628de741b3d42c6f4a29ed4572b0f05fe8b4";
