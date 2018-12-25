@@ -69,7 +69,7 @@
     _infoTableView.showsVerticalScrollIndicator = NO;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
-    _infoTableView.backgroundColor = WHITE_COLOR;
+    _infoTableView.backgroundColor = BACKGROUND_DARK_COLOR;
     _infoTableView.scrollEnabled = NO;
     _infoTableView.tableFooterView = [self addTableFooterView];
     [self.view addSubview:_infoTableView];
@@ -97,7 +97,7 @@
     seeProtocol.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:@"服务条款"];
     //设置：在某个单位长度内的内容显示成蓝色
-    [str addAttribute:NSForegroundColorAttributeName value:TEXT_GOLD_COLOR range:NSMakeRange(0, 4)];
+    [str addAttribute:NSForegroundColorAttributeName value:TEXT_GREEN_COLOR range:NSMakeRange(0, 4)];
     [seeProtocol setAttributedTitle:str forState:UIControlStateNormal];
     [seeProtocol addTarget:self action:@selector(seeProtocol:) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:seeProtocol];

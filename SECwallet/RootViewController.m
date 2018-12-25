@@ -50,12 +50,12 @@
 {
     //切换视图
     bkgView = [[UIView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(130))/2, kScreenHeight -Size(40+25), Size(130), Size(40))];
-    bkgView.backgroundColor = COLOR(241, 242, 244, 1);
+    bkgView.backgroundColor = COLOR(244, 245, 246, 1);
     bkgView.layer.cornerRadius = Size(10);
     [self.view addSubview:bkgView];
     //中间线
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(bkgView.width/2, Size(3), Size(0.5), bkgView.height -Size(3*2))];
-    line.backgroundColor = COLOR(224, 225, 226, 1);
+    line.backgroundColor = COLOR(230, 231, 232, 1);
     [bkgView addSubview:line];
     //两个按钮
     homeBT = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, bkgView.width/2, bkgView.height)];
@@ -68,8 +68,8 @@
     [bkgView addSubview:settingBT];
     
     //下划线
-    bottomLine = [[UIView alloc]initWithFrame:CGRectMake(bkgView.minX +Size(13), bkgView.maxY, bkgView.width/2 -Size(13*2), Size(1.2))];
-    bottomLine.backgroundColor = COLOR(45, 121, 209, 1);
+    bottomLine = [[UIView alloc]initWithFrame:CGRectMake(bkgView.minX +Size(13), bkgView.maxY, bkgView.width/2 -Size(13*2), Size(1.5))];
+    bottomLine.backgroundColor = COLOR(56, 142, 218, 1);
     bottomLine.layer.cornerRadius = Size(2);
     [self.view addSubview:bottomLine];
     

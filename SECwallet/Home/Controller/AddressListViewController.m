@@ -41,7 +41,7 @@
 {
     _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight -KNaviHeight-kAddContactHeight) style:UITableViewStyleGrouped];
     _infoTableView.showsVerticalScrollIndicator = NO;
-    _infoTableView.backgroundColor = WHITE_COLOR;
+    _infoTableView.backgroundColor = BACKGROUND_DARK_COLOR;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
     [self.view addSubview:_infoTableView];
@@ -72,7 +72,7 @@
     [_noneContactView addSubview:lb];
     UIButton *bt = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth -Size(100))/2, lb.maxY, Size(100), Size(30))];
     bt.titleLabel.font = SystemFontOfSize(14);
-    [bt setTitleColor:TEXT_GOLD_COLOR forState:UIControlStateNormal];
+    [bt setTitleColor:TEXT_GREEN_COLOR forState:UIControlStateNormal];
     [bt setTitle:@"点此添加" forState:UIControlStateNormal];
     [bt addTarget:self action:@selector(addAddressAction) forControlEvents:UIControlEventTouchUpInside];
     [_noneContactView addSubview:bt];

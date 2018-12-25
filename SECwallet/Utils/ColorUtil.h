@@ -30,20 +30,26 @@
 #define BLACK_COLOR	[UIColor blackColor]
 
 // 灰色
-#define DARK_COLOR	  COLOR(244,245,246,1)
+#define DARK_COLOR	    COLOR(245,246,247,1)
+
+// 浅蓝色
+#define LightGreen_COLOR    COLOR(246,252,251,1)
 
 /***********************字体***********************/
 // 字体黑色
-#define TEXT_BLACK_COLOR   COLOR(51,51,51,1)
+#define TEXT_BLACK_COLOR   COLOR(88,99,104,1)
 
 // 字体灰色
-#define TEXT_DARK_COLOR	   COLOR(178,178,178,1)
+#define TEXT_DARK_COLOR	   COLOR(144,162,171,1)
 
-//字体金色
-#define TEXT_GOLD_COLOR    COLOR(175, 136, 68, 1)
+//浅灰色
+#define TEXT_LightDark_COLOR  COLOR(179,180,181,1)
+
+//字体绿色
+#define TEXT_GREEN_COLOR    COLOR(40, 217, 148, 1)
 
 // 分割线颜色
-#define DIVIDE_LINE_COLOR  COLOR(219, 219, 219, 1)
+#define DIVIDE_LINE_COLOR  COLOR(222, 223, 224, 1)
 
 
 

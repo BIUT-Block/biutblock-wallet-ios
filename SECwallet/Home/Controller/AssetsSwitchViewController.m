@@ -95,7 +95,7 @@
     
     if (indexPath.row == [[AppDefaultUtil sharedInstance].defaultWalletIndex integerValue]) {
         cell.backgroundColor = COLOR(209, 163, 101, 1);
-        cell.textLabel.textColor = WHITE_COLOR;
+        cell.textLabel.textColor = BACKGROUND_DARK_COLOR;
     }
     return cell;
 }

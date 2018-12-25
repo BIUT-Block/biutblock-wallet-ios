@@ -107,18 +107,18 @@
     NSMutableArray *arr = [NSMutableArray new];
     
     float alpha = 1.0;
-    NSArray *colorArr = @[TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR,
-                          TEXT_GOLD_COLOR];
+    NSArray *colorArr = @[TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR,
+                          TEXT_GREEN_COLOR];
     for (int i = 1; i < _numOfMoveView +1; i ++)
     {
         

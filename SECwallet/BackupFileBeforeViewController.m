@@ -38,7 +38,7 @@
 {
     UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(0, Size(30), kScreenWidth, Size(25))];
     titLb.font = BoldSystemFontOfSize(18);
-    titLb.textColor = TEXT_GOLD_COLOR;
+    titLb.textColor = TEXT_GREEN_COLOR;
     titLb.textAlignment = NSTextAlignmentCenter;
     titLb.text = @"抄写下你的钱包助记词";
     [self.view addSubview:titLb];

@@ -54,7 +54,7 @@
     //名称
     UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(0, backIV.minY, kScreenWidth, Size(20))];
     nameLb.font = BoldSystemFontOfSize(18);
-    nameLb.textColor = WHITE_COLOR;
+    nameLb.textColor = BACKGROUND_DARK_COLOR;
     nameLb.textAlignment = NSTextAlignmentCenter;
     nameLb.text = @"收款码";
     [self.view addSubview:nameLb];

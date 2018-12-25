@@ -76,7 +76,7 @@
     _infoTableView.showsVerticalScrollIndicator = NO;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
-    _infoTableView.backgroundColor = WHITE_COLOR;
+    _infoTableView.backgroundColor = BACKGROUND_DARK_COLOR;
     //解决MJ控件IOS11刷新问题
     _infoTableView.estimatedRowHeight =0;
     _infoTableView.estimatedSectionHeaderHeight =0;
@@ -381,7 +381,7 @@
     [_noNetworkView addSubview:lb];
     UIButton *bt = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth -Size(100))/2, lb.maxY, Size(100), Size(30))];
     bt.titleLabel.font = SystemFontOfSize(14);
-    [bt setTitleColor:TEXT_GOLD_COLOR forState:UIControlStateNormal];
+    [bt setTitleColor:TEXT_GREEN_COLOR forState:UIControlStateNormal];
     [bt setTitle:@"点击重试" forState:UIControlStateNormal];
     [bt addTarget:self action:@selector(refreshNetworkAction) forControlEvents:UIControlEventTouchUpInside];
     [_noNetworkView addSubview:bt];

@@ -59,7 +59,7 @@
     
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), 0, loadingWidth-Size(15 *2), loadingheight)];
     lab.font = SystemFontOfSize(14);
-    lab.textColor = WHITE_COLOR;
+    lab.textColor = BACKGROUND_DARK_COLOR;
     lab.textAlignment = NSTextAlignmentCenter;
     lab.text = self.labelText;
     [loadingView addSubview:lab];

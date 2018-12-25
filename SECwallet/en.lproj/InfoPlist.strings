@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  SECwallet
+
+  Created by 通证控股 on 2018/12/25.
+  Copyright © 2018 通证控股. All rights reserved.
+*/
+
+CFBundleDisplayName = "SEC Wallet";

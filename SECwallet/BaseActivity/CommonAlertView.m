@@ -69,7 +69,7 @@
 {
     if (self = [super init]) {
         self.layer.cornerRadius = Size(12);
-        self.backgroundColor = WHITE_COLOR;
+        self.backgroundColor = BACKGROUND_DARK_COLOR;
         self.alertType = alertViewType;
         
         _alertViewType = alertViewType;

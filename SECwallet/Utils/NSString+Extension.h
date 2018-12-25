@@ -29,6 +29,9 @@
 // 把手机号第4-7位变成星号
 +(NSString *)phoneNumToAsterisk:(NSString*)phoneNum;
 
+// 把地址第7-27位变成点号
++(NSString *)addressToAsterisk:(NSString*)address;
+
 // 邮箱验证
 +(BOOL)validateEmail:(NSString *)email;
 
@@ -41,8 +44,8 @@
 // 把身份证号第5-14位变成星号
 +(NSString *)idCardToAsterisk:(NSString *)idCardNum;
 
-// 把钱包地址第9-56位变成星号
-+(NSString *)addressToAsterisk:(NSString *)address;
+//// 把钱包地址第9-56位变成星号
+//+(NSString *)addressToAsterisk:(NSString *)address;
 
 // 密码验证
 +(BOOL)validatePassword:(NSString *)password;

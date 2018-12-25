@@ -38,7 +38,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = WHITE_COLOR;
+        self.backgroundColor = BACKGROUND_DARK_COLOR;
         [self initData];
         cellWidth = self.frame.size.width -Size(40);
         cellHeight = self.frame.size.height -Size(20);
@@ -83,8 +83,8 @@
 -(CommonPageControl*)pageControl{
     _pageControl = [[CommonPageControl alloc]initWithFrame:_pageControlRect];
     _pageControl.numberOfPages = _walletArray.count > COUNT ? COUNT : _walletArray.count;  //固定
-    [_pageControl setPageIndicatorTintColor:COLOR(206, 207, 208, 1)];
-    [_pageControl setCurrentPageIndicatorTintColor:COLOR(42, 213, 129, 1)];
+    [_pageControl setPageIndicatorTintColor:COLOR(215, 216, 217, 1)];
+    [_pageControl setCurrentPageIndicatorTintColor:TEXT_GREEN_COLOR];
     return _pageControl;
 }
 

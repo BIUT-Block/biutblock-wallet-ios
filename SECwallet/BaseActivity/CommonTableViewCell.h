@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#define kTableCellHeight Size(42)
-
 @interface CommonTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) UIImageView *icon;
+@property (nonatomic, strong) UILabel *staticTitleLb;
+@property (nonatomic, strong) UIImageView *accessoryIV;
 
 -(void) fillCellWithObject:(id) object;
 

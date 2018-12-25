@@ -19,7 +19,7 @@
 #import "UIView+SGExtension.h"
 
 #define SG_screenWidth [UIScreen mainScreen].bounds.size.width
-#define indicatorViewColorDefualt TEXT_GOLD_COLOR
+#define indicatorViewColorDefualt TEXT_GREEN_COLOR
 
 
 @interface SGSegmentedControl ()

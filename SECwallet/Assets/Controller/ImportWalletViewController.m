@@ -115,7 +115,7 @@
     passwordTipTF = [[UITextField alloc] initWithFrame:CGRectMake(re_passwordTF.minX, passwordTipDesLb.maxY, re_passwordTF.width, re_passwordTF.height)];
     passwordTipTF.font = SystemFontOfSize(14);
     passwordTipTF.textColor = TEXT_BLACK_COLOR;
-    passwordTipTF.tintColor = TEXT_GOLD_COLOR;
+    passwordTipTF.tintColor = TEXT_GREEN_COLOR;
     passwordTipTF.delegate = self;
     [self.view addSubview:passwordTipTF];
     line3 = [[UIView alloc]initWithFrame:CGRectMake(passwordTipTF.minX, passwordTipTF.maxY, passwordTipTF.width, Size(0.5))];
@@ -169,7 +169,7 @@
         importTipLb.attributedText = msgStr;
         [self.view addSubview:importTipLb];
         inputTV.frame = CGRectMake(importTipLb.minX, importTipLb.maxY +Size(10), importTipLb.width, KInputTVViewHeight);
-        inputTV.backgroundColor = WHITE_COLOR;
+        inputTV.backgroundColor = BACKGROUND_DARK_COLOR;
         inputTV.layer.borderWidth = Size(1);
         inputTV.layer.borderColor = DARK_COLOR.CGColor;
         passwordDesLb.frame = CGRectMake(inputTV.minX, inputTV.maxY +Size(30), inputTV.width, KInputDesViewHeight);
@@ -193,7 +193,7 @@
         [tipBtn setTitle:@"什么是keystore？" forState:UIControlStateNormal];
         
     }else if (_importWalletType == ImportWalletType_privateKey) {
-        inputTV.backgroundColor = WHITE_COLOR;
+        inputTV.backgroundColor = BACKGROUND_DARK_COLOR;
         inputTV.layer.borderWidth = Size(1);
         inputTV.layer.borderColor = DARK_COLOR.CGColor;
         
@@ -202,7 +202,7 @@
     }
     
     tipBtn.frame = CGRectMake((kScreenWidth -Size(150))/2, importBT.maxY + Size(15), Size(150), Size(25));
-    [tipBtn setTitleColor:TEXT_GOLD_COLOR forState:UIControlStateNormal];
+    [tipBtn setTitleColor:TEXT_GREEN_COLOR forState:UIControlStateNormal];
     tipBtn.titleLabel.font = SystemFontOfSize(15);
     [tipBtn addTarget:self action:@selector(tipBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:tipBtn];
@@ -348,7 +348,7 @@
         importTipLb.attributedText = msgStr;
         [self.view addSubview:importTipLb];
         inputTV.frame = CGRectMake(importTipLb.minX, importTipLb.maxY +Size(10), importTipLb.width, KInputTVViewHeight);
-        inputTV.backgroundColor = WHITE_COLOR;
+        inputTV.backgroundColor = BACKGROUND_DARK_COLOR;
         inputTV.layer.borderWidth = Size(1);
         inputTV.layer.borderColor = DARK_COLOR.CGColor;
         passwordDesLb.frame = CGRectMake(inputTV.minX, inputTV.maxY +Size(30), inputTV.width, KInputDesViewHeight);
@@ -444,7 +444,7 @@
         }];
         
     }else if (_importWalletType == ImportWalletType_privateKey) {
-        inputTV.backgroundColor = WHITE_COLOR;
+        inputTV.backgroundColor = BACKGROUND_DARK_COLOR;
         inputTV.layer.borderWidth = Size(1);
         inputTV.layer.borderColor = DARK_COLOR.CGColor;
         

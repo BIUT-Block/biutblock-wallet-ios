@@ -54,7 +54,7 @@
 {
     _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-KNaviHeight +Size(15)) style:UITableViewStyleGrouped];
     _infoTableView.showsVerticalScrollIndicator = NO;
-    _infoTableView.backgroundColor = WHITE_COLOR;
+    _infoTableView.backgroundColor = BACKGROUND_DARK_COLOR;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
     _infoTableView.scrollEnabled = NO;
@@ -115,7 +115,7 @@
         cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"contactHeader"]];
         UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15), 0, kScreenWidth -Size(15 +30), Size(35))];
         nameLb.font = SystemFontOfSize(16);
-        nameLb.textColor = TEXT_GOLD_COLOR;
+        nameLb.textColor = TEXT_GREEN_COLOR;
         nameLb.text = @"姓名";
         [cell.contentView addSubview:nameLb];
         nameTF = [[UITextField alloc] initWithFrame:CGRectMake(nameLb.minX, nameLb.maxY, nameLb.width, kTableCellHeight -nameLb.height)];
@@ -136,7 +136,7 @@
         [cell.contentView addSubview:scanBtn];
         UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(nameTF.minX, 0, nameTF.width, Size(35))];
         addressLb.font = SystemFontOfSize(16);
-        addressLb.textColor = TEXT_GOLD_COLOR;
+        addressLb.textColor = TEXT_GREEN_COLOR;
         addressLb.text = @"联系人钱包地址";
         [cell.contentView addSubview:addressLb];
         addressContentView = [[UIScrollView alloc]initWithFrame:CGRectMake(addressLb.minX, addressLb.maxY, kScreenWidth -Size(15 +45), Size(20))];

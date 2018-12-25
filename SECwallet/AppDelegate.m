@@ -33,7 +33,9 @@
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = WHITE_COLOR;
+    self.window.backgroundColor = BACKGROUND_DARK_COLOR;
+    
+    [[Localized sharedInstance]initLanguage];
     
     self.guideView = [[GuideViewController alloc] init];
     self.window.rootViewController = self.guideView;
@@ -44,9 +46,7 @@
     
     // 启动图片延时: 2秒
     [NSThread sleepForTimeInterval:2];
-    
-//    count=0;
-    
+        
     return YES;
 }
 

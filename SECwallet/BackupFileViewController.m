@@ -31,7 +31,7 @@
 {
     UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(0, Size(30), kScreenWidth, Size(25))];
     titLb.font = BoldSystemFontOfSize(18);
-    titLb.textColor = TEXT_GOLD_COLOR;
+    titLb.textColor = TEXT_GREEN_COLOR;
     titLb.textAlignment = NSTextAlignmentCenter;
     titLb.text = @"确认你的钱包助记词";
     [self.view addSubview:titLb];
@@ -48,10 +48,10 @@
     bkgView.layer.cornerRadius = Size(5);
     [self.view addSubview:bkgView];
     _showTagList = [[DWTagList alloc]initWithFrame:CGRectMake(Size(30), remindLb.maxY +Size(20) +Size(20), kScreenWidth - Size(30)*2, Size(120))];
-    [_showTagList setTagBackgroundColor:WHITE_COLOR];
+    [_showTagList setTagBackgroundColor:BACKGROUND_DARK_COLOR];
     _showTagList.textColor = TEXT_BLACK_COLOR;
     _showTagList.cornerRadius = Size(5);
-    [_showTagList setTagHighlightColor:WHITE_COLOR];
+    [_showTagList setTagHighlightColor:BACKGROUND_DARK_COLOR];
     [_showTagList setTagDelegate:self];
     [self.view addSubview:_showTagList];
     

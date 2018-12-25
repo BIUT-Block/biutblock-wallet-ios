@@ -14,9 +14,19 @@
 -(void)customerBtnStyle:(NSString *)title andBkgImg:(NSString *)bkgImg{
     self.layer.masksToBounds = YES;
     [self setAdjustsImageWhenHighlighted:NO];
-    [self setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
+    [self setTitleColor:BACKGROUND_DARK_COLOR forState:UIControlStateNormal];
     [self setTitle:title forState:UIControlStateNormal];
     self.titleLabel.font = SystemFontOfSize(18);
+    [self setBackgroundImage:[UIImage imageNamed:bkgImg] forState:UIControlStateNormal];
+}
+
+// 绿色边框风格按钮
+-(void)greenBorderBtnStyle:(NSString *)title andBkgImg:(NSString *)bkgImg{
+    self.layer.masksToBounds = YES;
+    [self setAdjustsImageWhenHighlighted:NO];
+    [self setTitleColor:COLOR(9, 197, 183, 1) forState:UIControlStateNormal];
+    [self setTitle:title forState:UIControlStateNormal];
+    self.titleLabel.font = SystemFontOfSize(9);
     [self setBackgroundImage:[UIImage imageNamed:bkgImg] forState:UIControlStateNormal];
 }
 
@@ -24,7 +34,7 @@
 -(void)goldBigBtnStyle:(NSString *)title{
     self.layer.masksToBounds = YES;
     [self setAdjustsImageWhenHighlighted:NO];
-    [self setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
+    [self setTitleColor:BACKGROUND_DARK_COLOR forState:UIControlStateNormal];
     self.titleLabel.font = SystemFontOfSize(18);
     [self setTitle:title forState:UIControlStateNormal];
     [self setBackgroundImage:[UIImage imageNamed:@"goldBigBtn"] forState:UIControlStateNormal];
@@ -34,7 +44,7 @@
 -(void)goldSmallBtnStyle:(NSString *)title{
     self.layer.masksToBounds = YES;
     [self setAdjustsImageWhenHighlighted:NO];
-    [self setTitleColor: WHITE_COLOR forState:UIControlStateNormal];
+    [self setTitleColor: BACKGROUND_DARK_COLOR forState:UIControlStateNormal];
     self.titleLabel.font = BoldSystemFontOfSize(13);
     [self setTitle:title forState:UIControlStateNormal];
     [self setBackgroundImage:[UIImage imageNamed:@"goldSmallBtn"] forState:UIControlStateNormal];
@@ -44,7 +54,7 @@
 -(void)goldSmallBtnStyle1:(NSString *)title{
     self.layer.masksToBounds = YES;
     [self setAdjustsImageWhenHighlighted:NO];
-    [self setTitleColor: WHITE_COLOR forState:UIControlStateNormal];
+    [self setTitleColor: BACKGROUND_DARK_COLOR forState:UIControlStateNormal];
     self.titleLabel.font = SystemFontOfSize(18);
     [self setTitle:title forState:UIControlStateNormal];
     [self setBackgroundImage:[UIImage imageNamed:@"goldSmallBtn1"] forState:UIControlStateNormal];
@@ -72,7 +82,7 @@
     [self setTitleColor:COLOR(195, 195, 195, 1) forState:UIControlStateNormal];
     [self setTitle:title forState:UIControlStateNormal];
     self.titleLabel.font = SystemFontOfSize(18);
-    self.backgroundColor = WHITE_COLOR;
+    self.backgroundColor = BACKGROUND_DARK_COLOR;
     self.layer.borderColor = DARK_COLOR.CGColor;
 }
 

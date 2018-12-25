@@ -37,7 +37,7 @@
     [topVC.view addSubview:self];
     
     _infoView = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight, kAssetsViewWidth, kAssetsViewHeight)];
-    _infoView.backgroundColor = WHITE_COLOR;
+    _infoView.backgroundColor = BACKGROUND_DARK_COLOR;
     [self addSubview:_infoView];
     
     //返回按钮

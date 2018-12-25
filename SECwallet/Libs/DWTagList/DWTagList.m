@@ -177,7 +177,7 @@
         //选中状态
         for (NSString *selectStr in selectTextArray) {
             if ([selectStr isEqualToString:text]) {
-                [tagView setBackgroundColor:WHITE_COLOR];
+                [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
                 [tagView setCornerRadius:self.cornerRadius];
                 [tagView setBorderColor:COLOR(181,198,216,1).CGColor];
                 [tagView setBorderWidth:Size(1)];
@@ -222,7 +222,7 @@
     DWTagView *tagView = (DWTagView *)[button superview];
     //选中状态
     if ([selectTextArray containsObject:tagView.label.text]) {
-        [tagView setBackgroundColor:WHITE_COLOR];
+        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
     }else{
         [tagView setBackgroundColor:self.highlightedBackgroundColor];
     }
@@ -234,7 +234,7 @@
     DWTagView *tagView = (DWTagView *)[button superview];
     //选中状态
     if ([selectTextArray containsObject:tagView.label.text]) {
-        [tagView setBackgroundColor:WHITE_COLOR];
+        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
     }else{
         [tagView setBackgroundColor:[self getBackgroundColor]];
     }
@@ -265,7 +265,7 @@
     DWTagView *tagView = (DWTagView *)[button superview];
     //选中状态
     if ([selectTextArray containsObject:tagView.label.text]) {
-        [tagView setBackgroundColor:WHITE_COLOR];
+        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
     }else{
         [tagView setBackgroundColor:[self getBackgroundColor]];
     }
@@ -277,7 +277,7 @@
     DWTagView *tagView = (DWTagView *)[button superview];
     //选中状态
     if ([selectTextArray containsObject:tagView.label.text]) {
-        [tagView setBackgroundColor:WHITE_COLOR];
+        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
     }else{
         [tagView setBackgroundColor:[self getBackgroundColor]];
     }
@@ -286,7 +286,7 @@
 - (UIColor *)getBackgroundColor
 {
     if (!lblBackgroundColor) {
-        return TEXT_GOLD_COLOR;
+        return TEXT_GREEN_COLOR;
     } else {
         return lblBackgroundColor;
     }
@@ -358,7 +358,7 @@
     self = [super init];
     if (self) {
         _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-        [_label setTextColor:TEXT_GOLD_COLOR];
+        [_label setTextColor:TEXT_GREEN_COLOR];
         [_label setShadowColor:TEXT_SHADOW_COLOR];
         [_label setShadowOffset:TEXT_SHADOW_OFFSET];
         [_label setBackgroundColor:[UIColor clearColor]];

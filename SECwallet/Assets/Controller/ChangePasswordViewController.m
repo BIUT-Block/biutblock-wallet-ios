@@ -52,7 +52,7 @@
     _infoTableView.showsVerticalScrollIndicator = NO;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
-    _infoTableView.backgroundColor = WHITE_COLOR;
+    _infoTableView.backgroundColor = BACKGROUND_DARK_COLOR;
     _infoTableView.scrollEnabled = NO;
     _infoTableView.tableFooterView = [self addTableFooterView];
     [self.view addSubview:_infoTableView];

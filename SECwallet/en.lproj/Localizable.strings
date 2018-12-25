@@ -1,0 +1,29 @@
+/* 
+  Localizable.strings
+  SECwallet
+
+  Created by 通证控股 on 2018/12/25.
+  Copyright © 2018 通证控股. All rights reserved.
+*/
+
+"请备份"="Backup";
+"我的钱包"="My Wallet";
+"管理钱包"="Manage Wallet";
+"交易记录"="Transacation Record";
+"地址薄"="Address Book";
+"切换语言"="Switch Language";
+"钱包管理"="Manage Wallet";
+"导入钱包"="Import Wallet";
+"导入一个已存在钱包"="Import an existing SEC wallet";
+"创建钱包"="Creat Wallet";
+"创建一个新钱包"="Create a new SEC wallet";
+"钱包名称"="Wallet Name";
+"密码提示"="Password Prompt";
+"修改密码"="Change Password";
+"导出私钥"="Export PrivateKey";
+"导出KeyStore"="Export KeyStore";
+"备份助记词"="Backup Mnemonic";
+"删除钱包"="Delete Wallet";
+"SEC交易记录"="SEC Receipt";
+"切换钱包"="Switch Wallet";
+

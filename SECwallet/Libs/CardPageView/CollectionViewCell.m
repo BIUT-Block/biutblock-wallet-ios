@@ -30,7 +30,7 @@
         
         _nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(10), 0, Size(150), Size(40))];
         _nameLb.font = SystemFontOfSize(16);
-        _nameLb.textColor = WHITE_COLOR;
+        _nameLb.textColor = BACKGROUND_DARK_COLOR;
         _nameLb.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_nameLb];
         
@@ -41,7 +41,7 @@
         //地址
         _addressBT = [[UIButton alloc]initWithFrame:CGRectMake(self.width/4, _nameLb.maxY +Size(40), self.width/2, Size(15))];
         _addressBT.titleLabel.font = SystemFontOfSize(12);
-        [_addressBT setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
+        [_addressBT setTitleColor:BACKGROUND_DARK_COLOR forState:UIControlStateNormal];
         [_addressBT setImage:[UIImage imageNamed:@"codeIcon"] forState:UIWindowLevelNormal];
         _addressBT.contentEdgeInsets = UIEdgeInsetsMake(0, -Size(10), 0, 0);
         _addressBT.imageEdgeInsets = UIEdgeInsetsMake(0, _addressBT.titleLabel.width + self.width/2, 0, -_addressBT.titleLabel.width - self.width/2);
@@ -51,12 +51,12 @@
         
         _totalSumLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(10), _addressBT.maxY, self.width, Size(30))];
         _totalSumLb.font = SystemFontOfSize(28);
-        _totalSumLb.textColor = WHITE_COLOR;
+        _totalSumLb.textColor = BACKGROUND_DARK_COLOR;
         [self.contentView addSubview:_totalSumLb];
         //描述
         UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(_totalSumLb.minX, _totalSumLb.maxY, _totalSumLb.width, Size(10))];
         desLb.font = SystemFontOfSize(12);
-        desLb.textColor = WHITE_COLOR;
+        desLb.textColor = BACKGROUND_DARK_COLOR;
         desLb.text = @"总资产";
         [self.contentView addSubview:desLb];
 

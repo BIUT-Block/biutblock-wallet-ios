@@ -49,7 +49,7 @@
 -(void)initSubViews
 {
     _infoWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight -KNaviHeight)];
-    _infoWebView.backgroundColor = WHITE_COLOR;
+    _infoWebView.backgroundColor = BACKGROUND_DARK_COLOR;
     _infoWebView.scrollView.showsVerticalScrollIndicator = NO;
     _infoWebView.scrollView.showsHorizontalScrollIndicator = NO;
     _infoWebView.delegate = self;
@@ -60,8 +60,8 @@
     [_infoWebView addSubview:bkgIV];
     
     _progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, Size(0.5), kScreenWidth, Size(3))];
-    _progressView.trackTintColor = WHITE_COLOR;
-    _progressView.progressTintColor = TEXT_GOLD_COLOR;
+    _progressView.trackTintColor = BACKGROUND_DARK_COLOR;
+    _progressView.progressTintColor = TEXT_GREEN_COLOR;
     [self.view addSubview:_progressView];
     if (_commonHtmlShowViewType == CommonHtmlShowViewType_startRgsProtocol) {
         _infoWebView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight -KNaviHeight -Size(80));
@@ -282,7 +282,7 @@
         [continueBT setBackgroundColor:DARK_COLOR];
         continueBT.userInteractionEnabled = NO;
     }else{
-        [continueBT setBackgroundColor:TEXT_GOLD_COLOR];
+        [continueBT setBackgroundColor:TEXT_GREEN_COLOR];
         continueBT.userInteractionEnabled = YES;
     }
 }

@@ -495,7 +495,7 @@ static UIColor *titleColor;
         
         self.navigationController.navigationBar.translucent = NO;
         
-        [self.navigationController.navigationBar setBarTintColor:WHITE_COLOR];
+        [self.navigationController.navigationBar setBarTintColor:BACKGROUND_DARK_COLOR];
     }
 }
 
@@ -826,7 +826,7 @@ static UIColor *titleColor;
         
         self.navigationController.navigationBar.translucent = NO;
         
-        [self.navigationController.navigationBar setBarTintColor:WHITE_COLOR];
+        [self.navigationController.navigationBar setBarTintColor:BACKGROUND_DARK_COLOR];
     }
 }
 
@@ -1108,7 +1108,7 @@ static UIColor *titleColor;
     
     self.navigationController.navigationBar.translucent = NO;
     
-    [self.navigationController.navigationBar setBarTintColor:WHITE_COLOR];
+    [self.navigationController.navigationBar setBarTintColor:BACKGROUND_DARK_COLOR];
     
 }
 

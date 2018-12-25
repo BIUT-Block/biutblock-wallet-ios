@@ -7,7 +7,7 @@
 //
 
 #import "TradeListViewController.h"
-#import "TradeListTableViewCell.h"
+#import "CommonTableViewCell.h"
 #import "TradeModel.h"
 #import "WalletModel.h"
 #import "AssetsSwitchViewController.h"
@@ -17,6 +17,7 @@
 
 @interface TradeListViewController()<UITableViewDelegate,UITableViewDataSource>
 {
+    UILabel *nameLb;
     BOOL isHeaderRefresh;
     NSMutableArray *_walletList;  //钱包列表
     NSMutableArray *_dataArrays;  //交易列表
@@ -48,6 +49,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
     NSData* datapath = [NSData dataWithContentsOfFile:path];
     NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
@@ -55,7 +57,7 @@
     _walletList = [unarchiver decodeObjectForKey:@"walletList"];
     [unarchiver finishDecoding];
     _walletModel = _walletList[[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue]];
-    [self setNavgationItemTitle:_walletModel.walletName];
+    nameLb.text = _walletModel.walletName;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // 延时加载，解决一个因为启动过快，AFN判断网络的类未启动完成导致判断网络无网络的Bug
         [self readTradeRecordListCache];
@@ -80,11 +82,44 @@
 }
 - (void)addSubView
 {
-    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight -KNaviHeight) style:UITableViewStyleGrouped];
+    //标题
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), 0, Size(200), Size(30))];
+    titleLb.textColor = TEXT_BLACK_COLOR;
+    titleLb.font = BoldSystemFontOfSize(20);
+    titleLb.text = Localized(@"SEC交易记录",nil);
+    [self.view addSubview:titleLb];
+    
+    //钱包名
+    UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(5), Size(100), Size(10))];
+    desLb.textColor = TEXT_LightDark_COLOR;
+    desLb.font = SystemFontOfSize(8);
+    desLb.text = Localized(@"钱包名称",nil);
+    [self.view addSubview:desLb];
+    nameLb = [[UILabel alloc] initWithFrame:CGRectMake(titleLb.minX, desLb.maxY, Size(100), Size(30))];
+    nameLb.textColor = TEXT_GREEN_COLOR;
+    nameLb.font = BoldSystemFontOfSize(18);
+    nameLb.text = _walletModel.walletName;
+    [self.view addSubview:nameLb];
+    //横线
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(nameLb.minX, nameLb.maxY, kScreenWidth -nameLb.minX*2, Size(0.5))];
+    line.backgroundColor = DIVIDE_LINE_COLOR;
+    [self.view addSubview:line];
+    UIView *greenLine = [[UIView alloc]initWithFrame:CGRectMake(line.minX, line.minY-Size(1.5 -0.5)/2, Size(60), Size(1.5))];
+    greenLine.backgroundColor = TEXT_GREEN_COLOR;
+    [self.view addSubview:greenLine];
+    
+    //交换钱包按钮
+    UIButton *exchangeBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(65 +20), desLb.maxY-Size(2), Size(65), Size(25))];
+    [exchangeBT greenBorderBtnStyle:Localized(@"切换钱包",nil) andBkgImg:@"continue"];
+    [exchangeBT addTarget:self action:@selector(exchangeAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:exchangeBT];
+    
+    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(Size(20), greenLine.maxY +Size(25), kScreenWidth -Size(20)*2, kScreenHeight-KNaviHeight -Size(105)) style:UITableViewStyleGrouped];
     _infoTableView.showsVerticalScrollIndicator = NO;
+    _infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
-    _infoTableView.backgroundColor = WHITE_COLOR;
+    _infoTableView.backgroundColor = BACKGROUND_DARK_COLOR;
     //解决MJ控件IOS11刷新问题
     _infoTableView.estimatedRowHeight =0;
     _infoTableView.estimatedSectionHeaderHeight =0;
@@ -121,50 +156,53 @@
 }
 
 #pragma mark - Table view data source
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return _dataArrays.count;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return Size(8);
+    return 0.1f;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc]init];
-    view.backgroundColor = DARK_COLOR;
+    view.backgroundColor = BACKGROUND_DARK_COLOR;
     return view;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 0.1f;
+    return Size(8);
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kTableCellHeight;
+    return Size(42);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *itemCell = @"cell_item";
-    TradeListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell];
+    CommonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell];
     if (cell == nil)
     {
-        cell = [[TradeListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell = [[CommonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    TradeModel *model = _dataArrays[indexPath.row];
+    TradeModel *model = _dataArrays[indexPath.section];
     [cell fillCellWithObject:model];
-    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TradeModel *model = _dataArrays[indexPath.row];
+    TradeModel *model = _dataArrays[indexPath.section];
     TradeInfoViewController *viewController = [[TradeInfoViewController alloc] init];
     viewController.tradeModel = model;
     [self.navigationController pushViewController:viewController animated:YES];
@@ -274,7 +312,7 @@
 -(void)addNoNetworkView
 {
     _noNetworkView = [[UIView alloc] initWithFrame:CGRectMake(0, Size(8), kScreenWidth, kScreenHeight)];
-    _noNetworkView.backgroundColor = WHITE_COLOR;
+    _noNetworkView.backgroundColor = BACKGROUND_DARK_COLOR;
     [self.view addSubview:_noNetworkView];
     _noNetworkView.hidden = YES;
     
@@ -289,7 +327,7 @@
     [_noNetworkView addSubview:lb];
     UIButton *bt = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth -Size(100))/2, lb.maxY, Size(100), Size(30))];
     bt.titleLabel.font = SystemFontOfSize(14);
-    [bt setTitleColor:TEXT_GOLD_COLOR forState:UIControlStateNormal];
+    [bt setTitleColor:TEXT_GREEN_COLOR forState:UIControlStateNormal];
     [bt setTitle:@"点击重试" forState:UIControlStateNormal];
     [bt addTarget:self action:@selector(refreshNetworkAction) forControlEvents:UIControlEventTouchUpInside];
     [_noNetworkView addSubview:bt];

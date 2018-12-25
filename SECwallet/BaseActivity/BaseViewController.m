@@ -21,10 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = WHITE_COLOR;
+    self.view.backgroundColor = BACKGROUND_DARK_COLOR;
     
     self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.barTintColor = WHITE_COLOR;
+    self.navigationController.navigationBar.barTintColor = BACKGROUND_DARK_COLOR;
     self.navigationController.navigationBar.tintColor = BLACK_COLOR;
     
     //设置返回back
@@ -52,14 +52,14 @@
 {
     [super viewWillAppear:animated];
     
-    self.view.backgroundColor = WHITE_COLOR;
+    self.view.backgroundColor = BACKGROUND_DARK_COLOR;
     
     navigationImageView.hidden = YES;
     
     [self.tabBarController.tabBar setHidden:YES];
     
     self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.barTintColor = WHITE_COLOR;
+    self.navigationController.navigationBar.barTintColor = BACKGROUND_DARK_COLOR;
     self.navigationController.navigationBar.tintColor = BLACK_COLOR;
     
     //设置返回back

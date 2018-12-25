@@ -126,9 +126,9 @@
 
     [self.navigationController popViewControllerAnimated:YES];
     if([[[UIDevice currentDevice]systemVersion] doubleValue]>=7.0){
-        self.navigationController.navigationBar.barTintColor = WHITE_COLOR;
+        self.navigationController.navigationBar.barTintColor = BACKGROUND_DARK_COLOR;
     }else{
-        self.navigationController.navigationBar.tintColor = WHITE_COLOR;
+        self.navigationController.navigationBar.tintColor = BACKGROUND_DARK_COLOR;
     }
 
 }

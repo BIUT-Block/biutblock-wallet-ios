@@ -37,7 +37,7 @@
 {
     self.title = @"导入钱包";
     
-    [self.navigationController.navigationBar setBarTintColor:TEXT_GOLD_COLOR];
+    [self.navigationController.navigationBar setBarTintColor:TEXT_GREEN_COLOR];
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
                                                                       BLACK_COLOR, NSForegroundColorAttributeName,
