@@ -33,7 +33,7 @@
 #import "UIButton+WebCache.h"
 #import "UIImageView+WebCache.h"
 #import "CommonAlertView.h"
-
+#import "CommonSidePullView.h"
 #import "NSString+Shove.h"
 #import "CacheUtil.h"
 

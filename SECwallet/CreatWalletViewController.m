@@ -314,7 +314,7 @@
 -(void)requestCreatWalletBy:(NSString *)password
 {
     //创建钱包 等5秒钟，创建比较慢
-    [self createLoadingView:@"创建钱包中···"];
+    [self createLoadingView:Localized(@"创建钱包中···", nil)];
     [HSEther hs_createWithPwd:passwordTF.text block:^(NSString *address, NSString *keyStore, NSString *mnemonicPhrase, NSString *privateKey) {
         [self hiddenLoadingView];
         /*************默认钱包信息*************/
@@ -348,12 +348,14 @@
             [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:@"0"];
         }
         
-        
-        BackupRemindViewController *controller = [[BackupRemindViewController alloc]init];
-        controller.walletModel = tempModel;
-        UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:controller];
-        [self presentViewController:navi animated:YES completion:nil];
-        
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"创建钱包", nil) contentText:Localized(@"钱包创建成功", nil) imageName:@"Check_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_Check_mark];
+        [alert show];
+        alert.leftBlock = ^() {
+            BackupRemindViewController *controller = [[BackupRemindViewController alloc]init];
+            controller.walletModel = tempModel;
+            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:controller];
+            [self presentViewController:navi animated:YES completion:nil];
+        };
     }];
 }
 

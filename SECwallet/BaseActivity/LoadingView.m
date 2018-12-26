@@ -26,7 +26,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.frame = frame;
-        self.labelText = @"加载中...";
+        self.labelText = Localized(@"加载中...", nil);
     }
     return self;
 }

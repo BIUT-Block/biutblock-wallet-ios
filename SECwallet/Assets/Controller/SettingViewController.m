@@ -59,7 +59,7 @@
         iv.image = [UIImage imageNamed:imgArr[i]];
         [headerView addSubview:iv];
         UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(iv.minX -Size(18), iv.maxY, Size(80), Size(35))];
-        lb.font = SystemFontOfSize(16);
+        lb.font = SystemFontOfSize(10);
         lb.textColor = TEXT_BLACK_COLOR;
         lb.textAlignment = NSTextAlignmentCenter;
         lb.text = titArr[i];
@@ -110,7 +110,7 @@
     remindLb.font = SystemFontOfSize(10);
     remindLb.textColor = TEXT_DARK_COLOR;
     remindLb.textAlignment = NSTextAlignmentCenter;
-    remindLb.text = @"New Version Update";
+    remindLb.text = Localized(@"版本更新", nil);
     [self.view addSubview:remindLb];
     
 }
@@ -144,7 +144,7 @@
         case 1003:
             //切换语言
         {
-            UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:@"切换语言" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"简体中文" otherButtonTitles:@"英文", nil];
+            UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:Localized(@"切换语言",nil) delegate:self cancelButtonTitle:Localized(@"取消",nil) destructiveButtonTitle:Localized(@"简体中文", nil) otherButtonTitles:Localized(@"英文", nil), nil];
             sheet.actionSheetStyle = UIActionSheetStyleDefault;
             [sheet showInView:self.view];
             sheet.delegate = self;

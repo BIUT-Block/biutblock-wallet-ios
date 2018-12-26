@@ -37,8 +37,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setNavgationRightImage:[UIImage imageNamed:@"changeIcon"] withAction:@selector(changeAction)];
-    
     [self addSubView];
     [self addNoNetworkView];
     
@@ -259,7 +257,7 @@
             }
             
         }else{
-            [self hudShowWithString:@"数据获取失败" delayTime:1.5];
+            
             _dataArrays = [NSMutableArray array];
             [_infoTableView reloadData];
             [_noRemindView removeFromSuperview];
@@ -271,7 +269,8 @@
         isHeaderRefresh = NO;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self hudShowWithString:@"数据获取失败" delayTime:1.5];
+        [self hiddenLoadingView];
+        [self hiddenRefreshView];
         _dataArrays = [NSMutableArray array];
         [_infoTableView reloadData];
         [_noRemindView removeFromSuperview];
@@ -282,7 +281,7 @@
 }
 
 #pragma 切换账户
--(void)changeAction
+-(void)exchangeAction
 {
     AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
     viewController.assetsList = _walletList;

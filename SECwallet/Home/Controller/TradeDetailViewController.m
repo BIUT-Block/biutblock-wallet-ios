@@ -298,7 +298,6 @@
             _noNetworkView.hidden = YES;
             
         }else{
-            [self hudShowWithString:@"数据获取失败" delayTime:1.5];
             _dataArrays = [NSMutableArray array];
             [_infoTableView reloadData];
             [_noRemindView removeFromSuperview];

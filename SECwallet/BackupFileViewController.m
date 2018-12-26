@@ -128,9 +128,8 @@
     }
     NSString *tagStr = [_selectTagList componentsJoinedByString:@" "];
     if ([tagStr isEqualToString:_walletModel.mnemonicPhrase]) {
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"是否删除本地助记词" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
-        [alertView show];
-
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"是否删除本地助记词" contentText:@"助记词备份成功,\n是否从SEC钱包中删除助记词？" imageName:@"question_mark" leftButtonTitle:@"取消" rightButtonTitle:@"确定" alertViewType:CommonAlertViewType_question_mark];
+        [alert show];
     }else{
         [self hudShowWithString:@"助记词顺序不正确" delayTime:2];
     }

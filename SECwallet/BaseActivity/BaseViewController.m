@@ -212,7 +212,7 @@
         [_loadingView removeFromSuperview];
     }
     _loadingView = [[LoadingView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    _loadingView.labelText = message==nil ?@"加载中...":message;
+    _loadingView.labelText = message==nil?Localized(@"加载中...", nil):message;
     [_loadingView showLoadingViewOnly];
     [AppDelegateInstance.window addSubview:_loadingView];
 }

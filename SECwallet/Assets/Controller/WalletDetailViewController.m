@@ -22,6 +22,10 @@
     UIButton *secretBtn;  //加密按钮
 }
 
+@property (nonatomic, strong) CommonSidePullView *codeSidePullView;
+@property (nonatomic, strong) CommonSidePullView *privateKeySidePullView;
+@property (nonatomic, strong) CommonSidePullView *keystoreSidePullView;
+
 @end
 
 @implementation WalletDetailViewController
@@ -30,6 +34,7 @@
     [super viewDidLoad];
     
     [self addSubView];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -59,30 +64,23 @@
     headerView.backgroundColor = LightGreen_COLOR;
     [self.view addSubview:headerView];
     //返回按钮
-//    UIImageView *backIV = [[UIImageView alloc]initWithFrame:CGRectMake(Size(15), Size(10)+KStatusBarHeight, Size(25), Size(15))];
-//    backIV.image = [UIImage imageNamed:@"backIcon"];
-//    [headerView addSubview:backIV];
-    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(25), Size(10)+KStatusBarHeight, Size(25), Size(15))];
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KStatusBarHeight+Size(13), Size(25), Size(15))];
     [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
     [headerView addSubview:backBT];
-//    //保存按钮
-//    UIButton *saveBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(45 +15), backIV.minY, Size(45), Size(20))];
-//    saveBT.titleLabel.font = SystemFontOfSize(18);
-//    [saveBT setTitleColor:BACKGROUND_DARK_COLOR forState:UIControlStateNormal];
-//    [saveBT setTitle:@"保存" forState:UIControlStateNormal];
-//    [saveBT addTarget:self action:@selector(saveData) forControlEvents:UIControlEventTouchUpInside];
-//    [cell.contentView addSubview:saveBT];
-//    UIImageView *addressIV = [[UIImageView alloc]initWithFrame:CGRectMake(addressBkgView.maxX +Size(5), addressLb.minY +Size(5), Size(20), Size(20))];
-//    addressIV.image = [UIImage imageNamed:@"codeIcon"];
-//    [cell.contentView addSubview:addressIV];
-//    UIButton *addressBT = [[UIButton alloc]initWithFrame:CGRectMake(addressBkgView.minX, addressBkgView.minY, addressBkgView.width +Size(20), Size(20))];
-//    [addressBT addTarget:self action:@selector(showAddressCodeAction) forControlEvents:UIControlEventTouchUpInside];
-//    [cell.contentView addSubview:addressBT];
     
+    UIButton *QRcodeBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(55 +15 +40 +20), KStatusBarHeight+Size(11), Size(55), Size(24))];
+    [QRcodeBT greenBorderBtnStyle:Localized(@"二维码",nil) andBkgImg:@"continue"];
+    [QRcodeBT addTarget:self action:@selector(showAddressCodeAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:QRcodeBT];
+    
+    UIButton *saveBT = [[UIButton alloc] initWithFrame:CGRectMake(QRcodeBT.maxX +Size(15), QRcodeBT.minY, Size(40), QRcodeBT.height)];
+    [saveBT greenBorderBtnStyle:Localized(@"保存",nil) andBkgImg:@"continue"];
+    [saveBT addTarget:self action:@selector(saveData) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:saveBT];
     
     //标题
-    UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(25), Size(52), Size(100), Size(10))];
+    UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(52), Size(100), Size(10))];
     desLb.textColor = TEXT_LightDark_COLOR;
     desLb.font = SystemFontOfSize(8);
     desLb.text = Localized(@"钱包名称",nil);
@@ -115,7 +113,7 @@
     CommonTableViewCell *nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     nameCell.frame = CGRectMake(Size(20), headerView.maxY +Size(22), kScreenWidth -Size(20 *2), Size(36));
     [self.view addSubview:nameCell];
-    UILabel *nameDesLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(10), 0, Size(80), nameCell.height)];
+    UILabel *nameDesLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15), 0, Size(85), nameCell.height)];
     nameDesLb.font = SystemFontOfSize(10);
     nameDesLb.textColor = TEXT_BLACK_COLOR;
     nameDesLb.text = Localized(@"钱包名称",nil);
@@ -136,10 +134,10 @@
         UILabel *pswTipDesLb = [[UILabel alloc]initWithFrame:CGRectMake(nameDesLb.minX, 0, nameDesLb.width, nameDesLb.height)];
         pswTipDesLb.font = SystemFontOfSize(10);
         pswTipDesLb.textColor = TEXT_BLACK_COLOR;
-        pswTipDesLb.text = @"密码提示";
+        pswTipDesLb.text = Localized(@"密码提示",nil);
         [pswTipCell.contentView addSubview:pswTipDesLb];
         passwordDesTF = [[UITextField alloc] initWithFrame:CGRectMake(pswTipDesLb.maxX, pswTipDesLb.minY, walletNameTF.width, walletNameTF.height)];
-        passwordDesTF.font = SystemFontOfSize(15);
+        passwordDesTF.font = SystemFontOfSize(10);
         passwordDesTF.textColor = TEXT_DARK_COLOR;
         passwordDesTF.keyboardType = UIKeyboardTypeNamePhonePad;
         passwordDesTF.secureTextEntry = YES;
@@ -157,7 +155,7 @@
     }
     
     NSArray *iconArr = @[@"addressBook",@"addressBook",@"addressBook"];
-    NSArray *titArr = @[Localized(@"修改密码",nil),Localized(@"导出私钥",nil),Localized(@"导出Keystore",nil)];
+    NSArray *titArr = @[Localized(@"修改密码",nil),Localized(@"导出私钥",nil),Localized(@"导出KeyStore",nil)];
     for (int i = 0; i< iconArr.count; i++) {
         CommonTableViewCell *staticCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         staticCell.frame = CGRectMake(pswTipCell.minX, pswTipCell.maxY +Size(7) +(nameCell.height +Size(7))*i, pswTipCell.width, nameCell.height);
@@ -214,14 +212,9 @@
                 return;
             }else{
                 if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
-                    CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"导出私钥" contentText:_walletModel.privateKey imageName:nil leftButtonTitle:@"复制" rightButtonTitle:nil alertViewType:CommonAlertViewType_Check_mark];
-                    [alert show];
-                    alert.leftBlock = ^() {
-                        //复制
-                        UIPasteboard * pastboard = [UIPasteboard generalPasteboard];
-                        pastboard.string = _walletModel.privateKey;
-                        [self hudShowWithString:@"已复制" delayTime:1];
-                    };
+                    _privateKeySidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_privateKey];
+                    [self.view addSubview:_privateKeySidePullView];
+                    [_privateKeySidePullView show];
                 }else{
                     [self hudShowWithString:@"密码不正确" delayTime:1];
                     return;
@@ -244,9 +237,9 @@
                 return;
             }else{
                 if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
-                    ExportKeyStoreViewController *viewController = [[ExportKeyStoreViewController alloc]init];
-                    viewController.keyStore = _walletModel.keyStore;
-                    [self.navigationController pushViewController:viewController animated:YES];
+                    _keystoreSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(268) sidePullViewType:CommonSidePullViewType_keyStore];
+                    [self.view addSubview:_keystoreSidePullView];
+                    [_keystoreSidePullView show];
                 }else{
                     [self hudShowWithString:@"密码不正确" delayTime:1];
                     return;
@@ -326,7 +319,7 @@
 -(void)saveData
 {
     [self dismissKeyboardAction];
-    [self createLoadingView:@"正在保存..."];
+    [self createLoadingView:Localized(@"导入钱包中···", nil)];
     if (![walletNameTF.text isEqualToString:_walletModel.walletName]) {
         /***********更新当前钱包信息***********/
         NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
@@ -365,10 +358,9 @@
 #pragma 收款码
 -(void)showAddressCodeAction
 {
-    AddressCodePayViewController *viewController = [[AddressCodePayViewController alloc] init];
-    viewController.walletModel = _walletModel;
-    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-    [self presentViewController:navi animated:YES completion:nil];
+    _codeSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_address];
+    [self.view addSubview:_codeSidePullView];
+    [_codeSidePullView show];
 }
 
 #pragma 备份助记词

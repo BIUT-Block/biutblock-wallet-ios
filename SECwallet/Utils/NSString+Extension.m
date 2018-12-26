@@ -124,12 +124,6 @@
     }
 }
 
-// 把地址第7-27位变成点号
-+(NSString *)addressToAsterisk:(NSString*)address
-{
-    return [address stringByReplacingCharactersInRange:NSMakeRange(7,27) withString:@"..."];
-}
-
 //邮箱验证
 + (BOOL) validateEmail:(NSString *)email
 {
@@ -305,13 +299,13 @@
     return [idCardNum stringByReplacingCharactersInRange:NSMakeRange(10, 4) withString:@"****"];
 }
 
-//// 把钱包地址第9-26位变成星号
-//+(NSString *)addressToAsterisk:(NSString *)address
-//{
-//    NSString *str1 = [address substringWithRange:NSMakeRange(0,8)];
-//    NSString *str2 = [address substringWithRange:NSMakeRange(address.length-8,8)];
-//    return [NSString stringWithFormat:@"%@...%@",str1,str2];
-//}
+// 把地址中间位变成星号
++(NSString *)addressToAsterisk:(NSString *)address
+{
+    NSString *str1 = [address substringWithRange:NSMakeRange(0,8)];
+    NSString *str2 = [address substringWithRange:NSMakeRange(address.length-8,8)];
+    return [NSString stringWithFormat:@"%@...%@",str1,str2];
+}
 
 //通过文本宽度计算高度
 -(CGSize) calculateSize:(UIFont *)font maxWidth:(CGFloat)width

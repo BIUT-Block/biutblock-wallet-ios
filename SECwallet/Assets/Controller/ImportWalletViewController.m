@@ -268,7 +268,7 @@
         }
     
         //导入助记词
-        [self createLoadingView:@"导入钱包中···"];
+        [self createLoadingView:Localized(@"导入钱包中···", nil)];
         //添加计时器
         dispatch_async(dispatch_get_main_queue(), ^{
             _timing = 5;
@@ -380,7 +380,7 @@
             return;
         }
         //导入KeyStore
-        [self createLoadingView:@"导入钱包中···"];
+        [self createLoadingView:Localized(@"导入钱包中···", nil)];
         //添加计时器
         dispatch_async(dispatch_get_main_queue(), ^{
             _timing = 5;
@@ -474,7 +474,7 @@
             return;
         }
         //导入私钥
-        [self createLoadingView:@"导入钱包中···"];
+        [self createLoadingView:Localized(@"导入钱包中···", nil)];
         //添加计时器
         dispatch_async(dispatch_get_main_queue(), ^{
             _timing = 5;

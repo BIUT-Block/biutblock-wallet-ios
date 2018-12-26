@@ -115,7 +115,7 @@
             _subDetailLb.textColor = COLOR(159, 160, 162, 1);
         }
         if (obj.status == 2) {
-            _subDetailLb.text = @"打包中";
+            _subDetailLb.text = Localized(@"打包中",nil);
         }
         
     }else if ([self.object isMemberOfClass:[WalletModel class]]) {

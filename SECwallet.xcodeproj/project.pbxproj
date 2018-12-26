@@ -167,6 +167,7 @@
 		1B79566B21D1CD3D00EF26C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B79566D21D1CD3D00EF26C8 /* Localizable.strings */; };
 		1B79567121D1CE1C00EF26C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B79567321D1CE1C00EF26C8 /* InfoPlist.strings */; };
 		1B79567721D1D1D900EF26C8 /* Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B79567621D1D1D900EF26C8 /* Localized.m */; };
+		1B79567A21D2246A00EF26C8 /* CommonSidePullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B79567921D2246A00EF26C8 /* CommonSidePullView.m */; };
 		1B8A77C621366DE4003BF708 /* RgsProtocol.docx in Resources */ = {isa = PBXBuildFile; fileRef = 1B8A77C521366DE4003BF708 /* RgsProtocol.docx */; };
 		1BD081AC21C2041E006E1EEA /* ethers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BD081AA21C2041E006E1EEA /* ethers.framework */; };
 		1BD081AD21C2041E006E1EEA /* HSEther.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BD081AB21C2041E006E1EEA /* HSEther.a */; };
@@ -484,6 +485,8 @@
 		1B79567421D1CE1E00EF26C8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1B79567521D1D1D900EF26C8 /* Localized.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Localized.h; sourceTree = "<group>"; };
 		1B79567621D1D1D900EF26C8 /* Localized.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Localized.m; sourceTree = "<group>"; };
+		1B79567821D2246A00EF26C8 /* CommonSidePullView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonSidePullView.h; sourceTree = "<group>"; };
+		1B79567921D2246A00EF26C8 /* CommonSidePullView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommonSidePullView.m; sourceTree = "<group>"; };
 		1B8A77C521366DE4003BF708 /* RgsProtocol.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = RgsProtocol.docx; sourceTree = "<group>"; };
 		1BB8FFED214B89B5001BEEB8 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		1BD081A921C2041E006E1EEA /* HSEther.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSEther.h; sourceTree = "<group>"; };
@@ -1016,6 +1019,8 @@
 				1B30B6CE21CC87F2007CB54E /* CommonPageControl.m */,
 				1B30B6D021CCCD76007CB54E /* CommonTableViewCell.h */,
 				1B30B6D121CCCD76007CB54E /* CommonTableViewCell.m */,
+				1B79567821D2246A00EF26C8 /* CommonSidePullView.h */,
+				1B79567921D2246A00EF26C8 /* CommonSidePullView.m */,
 			);
 			path = BaseActivity;
 			sourceTree = "<group>";
@@ -1476,6 +1481,7 @@
 				1B65E858212BF5C100BB8DE5 /* SDWebImageDownloaderOperation.m in Sources */,
 				1B65E872212BF5C100BB8DE5 /* ColorUtil.m in Sources */,
 				1B65E881212BF5C100BB8DE5 /* ShowBigViewController.m in Sources */,
+				1B79567A21D2246A00EF26C8 /* CommonSidePullView.m in Sources */,
 				1B65E89F212BF5C100BB8DE5 /* SGImageButton.m in Sources */,
 				1B65E854212BF5C000BB8DE5 /* UIImage+MultiFormat.m in Sources */,
 				1B30B6D221CCCD76007CB54E /* CommonTableViewCell.m in Sources */,

@@ -9,7 +9,7 @@
 #import "TradeInfoViewController.h"
 #import "CommonHtmlShowViewController.h"
 
-#define kHeaderHeight    Size(100) +KStatusBarHeight
+#define kHeaderHeight    KStatusBarHeight+Size(225)
 
 @interface TradeInfoViewController ()
 
@@ -33,90 +33,80 @@
 #pragma mark - 底部收款视图
 - (void)addContentView
 {
-    UIImageView *bkgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kHeaderHeight)];
-    bkgView.image = [UIImage imageNamed:@"tradeBkg"];
-    [self.view addSubview:bkgView];
-    //返回按钮
-    UIImageView *backIV = [[UIImageView alloc]initWithFrame:CGRectMake(Size(15), Size(10)+KStatusBarHeight, Size(16), Size(16))];
-    backIV.image = [UIImage imageNamed:@"backIcon"];
-    [self.view addSubview:backIV];
-    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(5), KStatusBarHeight, Size(35), Size(35))];
-    [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:backBT];
-    //名称
-    UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(0, backIV.minY, kScreenWidth, Size(20))];
-    nameLb.font = BoldSystemFontOfSize(18);
-    nameLb.textColor = BACKGROUND_DARK_COLOR;
-    nameLb.textAlignment = NSTextAlignmentCenter;
-    nameLb.text = @"交易记录";
-    [self.view addSubview:nameLb];
-    
-    //头像
-    UIImageView *headerView = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(55))/2, bkgView.maxY -Size(55)/2, Size(55), Size(55))];
-    headerView.image = [UIImage imageNamed:@"tradeInfoIcon_success"];
-    if (_tradeModel.status == 0) {
-        headerView.image = [UIImage imageNamed:@"tradeInfoIcon_fail"];
-    }
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kHeaderHeight)];
+    headerView.backgroundColor = LightGreen_COLOR;
     [self.view addSubview:headerView];
+    //返回按钮
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KStatusBarHeight+Size(13), Size(25), Size(15))];
+    [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
+    [headerView addSubview:backBT];
     
-    //金额
-    UILabel *sumLb = [[UILabel alloc]initWithFrame:CGRectMake(0, headerView.maxY +Size(5), kScreenWidth, Size(30))];
-    sumLb.font = SystemFontOfSize(22);
-    sumLb.textColor = TEXT_BLACK_COLOR;
-    sumLb.textAlignment = NSTextAlignmentCenter;
-    sumLb.text = [NSString stringWithFormat:@"%@ sec",_tradeModel.sum];
-    //设置不同字体
-    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:sumLb.text];
-    if ([sumLb.text containsString:@"ether"]) {
-        [attStr addAttribute:NSForegroundColorAttributeName value:TEXT_DARK_COLOR range:NSMakeRange(sumLb.text.length -5, 5)];
-        [attStr addAttribute:NSFontAttributeName value:SystemFontOfSize(12) range:NSMakeRange(sumLb.text.length -5, 5)];
-    }else{
-        [attStr addAttribute:NSForegroundColorAttributeName value:TEXT_DARK_COLOR range:NSMakeRange(sumLb.text.length -3, 3)];
-        [attStr addAttribute:NSFontAttributeName value:SystemFontOfSize(12) range:NSMakeRange(sumLb.text.length -3, 3)];
-    }
-    sumLb.attributedText = attStr;
-    [self.view addSubview:sumLb];
-    if (_tradeModel.status == 0) {
-        UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(0, sumLb.maxY, kScreenWidth, Size(15))];
-        desLb.font = SystemFontOfSize(12);
-        desLb.textColor = COLOR(222, 57, 57, 1);
-        desLb.textAlignment = NSTextAlignmentCenter;
-        desLb.text = @"交易失败";
-        [self.view addSubview:desLb];
-    }
-    
-    //横线
-    UIView *line1 = [[UIView alloc]initWithFrame:CGRectMake(Size(20), sumLb.maxY +Size(10), kScreenWidth -Size(20 *2), Size(1))];
-    line1.backgroundColor = DIVIDE_LINE_COLOR;
-    [self.view addSubview:line1];
-    
-    NSArray *titleArr = @[@"发款方",@"收款方",@"矿工费用",@"交易号",@"区块",@"备注",@"交易时间"];
-    NSArray *contentArr = @[_tradeModel.transferAddress,_tradeModel.gatherAddress,_tradeModel.gas,_tradeModel.tradeNum,_tradeModel.blockNum,_tradeModel.tip,_tradeModel.time];
-    if (_tradeModel.tip.length == 0) {
-        titleArr = @[@"发款方",@"收款方",@"矿工费用",@"交易号",@"区块",@"交易时间"];
-        contentArr = @[_tradeModel.transferAddress,_tradeModel.gatherAddress,_tradeModel.gas,_tradeModel.tradeNum,_tradeModel.blockNum,_tradeModel.time];
-    }
-    
-    for (int i = 0; i< titleArr.count; i++) {
-        UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake(line1.minX, line1.maxY+Size(5) +i*Size(25 +20), kScreenWidth -line1.minX*2, Size(25))];
-        titleLb.font = SystemFontOfSize(16);
-        titleLb.textColor = TEXT_DARK_COLOR;
-        titleLb.text = titleArr[i];
-        [self.view addSubview:titleLb];
-        UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY, titleLb.width, Size(20))];
-        contentLb.font = SystemFontOfSize(12);
-        contentLb.textColor = TEXT_DARK_COLOR;
-        if (i == 4) {
-            contentLb.textColor = COLOR(87, 186, 116, 1);
-        }
-        contentLb.text = contentArr[i];
-        [self.view addSubview:contentLb];
-    }
-    
-    UIButton *moreBT = [[UIButton alloc]initWithFrame:CGRectMake(0, kScreenHeight -Size(40), kScreenWidth, Size(40))];
-    [moreBT setBackgroundImage:[UIImage imageNamed:@"checkMore"] forState:UIControlStateNormal];
+    UIButton *moreBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(65 +20), KStatusBarHeight+Size(11), Size(65), Size(24))];
+    [moreBT greenBorderBtnStyle:Localized(@"查看更多",nil) andBkgImg:@"continue"];
     [moreBT addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:moreBT];
+    
+    //标题
+    UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(15), Size(200), Size(20))];
+    desLb.textColor = TEXT_BLACK_COLOR;
+    desLb.font = BoldSystemFontOfSize(20);
+    desLb.text = Localized(@"交易记录",nil);
+    [headerView addSubview:desLb];
+    
+    //状态图片
+    UIImageView *statusIV = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(60))/2, desLb.maxY +Size(35), Size(60), Size(60))];
+    if (_tradeModel.status == 0) {
+        statusIV.image = [UIImage imageNamed:@"tradeInfoIcon_fail"];
+    }else{
+        statusIV.image = [UIImage imageNamed:@"tradeInfoIcon_success"];
+    }
+    [headerView addSubview:statusIV];
+    //金额
+    UILabel *sumLb = [[UILabel alloc]initWithFrame:CGRectMake(0, statusIV.maxY +Size(5), kScreenWidth, Size(30))];
+    sumLb.font = SystemFontOfSize(14);
+    sumLb.textColor = TEXT_GREEN_COLOR;
+    sumLb.textAlignment = NSTextAlignmentCenter;
+    sumLb.text = [NSString stringWithFormat:@"+%@ sec",_tradeModel.sum];
+    [headerView addSubview:sumLb];
+    
+    UIView *centerView = [[UIView alloc]initWithFrame:CGRectMake(0, headerView.maxY, kScreenWidth, Size(185))];
+    centerView.backgroundColor = BACKGROUND_DARK_COLOR;
+    [self.view addSubview:centerView];
+    NSArray *titleArr = @[Localized(@"发款方", nil),Localized(@"收款方", nil),Localized(@"矿工费用", nil),Localized(@"备注", nil)];
+    NSArray *contentArr = @[_tradeModel.transferAddress,_tradeModel.gatherAddress,_tradeModel.gas,_tradeModel.tip];
+    for (int i = 0; i< titleArr.count; i++) {
+        UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.minX, Size(15) +i*Size(10 +20 +15), kScreenWidth -desLb.minX*2, Size(10))];
+        titleLb.font = SystemFontOfSize(10);
+        titleLb.textColor = COLOR(64,84,90,1);
+        titleLb.text = titleArr[i];
+        [centerView addSubview:titleLb];
+        UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY, titleLb.width, Size(20))];
+        contentLb.font = SystemFontOfSize(10);
+        contentLb.textColor = COLOR(175, 176, 177, 1);
+        contentLb.text = contentArr[i];
+        [centerView addSubview:contentLb];
+    }
+    
+    UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, centerView.maxY, kScreenWidth, kScreenHeight-KNaviHeight-kHeaderHeight-centerView.height)];
+    bottomView.backgroundColor = COLOR(244, 245, 246, 1);
+    [self.view addSubview:bottomView];
+    NSArray *titleArr1 = @[Localized(@"交易号", nil),Localized(@"区块", nil),Localized(@"交易时间", nil)];
+    NSArray *contentArr1 = @[[NSString addressToAsterisk:_tradeModel.tradeNum],_tradeModel.blockNum,_tradeModel.time];
+    for (int i = 0; i< titleArr1.count; i++) {
+        UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.minX, Size(15) +i*Size(25), Size(150), Size(25))];
+        titleLb.font = SystemFontOfSize(10);
+        titleLb.textColor = COLOR(64,84,90,1);
+        titleLb.text = titleArr1[i];
+        [bottomView addSubview:titleLb];
+        UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.maxX, titleLb.minY, kScreenWidth-Size(150)-desLb.minX*2, Size(25))];
+        contentLb.font = SystemFontOfSize(10);
+        contentLb.textColor = COLOR(144,162,171,1);
+        contentLb.textAlignment = NSTextAlignmentRight;
+        contentLb.text = contentArr1[i];
+        [bottomView addSubview:contentLb];
+    }
+
 }
 
 #pragma 查看更多信息

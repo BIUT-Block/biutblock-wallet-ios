@@ -9,7 +9,7 @@
 "请备份"="Backup";
 "我的钱包"="My Wallet";
 "管理钱包"="Manage Wallet";
-"交易记录"="Transacation Record";
+"交易记录"="Transaction Record";
 "地址薄"="Address Book";
 "切换语言"="Switch Language";
 "钱包管理"="Manage Wallet";
@@ -27,3 +27,38 @@
 "SEC交易记录"="SEC Receipt";
 "切换钱包"="Switch Wallet";
 
+"二维码"="QR Code";
+"保存"="Save";
+"打包中"="Packed";
+"加载中..."="Loading...";
+"创建钱包中···"="Creating Wallet...";
+"正在转账..."="Transfer...";
+"导入钱包中···"="Importing the Wallet...";
+"查看更多"="More";
+"发款方"="Sending Party";
+"收款方"="Recipient Party";
+"矿工费用"="Miner Cost";
+"备注"="Remarks";
+"交易号"="Transaction Number";
+"区块"="Block";
+"交易时间"="Transaction Time";
+"版本更新"="New Version Update";
+"取消"="Cancel";
+"简体中文"="Chinese Simplified";
+"英文"="English";
+"关闭"="Close";
+"钱包地址"="Wallet Address";
+"复制"="Copy";
+"安全警告：privateKey未经加密且导出有风险。建议使用助记词或者Keystore进行备份"="Security Warning:The privateKey is not encrypted and the export is risky.Here recommend to backup with mnemonic or Keystore";
+"离线保存"="Save offline";
+"请将Keystore文件复制并粘贴到安全的离线位置进行保存。不要保存到电子邮件，记事本，网络，聊天App，这是非常危险的。"="Please copy and paste the Keystore file to a safe,offline place to save.Don’t save to email,notepad,network,chat App,it is very dangerous.";
+"不要网上传输"="No transmitting on net";
+"不要通过网络工具传输密钥库文件。一旦被黑客入侵，将导致无法弥补的资产损失。通过扫描QR码传输离线设备。"="Don’t transfer Keystore files through network tools.Once hacked,it will cause irreparable asset loss.to transfer offline devices by scanning the QR code.";
+"复制Keystore"="Copy Keystore";
+
+"钱包创建成功"="Wallet create successfully";
+"请勿截图"="No screenshot，Please!";
+"如果有人获取你的助记词将直接获取你的资产！\n请抄下助记词并放在安全的地方。"="If someone gets your mnemonic,it will get your assets directly!\nPlease copy the mnemonic and store it in a safe place.";
+"知道了"="Got It";
+"是否删除本地助记词"="Are you sure";
+"助记词备份成功,\n是否从SEC钱包中删除助记词？"="The order of the mnemonics you backed up is verified correctly,\nwhether the mnemonic is removed for the SEC";

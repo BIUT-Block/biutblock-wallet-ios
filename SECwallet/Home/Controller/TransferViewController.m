@@ -232,7 +232,7 @@
         }else{
             if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
                 /***************************开始转账****************************/
-                [self createLoadingView:@"正在转账..."];
+                [self createLoadingView:Localized(@"正在转账...", nil)];
 //                __block Account *a;
 //                __block JsonRpcProvider *e = [[JsonRpcProvider alloc]initWithChainId:ChainIdHomestead url:[NSURL URLWithString:BaseServerUrl]];
 //                NSData *jsonData = [_walletModel.keyStore dataUsingEncoding:NSUTF8StringEncoding];

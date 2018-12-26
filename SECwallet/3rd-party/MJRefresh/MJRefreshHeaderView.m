@@ -52,9 +52,9 @@
 - (id)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.pullToRefreshText = MJRefreshHeaderPullToRefresh;
-        self.releaseToRefreshText = MJRefreshHeaderReleaseToRefresh;
-        self.refreshingText = MJRefreshHeaderRefreshing;
+        self.pullToRefreshText = Localized(@"加载中...", nil);
+        self.releaseToRefreshText = Localized(@"加载中...", nil);
+        self.refreshingText = Localized(@"加载中...", nil);
     }
     return self;
 }
