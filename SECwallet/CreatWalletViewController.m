@@ -7,6 +7,7 @@
 //
 
 #import "CreatWalletViewController.h"
+#import "CommonTableViewCell.h"
 #import "RootViewController.h"
 #import "BackupRemindViewController.h"
 #import "ImportWalletManageViewController.h"
@@ -15,12 +16,12 @@
 
 #define kTableCellHeight Size(60)
 
-@interface CreatWalletViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface CreatWalletViewController ()<UITextFieldDelegate>
 {
     UITextField *walletNameTF;     //钱包名称
     UITextField *passwordTF;       //密码
     UITextField *re_passwordTF;   //重复密码
-    UITextField *passwordDesTF;   //密码提示
+    UITextField *passwordTipTF;   //密码提示
     UIButton *agreementBtn;  //用户协议
     
     UIButton *creatBT;
@@ -28,8 +29,6 @@
     
     NSMutableArray *walletList;
 }
-
-@property (nonatomic, strong) UITableView *infoTableView;
 
 @end
 
@@ -48,191 +47,145 @@
     walletList = [unarchiver decodeObjectForKey:@"walletList"];
     [unarchiver finishDecoding];
     
-    [self addInfoTableView];
+    [self addSubView];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboardAction)];
     [self.view addGestureRecognizer:tap];
         
 }
-
-- (void)viewWillAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    /**************导航栏布局***************/
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)addSubView
+{
+    //返回按钮
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KStatusBarHeight+Size(13), Size(25), Size(15))];
+    [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
+    [self.view addSubview:backBT];
     if (_isNoBack == YES) {
-        self.navigationItem.leftBarButtonItem = nil;
+        backBT.hidden = YES;
     }
-}
-
-- (void)addInfoTableView
-{
-    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-KNaviHeight +Size(15)) style:UITableViewStyleGrouped];
-    _infoTableView.showsVerticalScrollIndicator = NO;
-    _infoTableView.delegate = self;
-    _infoTableView.dataSource = self;
-    _infoTableView.backgroundColor = BACKGROUND_DARK_COLOR;
-    _infoTableView.scrollEnabled = NO;
-    _infoTableView.tableFooterView = [self addTableFooterView];
-    [self.view addSubview:_infoTableView];
-}
-
-#pragma mark - addTableFooterView
-- (UIView *)addTableFooterView
-{
-    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, Size(180))];
+    UIButton *importBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(70+20), KStatusBarHeight+Size(11), Size(70), Size(24))];
+    [importBT greenBorderBtnStyle:Localized(@"导入钱包",nil) andBkgImg:@"continue"];
+    [importBT addTarget:self action:@selector(importAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:importBT];
+    //标题
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), importBT.maxY +Size(20), Size(200), Size(30))];
+    titleLb.textColor = TEXT_BLACK_COLOR;
+    titleLb.font = BoldSystemFontOfSize(20);
+    titleLb.text = Localized(@"创建钱包",nil);
+    [self.view addSubview:titleLb];
+    
+    UILabel *tipLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY, kScreenWidth -titleLb.minX*2, Size(35))];
+    tipLb.font = SystemFontOfSize(8);
+    tipLb.textColor = TEXT_BLACK_COLOR;
+    tipLb.text = Localized(@"密码用于保护私钥和交易授权，强度非常重要。\nSEC钱包不存储密码，也无法帮您找回，请务必牢记。", nil);
+    tipLb.numberOfLines = 3;
+    //设置行间距
+    NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:tipLb.text];
+    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = Size(2);
+    [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
+    tipLb.attributedText = msgStr;
+    [self.view addSubview:tipLb];
+    //钱包名
+    UILabel *nameDesLb = [[UILabel alloc] initWithFrame:CGRectMake(tipLb.minX, tipLb.maxY +Size(20), tipLb.width, Size(25))];
+    nameDesLb.font = BoldSystemFontOfSize(10);
+    nameDesLb.textColor = TEXT_BLACK_COLOR;
+    nameDesLb.text = Localized(@"钱包名称", nil);
+    [self.view addSubview:nameDesLb];
+    CommonTableViewCell *nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    nameCell.frame = CGRectMake(nameDesLb.minX, nameDesLb.maxY, nameDesLb.width, Size(36));
+    [self.view addSubview:nameCell];
+    walletNameTF = [[UITextField alloc] initWithFrame:CGRectMake(nameDesLb.minX +Size(10), nameDesLb.maxY, nameCell.width -Size(20), nameCell.height)];
+    walletNameTF.font = SystemFontOfSize(8);
+    walletNameTF.textColor = TEXT_BLACK_COLOR;
+    walletNameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    walletNameTF.placeholder = Localized(@"例如：wallet01", nil);
+    [self.view addSubview:walletNameTF];
+    //密码
+    UILabel *passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(nameDesLb.minX, nameCell.maxY +Size(3), nameDesLb.width, nameDesLb.height)];
+    passwordDesLb.font = BoldSystemFontOfSize(10);
+    passwordDesLb.textColor = TEXT_BLACK_COLOR;
+    passwordDesLb.text = Localized(@"密码", nil);
+    [self.view addSubview:passwordDesLb];
+    CommonTableViewCell *pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    pswCell.frame = CGRectMake(passwordDesLb.minX, passwordDesLb.maxY, nameCell.width, nameCell.height);
+    [self.view addSubview:pswCell];
+    passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(pswCell.minX +Size(10), passwordDesLb.maxY, pswCell.width -Size(20), pswCell.height)];
+    passwordTF.font = SystemFontOfSize(8);
+    passwordTF.textColor = TEXT_BLACK_COLOR;
+    passwordTF.placeholder = Localized(@"8~30位数字，英文字母以及特殊字符至少2种组合", nil);
+    passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
+    passwordTF.secureTextEntry = YES;
+    passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [self.view addSubview:passwordTF];
+    
+    //重复密码
+    UILabel *re_passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(passwordDesLb.minX, pswCell.maxY +Size(3), passwordDesLb.width, passwordDesLb.height)];
+    re_passwordDesLb.font = BoldSystemFontOfSize(10);
+    re_passwordDesLb.textColor = TEXT_BLACK_COLOR;
+    re_passwordDesLb.text = Localized(@"重复密码", nil);
+    [self.view addSubview:re_passwordDesLb];
+    CommonTableViewCell *re_pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    re_pswCell.frame = CGRectMake(pswCell.minX, re_passwordDesLb.maxY, pswCell.width, pswCell.height);
+    [self.view addSubview:re_pswCell];
+    re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordTF.minX, re_passwordDesLb.maxY, passwordTF.width, passwordTF.height)];
+    re_passwordTF.font = SystemFontOfSize(8);
+    re_passwordTF.textColor = TEXT_BLACK_COLOR;
+    re_passwordTF.placeholder = Localized(@"请再次确认密码", nil);
+    re_passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
+    re_passwordTF.secureTextEntry = YES;
+    re_passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [self.view addSubview:re_passwordTF];
+    
+    //密码提示
+    UILabel *passwordTipDesLb = [[UILabel alloc] initWithFrame:CGRectMake(re_passwordDesLb.minX, re_pswCell.maxY +Size(3), re_pswCell.width, re_passwordDesLb.height)];
+    passwordTipDesLb.font = BoldSystemFontOfSize(10);
+    passwordTipDesLb.textColor = TEXT_BLACK_COLOR;
+    passwordTipDesLb.text = Localized(@"密码提示（选填）", nil);
+    [self.view addSubview:passwordTipDesLb];
+    CommonTableViewCell *pswTipCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    pswTipCell.frame = CGRectMake(re_pswCell.minX, passwordTipDesLb.maxY, re_pswCell.width, re_pswCell.height);
+    [self.view addSubview:pswTipCell];
+    passwordTipTF = [[UITextField alloc] initWithFrame:CGRectMake(re_passwordTF.minX, passwordTipDesLb.maxY, re_passwordTF.width, re_passwordTF.height)];
+    passwordTipTF.font = SystemFontOfSize(10);
+    passwordTipTF.textColor = TEXT_BLACK_COLOR;
+    passwordTipTF.placeholder = Localized(@"选填", nil);
+    passwordTipTF.delegate = self;
+    [self.view addSubview:passwordTipTF];
+    
     /*****************用户协议*****************/
-    agreementBtn = [[UIButton alloc] initWithFrame:CGRectMake(Size(10), Size(10),kScreenWidth/2 -Size(20), Size(20))];
-    [agreementBtn setTitleColor:TEXT_DARK_COLOR forState:UIControlStateNormal];
-    [agreementBtn setTitle:@" 我已仔细阅读并同意" forState:UIControlStateNormal];
-    agreementBtn.titleLabel.font = SystemFontOfSize(15);
-    agreementBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    NSString *str = Localized(@" 我已仔细阅读并同意服务条款", nil);
+    CGSize size = [str calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
+    agreementBtn = [[UIButton alloc] initWithFrame:CGRectMake(passwordTipDesLb.minX, passwordTipTF.maxY + Size(17),size.width +Size(20), Size(20))];
+    [agreementBtn setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
+    [agreementBtn setTitle:str forState:UIControlStateNormal];
+    agreementBtn.titleLabel.font = BoldSystemFontOfSize(8);
     [agreementBtn setImage:[UIImage imageNamed:@"invest_protocolun"] forState:UIControlStateNormal];
     [agreementBtn setImage:[UIImage imageNamed:@"invest_protocol"] forState:UIControlStateSelected];
     agreementBtn.selected = NO;
     [agreementBtn addTarget:self action:@selector(agreementBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [footView addSubview:agreementBtn];
+    [self.view addSubview:agreementBtn];
     
-    //协议内容
-    UIButton *seeProtocol = [[UIButton alloc]initWithFrame:CGRectMake(agreementBtn.maxX, agreementBtn.minY, kScreenWidth/2, CGRectGetHeight(agreementBtn.frame))];
-    seeProtocol.titleLabel.font = SystemFontOfSize(15);
-    seeProtocol.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:@"服务条款"];
-    //设置：在某个单位长度内的内容显示成蓝色
-    [str addAttribute:NSForegroundColorAttributeName value:TEXT_GREEN_COLOR range:NSMakeRange(0, 4)];
-    [seeProtocol setAttributedTitle:str forState:UIControlStateNormal];
-    [seeProtocol addTarget:self action:@selector(seeProtocol:) forControlEvents:UIControlEventTouchUpInside];
-    [footView addSubview:seeProtocol];
     /*****************创建钱包*****************/
-    CGFloat padddingLeft = Size(20);
-    creatBT = [[UIButton alloc] initWithFrame:CGRectMake(padddingLeft, seeProtocol.maxY +Size(40), kScreenWidth - 2*padddingLeft, Size(45))];
-    [creatBT darkBtnStyle:@"创建钱包"];
+    creatBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), agreementBtn.maxY +Size(13), kScreenWidth - 2*Size(20), Size(45))];
+    [creatBT darkBtnStyle:Localized(@"创建钱包", nil)];
     [creatBT addTarget:self action:@selector(creatAction) forControlEvents:UIControlEventTouchUpInside];
     creatBT.userInteractionEnabled = NO;
-    [footView addSubview:creatBT];
+    [self.view addSubview:creatBT];
     
-    /*****************导入钱包*****************/
-    UIButton *importBT = [[UIButton alloc] initWithFrame:CGRectMake(creatBT.minX, creatBT.maxY +Size(20), creatBT.width, creatBT.height)];
-    [importBT setTitleColor:COLOR(213, 174, 121, 1) forState:UIControlStateNormal];
-    importBT.titleLabel.font = SystemFontOfSize(16);
-    [importBT setTitle:@"导入钱包" forState:UIControlStateNormal];
-    [importBT addTarget:self action:@selector(importAction) forControlEvents:UIControlEventTouchUpInside];
-    [footView addSubview:importBT];
-    
-    return footView;
-}
-
-#pragma mark - Table view data source
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 4;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return Size(50);
-}
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return Size(0.1);
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIImageView *header = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, Size(50))];
-    header.image = [UIImage imageNamed:@"creatWalletHeaderView"];
-    return header;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return kTableCellHeight;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //每个单元格的视图
-    static NSString *itemCell = @"cell_item";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell];
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    CGFloat toX = Size(15);
-    if (indexPath.row == 0) {
-        //钱包名称
-        UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(toX, Size(5), Size(150), Size(30))];
-        desLb.font = SystemFontOfSize(16);
-        desLb.textColor = TEXT_DARK_COLOR;
-        desLb.text = @"钱包名称";
-        [cell.contentView addSubview:desLb];
-        walletNameTF = [[UITextField alloc] initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth -toX, Size(25))];
-        walletNameTF.font = SystemFontOfSize(16);
-        walletNameTF.textColor = TEXT_BLACK_COLOR;
-        walletNameTF.delegate = self;
-        [walletNameTF setAutocapitalizationType:UITextAutocapitalizationTypeNone];
-        //默认
-        if (walletList.count +1>=10) {
-            walletNameTF.text = [NSString stringWithFormat:@"wallet%lu",(unsigned long)walletList.count+1];
-        }else{
-            walletNameTF.text = [NSString stringWithFormat:@"wallet0%lu",(unsigned long)walletList.count+1];
-        }
-        [cell.contentView addSubview:walletNameTF];
-        
-    }else if (indexPath.row == 1) {
-        //密码
-        UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(toX, Size(5), Size(150), Size(30))];
-        desLb.font = SystemFontOfSize(16);
-        desLb.textColor = TEXT_DARK_COLOR;
-        desLb.text = @"密码";
-        [cell.contentView addSubview:desLb];
-        passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth -toX, Size(25))];
-        passwordTF.font = SystemFontOfSize(14);
-        passwordTF.textColor = TEXT_BLACK_COLOR;
-        passwordTF.placeholder = @"8~30位字符必须包含数字，英文字母以及特殊字符至少2种";
-        NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:passwordTF.placeholder];
-        [placeholder addAttribute:NSFontAttributeName value:SystemFontOfSize(12) range:NSMakeRange(0, passwordTF.placeholder.length)];
-        passwordTF.attributedPlaceholder = placeholder;
-        passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
-        passwordTF.secureTextEntry = YES;
-        passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [cell.contentView addSubview:passwordTF];
-        
-    }else if (indexPath.row == 2) {
-        //重复密码
-        UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(toX, Size(5), Size(150), Size(30))];
-        desLb.font = SystemFontOfSize(16);
-        desLb.textColor = TEXT_DARK_COLOR;
-        desLb.text = @"重复密码";
-        [cell.contentView addSubview:desLb];
-        re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth -toX, Size(25))];
-        re_passwordTF.font = SystemFontOfSize(14);
-        re_passwordTF.textColor = TEXT_BLACK_COLOR;
-        re_passwordTF.placeholder = @"请再次确认密码";
-        re_passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
-        re_passwordTF.secureTextEntry = YES;
-        re_passwordTF.clearButtonMode=UITextFieldViewModeWhileEditing;
-        [cell.contentView addSubview:re_passwordTF];
-        
-    }else if (indexPath.row == 3) {
-        //密码提示
-        UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(toX, Size(5), Size(150), Size(30))];
-        desLb.font = SystemFontOfSize(16);
-        desLb.textColor = TEXT_DARK_COLOR;
-        desLb.text = @"密码提示（选填）";
-        [cell.contentView addSubview:desLb];
-        passwordDesTF = [[UITextField alloc] initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth -toX, Size(25))];
-        passwordDesTF.font = SystemFontOfSize(14);
-        passwordDesTF.textColor = TEXT_BLACK_COLOR;
-        passwordDesTF.delegate = self;
-        [cell.contentView addSubview:passwordDesTF];
-    }
-    return cell;
 }
 
 #pragma UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField == walletNameTF || textField == passwordDesTF) {
+    if (textField == walletNameTF || textField == passwordTipTF) {
         //限制输入12位
         if (range.length == 1 && string.length == 0) {
             return YES;
@@ -241,8 +194,8 @@
             walletNameTF.text = [textField.text substringToIndex:12];
             return NO;
         }
-        if (passwordDesTF.text.length >= 12) {
-            passwordDesTF.text = [textField.text substringToIndex:12];
+        if (passwordTipTF.text.length >= 12) {
+            passwordTipTF.text = [textField.text substringToIndex:12];
             return NO;
         }
     }
@@ -253,21 +206,12 @@
 {
     agreementBtn.selected = !agreementBtn.selected;
     if (!agreementBtn.selected) {
-        [creatBT darkBtnStyle:@"创建钱包"];
+        [creatBT darkBtnStyle:Localized(@"创建钱包", nil)];
         creatBT.userInteractionEnabled = NO;
     }else{
-        [creatBT goldBigBtnStyle:@"创建钱包"];
+        [creatBT goldBigBtnStyle:Localized(@"创建钱包", nil)];
         creatBT.userInteractionEnabled = YES;
     }
-}
-//查看协议内容
--(void)seeProtocol:(UIButton *)btn
-{
-    CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
-    viewController.hidesBottomBarWhenPushed = YES;
-    viewController.commonHtmlShowViewType = CommonHtmlShowViewType_RgsProtocol;
-    viewController.titleStr = @"商户协议";
-    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark 创建钱包 
@@ -275,34 +219,29 @@
 {
     [self dismissKeyboardAction];
     if (walletNameTF.text.length == 0) {
-        [self hudShowWithString:@"请输入钱包名称" delayTime:1.5];
+        [self hudShowWithString:Localized(@"请输入钱包名称", nil) delayTime:1.5];
         return;
     }
     if (passwordTF.text.length >30 || passwordTF.text.length <8) {
-        [self hudShowWithString:@"请输入8~30位密码" delayTime:1.5];
+        [self hudShowWithString:Localized(@"请输入8~30位密码", nil) delayTime:1.5];
         return;
     }
     if ([NSString validatePassword:passwordTF.text] == NO) {
-        [self hudShowWithString:@"请输入数字和字母组合密码" delayTime:1.5];
+        [self hudShowWithString:Localized(@"请输入数字和字母组合密码", nil) delayTime:1.5];
         return;
     }
     if (re_passwordTF.text.length == 0) {
-        [self hudShowWithString:@"请输入确认密码" delayTime:1.5];
+        [self hudShowWithString:Localized(@"请再次输入密码", nil) delayTime:1.5];
         return;
     }
     if (![passwordTF.text isEqualToString:re_passwordTF.text]) {
-        [self hudShowWithString:@"两次密码输入不一致，请重新输入！" delayTime:1.5];
+        [self hudShowWithString:Localized(@"两次密码输入不一致，请重新输入！", nil) delayTime:1.5];
         return;
     }
-    if (!agreementBtn.selected) {
-        [self hudShowWithString:@"请先阅读并同意服务条款" delayTime:1.5];
-        return;
-    }
-
     //判断钱包名是否有重复
     for (WalletModel *model in walletList) {
         if ([walletNameTF.text isEqualToString:model.walletName]) {
-            [self hudShowWithString:@"钱包名已存在" delayTime:1.5];
+            [self hudShowWithString:Localized(@"钱包名已存在", nil) delayTime:1.5];
             return;
         }
     }
@@ -322,7 +261,7 @@
         //随机生成钱包ICON
         int i = arc4random() % 6;
         NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
-        tempModel = [[WalletModel alloc]initWithWalletName:walletNameTF.text andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordDesTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKey andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:0 andIsFromMnemonicImport:0];
+        tempModel = [[WalletModel alloc]initWithWalletName:walletNameTF.text andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKey andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:0 andIsFromMnemonicImport:0];
         
         /*************先获取钱包列表将最新钱包排在末尾并设置为默认钱包*************/
         NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];

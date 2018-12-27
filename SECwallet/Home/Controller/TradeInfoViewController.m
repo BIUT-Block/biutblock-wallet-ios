@@ -78,7 +78,7 @@
     for (int i = 0; i< titleArr.count; i++) {
         UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.minX, Size(15) +i*Size(10 +20 +15), kScreenWidth -desLb.minX*2, Size(10))];
         titleLb.font = SystemFontOfSize(10);
-        titleLb.textColor = COLOR(64,84,90,1);
+        titleLb.textColor = TEXT_BLACK_COLOR;
         titleLb.text = titleArr[i];
         [centerView addSubview:titleLb];
         UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY, titleLb.width, Size(20))];
@@ -89,19 +89,19 @@
     }
     
     UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, centerView.maxY, kScreenWidth, kScreenHeight-KNaviHeight-kHeaderHeight-centerView.height)];
-    bottomView.backgroundColor = COLOR(244, 245, 246, 1);
+    bottomView.backgroundColor = DARK_COLOR;
     [self.view addSubview:bottomView];
     NSArray *titleArr1 = @[Localized(@"交易号", nil),Localized(@"区块", nil),Localized(@"交易时间", nil)];
     NSArray *contentArr1 = @[[NSString addressToAsterisk:_tradeModel.tradeNum],_tradeModel.blockNum,_tradeModel.time];
     for (int i = 0; i< titleArr1.count; i++) {
         UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.minX, Size(15) +i*Size(25), Size(150), Size(25))];
         titleLb.font = SystemFontOfSize(10);
-        titleLb.textColor = COLOR(64,84,90,1);
+        titleLb.textColor = TEXT_BLACK_COLOR;
         titleLb.text = titleArr1[i];
         [bottomView addSubview:titleLb];
         UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.maxX, titleLb.minY, kScreenWidth-Size(150)-desLb.minX*2, Size(25))];
         contentLb.font = SystemFontOfSize(10);
-        contentLb.textColor = COLOR(144,162,171,1);
+        contentLb.textColor = TEXT_DARK_COLOR;
         contentLb.textAlignment = NSTextAlignmentRight;
         contentLb.text = contentArr1[i];
         [bottomView addSubview:contentLb];

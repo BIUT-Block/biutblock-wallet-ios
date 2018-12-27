@@ -58,14 +58,14 @@
         UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(insert +(insert*2 +btWidth)*i, titLb.maxY +Size(70), btWidth, btWidth)];
         iv.image = [UIImage imageNamed:imgArr[i]];
         [headerView addSubview:iv];
-        UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(iv.minX -Size(18), iv.maxY, Size(80), Size(35))];
-        lb.font = SystemFontOfSize(10);
+        UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(iv.minX -Size(22), iv.maxY, Size(85), Size(35))];
+        lb.font = BoldSystemFontOfSize(10);
         lb.textColor = TEXT_BLACK_COLOR;
         lb.textAlignment = NSTextAlignmentCenter;
         lb.text = titArr[i];
         [headerView addSubview:lb];
         
-        UIButton *lnkBtn = [[UIButton alloc]initWithFrame:iv.frame];
+        UIButton *lnkBtn = [[UIButton alloc]initWithFrame:CGRectMake(iv.minX, iv.minY, btWidth, btWidth+lb.height)];
         lnkBtn.tag = 1000+i;
         [lnkBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:lnkBtn];

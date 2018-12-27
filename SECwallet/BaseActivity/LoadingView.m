@@ -31,20 +31,6 @@
     return self;
 }
 
-- (void)showLoadingView:(SEL)method onTarget:(id)target withObject:(id)object animated:(BOOL)animated
-{
-    methodForExecution = method;
-	targetForExecution = MB_RETAIN(target);
-	objectForExecution = MB_RETAIN(object);
-    [self initLabel];
-    [NSThread detachNewThreadSelector:@selector(launchExecution) toTarget:self withObject:nil];
-}
-
-- (void)showLoadingViewOnly
-{
-    [self initLabel];
-}
-
 - (void)initLabel
 {
     for (UIView *subVi in self.subviews) {
@@ -66,6 +52,15 @@
     
 }
 
+- (void)showLoadingView:(SEL)method onTarget:(id)target withObject:(id)object animated:(BOOL)animated
+{
+    methodForExecution = method;
+    targetForExecution = MB_RETAIN(target);
+    objectForExecution = MB_RETAIN(object);
+    [self initLabel];
+    [NSThread detachNewThreadSelector:@selector(launchExecution) toTarget:self withObject:nil];
+}
+
 - (void)launchExecution
 {
 	@autoreleasepool {
@@ -75,6 +70,11 @@
 		//[self performSelectorOnMainThread:methodForExecution withObject:nil waitUntilDone:NO];
         //[targetForExecution performSelectorOnMainThread:methodForExecution withObject:nil waitUntilDone:NO];
 	}
+}
+
+- (void)showLoadingViewOnly
+{
+    [self initLabel];
 }
 
 - (void)cleanUp

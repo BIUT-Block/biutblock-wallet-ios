@@ -43,7 +43,7 @@
     
     //标准
     _staticTitleLb = [[UILabel alloc] initWithFrame:CGRectMake(_icon.maxX +Size(15), 0, Size(100), self.height)];
-    _staticTitleLb.textColor = COLOR(50, 66, 74, 1);
+    _staticTitleLb.textColor = TEXT_BLACK_COLOR;
     _staticTitleLb.font = SystemFontOfSize(10);
     [self addSubview:_staticTitleLb];
     
@@ -111,8 +111,6 @@
         //交易状态(1成功 0失败 2打包中)
         if (obj.status == 0) {
             _icon.image = [UIImage imageNamed:@"fail"];
-            //设置不同字体颜色
-            _subDetailLb.textColor = COLOR(159, 160, 162, 1);
         }
         if (obj.status == 2) {
             _subDetailLb.text = Localized(@"打包中",nil);

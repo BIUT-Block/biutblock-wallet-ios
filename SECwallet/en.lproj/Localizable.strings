@@ -62,3 +62,81 @@
 "知道了"="Got It";
 "是否删除本地助记词"="Are you sure";
 "助记词备份成功,\n是否从SEC钱包中删除助记词？"="The order of the mnemonics you backed up is verified correctly,\nwhether the mnemonic is removed for the SEC";
+"什么是助记词？"="What is a Mnemonic?";
+"什么是Keystore？"="What is a Keystore?";
+"什么是私钥？"="What is a PrivateKey?";
+"助记词"="Mnemonic";
+"官方钱包"="Offical wallet";
+"私钥"="PrivateKey";
+"助记词，按空格分隔"="Mnemonic, separated by spaces";
+"密码"="Password";
+"8~30位数字，英文字母以及特殊字符至少2种组合"="Ex:8~30characters,numbers,contain at least two English letters and special characters";
+"重复密码"="Repeat the Password";
+"请再次确认密码"="Repeat the Password again";
+"密码提示（选填）"="Password prompt(optional)";
+"选填"="optional";
+" 我已仔细阅读并同意服务条款"="   I have read and agreed to the Servive and Privacy Policy";
+"开始导入"="Import";
+"直接复制粘贴以太坊官方钱包keyStore文件内容至输入框。"="Copy and paste the contents of the Ethereum official wallet keystore file directly into the input box. ";
+"keyStore密码"="keyStore password";
+"keystore文本内容"="keystore text content";
+"明文私钥"="privateKey";
+
+"点击添加"="Click to Add";
+"暂无联系人"="No Contact Yet";
+"新增地址"="Add Contact";
+"编辑地址"="Edit Contact";
+"请输入联系人姓名"="Please Type in your name";
+"联系人钱包地址"="Payee Wallet Address";
+"手机号码"="Phone No";
+"邮箱"="Email";
+"备注"="Remark";
+"确认新增"="Confirm Add";
+"保存修改"="Save Change";
+"钱包已存在，是否设置为新密码？\n（请牢记钱包新密码）"="The wallet already exists.Is it set to a new password?\n(Please keep in mind the new password of the wallet)";
+"温馨提示"="Are you sure";
+"请输入钱包密码"="Please type in Wallet password";
+"密码用于保护私钥和交易授权，强度非常重要。\nSEC钱包不存储密码，也无法帮您找回，请务必牢记。"="Password is used to protect the private key and transaction authorization, and the strength is very important. \nSEC wallet don’t store password and nor retrieved for you. Please keep in mind.";
+"例如：wallet01"="ex:wallet01";
+
+
+
+
+
+
+
+
+
+
+
+
+/****************HUD提示文本********************/
+"数据获取失败"="Data acquisition failed";
+"删除"="Delete";
+"请输入收款人钱包地址"="Please type in Payee Wallet Address";
+"地址不正确，请重新输入"="The address is incorrect,Try again";
+"号码格式不正确，请重新输入"="The Phone No is incorrect,Try again";
+"邮箱格式不正确，请重新输入"="The Email format is incorrect,Try again";
+"该地址已存在"="Address already exists";
+"请输入助记词"="Please type in Mnemonics";
+"请输入8~30位密码"="Please type in 8~30characters password";
+"请输入数字和字母组合密码"="Please type in a Numbers and letters password";
+"两次密码输入不一致，请重新输入！"="Repeat the Password fail,Try again";
+"助记词长度不够"="Mnemonics is error length";
+"助记词个数不够"="Mnemonics is error count";
+"助记词有误"="Mnemonics error";
+"助记词导入成功"="Mnemonics import success";
+"请输入KeyStore"="Please type in KeyStore";
+"KeyStore长度不够"="KeyStore is error length";
+"密码不正确"="Password is error";
+"KeyStore导入成功"="KeyStore import success";
+"请输入私钥"="Please type in PrivateKey";
+"请输入正确的私钥"="PrivateKey is error";
+"私钥长度不够"="PrivateKey is error length";
+"私钥导入成功"="PrivateKey import success";
+"导入失败，请重新输入"="Import faild,Try again";
+"密码不能为空"="Password can't be blank";
+"密码不正确"="Password is error";
+"保存成功"="Successfully saved";
+"钱包名已存在"="The wallet name already exists";
+"请输入钱包名称"="Please type in wallet name";

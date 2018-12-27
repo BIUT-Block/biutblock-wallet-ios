@@ -35,7 +35,7 @@
         _sidePullViewHeight = kScreenHeight;
         //设置阴影
         CALayer *layer = [self layer];
-        layer.shadowOffset = CGSizeMake(0, Size(3)); //(0,0)时是四周都有阴影
+        layer.shadowOffset = CGSizeMake(0, Size(3));
         layer.shadowRadius = Size(5);
         layer.shadowColor = [UIColor darkGrayColor].CGColor;
         layer.shadowOpacity = Size(0.3);
@@ -57,7 +57,7 @@
             
             UILabel *tip1Lb = [[UILabel alloc] initWithFrame:CGRectMake(0, Size(155), _sidePullViewWidth, Size(20))];
             tip1Lb.font = SystemFontOfSize(10);
-            tip1Lb.textColor = COLOR(64, 83, 92, 1);
+            tip1Lb.textColor = TEXT_BLACK_COLOR;
             tip1Lb.textAlignment = NSTextAlignmentCenter;
             tip1Lb.text = Localized(@"二维码", nil);
             [self addSubview:tip1Lb];
@@ -69,18 +69,18 @@
             
             UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), codeIV.maxY +Size(15), Size(100), Size(20))];
             tip2Lb.font = SystemFontOfSize(10);
-            tip2Lb.textColor = COLOR(64, 83, 92, 1);
+            tip2Lb.textColor = TEXT_BLACK_COLOR;
             tip2Lb.text = Localized(@"钱包地址", nil);
             [self addSubview:tip2Lb];
             
             UITextView *contentTV = [[UITextView alloc]initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY +Size(3), Size(146), Size(46))];
             contentTV.userInteractionEnabled = NO;
-            contentTV.backgroundColor = COLOR(244, 245, 246, 1);
+            contentTV.backgroundColor = DARK_COLOR;
             contentTV.layer.borderWidth = Size(0.5);
             contentTV.layer.borderColor = COLOR(209, 210, 211, 1).CGColor;
             contentTV.layer.cornerRadius = Size(5);
             contentTV.font = SystemFontOfSize(10);
-            contentTV.textColor = COLOR(64, 83, 92, 1);
+            contentTV.textColor = TEXT_BLACK_COLOR;
             contentTV.text = _currentWallet.address;
             [self addSubview:contentTV];
             
@@ -94,7 +94,7 @@
             
             UILabel *tip1Lb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(125), _sidePullViewWidth, Size(20))];
             tip1Lb.font = SystemFontOfSize(12);
-            tip1Lb.textColor = COLOR(64, 83, 92, 1);
+            tip1Lb.textColor = TEXT_BLACK_COLOR;
             tip1Lb.text = Localized(@"导出私钥", nil);
             [self addSubview:tip1Lb];
             
@@ -113,12 +113,12 @@
             
             UITextView *contentTV = [[UITextView alloc]initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY +Size(25), Size(146), Size(46))];
             contentTV.userInteractionEnabled = NO;
-            contentTV.backgroundColor = COLOR(244, 245, 246, 1);
+            contentTV.backgroundColor = DARK_COLOR;
             contentTV.layer.borderWidth = Size(0.5);
             contentTV.layer.borderColor = COLOR(209, 210, 211, 1).CGColor;
             contentTV.layer.cornerRadius = Size(5);
             contentTV.font = SystemFontOfSize(10);
-            contentTV.textColor = COLOR(64, 83, 92, 1);
+            contentTV.textColor = TEXT_BLACK_COLOR;
             contentTV.text = _currentWallet.privateKey;
             [self addSubview:contentTV];
             
@@ -132,13 +132,13 @@
             
             UILabel *tip1Lb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(125), _sidePullViewWidth, Size(20))];
             tip1Lb.font = SystemFontOfSize(12);
-            tip1Lb.textColor = COLOR(64, 83, 92, 1);
+            tip1Lb.textColor = TEXT_BLACK_COLOR;
             tip1Lb.text = Localized(@"导出KeyStore", nil);
             [self addSubview:tip1Lb];
             
             UILabel *tit1Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip1Lb.minX, tip1Lb.maxY+Size(30), Size(100), Size(15))];
             tit1Lb.font = SystemFontOfSize(12);
-            tit1Lb.textColor = COLOR(144, 162, 171, 1);
+            tit1Lb.textColor = TEXT_DARK_COLOR;
             tit1Lb.text = Localized(@"离线保存", nil);
             [self addSubview:tit1Lb];
             UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit1Lb.minX, tit1Lb.maxY, Size(230), Size(55))];
@@ -156,7 +156,7 @@
             
             UILabel *tit2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY+Size(15), Size(200), Size(15))];
             tit2Lb.font = SystemFontOfSize(12);
-            tit2Lb.textColor = COLOR(144, 162, 171, 1);
+            tit2Lb.textColor = TEXT_DARK_COLOR;
             tit2Lb.text = Localized(@"不要网上传输", nil);
             [self addSubview:tit2Lb];
             UILabel *tip3Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit2Lb.minX, tit2Lb.maxY, tip2Lb.width, tip2Lb.height)];
@@ -174,12 +174,12 @@
             
             UITextView *contentTV = [[UITextView alloc]initWithFrame:CGRectMake(tip3Lb.minX, tip3Lb.maxY +Size(10), Size(230), Size(85))];
             contentTV.userInteractionEnabled = NO;
-            contentTV.backgroundColor = COLOR(244, 245, 246, 1);
+            contentTV.backgroundColor = DARK_COLOR;
             contentTV.layer.borderWidth = Size(0.5);
             contentTV.layer.borderColor = COLOR(209, 210, 211, 1).CGColor;
             contentTV.layer.cornerRadius = Size(5);
             contentTV.font = SystemFontOfSize(10);
-            contentTV.textColor = COLOR(64, 83, 92, 1);
+            contentTV.textColor = TEXT_BLACK_COLOR;
             contentTV.text = _currentWallet.keyStore;
             [self addSubview:contentTV];
             

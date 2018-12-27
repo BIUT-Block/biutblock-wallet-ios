@@ -9,11 +9,12 @@
 #import "ImportWalletManageViewController.h"
 #import "SGSegmentedControl.h"
 #import "ImportWalletViewController.h"
-#import "ScanQRCodeViewController.h"
+#import "CommonHtmlShowViewController.h"
 
-#define kDefaultTabHeight Size(36)
-
-@interface ImportWalletManageViewController ()<UIScrollViewDelegate, SGSegmentedControlDelegate,ScanQRCodeViewControllerDelegate>
+@interface ImportWalletManageViewController ()<UIScrollViewDelegate, SGSegmentedControlDelegate>
+{
+    UIButton *tipBT;
+}
 
 @property (nonatomic, strong) SGSegmentedControl *SG;
 @property (nonatomic, strong) UIScrollView *mainScrollView;
@@ -25,63 +26,84 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initNavigationBar];
+    self.view.backgroundColor = BACKGROUND_DARK_COLOR;
     
     // 1.添加所有子控制器
     [self setupChildViewController];
     
-    [self setupSegmentedControl];
+    [self setupUI];
 }
 
-- (void)initNavigationBar
+-(void)viewWillAppear:(BOOL)animated
 {
-    self.title = @"导入钱包";
-    
-    [self.navigationController.navigationBar setBarTintColor:TEXT_GREEN_COLOR];
-    self.navigationController.navigationBar.translucent = NO;
-    [self.navigationController.navigationBar setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                                      BLACK_COLOR, NSForegroundColorAttributeName,
-                                                                      BoldSystemFontOfSize(18), NSFontAttributeName, nil]];
-    
-    // 导航条 左边 返回按钮
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"left_back"] style:UIBarButtonItemStyleDone target:self action:@selector(btnClick:)];
-    backItem.tintColor = BLACK_COLOR;
-    backItem.tag = 1;
-    [self.navigationItem setLeftBarButtonItem:backItem];
-    
+    [super viewWillAppear:animated];
+    /**************导航栏布局***************/
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
-- (void)setupSegmentedControl {
+- (void)setupUI
+{
+    //返回按钮
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KStatusBarHeight+Size(13), Size(25), Size(15))];
+    [backBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
+    backBT.tag = 100;
+    [self.view addSubview:backBT];
     
-    NSArray *titleArr = @[@"助记词", @"官方钱包", @"私钥"];
+    tipBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(100+20), KStatusBarHeight+Size(11), Size(100), Size(24))];
+    [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"continue"];
+    [tipBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    tipBT.tag = 101;
+    [self.view addSubview:tipBT];
+    //标题
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), tipBT.maxY +Size(3), Size(200), Size(35))];
+    titleLb.textColor = TEXT_BLACK_COLOR;
+    titleLb.font = BoldSystemFontOfSize(20);
+    titleLb.text = Localized(@"导入钱包",nil);
+    [self.view addSubview:titleLb];
+    
+    NSArray *titleArr = @[Localized(@"助记词", nil), Localized(@"官方钱包", nil), Localized(@"私钥", nil)];
     // 创建底部滚动视图
-    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, kDefaultTabHeight, kScreenWidth, kScreenHeight -kDefaultTabHeight -KNaviHeight)];
+    self.mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, titleLb.maxY +Size(13), kScreenWidth, kScreenHeight-KNaviHeight-titleLb.maxY +Size(20))];
     _mainScrollView.contentSize = CGSizeMake(kScreenWidth * titleArr.count, 0);
     _mainScrollView.backgroundColor = CLEAR_COLOR;
     _mainScrollView.pagingEnabled = YES;
-    // 没有弹簧效果
     _mainScrollView.bounces = NO;
-    // 隐藏水平滚动条
     _mainScrollView.showsHorizontalScrollIndicator = NO;
-    // 设置代理
     _mainScrollView.delegate = self;
     [self.view addSubview:_mainScrollView];
     
-    self.SG = [SGSegmentedControl segmentedControlWithFrame:CGRectMake(0, 0, kScreenWidth, kDefaultTabHeight) delegate:self segmentedControlType:(SGSegmentedControlTypeStatic) titleArr:titleArr btn_Margin:15];
+    self.SG = [SGSegmentedControl segmentedControlWithFrame:CGRectMake(0, self.mainScrollView.minY, kScreenWidth, Size(30)) delegate:self segmentedControlType:(SGSegmentedControlTypeStatic) titleArr:titleArr btn_Margin:15];
     _SG.segmentedControlIndicatorType = SGSegmentedControlIndicatorTypeBottom;
-    _SG.titleColorStateSelected = COLOR(175, 136, 68, 1);
-    _SG.indicatorColor = COLOR(175, 136, 68, 1);
-    _SG.titleColorStateNormal = TEXT_DARK_COLOR;
+    _SG.titleColorStateSelected = TEXT_GREEN_COLOR;
+    _SG.indicatorColor = TEXT_GREEN_COLOR;
+    _SG.titleColorStateNormal = COLOR(222, 223, 234, 1);
     [self.view addSubview:_SG];
     //横线
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(Size(20), _SG.maxY -Size(3), kScreenWidth -Size(20)*2, Size(1))];
-    line.backgroundColor = DIVIDE_LINE_COLOR;
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(Size(20), _SG.maxY -Size(2), kScreenWidth -Size(20)*2, Size(0.5))];
+    line.backgroundColor = COLOR(222, 223, 234, 1);
     [self.view addSubview:line];
     
     ImportWalletViewController *controller1 = [[ImportWalletViewController alloc] init];
     controller1.importWalletType = ImportWalletType_mnemonicPhrase;
     [self addChildViewController:controller1];
     
+}
+
+-(void)btnClick:(UIButton *)sender
+{
+    if (sender.tag == 100) {
+        if (self.navigationController.viewControllers.count > 1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }else if (sender.tag == 101) {
+        CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
+        viewController.titleStr = sender.titleLabel.text;
+        viewController.commonHtmlShowViewType = CommonHtmlShowViewType_RgsProtocol;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
 }
 
 - (void)SGSegmentedControl:(SGSegmentedControl *)segmentedControl didSelectBtnAtIndex:(NSInteger)index {
@@ -106,28 +128,25 @@
     ImportWalletViewController *controller3 = [[ImportWalletViewController alloc] init];
     controller3.importWalletType = ImportWalletType_privateKey;
     [self addChildViewController:controller3];
-    
 }
 
 // 显示控制器的view
 - (void)showVc:(NSInteger)index
 {
-//    if (index == 1) {
-//        //扫一扫
-//        UIBarButtonItem *scanItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"scanIcon"] style:UIBarButtonItemStyleDone target:self action:@selector(btnClick:)];
-//        scanItem.tag = 2;
-//        [self.navigationItem setRightBarButtonItem:scanItem];
-//    }else{
-//        self.navigationItem.rightBarButtonItem = nil;
-//    }
-    
     CGFloat offsetX = index * self.view.frame.size.width;
     UIViewController *vc = self.childViewControllers[index];
     // 判断控制器的view有没有加载过,如果已经加载过,就不需要加载
     if (vc.isViewLoaded) return;
     [self.mainScrollView addSubview:vc.view];
-    vc.view.frame = CGRectMake(offsetX, 0, kScreenWidth, kScreenHeight -kDefaultTabHeight -KNaviHeight);
+    vc.view.frame = CGRectMake(offsetX, 0, kScreenWidth, kScreenHeight -Size(30) -KNaviHeight);
     
+    if (index == 0) {
+        [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"continue"];
+    }else if (index == 1) {
+        [tipBT greenBorderBtnStyle:Localized(@"什么是Keystore？",nil) andBkgImg:@"continue"];
+    }else if (index == 2) {
+        [tipBT greenBorderBtnStyle:Localized(@"什么是私钥？",nil) andBkgImg:@"continue"];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -139,38 +158,15 @@
     [self showVc:index];
     // 2.把对应的标题选中
     [self.SG titleBtnSelectedWithScrollView:scrollView];
-}
-
--(void)btnClick:(UIButton *)sender
-{
-    switch (sender.tag) {
-        case 1:
-        {
-            if (self.navigationController.viewControllers.count > 1) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }else {
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-        }
-            break;
-        case 2:
-        {
-            //扫一扫
-            ScanQRCodeViewController *viewController = [[ScanQRCodeViewController alloc] init];
-            viewController.hidesBottomBarWhenPushed = YES;
-            viewController.delegate = self;
-            [self.navigationController pushViewController:viewController animated:YES];
-        }
-            break;
-        default:
-            break;
+    
+    if (index == 0) {
+        [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"continue"];
+    }else if (index == 1) {
+        [tipBT greenBorderBtnStyle:Localized(@"什么是Keystore？",nil) andBkgImg:@"continue"];
+    }else if (index == 2) {
+        [tipBT greenBorderBtnStyle:Localized(@"什么是私钥？",nil) andBkgImg:@"continue"];
     }
 }
 
-#pragma ScanQRCodeViewControllerDelegate
--(void)getScanCode:(NSString *)codeStr
-{
-    
-}
 
 @end

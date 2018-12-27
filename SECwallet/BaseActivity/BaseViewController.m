@@ -134,9 +134,9 @@
 - (void)hudShowWithString:(NSString *)str delayTime:(CGFloat)time{
     
     HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    HUD.labelFont = SystemFontOfSize(15);
-    HUD.cornerRadius = Size(17.5);
-    HUD.color = BLACK_COLOR;
+    HUD.labelFont = SystemFontOfSize(10);
+    HUD.cornerRadius = Size(5);
+    HUD.color = COLOR(68, 83, 91, 1);
     HUD.margin = Size(10);
     HUD.mode = MBProgressHUDModeText;
     HUD.labelText = str;
@@ -151,7 +151,7 @@
     label.textColor = BLACK_COLOR;
     label.textAlignment = 1;
     label.text = string;
-    label.font = BoldSystemFontOfSize(18);
+    label.font = BoldSystemFontOfSize(12);
     self.navigationItem.titleView = label;
 }
 
@@ -233,13 +233,13 @@
     HUD = [[MBProgressHUD alloc] init];
     HUD.dimBackground = NO;
     HUD.margin = Size(10);
-    HUD.cornerRadius = Size(17.5f);
+    HUD.cornerRadius = Size(5);
     HUD.mode = mode;
-    HUD.color = BLACK_COLOR;
+    HUD.color = COLOR(68, 83, 91, 1);
     HUD.labelText = message;
     HUD.detailsLabelText = msg;
-    HUD.detailsLabelFont = SystemFontOfSize(15);
-    HUD.labelFont = SystemFontOfSize(15);
+    HUD.detailsLabelFont = SystemFontOfSize(10);
+    HUD.labelFont = SystemFontOfSize(12);
     HUD.yOffset = HUDYOFFSET;
     [self.view addSubview:HUD];
     [HUD showAnimated:YES whileExecutingBlock:^{
@@ -256,13 +256,13 @@
     HUD = [[MBProgressHUD alloc] init];
     HUD.dimBackground = NO;
     HUD.margin = Size(10);
-    HUD.cornerRadius = Size(17.5f);
+    HUD.cornerRadius = Size(8);
     HUD.mode = mode;
-    HUD.color = BLACK_COLOR;
+    HUD.color = COLOR(68, 83, 91, 1);
     HUD.labelText = message;
     HUD.detailsLabelText = msg;
-    HUD.detailsLabelFont = SystemFontOfSize(15);
-    HUD.labelFont = SystemFontOfSize(15);
+    HUD.detailsLabelFont = SystemFontOfSize(10);
+    HUD.labelFont = SystemFontOfSize(12);
     HUD.yOffset = offsetY;
     [self.view addSubview:HUD];
     [HUD showAnimated:YES whileExecutingBlock:^{

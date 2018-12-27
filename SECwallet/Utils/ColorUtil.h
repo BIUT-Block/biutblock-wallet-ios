@@ -37,7 +37,7 @@
 
 /***********************字体***********************/
 // 字体黑色
-#define TEXT_BLACK_COLOR   COLOR(88,99,104,1)
+#define TEXT_BLACK_COLOR   COLOR(64, 83, 92, 1)
 
 // 字体灰色
 #define TEXT_DARK_COLOR	   COLOR(144,162,171,1)

@@ -135,7 +135,6 @@
     
     _infoTableView = [[JXMovableCellTableView alloc]initWithFrame:CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight) style:UITableViewStylePlain];
     _infoTableView.showsVerticalScrollIndicator = NO;
-//    _infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
     _infoTableView.longPressGesture.minimumPressDuration = 0.5;
@@ -196,18 +195,14 @@
 #pragma mark - JXMovableCellTableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
-//
-//    //资产详情
-//    TradeDetailViewController *viewController = [[TradeDetailViewController alloc]init];
-//    TokenCoinModel *model = _dataArrays[indexPath.row];
-//    viewController.tokenCoinModel = model;
-//    viewController.walletModel = currentWallet;
-//    viewController.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:viewController animated:YES];
-    
-    [_codeSidePullView show];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
+    //资产详情
+    TradeDetailViewController *viewController = [[TradeDetailViewController alloc]init];
+    TokenCoinModel *model = _dataArrays[indexPath.row];
+    viewController.tokenCoinModel = model;
+    viewController.walletModel = currentWallet;
+    viewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark 选择编辑模式，添加模式很少用,默认是删除
@@ -356,7 +351,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self hiddenLoadingView];
-        [self hudShowWithString:@"数据获取失败" delayTime:1.5];
+        [self hudShowWithString:Localized(@"数据获取失败", nil) delayTime:1.5];
     }];
 }
 
