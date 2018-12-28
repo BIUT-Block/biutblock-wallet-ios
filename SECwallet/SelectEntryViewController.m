@@ -30,81 +30,52 @@
 
 -(void)initSubViews
 {
-    
-    UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), Size(30), kScreenWidth, Size(35))];
-    if (IS_iPhoneX) {
-        nameLb.frame = CGRectMake(Size(20), Size(60), kScreenWidth, Size(35));
-    }
-    nameLb.font = SystemFontOfSize(35);
-    nameLb.textColor = COLOR(189, 146, 83, 1);
-    nameLb.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight/2)];
+    topView.backgroundColor = COLOR(246, 252, 251, 1);
+    [self.view addSubview:topView];
+    UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(0, Size(60), kScreenWidth, Size(35))];
+    nameLb.font = BoldSystemFontOfSize(20);
+    nameLb.textColor = TEXT_BLACK_COLOR;
+    nameLb.textAlignment = NSTextAlignmentCenter;
+    nameLb.text = Localized(@"SEC轻钱包", nil);
     [self.view addSubview:nameLb];
-    UILabel *tipLb = [[UILabel alloc]initWithFrame:CGRectMake(nameLb.minX, nameLb.maxY, kScreenWidth, Size(25))];
-    tipLb.font = SystemFontOfSize(16);
-    tipLb.textColor = TEXT_DARK_COLOR;
-    tipLb.text = @"最简单安全的智能数字钱包";
-    [self.view addSubview:tipLb];
-    /*****************导入钱包*****************/
-    CGFloat padddingLeft = Size(20);
-    UIButton *creatBT = [[UIButton alloc] initWithFrame:CGRectMake(padddingLeft, tipLb.maxY +Size(25), kScreenWidth - 2*padddingLeft, Size(175))];
-    creatBT.layer.cornerRadius = Size(5);
-    creatBT.layer.borderWidth = Size(1);
-    creatBT.layer.borderColor = COLOR(189, 146, 83, 1).CGColor;
-    [creatBT addTarget:self action:@selector(creatAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:creatBT];
-    UILabel *creatLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(10), Size(15), Size(100), Size(20))];
-    creatLb.font = SystemFontOfSize(26);
-    creatLb.textColor = COLOR(104, 104, 104, 1);
-    creatLb.text = @"创建钱包";
-    [creatBT addSubview:creatLb];
-    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:creatLb.text];
-    [attStr addAttribute:NSFontAttributeName value:SystemFontOfSize(20) range:NSMakeRange(2, 2)];
-    creatLb.attributedText = attStr;
-    UILabel *des1Lb = [[UILabel alloc]initWithFrame:CGRectMake(creatLb.minX, creatLb.maxY +Size(10), Size(120), Size(30))];
-    des1Lb.font = SystemFontOfSize(12.5);
-    des1Lb.textColor = COLOR(187, 186, 186, 1);
-    des1Lb.text = @"创建一个新的ETH钱包，\n支持所有ERC-20资产";
-    des1Lb.numberOfLines = 2;
-    [creatBT addSubview:des1Lb];
-    //设置行间距
-    NSMutableAttributedString *des1Str = [[NSMutableAttributedString alloc] initWithString:des1Lb.text];
-    NSMutableParagraphStyle * des1LbparagraphStyle = [[NSMutableParagraphStyle alloc] init];
-    des1LbparagraphStyle.lineSpacing = Size(3);
-    [des1Str addAttribute:NSParagraphStyleAttributeName value:des1LbparagraphStyle range:NSMakeRange(0, des1Str.length)];
-    des1Lb.attributedText = des1Str;
-    UIImageView *creatIV = [[UIImageView alloc]initWithFrame:CGRectMake(creatBT.width -Size(150 +10), Size(20), Size(150), Size(140))];
-    creatIV.image = [UIImage imageNamed:@"start_creat"];
-    [creatBT addSubview:creatIV];
     
-    UIButton *importBT = [[UIButton alloc] initWithFrame:CGRectMake(creatBT.minX, creatBT.maxY +Size(35), creatBT.width, creatBT.height)];
-    importBT.layer.cornerRadius = Size(5);
-    importBT.layer.borderWidth = Size(1);
-    importBT.layer.borderColor = COLOR(189, 146, 83, 1).CGColor;
+    UIButton *creatBT = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth -Size(60))/2, nameLb.maxY+Size(55), Size(60), Size(60))];
+    creatBT.titleLabel.font = BoldSystemFontOfSize(10);
+    [creatBT setImage:[UIImage imageNamed:@"wallet1"] forState:UIControlStateNormal];
+    [creatBT setTitleColor:TEXT_GREEN_COLOR forState:UIControlStateNormal];
+    [creatBT setTitle:Localized(@"创建钱包",nil) forState:UIControlStateNormal];
+    creatBT.titleEdgeInsets = UIEdgeInsetsMake(0, -creatBT.imageView.frame.size.width, -creatBT.imageView.frame.size.height-Size(20)/2, 0);
+    creatBT.imageEdgeInsets = UIEdgeInsetsMake(-creatBT.titleLabel.intrinsicContentSize.height-Size(20)/2, 0, 0, -creatBT.titleLabel.intrinsicContentSize.width);
+    [creatBT addTarget:self action:@selector(creatAction) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:creatBT];
+    //描述
+    UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(0, creatBT.maxY, kScreenWidth, Size(20))];
+    desLb.textAlignment = NSTextAlignmentCenter;
+    desLb.textColor = TEXT_DARK_COLOR;
+    desLb.font = SystemFontOfSize(8);
+    desLb.text = Localized(@"创建一个新钱包",nil);
+    [topView addSubview:desLb];
+    
+    UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, topView.maxY, kScreenWidth, kScreenHeight/2)];
+    bottomView.backgroundColor = BACKGROUND_DARK_COLOR;
+    [self.view addSubview:bottomView];
+    UIButton *importBT = [[UIButton alloc]initWithFrame:CGRectMake(creatBT.minX, Size(105), creatBT.width, creatBT.height)];
+    importBT.titleLabel.font = BoldSystemFontOfSize(10);
+    [importBT setImage:[UIImage imageNamed:@"wallet0"] forState:UIControlStateNormal];
+    [importBT setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
+    [importBT setTitle:Localized(@"导入钱包",nil) forState:UIControlStateNormal];
+    importBT.titleEdgeInsets = UIEdgeInsetsMake(0, -importBT.imageView.frame.size.width, -importBT.imageView.frame.size.height-Size(20)/2, 0);
+    importBT.imageEdgeInsets = UIEdgeInsetsMake(-importBT.titleLabel.intrinsicContentSize.height-Size(20)/2, 0, 0, -importBT.titleLabel.intrinsicContentSize.width);
     [importBT addTarget:self action:@selector(importAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:importBT];
-    UILabel *importLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(10), Size(15), Size(100), Size(20))];
-    importLb.font = SystemFontOfSize(26);
-    importLb.textColor = COLOR(104, 104, 104, 1);
-    importLb.text = @"导入钱包";
-    [importBT addSubview:importLb];
-    NSMutableAttributedString *attStr1 = [[NSMutableAttributedString alloc]initWithString:importLb.text];
-    [attStr1 addAttribute:NSFontAttributeName value:SystemFontOfSize(20) range:NSMakeRange(2, 2)];
-    importLb.attributedText = attStr1;
-    UILabel *des2Lb = [[UILabel alloc]initWithFrame:CGRectMake(importLb.minX, importLb.maxY +Size(10), Size(120), Size(30))];
-    des2Lb.font = SystemFontOfSize(12.5);
-    des2Lb.textColor = COLOR(187, 186, 186, 1);
-    des2Lb.text = @"导入已有的ETH钱包，\n支持所有ERC-20资产";
-    des2Lb.numberOfLines = 2;
-    [importBT addSubview:des2Lb];
-    //设置行间距
-    NSMutableAttributedString *des2Str = [[NSMutableAttributedString alloc] initWithString:des2Lb.text];
-    NSMutableParagraphStyle * des2LbparagraphStyle = [[NSMutableParagraphStyle alloc] init];
-    des2LbparagraphStyle.lineSpacing = Size(3);
-    [des2Str addAttribute:NSParagraphStyleAttributeName value:des2LbparagraphStyle range:NSMakeRange(0, des2Str.length)];
-    des2Lb.attributedText = des2Str;
-    UIImageView *importIV = [[UIImageView alloc]initWithFrame:CGRectMake(creatIV.minX, Size(20), creatIV.width, creatIV.height)];
-    importIV.image = [UIImage imageNamed:@"start_import"];
-    [importBT addSubview:importIV];
+    [bottomView addSubview:importBT];
+    //描述
+    UILabel *desLb1 = [[UILabel alloc] initWithFrame:CGRectMake(0, importBT.maxY, kScreenWidth, desLb.height)];
+    desLb1.textAlignment = NSTextAlignmentCenter;
+    desLb1.textColor = TEXT_DARK_COLOR;
+    desLb1.font = SystemFontOfSize(8);
+    desLb1.text = Localized(@"导入一个已存在钱包",nil);
+    [bottomView addSubview:desLb1];
     
 }
 

@@ -71,7 +71,6 @@
         self.layer.cornerRadius = Size(12);
         self.backgroundColor = BACKGROUND_DARK_COLOR;
         self.alertType = alertViewType;
-        
         _alertViewType = alertViewType;
         
         if (alertViewType == CommonAlertViewType_exclamation_mark) {
@@ -256,10 +255,17 @@
     
     if (_alertType == CommonAlertViewType_remind) {
         self.alpha = 0.9;
+    }else{
+        //设置阴影
+        CALayer *layer = [self layer];
+        layer.shadowOffset = CGSizeMake(0, 0);
+        layer.shadowRadius = Size(2);
+        layer.shadowColor = [UIColor darkGrayColor].CGColor;
+        layer.shadowOpacity = Size(0.3);
     }
     
     CAKeyframeAnimation* animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    animation.duration = 0.3f;// 动画时间
+    animation.duration = 0.2f;// 动画时间
     NSMutableArray *values = [NSMutableArray array];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 1.0)]];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
@@ -293,14 +299,14 @@
     _backView = nil;
     
     CAKeyframeAnimation* animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    animation.duration = 0.3f;// 动画时间
+    animation.duration = 0.2f;// 动画时间
     NSMutableArray *values = [NSMutableArray array];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 1.0)]];
     animation.values = values;
     [self.layer addAnimation:animation forKey:nil];
     
-    [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.alpha = 0;
     } completion:^(BOOL finished) {
 //        [super removeFromSuperview];
@@ -323,7 +329,7 @@
     [topVC.view addSubview:_backView];
 
     self.alpha = 0;
-    [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+    [UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.transform = CGAffineTransformMakeRotation(0);
         self.alpha = 1;
     } completion:^(BOOL finished) {

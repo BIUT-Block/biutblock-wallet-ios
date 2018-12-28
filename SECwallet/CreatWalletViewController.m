@@ -20,7 +20,7 @@
 {
     UITextField *walletNameTF;     //钱包名称
     UITextField *passwordTF;       //密码
-    UITextField *re_passwordTF;   //重复密码
+    UITextField *re_passwordTF;   //确认密码
     UITextField *passwordTipTF;   //密码提示
     UIButton *agreementBtn;  //用户协议
     
@@ -126,11 +126,11 @@
     passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self.view addSubview:passwordTF];
     
-    //重复密码
+    //确认密码
     UILabel *re_passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(passwordDesLb.minX, pswCell.maxY +Size(3), passwordDesLb.width, passwordDesLb.height)];
     re_passwordDesLb.font = BoldSystemFontOfSize(10);
     re_passwordDesLb.textColor = TEXT_BLACK_COLOR;
-    re_passwordDesLb.text = Localized(@"重复密码", nil);
+    re_passwordDesLb.text = Localized(@"确认密码", nil);
     [self.view addSubview:re_passwordDesLb];
     CommonTableViewCell *re_pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     re_pswCell.frame = CGRectMake(pswCell.minX, re_passwordDesLb.maxY, pswCell.width, pswCell.height);

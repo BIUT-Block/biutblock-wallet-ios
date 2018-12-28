@@ -8,14 +8,8 @@
 
 #import "AddressCodePayViewController.h"
 
-#define kHeaderHeight    Size(105) +KStatusBarHeight
-
-@interface AddressCodePayViewController ()<UITextFieldDelegate>
+@interface AddressCodePayViewController ()
 {
-    //支付码
-    UIImageView *payCode;
-    //金额
-    UITextField *sumTF;
 }
 @end
 
@@ -23,10 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboardAction)];
-    [self.view addGestureRecognizer:tap];
     
+    self.view.backgroundColor = COLOR(246, 252, 251, 1);
     [self addContentView];
     
 }
@@ -36,79 +28,50 @@
     [super viewWillAppear:animated];
     /**************导航栏布局***************/
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    self.view.backgroundColor = COLOR(246, 252, 251, 1);
+    
 }
 
 #pragma mark - 底部收款视图
 - (void)addContentView
 {
-    UIImageView *bkgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kHeaderHeight)];
-    bkgView.image = [UIImage imageNamed:@"tradeBkg"];
-    [self.view addSubview:bkgView];
     //返回按钮
-    UIImageView *backIV = [[UIImageView alloc]initWithFrame:CGRectMake(Size(15), Size(10)+KStatusBarHeight, Size(16), Size(16))];
-    backIV.image = [UIImage imageNamed:@"backIcon"];
-    [self.view addSubview:backIV];
-    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(5), KStatusBarHeight, Size(35), Size(35))];
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KStatusBarHeight+Size(13), Size(25), Size(15))];
     [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
     [self.view addSubview:backBT];
-    //名称
-    UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(0, backIV.minY, kScreenWidth, Size(20))];
-    nameLb.font = BoldSystemFontOfSize(18);
-    nameLb.textColor = BACKGROUND_DARK_COLOR;
-    nameLb.textAlignment = NSTextAlignmentCenter;
-    nameLb.text = @"收款码";
-    [self.view addSubview:nameLb];
     
-    //头像
-    UIImageView *headerView = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(65))/2, bkgView.maxY -Size(65)/2, Size(65), Size(65))];
-    headerView.image = [UIImage imageNamed:_walletModel.walletIcon];
-    [self.view addSubview:headerView];
+    //标题
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(0, backBT.maxY +Size(10), kScreenWidth, Size(30))];
+    titleLb.textColor = TEXT_BLACK_COLOR;
+    titleLb.font = BoldSystemFontOfSize(20);
+    titleLb.textAlignment = NSTextAlignmentCenter;
+    titleLb.text = Localized(@"SEC收款",nil);
+    [self.view addSubview:titleLb];
+    
     //地址
-    UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(55), bkgView.maxY +Size(30), kScreenWidth -Size(55)*2, Size(30))];
-    addressLb.font = SystemFontOfSize(13);
+    UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(65), titleLb.maxY +Size(60), kScreenWidth -Size(65)*2, Size(40))];
+    addressLb.font = SystemFontOfSize(10);
     addressLb.textColor = TEXT_DARK_COLOR;
     addressLb.numberOfLines = 2;
+    addressLb.textAlignment = NSTextAlignmentCenter;
     addressLb.text = _walletModel.address;
     [self.view addSubview:addressLb];
-    //金额
-    sumTF = [[UITextField alloc]initWithFrame:CGRectMake(addressLb.minX, addressLb.maxY +Size(20), addressLb.width, Size(20))];
-    sumTF.font = SystemFontOfSize(12);
-    sumTF.textColor = TEXT_BLACK_COLOR;
-    sumTF.keyboardType = UIKeyboardTypeNumberPad;
-    sumTF.delegate = self;
-    sumTF.text = @"0";
-    [self.view addSubview:sumTF];
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(sumTF.minX, sumTF.maxY, sumTF.width, Size(0.5))];
-    line.backgroundColor = DIVIDE_LINE_COLOR;
-    [self.view addSubview:line];
+    
     //支付码
-    payCode = [[UIImageView alloc]initWithFrame:CGRectMake(addressLb.minX, line.maxY +Size(20), addressLb.width, addressLb.width)];
-    payCode.image = [NSString twoDimensionCodeWithUrl:[NSString stringWithFormat:@"%@###%@",_walletModel.address,sumTF.text]];
-    [self.view addSubview:payCode];
+    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(addressLb.minX, addressLb.maxY +Size(15), kScreenWidth-addressLb.minX*2, Size(190))];
+    bkgView.backgroundColor = BACKGROUND_DARK_COLOR;
+    [self.view addSubview:bkgView];
+    UIImageView *payCode = [[UIImageView alloc]initWithFrame:CGRectMake(Size(20), Size(20), bkgView.width-Size(20 *2), bkgView.height-Size(20 *2))];
+    payCode.image = [NSString twoDimensionCodeWithUrl:_walletModel.address];
+    [bkgView addSubview:payCode];
+    
     //复制收款地址
-    UIButton *copyBT = [[UIButton alloc] initWithFrame:CGRectMake(payCode.minX, payCode.maxY +Size(20), payCode.width, Size(45))];
-    [copyBT goldBigBtnStyle:@"复制收款地址"];
+    UIButton *copyBT = [[UIButton alloc] initWithFrame:CGRectMake(bkgView.minX, bkgView.maxY +Size(30), bkgView.width, Size(45))];
+    [copyBT goldBigBtnStyle:Localized(@"复制收款地址", nil)];
     [copyBT addTarget:self action:@selector(copyAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:copyBT];
     
-}
-
-#pragma UITextFieldDelegate
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    sumTF.text = nil;
-}
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    if ([textField.text floatValue] <= [_walletModel.balance floatValue]) {
-        //更新收款地址二维码
-        payCode.image = [NSString twoDimensionCodeWithUrl:[NSString stringWithFormat:@"%@###%@",_walletModel.address,sumTF.text]];
-    }else{
-        [self hudShowWithString:@"超过最大余额，请重新输入" delayTime:2];
-        textField.text = nil;
-        [textField resignFirstResponder];
-    }
-    return YES;
 }
 
 #pragma 复制收款地址
@@ -117,12 +80,6 @@
     UIPasteboard * pastboard = [UIPasteboard generalPasteboard];
     pastboard.string = _walletModel.address;
     [self hudShowWithString:@"已复制" delayTime:1];
-}
-
-#pragma mark - 点击空白处收回键盘
--(void)dismissKeyboardAction
-{
-    [sumTF resignFirstResponder];
 }
 
 @end

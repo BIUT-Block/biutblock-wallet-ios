@@ -11,7 +11,7 @@
 #define CORNER_RADIUS Size(12.0f)
 #define LABEL_MARGIN_DEFAULT Size(8.0f)
 #define BOTTOM_MARGIN_DEFAULT Size(8.0f)
-#define FONT_SIZE_DEFAULT Size(13.0f)
+#define FONT_SIZE_DEFAULT Size(10)
 #define HORIZONTAL_PADDING_DEFAULT Size(8.0f)
 #define VERTICAL_PADDING_DEFAULT Size(5.0f)
 #define TEXT_SHADOW_COLOR [UIColor clearColor]
@@ -168,20 +168,20 @@
         gotPreviousFrame = YES;
         
         //默认状态
-        [tagView setBackgroundColor:[self getBackgroundColor]];
+        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
         [tagView setCornerRadius:self.cornerRadius];
-        [tagView setBorderColor:self.borderColor.CGColor];
-        [tagView setBorderWidth:self.borderWidth];
-        [tagView setTextColor:self.textColor];
+        [tagView setBorderColor:TEXT_GREEN_COLOR.CGColor];
+        [tagView setBorderWidth:Size(0.5)];
+        [tagView setTextColor:TEXT_GREEN_COLOR];
         
         //选中状态
         for (NSString *selectStr in selectTextArray) {
             if ([selectStr isEqualToString:text]) {
-                [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
-                [tagView setCornerRadius:self.cornerRadius];
-                [tagView setBorderColor:COLOR(181,198,216,1).CGColor];
-                [tagView setBorderWidth:Size(1)];
-                [tagView setTextColor:COLOR(181,198,216,1)];
+                [tagView setBackgroundColor:COLOR(56, 142, 218, 1)];
+                [tagView setCornerRadius:Size(10)];
+                [tagView setBorderWidth:Size(0)];
+                [tagView setBorderColor:COLOR(56, 142, 218, 1).CGColor];
+                [tagView setTextColor:WHITE_COLOR];
             }
         }
         
@@ -222,7 +222,7 @@
     DWTagView *tagView = (DWTagView *)[button superview];
     //选中状态
     if ([selectTextArray containsObject:tagView.label.text]) {
-        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
+        [tagView setBackgroundColor:COLOR(56, 142, 218, 1)];
     }else{
         [tagView setBackgroundColor:self.highlightedBackgroundColor];
     }
@@ -234,15 +234,11 @@
     DWTagView *tagView = (DWTagView *)[button superview];
     //选中状态
     if ([selectTextArray containsObject:tagView.label.text]) {
-        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
+        [tagView setBackgroundColor:COLOR(56, 142, 218, 1)];
     }else{
         [tagView setBackgroundColor:[self getBackgroundColor]];
     }
-    
-//    if ([self.tagDelegate respondsToSelector:@selector(selectedTag:tagIndex:)]) {
-//        [self.tagDelegate selectedTag:tagView.label.text tagIndex:tagView.tag];
-//    }
-    
+
     if ([self.tagDelegate respondsToSelector:@selector(selectedDWTagList:tag:tagIndex:)]) {
         [self.tagDelegate selectedDWTagList:self tag:tagView.label.text tagIndex:tagView.tag];
     }
@@ -286,7 +282,7 @@
 - (UIColor *)getBackgroundColor
 {
     if (!lblBackgroundColor) {
-        return TEXT_GREEN_COLOR;
+        return COLOR(56, 142, 218, 1);
     } else {
         return lblBackgroundColor;
     }
@@ -395,8 +391,6 @@
 		textSize = [str2 sizeWithFont:font forWidth:maxWidth lineBreakMode:NSLineBreakByTruncatingTail];
 		_label.attributedText = [attributedString copy];
 
-//        textSize = [attributedString boundingRectWithSize:CGSizeMake(maxWidth, 0) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
-//        _label.attributedText = [attributedString copy];
     } else {
 
 		NSString *str = text;
@@ -406,10 +400,6 @@
 		}
 		textSize = [str sizeWithFont:font forWidth:maxWidth lineBreakMode:NSLineBreakByTruncatingTail];
 		_label.text = text;
-		
-//        textSize = [text sizeWithFont:font forWidth:maxWidth lineBreakMode:NSLineBreakByTruncatingTail];
-//        _label.text = text;
-		
     }
     
     textSize.width = MAX(textSize.width, minimumWidth);

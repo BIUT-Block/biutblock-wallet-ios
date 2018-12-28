@@ -20,6 +20,8 @@
 #import "CardPageView.h"
 #import "JXMovableCellTableView.h"
 
+#import "SelectEntryViewController.h"
+
 #define kHeaderHeight    Size(200)
 #define USD_to_CNY       6.8872
 
@@ -248,12 +250,16 @@
 #pragma mark - 快捷功能入口点击
 -(void)rightClick
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
+//
+//    AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
+//    viewController.assetsList = assetsList;
+//    [self.navigationController pushViewController:viewController animated:YES];
+    
+    SelectEntryViewController *viewController = [[SelectEntryViewController alloc]init];
+    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
+    [self presentViewController:navi animated:YES completion:nil];
 
-    AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
-    viewController.assetsList = assetsList;
-    viewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark - CardPageViewDelegate

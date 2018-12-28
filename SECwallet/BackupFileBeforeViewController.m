@@ -18,7 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavgationItemTitle:@"备份助记词"];
     
     [self setupUI];
     
@@ -27,48 +26,62 @@
         [alert show];
     });
 }
-
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    self.navigationItem.leftBarButtonItem = nil;
-//}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    /**************导航栏布局***************/
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
 
 -(void)setupUI
 {
-    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(0, Size(30), kScreenWidth, Size(25))];
-    titLb.font = BoldSystemFontOfSize(18);
-    titLb.textColor = TEXT_GREEN_COLOR;
-    titLb.textAlignment = NSTextAlignmentCenter;
-    titLb.text = @"抄写下你的钱包助记词";
+    //返回按钮
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KStatusBarHeight+Size(13), Size(25), Size(15))];
+    [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
+    [self.view addSubview:backBT];
+
+    //标题
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(35), Size(200), Size(30))];
+    titleLb.textColor = TEXT_BLACK_COLOR;
+    titleLb.font = BoldSystemFontOfSize(20);
+    titleLb.text = Localized(@"备份助记词",nil);
+    [self.view addSubview:titleLb];
+    
+    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(35), kScreenWidth, Size(20))];
+    titLb.font = SystemFontOfSize(10);
+    titLb.textColor = TEXT_DARK_COLOR;
+    titLb.text = Localized(@"抄写下你的钱包助记词", nil);
     [self.view addSubview:titLb];
     
-    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), titLb.maxY +Size(15), kScreenWidth -Size(20)*2, Size(60))];
-    remindLb.font = SystemFontOfSize(15.5);
+    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titLb.maxY +Size(10), kScreenWidth -Size(20)*2, Size(45))];
+    remindLb.font = SystemFontOfSize(10);
     remindLb.textColor = TEXT_DARK_COLOR;
     remindLb.numberOfLines = 3;
-    remindLb.text = @"助记词用于恢复钱包或重置钱包密码，将它准确的抄写到纸上，并存放在的只有你知道的安全的地方。";
-    //设置行间距
+    remindLb.text = Localized(@"助记词用于恢复钱包或重置钱包密码，将它准确的抄写到纸上，并存放在的只有你知道的安全的地方。", nil);
     NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:remindLb.text];
     NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing = Size(5);
+    paragraphStyle.lineSpacing = Size(3);
     [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
     remindLb.attributedText = msgStr;
     [self.view addSubview:remindLb];
     
-    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(25), remindLb.width, Size(100))];
+    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(20), remindLb.width, Size(75))];
     bkgView.backgroundColor = DARK_COLOR;
     bkgView.layer.cornerRadius = Size(5);
     [self.view addSubview:bkgView];
-    UILabel *fileDataLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(8), Size(8), bkgView.width -Size(16), Size(80))];
-    fileDataLb.font = SystemFontOfSize(18);
+    UILabel *fileDataLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(8), Size(8), bkgView.width -Size(16), bkgView.height-Size(16))];
+    fileDataLb.font = BoldSystemFontOfSize(12);
     fileDataLb.textColor = TEXT_BLACK_COLOR;
     fileDataLb.numberOfLines = 3;
     fileDataLb.text = _walletModel.mnemonicPhrase;
+    NSMutableAttributedString *msgStr1 = [[NSMutableAttributedString alloc] initWithString:fileDataLb.text];
+    [msgStr1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr1.length)];
+    fileDataLb.attributedText = msgStr1;
     [bkgView addSubview:fileDataLb];
     
     /*****************下一步*****************/
-    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake((kScreenWidth -Size(155))/2, bkgView.maxY +Size(40), Size(155), Size(45))];
+    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(titleLb.minX, bkgView.maxY +Size(25), kScreenWidth -titleLb.minX*2, Size(45))];
     [nextBT goldBigBtnStyle:@"下一步"];
     [nextBT addTarget:self action:@selector(nextAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBT];

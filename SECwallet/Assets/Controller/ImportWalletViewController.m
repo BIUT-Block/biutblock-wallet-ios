@@ -25,7 +25,7 @@
     UILabel *passwordDesLb;
     UITextField *passwordTF;
     
-    //重复密码
+    //确认密码
     CommonTableViewCell *re_pswCell;
     UILabel *re_passwordDesLb;
     UITextField *re_passwordTF;
@@ -92,11 +92,11 @@
     passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self.view addSubview:passwordTF];
     
-    //重复密码
+    //确认密码
     re_passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(inputTV.minX, pswCell.maxY +Size(3), inputTV.width, KInputDesViewHeight)];
     re_passwordDesLb.font = BoldSystemFontOfSize(10);
     re_passwordDesLb.textColor = TEXT_BLACK_COLOR;
-    re_passwordDesLb.text = Localized(@"重复密码", nil);
+    re_passwordDesLb.text = Localized(@"确认密码", nil);
     [self.view addSubview:re_passwordDesLb];
     re_pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     re_pswCell.frame = CGRectMake(pswCell.minX, re_passwordDesLb.maxY, pswCell.width, pswCell.height);

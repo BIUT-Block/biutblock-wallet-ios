@@ -34,7 +34,6 @@
     [super viewDidLoad];
     
     [self addSubView];
-
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -360,7 +359,19 @@
 {
     _codeSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_address];
     [self.view addSubview:_codeSidePullView];
+    for (UIView *view in self.view.subviews) {
+        if (![view isKindOfClass:[CommonSidePullView class]]) {
+            view.userInteractionEnabled = NO;
+        }
+    }
     [_codeSidePullView show];
+    _codeSidePullView.dismissBlock = ^() {
+        for (UIView *view in self.view.subviews) {
+            if (![view isKindOfClass:[CommonSidePullView class]]) {
+                view.userInteractionEnabled = YES;
+            }
+        }
+    };
 }
 
 #pragma 备份助记词

@@ -71,7 +71,7 @@
 "助记词，按空格分隔"="Mnemonic, separated by spaces";
 "密码"="Password";
 "8~30位数字，英文字母以及特殊字符至少2种组合"="Ex:8~30characters,numbers,contain at least two English letters and special characters";
-"重复密码"="Repeat the Password";
+"确认密码"="Confirm Password";
 "请再次确认密码"="Repeat the Password again";
 "密码提示（选填）"="Password prompt(optional)";
 "选填"="optional";
@@ -98,12 +98,46 @@
 "请输入钱包密码"="Please type in Wallet password";
 "密码用于保护私钥和交易授权，强度非常重要。\nSEC钱包不存储密码，也无法帮您找回，请务必牢记。"="Password is used to protect the private key and transaction authorization, and the strength is very important. \nSEC wallet don’t store password and nor retrieved for you. Please keep in mind.";
 "例如：wallet01"="ex:wallet01";
+"确定"="Determine";
+"请输入密码"="Please Type in password";
+"跳过"="Skip";
+"备份钱包"="Backup Wallet";
+"最后一步"="The Last Step";
+"立即备份您的钱包！"="Backup your wallet now!";
+"备份钱包：导出[助记词]并抄写到安全的地方，千万不要保存到网络上。\n然后尝试转入，转出小额资产开始使用。"="Backup wallet: Export [mnemonics] and copy to a safe place, don't save it to the network.\n Then try to transfer and transfer the small assets to start using.";
 
-
-
-
-
-
+"抄写下你的钱包助记词"="Copy your wallet Mnemonics";
+"助记词用于恢复钱包或重置钱包密码，将它准确的抄写到纸上，并存放在的只有你知道的安全的地方。"="The mnemonic is used to restore the wallet or reset the wallet password, copy it to the paper accurately, and store it in a safe place that only you know.";
+"确认你的钱包助记词"="Confirm your wallet Mnemonics";
+"请按照顺序点击助记词，以确认你备份的助记词正确。"=
+"Please click on the mnemonic in order to confirm that your backup mnemonic is correct.";
+"确认"="Sure";
+"备份失败"="Backup Failed";
+"Please Check and try again."="Please Check and try again.";
+"请检查您的助记词"="Please click your mnemonic";
+"完成"="complete";
+"更改密码"="Change Password";
+"当前密码"="Current Password";
+"请输入当前密码"="Please Type in Current Password";
+"新密码"="New Password";
+"请输入新密码"="Please Type in new password";
+"密码提示"="Password prompt";
+"马上导入"="Import Now";
+"忘记密码？\n导入助记词或私钥可重置密码"="Forget Password?\nImport Mnemonic or PrivateKey to reset the password";
+"SEC转账"="SEC transfer";
+"收款人钱包地址"="Payee wallet address";
+"转账金额"="Transfer Amount";
+"下一步"="Next Step";
+"交易详情"="Transaction Detail";
+"订单信息"="Order information";
+"转账"="Transfer";
+"转入地址"="To Address";
+"付款钱包"="Payment Address";
+"金额"="Amount";
+"SEC收款"="SEC Receipt";
+"复制收款地址"="Copy Payment Address";
+"切换账户"="Switch Wallet";
+"SEC轻钱包"="SEC Light Wallet";
 
 
 
@@ -140,3 +174,4 @@
 "保存成功"="Successfully saved";
 "钱包名已存在"="The wallet name already exists";
 "请输入钱包名称"="Please type in wallet name";
+

@@ -10,7 +10,7 @@
 #import "DWTagList.h"
 #import "RootViewController.h"
 
-@interface BackupFileViewController ()<DWTagListDelegate,UIAlertViewDelegate>
+@interface BackupFileViewController ()<DWTagListDelegate>
 
 @property (nonatomic, strong) DWTagList *tagList;  // 云标签
 @property (nonatomic, copy) NSMutableArray *selectTagList;
@@ -20,44 +20,68 @@
 
 @implementation BackupFileViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
+    
     [super viewDidLoad];
-    [self setNavgationItemTitle:@"备份助记词"];
+    
     [self setupUI];
     _selectTagList = [NSMutableArray array];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    /**************导航栏布局***************/
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 -(void)setupUI
 {
-    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(0, Size(30), kScreenWidth, Size(25))];
-    titLb.font = BoldSystemFontOfSize(18);
-    titLb.textColor = TEXT_GREEN_COLOR;
-    titLb.textAlignment = NSTextAlignmentCenter;
-    titLb.text = @"确认你的钱包助记词";
+    //返回按钮
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KStatusBarHeight+Size(13), Size(25), Size(15))];
+    [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
+    [self.view addSubview:backBT];
+    
+    //标题
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(35), Size(200), Size(30))];
+    titleLb.textColor = TEXT_BLACK_COLOR;
+    titleLb.font = BoldSystemFontOfSize(20);
+    titleLb.text = Localized(@"备份助记词",nil);
+    [self.view addSubview:titleLb];
+    
+    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(35), kScreenWidth, Size(20))];
+    titLb.font = SystemFontOfSize(10);
+    titLb.textColor = TEXT_DARK_COLOR;
+    titLb.text = Localized(@"确认你的钱包助记词", nil);
     [self.view addSubview:titLb];
     
-    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), titLb.maxY +Size(10), kScreenWidth -Size(20)*2, Size(40))];
-    remindLb.font = SystemFontOfSize(16);
+    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titLb.maxY +Size(10), kScreenWidth -Size(20)*2, Size(30))];
+    remindLb.font = SystemFontOfSize(10);
     remindLb.textColor = TEXT_DARK_COLOR;
     remindLb.numberOfLines = 2;
-    remindLb.text = @"请按照顺序点击助记词，以确认你备份的助记词正确。";
+    remindLb.text = Localized(@"请按照顺序点击助记词，以确认你备份的助记词正确。", nil);
+    NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:remindLb.text];
+    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = Size(3);
+    [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
+    remindLb.attributedText = msgStr;
     [self.view addSubview:remindLb];
     
-    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(20), remindLb.width, Size(135))];
+    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(15), remindLb.width, Size(100))];
     bkgView.backgroundColor = DARK_COLOR;
     bkgView.layer.cornerRadius = Size(5);
     [self.view addSubview:bkgView];
-    _showTagList = [[DWTagList alloc]initWithFrame:CGRectMake(Size(30), remindLb.maxY +Size(20) +Size(20), kScreenWidth - Size(30)*2, Size(120))];
-    [_showTagList setTagBackgroundColor:BACKGROUND_DARK_COLOR];
-    _showTagList.textColor = TEXT_BLACK_COLOR;
+    _showTagList = [[DWTagList alloc]initWithFrame:CGRectMake(Size(30), bkgView.minY +Size(10), kScreenWidth - Size(30)*2, bkgView.height -Size(5*2))];
+//    [_showTagList setTagBackgroundColor:BACKGROUND_DARK_COLOR];
+//    _showTagList.textColor = TEXT_BLACK_COLOR;
     _showTagList.cornerRadius = Size(5);
-    [_showTagList setTagHighlightColor:BACKGROUND_DARK_COLOR];
+//    [_showTagList setTagHighlightColor:BACKGROUND_DARK_COLOR];
     [_showTagList setTagDelegate:self];
     [self.view addSubview:_showTagList];
     
-    _tagList = [[DWTagList alloc] initWithFrame:CGRectMake(Size(20), bkgView.maxY +Size(20), kScreenWidth - Size(20)*2, Size(120))];
-    [_tagList setTagBackgroundColor:COLOR(209, 163, 101, 1)];
-    [_tagList setTagHighlightColor:COLOR(200,3,16,1)];
+    _tagList = [[DWTagList alloc] initWithFrame:CGRectMake(titleLb.minX, bkgView.maxY +Size(20), kScreenWidth - titleLb.minX*2, Size(100))];
+//    [_tagList setTagBackgroundColor:COLOR(209, 163, 101, 1)];
+//    [_tagList setTagHighlightColor:COLOR(200,3,16,1)];
     _tagList.cornerRadius = Size(5);
     NSArray *tagArr = [_walletModel.mnemonicPhrase componentsSeparatedByString:@" "];
     //打乱数组顺序
@@ -74,8 +98,8 @@
     [self.view addSubview:_tagList];
     
     /*****************确认*****************/
-    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake((kScreenWidth -Size(155))/2, _tagList.maxY +Size(10), Size(155), Size(45))];
-    [nextBT goldBigBtnStyle:@"确认"];
+    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(titleLb.minX, _tagList.maxY +Size(25), kScreenWidth -titleLb.minX*2, Size(45))];
+    [nextBT goldBigBtnStyle:Localized(@"确认", nil)];
     [nextBT addTarget:self action:@selector(comfirmAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBT];
 }
@@ -123,54 +147,52 @@
 {
     NSArray *tagArr = [_walletModel.mnemonicPhrase componentsSeparatedByString:@" "];
     if (tagArr.count > _selectTagList.count) {
-        [self hudShowWithString:@"助记词填写不完整" delayTime:2];
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"备份失败", nil) contentText:Localized(@"请检查您的助记词", nil) imageName:@"exclamation_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_exclamation_mark];
+        [alert show];
         return;
     }
     NSString *tagStr = [_selectTagList componentsJoinedByString:@" "];
     if ([tagStr isEqualToString:_walletModel.mnemonicPhrase]) {
-        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"是否删除本地助记词" contentText:@"助记词备份成功,\n是否从SEC钱包中删除助记词？" imageName:@"question_mark" leftButtonTitle:@"取消" rightButtonTitle:@"确定" alertViewType:CommonAlertViewType_question_mark];
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"是否删除本地助记词", nil) contentText:Localized(@"助记词备份成功,\n是否从SEC钱包中删除助记词？", nil) imageName:@"question_mark" leftButtonTitle:Localized(@"取消", nil) rightButtonTitle:Localized(@"确认", nil) alertViewType:CommonAlertViewType_question_mark];
         [alert show];
+        alert.rightBlock = ^() {
+            /***********更新当前钱包信息***********/
+            NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
+            NSData* datapath = [NSData dataWithContentsOfFile:path];
+            NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
+            NSMutableArray *list = [NSMutableArray array];
+            list = [unarchiver decodeObjectForKey:@"walletList"];
+            [unarchiver finishDecoding];
+            for (int i = 0; i< list.count; i++) {
+                WalletModel *model = list[i];
+                if ([model.walletName isEqualToString:_walletModel.walletName]) {
+                    [model setIsBackUpMnemonic:1];
+                    if (model.isFromMnemonicImport == YES) {
+                        [model setIsFromMnemonicImport:0];
+                    }
+                    [list replaceObjectAtIndex:i withObject:model];
+                }
+            }
+            //替换list中当前钱包信息
+            NSMutableData* data = [NSMutableData data];
+            NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+            [archiver encodeObject:list forKey:@"walletList"];
+            [archiver finishEncoding];
+            [data writeToFile:path atomically:YES];
+            //进入首页
+            RootViewController *controller = [[RootViewController alloc] init];
+            AppDelegateInstance.window.rootViewController = controller;
+            [AppDelegateInstance.window makeKeyAndVisible];
+            
+            /*************创建钱包成功后删除之前代币数据缓存*************/
+            [CacheUtil clearTokenCoinTradeListCacheFile];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
+        };
     }else{
-        [self hudShowWithString:@"助记词顺序不正确" delayTime:2];
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"备份失败", nil) contentText:Localized(@"请检查您的助记词", nil) imageName:@"exclamation_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_exclamation_mark];
+        [alert show];
     }
 }
 
-#pragma UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        /***********更新当前钱包信息***********/
-        NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
-        NSData* datapath = [NSData dataWithContentsOfFile:path];
-        NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
-        NSMutableArray *list = [NSMutableArray array];
-        list = [unarchiver decodeObjectForKey:@"walletList"];
-        [unarchiver finishDecoding];
-        for (int i = 0; i< list.count; i++) {
-            WalletModel *model = list[i];
-            if ([model.walletName isEqualToString:_walletModel.walletName]) {
-                [model setIsBackUpMnemonic:1];
-                if (model.isFromMnemonicImport == YES) {
-                    [model setIsFromMnemonicImport:0];
-                }
-                [list replaceObjectAtIndex:i withObject:model];
-            }
-        }
-        //替换list中当前钱包信息
-        NSMutableData* data = [NSMutableData data];
-        NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-        [archiver encodeObject:list forKey:@"walletList"];
-        [archiver finishEncoding];
-        [data writeToFile:path atomically:YES];
-        //进入首页
-        RootViewController *controller = [[RootViewController alloc] init];
-        AppDelegateInstance.window.rootViewController = controller;
-        [AppDelegateInstance.window makeKeyAndVisible];
-        
-        /*************创建钱包成功后删除之前代币数据缓存*************/
-        [CacheUtil clearTokenCoinTradeListCacheFile];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
-    }
-}
 
 @end

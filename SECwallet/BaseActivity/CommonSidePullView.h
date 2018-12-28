@@ -21,13 +21,9 @@ typedef enum {
 - (id)initWithWidth:(CGFloat)width
       sidePullViewType:(CommonSidePullViewType)sidePullViewType;
 
-
 - (void)show;
 
-@property (nonatomic, copy) dispatch_block_t leftBlock;
-@property (nonatomic, copy) dispatch_block_t rightBlock;
 @property (nonatomic, copy) dispatch_block_t dismissBlock;
-
 
 @end
 

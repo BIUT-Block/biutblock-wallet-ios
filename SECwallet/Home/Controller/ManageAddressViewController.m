@@ -55,8 +55,8 @@
     [self.view addSubview:titleLb];
     
     //姓名
-    UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), titleLb.maxY+Size(35), kScreenWidth -Size(15 +30), Size(25))];
-    nameLb.font = SystemFontOfSize(10);
+    UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), titleLb.maxY+Size(35), kScreenWidth -Size(20*2), Size(25))];
+    nameLb.font = BoldSystemFontOfSize(10);
     nameLb.textColor = TEXT_BLACK_COLOR;
     nameLb.text = Localized(@"请输入联系人姓名", nil);
     [self.view addSubview:nameLb];
@@ -73,7 +73,7 @@
     
     
     UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(nameLb.minX, nameCell.maxY +Size(3), nameLb.width, nameLb.height)];
-    addressLb.font = SystemFontOfSize(10);
+    addressLb.font = BoldSystemFontOfSize(10);
     addressLb.textColor = TEXT_BLACK_COLOR;
     addressLb.text = Localized(@"联系人钱包地址", nil);
     [self.view addSubview:addressLb];
@@ -100,7 +100,7 @@
 
     //手机号
     UILabel *phoneLb = [[UILabel alloc]initWithFrame:CGRectMake(addressLb.minX, addressCell.maxY +Size(4), addressLb.width, addressLb.height)];
-    phoneLb.font = SystemFontOfSize(10);
+    phoneLb.font = BoldSystemFontOfSize(10);
     phoneLb.textColor = TEXT_BLACK_COLOR;
     phoneLb.text = Localized(@"手机号码", nil);
     [self.view addSubview:phoneLb];
@@ -118,7 +118,7 @@
 
     //邮箱
     UILabel *emailLb = [[UILabel alloc]initWithFrame:CGRectMake(phoneCell.minX, phoneCell.maxY+Size(4), phoneCell.width, phoneLb.height)];
-    emailLb.font = SystemFontOfSize(10);
+    emailLb.font = BoldSystemFontOfSize(10);
     emailLb.textColor = TEXT_BLACK_COLOR;
     emailLb.text = Localized(@"邮箱", nil);
     [self.view addSubview:emailLb];
@@ -136,7 +136,7 @@
 
     //备注
     UILabel *remarkLb = [[UILabel alloc]initWithFrame:CGRectMake(nameLb.minX, emailCell.maxY +Size(4), nameLb.width, nameLb.height)];
-    remarkLb.font = SystemFontOfSize(10);
+    remarkLb.font = BoldSystemFontOfSize(10);
     remarkLb.textColor = TEXT_BLACK_COLOR;
     remarkLb.text = Localized(@"备注", nil);
     [self.view addSubview:remarkLb];

@@ -38,6 +38,11 @@
 -(void) initView
 {
     //图标
+    _bkgIV = [[UIImageView alloc] initWithFrame:self.frame];
+    _bkgIV.layer.cornerRadius = Size(10);
+    [self addSubview:_bkgIV];
+    
+    //图标
     _icon = [[UIImageView alloc] initWithFrame:CGRectMake(Size(15), (self.height -Size(25))/2, Size(25), Size(25))];
     [self addSubview:_icon];
     

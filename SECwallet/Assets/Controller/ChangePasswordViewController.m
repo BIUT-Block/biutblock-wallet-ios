@@ -8,18 +8,15 @@
 
 #import "ChangePasswordViewController.h"
 #import "ImportWalletManageViewController.h"
+#import "CommonTableViewCell.h"
 
-#define kTableCellHeight Size(45)
-
-@interface ChangePasswordViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface ChangePasswordViewController ()<UITextFieldDelegate>
 {
     UITextField *passwordTF;       //密码
     UITextField *newpasswordTF;    //新密码
     UITextField *re_passwordTF;   //重复新密码
-    UITextField *passwordDesTF;   //密码提示
+    UITextField *passwordTipTF;   //密码提示
 }
-
-@property (nonatomic, strong) UITableView *infoTableView;
 
 @end
 
@@ -28,131 +25,117 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setNavgationItemTitle:@"更改密码"];
-    [self setNavgationRightTitle:@"完成" withAction:@selector(savePassword)];
-    
-    [self addInfoTableView];
+    [self addSubView];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboardAction)];
     [self.view addGestureRecognizer:tap];
     
 }
-//解决手势和cell点击事件冲突
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    /**************导航栏布局***************/
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)addSubView
+{
+    //返回按钮
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KStatusBarHeight+Size(13), Size(25), Size(15))];
+    [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
+    [self.view addSubview:backBT];
+
+    UIButton *completeBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(60+20), KStatusBarHeight+Size(11), Size(60), Size(24))];
+    [completeBT greenBorderBtnStyle:Localized(@"完成",nil) andBkgImg:@"continue"];
+    [completeBT addTarget:self action:@selector(completeAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:completeBT];
+    //标题
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), completeBT.maxY +Size(10), Size(200), Size(30))];
+    titleLb.textColor = TEXT_BLACK_COLOR;
+    titleLb.font = BoldSystemFontOfSize(20);
+    titleLb.text = Localized(@"更改密码",nil);
+    [self.view addSubview:titleLb];
     
-    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
-    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
-        return NO;
-    }
-    return YES;
-}
-
-- (void)addInfoTableView
-{
-    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-KNaviHeight +Size(15)) style:UITableViewStyleGrouped];
-    _infoTableView.showsVerticalScrollIndicator = NO;
-    _infoTableView.delegate = self;
-    _infoTableView.dataSource = self;
-    _infoTableView.backgroundColor = BACKGROUND_DARK_COLOR;
-    _infoTableView.scrollEnabled = NO;
-    _infoTableView.tableFooterView = [self addTableFooterView];
-    [self.view addSubview:_infoTableView];
-}
-
-#pragma mark - addTableFooterView
-- (UIView *)addTableFooterView
-{
-    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, Size(80))];
-    UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15), Size(20), Size(235), Size(30))];
-    desLb.font = SystemFontOfSize(14);
+    //当前密码
+    CommonTableViewCell *pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    pswCell.frame = CGRectMake(titleLb.minX, titleLb.maxY +Size(30), kScreenWidth -titleLb.minX*2, Size(36));
+    [self.view addSubview:pswCell];
+    UILabel *passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(10), 0, Size(90), pswCell.height)];
+    passwordDesLb.font = BoldSystemFontOfSize(10);
+    passwordDesLb.textColor = TEXT_BLACK_COLOR;
+    passwordDesLb.text = Localized(@"当前密码", nil);
+    [pswCell addSubview:passwordDesLb];
+    passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordDesLb.maxX +Size(10), passwordDesLb.minY, Size(120), pswCell.height)];
+    passwordTF.font = SystemFontOfSize(8);
+    passwordTF.textColor = TEXT_BLACK_COLOR;
+    passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
+    passwordTF.placeholder = Localized(@"请输入当前密码", nil);
+    passwordTF.secureTextEntry = YES;
+    passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [pswCell addSubview:passwordTF];
+    
+    //新密码
+    CommonTableViewCell *newpswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    newpswCell.frame = CGRectMake(pswCell.minX, pswCell.maxY +Size(8), pswCell.width, pswCell.height);
+    [self.view addSubview:newpswCell];
+    UILabel *newpasswordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(passwordDesLb.minX, 0, passwordDesLb.width, newpswCell.height)];
+    newpasswordDesLb.font = BoldSystemFontOfSize(10);
+    newpasswordDesLb.textColor = TEXT_BLACK_COLOR;
+    newpasswordDesLb.text = Localized(@"新密码", nil);
+    [newpswCell addSubview:newpasswordDesLb];
+    newpasswordTF = [[UITextField alloc] initWithFrame:CGRectMake(newpasswordDesLb.maxX +Size(10), 0, passwordTF.width, newpswCell.height)];
+    newpasswordTF.font = SystemFontOfSize(8);
+    newpasswordTF.textColor = TEXT_BLACK_COLOR;
+    newpasswordTF.placeholder = Localized(@"8~30位数字，英文字母以及特殊字符至少2种组合", nil);
+    newpasswordTF.keyboardType = UIKeyboardTypeASCIICapable;
+    newpasswordTF.secureTextEntry = YES;
+    newpasswordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [newpswCell addSubview:newpasswordTF];
+    
+    //确认密码
+    CommonTableViewCell *re_pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    re_pswCell.frame = CGRectMake(newpswCell.minX, newpswCell.maxY +Size(8), pswCell.width, pswCell.height);
+    [self.view addSubview:re_pswCell];
+    UILabel *re_passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(passwordDesLb.minX, 0, passwordDesLb.width, re_pswCell.height)];
+    re_passwordDesLb.font = BoldSystemFontOfSize(10);
+    re_passwordDesLb.textColor = TEXT_BLACK_COLOR;
+    re_passwordDesLb.text = Localized(@"确认密码", nil);
+    [re_pswCell addSubview:re_passwordDesLb];
+    re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordDesLb.maxX +Size(10), 0, passwordTF.width, passwordTF.height)];
+    re_passwordTF.font = SystemFontOfSize(8);
+    re_passwordTF.textColor = TEXT_BLACK_COLOR;
+    re_passwordTF.placeholder = Localized(@"请再次确认密码", nil);
+    re_passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
+    re_passwordTF.secureTextEntry = YES;
+    re_passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [re_pswCell addSubview:re_passwordTF];
+    
+    //密码提示
+    CommonTableViewCell *pswTipCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    pswTipCell.frame = CGRectMake(re_pswCell.minX, re_pswCell.maxY +Size(8), re_pswCell.width, re_pswCell.height);
+    [self.view addSubview:pswTipCell];
+    UILabel *passwordTipDesLb = [[UILabel alloc] initWithFrame:CGRectMake(re_passwordDesLb.minX, 0, re_passwordDesLb.width, pswTipCell.height)];
+    passwordTipDesLb.font = BoldSystemFontOfSize(10);
+    passwordTipDesLb.textColor = TEXT_BLACK_COLOR;
+    passwordTipDesLb.text = Localized(@"密码提示", nil);
+    [pswTipCell addSubview:passwordTipDesLb];
+    passwordTipTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordTipDesLb.maxX +Size(10), 0, re_passwordTF.width, pswTipCell.height)];
+    passwordTipTF.font = SystemFontOfSize(10);
+    passwordTipTF.textColor = TEXT_BLACK_COLOR;
+    passwordTipTF.placeholder = Localized(@"选填", nil);
+    passwordTipTF.delegate = self;
+    [pswTipCell addSubview:passwordTipTF];
+    
+    UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(70), pswTipCell.maxY +Size(30), pswTipCell.width, Size(30))];
+    desLb.font = SystemFontOfSize(9);
     desLb.textColor = TEXT_DARK_COLOR;
-    desLb.text = @"忘记密码？导入助记词或私钥可重置密码。";
-    [footView addSubview:desLb];
-    UIButton *importBtn = [[UIButton alloc] initWithFrame:CGRectMake(desLb.maxX, desLb.minY, Size(50), Size(30))];
-    importBtn.titleLabel.font = SystemFontOfSize(14);
-    [importBtn setTitleColor:COLOR(173, 129, 65, 1) forState:UIControlStateNormal];
-    [importBtn setTitle:@"马上导入" forState:UIControlStateNormal];
+    desLb.numberOfLines = 2;
+    desLb.text = Localized(@"忘记密码？\n导入助记词或私钥可重置密码", nil);
+    [self.view addSubview:desLb];
+    UIButton *importBtn = [[UIButton alloc] initWithFrame:CGRectMake(desLb.minX, desLb.maxY+Size(20), kScreenWidth-desLb.minX*2, Size(35))];
+    [importBtn greenBorderBtnStyle:Localized(@"马上导入",nil) andBkgImg:@"continue"];
     [importBtn addTarget:self action:@selector(importBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [footView addSubview:importBtn];
-    
-    return footView;
-}
-
-#pragma mark - Table view data source
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 4;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0.1f;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 0.1f;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return kTableCellHeight;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //每个单元格的视图
-    static NSString *itemCell = @"cell_item";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell];
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    if (indexPath.row == 0) {
-        //密码
-        passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(Size(15), 0, kScreenWidth -Size(15 +10), kTableCellHeight)];
-        passwordTF.font = SystemFontOfSize(16);
-        passwordTF.textColor = TEXT_BLACK_COLOR;
-        passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
-        passwordTF.secureTextEntry = YES;
-        passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        passwordTF.placeholder = @"当前密码";
-        [cell.contentView addSubview:passwordTF];
-        
-    }else if (indexPath.row == 1) {
-        //新密码
-        newpasswordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordTF.minX, 0, passwordTF.width, kTableCellHeight)];
-        newpasswordTF.font = SystemFontOfSize(16);
-        newpasswordTF.textColor = TEXT_BLACK_COLOR;
-        newpasswordTF.secureTextEntry = YES;
-        newpasswordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        newpasswordTF.placeholder = @"新密码";
-        newpasswordTF.keyboardType = UIKeyboardTypeASCIICapable;
-        [cell.contentView addSubview:newpasswordTF];
-        
-    }else if (indexPath.row == 2) {
-        //重复密码
-        re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(newpasswordTF.minX, 0, newpasswordTF.width, kTableCellHeight)];
-        re_passwordTF.font = SystemFontOfSize(16);
-        re_passwordTF.textColor = TEXT_BLACK_COLOR;
-        re_passwordTF.placeholder = @"重复新密码";
-        re_passwordTF.secureTextEntry = YES;
-        re_passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        re_passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
-        [cell.contentView addSubview:re_passwordTF];
-        
-    }else if (indexPath.row == 3) {
-        //密码提示
-        passwordDesTF = [[UITextField alloc] initWithFrame:CGRectMake(re_passwordTF.minX, 0, re_passwordTF.width, kTableCellHeight)];
-        passwordDesTF.font = SystemFontOfSize(16);
-        passwordDesTF.textColor = TEXT_BLACK_COLOR;
-        passwordDesTF.placeholder = @"密码提示（选填）";
-        passwordDesTF.delegate = self;
-        [cell.contentView addSubview:passwordDesTF];
-    }
-    
-    return cell;
+    [self.view addSubview:importBtn];
 }
 
 #pragma mark 完成
@@ -188,7 +171,7 @@
             WalletModel *model = list[i];
             if ([model.walletName isEqualToString:_walletModel.walletName]) {
                 [model setLoginPassword:newpasswordTF.text];
-                [model setPasswordTip:passwordDesTF.text];
+                [model setPasswordTip:passwordTipTF.text];
                 [list replaceObjectAtIndex:i withObject:model];
             }
         }
@@ -212,12 +195,12 @@
 #pragma UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField == passwordDesTF) {
+    if (textField == passwordTipTF) {
         //限制输入12位
         if (range.length == 1 && string.length == 0) {
             return YES;
-        }else if (passwordDesTF.text.length >= 12) {
-            passwordDesTF.text = [textField.text substringToIndex:12];
+        }else if (passwordTipTF.text.length >= 12) {
+            passwordTipTF.text = [textField.text substringToIndex:12];
             return NO;
         }
     }
@@ -237,6 +220,7 @@
     [passwordTF resignFirstResponder];
     [newpasswordTF resignFirstResponder];
     [re_passwordTF resignFirstResponder];
+    [passwordTipTF resignFirstResponder];
 }
 
 @end

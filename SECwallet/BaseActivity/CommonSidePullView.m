@@ -9,12 +9,12 @@
 #import "CommonSidePullView.h"
 #import "WalletModel.h"
 
-#define kAssetsViewWidth      kScreenWidth -Size(50)
-#define kAssetsViewHeight     kScreenHeight +KNaviHeight
-#define KToStatusBarHeight    (IS_iPhoneX ? Size(38) : (IS_IOS11 ? Size(18) : 0))
-
+#define HUDYOFFSET   kScreenHeight/Size(3.3)
 
 @interface CommonSidePullView()<UIGestureRecognizerDelegate>
+{
+    MBProgressHUD *HUD; //透明提示框
+}
 
 @property (nonatomic, strong) WalletModel *currentWallet;
 @property (nonatomic, strong) UIView *backView;
@@ -206,24 +206,7 @@
     }else if (sender.tag == 102) {
         pastboard.string = _currentWallet.keyStore;
     }
-    
-//    [self hudShowWithString:@"已复制" delayTime:2];
-}
-
-- (void)leftBtnClicked:(id)sender
-{
-    if (self.leftBlock) {
-        self.leftBlock();
-    }
-    [self dismissSidePullView];
-    
-}
-- (void)rightBtnClicked:(id)sender
-{
-    if (self.rightBlock) {
-        self.rightBlock();
-    }
-    [self dismissSidePullView];
+    [self hudShowWithString:@"已复制" delayTime:2];
 }
 
 - (void)show
@@ -235,7 +218,6 @@
         self.frame = CGRectMake(kScreenWidth-_sidePullViewWidth, 0, _sidePullViewWidth, _sidePullViewHeight);
         [topVC.view addSubview:self];
     }];
-    
 }
 
 - (void)dismissSidePullView
@@ -256,17 +238,13 @@
     return topVC;
 }
 
-
 - (void)removeFromSuperview
 {
     [_backView removeFromSuperview];
     _backView = nil;
-    
-//    UIViewController *topVC = [self appRootViewController];
     //从左向右移动
     [UIView animateWithDuration:0.20 animations:^{
         self.frame = CGRectMake(kScreenWidth, 0, _sidePullViewWidth, _sidePullViewHeight);
-//        [topVC.view addSubview:self];
     }];
 }
 
@@ -294,6 +272,20 @@
     }];
     
     [super willMoveToSuperview:newSuperview];
+}
+
+/** 显示提示信息 */
+- (void)hudShowWithString:(NSString *)str delayTime:(CGFloat)time{
+    
+    HUD = [MBProgressHUD showHUDAddedTo:AppDelegateInstance.window animated:YES];
+    HUD.labelFont = SystemFontOfSize(10);
+    HUD.cornerRadius = Size(5);
+    HUD.color = COLOR(68, 83, 91, 1);
+    HUD.margin = Size(10);
+    HUD.mode = MBProgressHUDModeText;
+    HUD.labelText = str;
+    HUD.yOffset = HUDYOFFSET;
+    [HUD hide:YES afterDelay:time];
 }
 
 @end
