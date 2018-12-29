@@ -48,6 +48,9 @@
 //字体绿色
 #define TEXT_GREEN_COLOR    COLOR(40, 217, 148, 1)
 
+//字体红色
+#define TEXT_RED_COLOR    COLOR(237, 28, 57, 1)
+
 // 分割线颜色
 #define DIVIDE_LINE_COLOR  COLOR(222, 223, 224, 1)
 

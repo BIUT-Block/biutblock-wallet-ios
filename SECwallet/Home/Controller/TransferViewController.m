@@ -68,7 +68,7 @@
     UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(10), Size(200), Size(30))];
     titleLb.textColor = TEXT_BLACK_COLOR;
     titleLb.font = BoldSystemFontOfSize(20);
-    titleLb.text = Localized(@"SEC转账",nil);
+    titleLb.text = [NSString stringWithFormat:@"SEC %@",Localized(@"转账",nil)];
     [self.view addSubview:titleLb];
     
     UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(45), Size(200), Size(25))];

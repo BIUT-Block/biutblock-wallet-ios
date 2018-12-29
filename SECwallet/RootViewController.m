@@ -8,16 +8,11 @@
 
 
 #import "RootViewController.h"
+#import "DiscoveryViewController.h"
 #import "AssetsViewController.h"
 #import "SettingViewController.h"
 
 @interface RootViewController ()
-{
-    UIView *bkgView;
-    UIButton *homeBT;
-    UIButton *settingBT;
-    UIView *bottomLine;
-}
 
 @end
 
@@ -26,88 +21,43 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    //隐藏底部黑线
+    [self.tabBar setClipsToBounds:YES];
     // 加载子视图控制器
     [self loadViewControllers];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabView) name:NotificationShowTabView object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hiddenTabView) name:NotificationHiddenTabView object:nil];
-    
-}
-
--(void)showTabView
-{
-    bkgView.hidden = NO;
-    bottomLine.hidden = NO;
-}
-
--(void)hiddenTabView
-{
-    bkgView.hidden = YES;
-    bottomLine.hidden = YES;
 }
 
 - (void)loadViewControllers
 {
-    //切换视图
-    bkgView = [[UIView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(130))/2, kScreenHeight -Size(40+25), Size(130), Size(40))];
-    bkgView.backgroundColor = COLOR(244, 245, 246, 1);
-    bkgView.layer.cornerRadius = Size(10);
-    [self.view addSubview:bkgView];
-    //中间线
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(bkgView.width/2, Size(3), Size(0.5), bkgView.height -Size(3*2))];
-    line.backgroundColor = COLOR(230, 231, 232, 1);
-    [bkgView addSubview:line];
-    //两个按钮
-    homeBT = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, bkgView.width/2, bkgView.height)];
-    [homeBT setImage:[UIImage imageNamed:@"icon_tab_selected_01"] forState:UIControlStateNormal];
-    [homeBT addTarget:self action:@selector(homeBTAction) forControlEvents:UIControlEventTouchUpInside];
-    [bkgView addSubview:homeBT];
-    settingBT = [[UIButton alloc]initWithFrame:CGRectMake(homeBT.maxX, 0, bkgView.width/2, bkgView.height)];
-    [settingBT setImage:[UIImage imageNamed:@"icon_tab_normal_02"] forState:UIControlStateNormal];
-    [settingBT addTarget:self action:@selector(settingBTAction) forControlEvents:UIControlEventTouchUpInside];
-    [bkgView addSubview:settingBT];
+//    DiscoveryViewController *vc1 = [[DiscoveryViewController alloc] init];
+//    UINavigationController *discoveryNav = [[UINavigationController alloc] initWithRootViewController:vc1];
+//    discoveryNav.tabBarItem = [[UITabBarItem alloc]initWithTitle:Localized(@"发现", nil) image:[UIImage imageNamed:@"icon_tab_normal_01"] selectedImage:[UIImage imageNamed:@"icon_tab_selected_01"]];
+//    discoveryNav.tabBarItem.tag = 100;
+//    discoveryNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"icon_tab_selected_01"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    discoveryNav.tabBarItem.image = [[UIImage imageNamed:@"icon_tab_normal_01"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    [discoveryNav.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObject:TEXT_GREEN_COLOR forKey:NSForegroundColorAttributeName] forState:UIControlStateSelected];
     
-    //下划线
-    bottomLine = [[UIView alloc]initWithFrame:CGRectMake(bkgView.minX +Size(13), bkgView.maxY, bkgView.width/2 -Size(13*2), Size(1.5))];
-    bottomLine.backgroundColor = COLOR(56, 142, 218, 1);
-    bottomLine.layer.cornerRadius = Size(2);
-    [self.view addSubview:bottomLine];
+    AssetsViewController *vc2 = [[AssetsViewController alloc] init];
+    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:vc2];
+    homeNav.tabBarItem = [[UITabBarItem alloc]initWithTitle:Localized(@"首页", nil) image:[UIImage imageNamed:@"icon_tab_normal_01"] selectedImage:[UIImage imageNamed:@"icon_tab_selected_01"]];
+    homeNav.tabBarItem.tag = 101;
+    homeNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"icon_tab_selected_01"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    homeNav.tabBarItem.image = [[UIImage imageNamed:@"icon_tab_normal_01"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [homeNav.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObject:TEXT_GREEN_COLOR forKey:NSForegroundColorAttributeName] forState:UIControlStateSelected];
     
-    //默认首页
-    AssetsViewController *vc1 = [[AssetsViewController alloc] init];
-    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:vc1];
-    // 添加标签控制器
-    [self setViewControllers:@[homeNav] animated:YES];
+    SettingViewController *vc3 = [[SettingViewController alloc] init];
+    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:vc3];
+    mineNav.tabBarItem = [[UITabBarItem alloc]initWithTitle:Localized(@"我的", nil) image:[UIImage imageNamed:@"icon_tab_normal_02"] selectedImage:[UIImage imageNamed:@"icon_tab_selected_02"]];
+    mineNav.tabBarItem.tag = 102;
+    mineNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"icon_tab_selected_02"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    mineNav.tabBarItem.image = [[UIImage imageNamed:@"icon_tab_normal_02"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [mineNav.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObject:TEXT_GREEN_COLOR forKey:NSForegroundColorAttributeName] forState:UIControlStateSelected];
     
-}
-
--(void)homeBTAction
-{
-    AssetsViewController *vc = [[AssetsViewController alloc] init];
-    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:vc];
+    // 将子视图控制器放入数组
+    NSArray *vcs = @[homeNav, mineNav];
     // 添加标签控制器
-    [self setViewControllers:@[homeNav] animated:YES];
-    [homeBT setImage:[UIImage imageNamed:@"icon_tab_selected_01"] forState:UIControlStateNormal];
-    [settingBT setImage:[UIImage imageNamed:@"icon_tab_normal_02"] forState:UIControlStateNormal];
-    //从右向左移动
-    [UIView animateWithDuration:0.20 animations:^{
-        bottomLine.frame = CGRectMake(bkgView.minX +Size(13), bkgView.maxY, bkgView.width/2 -Size(13*2), Size(1.4));
-    }];
-}
-
--(void)settingBTAction
-{
-    // 默认s设置页
-    SettingViewController *vc = [[SettingViewController alloc] init];
-    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:vc];
-    // 添加标签控制器
-    [self setViewControllers:@[mineNav] animated:YES];
-    [homeBT setImage:[UIImage imageNamed:@"icon_tab_normal_01"] forState:UIControlStateNormal];
-    [settingBT setImage:[UIImage imageNamed:@"icon_tab_selected_02"] forState:UIControlStateNormal];
-    //从左向右移动
-    [UIView animateWithDuration:0.20 animations:^{
-        bottomLine.frame = CGRectMake(bkgView.minX +bkgView.width/2 +Size(13), bkgView.maxY, bkgView.width/2 -Size(13*2), Size(1.4));
-    }];
+    [self setViewControllers:vcs animated:YES];
 }
 
 

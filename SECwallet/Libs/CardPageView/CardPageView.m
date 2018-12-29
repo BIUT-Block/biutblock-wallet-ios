@@ -41,7 +41,7 @@
         self.backgroundColor = BACKGROUND_DARK_COLOR;
         [self initData];
         cellWidth = self.frame.size.width -Size(40);
-        cellHeight = self.frame.size.height -Size(20);
+        cellHeight = self.frame.size.height -Size(15);
         itemSpacing = Size(5);
         _walletArray = walletList;
         
@@ -52,8 +52,8 @@
 
 -(void)initData
 {
-    _collectionViewRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height -Size(20));
-    _pageControlRect = CGRectMake(0, _collectionViewRect.origin.y +_collectionViewRect.size.height -Size(15), kScreenWidth, Size(15));
+    _collectionViewRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height -Size(15));
+    _pageControlRect = CGRectMake(0, _collectionViewRect.origin.y +_collectionViewRect.size.height -Size(12), kScreenWidth, Size(15));
 }
 
 -(void)initSubviews{

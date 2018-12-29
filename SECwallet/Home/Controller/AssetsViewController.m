@@ -20,9 +20,9 @@
 #import "CardPageView.h"
 #import "JXMovableCellTableView.h"
 
-#import "SelectEntryViewController.h"
+#import "BackupFileViewController.h"
 
-#define kHeaderHeight    Size(200)
+#define kHeaderHeight    Size(195)
 #define USD_to_CNY       6.8872
 
 @interface AssetsViewController ()<JXMovableCellTableViewDataSource,JXMovableCellTableViewDelegate,CardPageViewDelegate>
@@ -52,7 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.leftBarButtonItem = nil;
+    
     [self setNavgationRightImage:[UIImage imageNamed:@"more"] withAction:@selector(rightClick)];
     
     NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
@@ -80,7 +80,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.leftBarButtonItem = nil;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    self.view.backgroundColor = COLOR(241, 242, 243, 1);
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         //网络监听
         [self networkManager];
@@ -131,11 +133,17 @@
 
 - (void)addSubView
 {
-    _walletListPageView = [[CardPageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kHeaderHeight) withWalletList:_walletList];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KNaviHeight +kHeaderHeight/2)];
+    headerView.backgroundColor = COLOR(246, 252, 251, 1);
+    [self.view addSubview:headerView];
+    _walletListPageView = [[CardPageView alloc]initWithFrame:CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight) withWalletList:_walletList];
+    _walletListPageView.backgroundColor = COLOR(242, 243, 244, 1);
     _walletListPageView.delegate = self;
     [self.view addSubview:_walletListPageView];
     
-    _infoTableView = [[JXMovableCellTableView alloc]initWithFrame:CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight) style:UITableViewStylePlain];
+    _infoTableView = [[JXMovableCellTableView alloc]initWithFrame:CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight) style:UITableViewStyleGrouped];
+    _infoTableView.backgroundColor = CLEAR_COLOR;
+    _infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _infoTableView.showsVerticalScrollIndicator = NO;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
@@ -155,7 +163,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return Size(35);
+    return Size(42)+ Size(1.5*2);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -165,31 +173,27 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell];
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.font = SystemFontOfSize(10);
-    cell.textLabel.textColor = COLOR(0, 209, 70, 1);
+    cell.layer.cornerRadius = Size(5);
+    cell.backgroundColor = COLOR(242, 243, 244, 1);
+    cell.textLabel.font = BoldSystemFontOfSize(12);
+    cell.textLabel.textColor = TEXT_BLACK_COLOR;
+    cell.textLabel.backgroundColor = BACKGROUND_DARK_COLOR;
+    cell.detailTextLabel.font = BoldSystemFontOfSize(12);
+    cell.detailTextLabel.textColor = TEXT_BLACK_COLOR;
+    cell.detailTextLabel.backgroundColor = BACKGROUND_DARK_COLOR;
     
-    UIImageView *bkgIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, _infoTableView.width, Size(35))];
-    bkgIV.image = [UIImage imageNamed:@"tokenListBkg"];
-    [cell.contentView addSubview:bkgIV];
-//    TokenCoinModel *model = _dataArrays[indexPath.row];
-//    cell.imageView.image = [UIImage imageNamed:model.icon];
-//    cell.textLabel.text = model.name;
-//    //金额
-//    CGSize size = [model.tokenNum calculateSize:SystemFontOfSize(10) maxWidth:_infoTableView.width/2];
-//    if (size.width < Size(35)) {
-//        size.width = Size(35);
-//    }
-//    UIButton *sumBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(20 +15) -(size.width +Size(10) +Size(15)), Size(35 -16)/2, size.width, Size(16))];
-//    sumBT.layer.borderWidth = Size(0.5);
-//    sumBT.layer.borderColor = COLOR(0, 209, 70, 1).CGColor;
-//    sumBT.layer.cornerRadius = Size(8);
-//    sumBT.titleLabel.font = SystemFontOfSize(10);
-//    [sumBT setTitleColor:COLOR(0, 209, 70, 1) forState:UIControlStateNormal];
-//    [sumBT setTitle:[NSString stringWithFormat:@"%.2f",[model.tokenNum floatValue]] forState:UIControlStateNormal];
-//    [cell.contentView addSubview:sumBT];
+    UIView *contentView = [[UIView alloc]initWithFrame:CGRectMake(0, Size(1.5), kScreenWidth -Size(20 *2),Size(42))];
+    contentView.backgroundColor = BACKGROUND_DARK_COLOR;
+    contentView.layer.cornerRadius = Size(5);
+    [cell.contentView addSubview:contentView];
+    [cell.contentView sendSubviewToBack:contentView];
+    TokenCoinModel *model = _dataArrays[indexPath.section];
+    cell.imageView.image = [UIImage imageNamed:model.icon];
+    cell.textLabel.text = model.name;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",[model.tokenNum floatValue]];
     
     return cell;
 }
@@ -200,7 +204,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
     //资产详情
     TradeDetailViewController *viewController = [[TradeDetailViewController alloc]init];
-    TokenCoinModel *model = _dataArrays[indexPath.row];
+    TokenCoinModel *model = _dataArrays[indexPath.section];
     viewController.tokenCoinModel = model;
     viewController.walletModel = currentWallet;
     viewController.hidesBottomBarWhenPushed = YES;
@@ -217,12 +221,12 @@
 - (void)tableView:(JXMovableCellTableView *)tableView didMoveCellFromIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
     // 移动cell之后更换数据数组里的循序
-    [_dataArrays exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
+    [_dataArrays exchangeObjectAtIndex:fromIndexPath.section withObjectAtIndex:toIndexPath.section];
     //改变tokenIconList的排序
     NSMutableArray *coinlist = [NSMutableArray arrayWithArray:currentWallet.tokenCoinList];
-    TokenCoinModel *coinModel = _dataArrays[toIndexPath.row];
-    [coinlist removeObjectAtIndex:fromIndexPath.row];
-    [coinlist insertObject:coinModel.name atIndex:toIndexPath.row];
+    TokenCoinModel *coinModel = _dataArrays[toIndexPath.section];
+    [coinlist removeObjectAtIndex:fromIndexPath.section];
+    [coinlist insertObject:coinModel.name atIndex:toIndexPath.section];
     [currentWallet setTokenCoinList:coinlist];
     
     /***********获取当前钱包信息***********/
@@ -256,9 +260,11 @@
 //    viewController.assetsList = assetsList;
 //    [self.navigationController pushViewController:viewController animated:YES];
     
-    SelectEntryViewController *viewController = [[SelectEntryViewController alloc]init];
-    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-    [self presentViewController:navi animated:YES completion:nil];
+    BackupFileViewController *viewController = [[BackupFileViewController alloc]init];
+    viewController.walletModel = currentWallet;
+    [self.navigationController pushViewController:viewController animated:YES];
+//    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
+//    [self presentViewController:navi animated:YES completion:nil];
 
 }
 
@@ -345,6 +351,7 @@
         model.name = @"SEC";
         model.tokenNum = currentWallet.balance;
         _dataArrays = [NSMutableArray arrayWithObject:model];
+        
         if (assetsList.count == 1) {
             for (UIView *view in self.view.subviews) {
                 [view removeFromSuperview];

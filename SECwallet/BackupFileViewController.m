@@ -72,7 +72,7 @@
     bkgView.layer.cornerRadius = Size(5);
     [self.view addSubview:bkgView];
     _showTagList = [[DWTagList alloc]initWithFrame:CGRectMake(Size(30), bkgView.minY +Size(10), kScreenWidth - Size(30)*2, bkgView.height -Size(5*2))];
-//    [_showTagList setTagBackgroundColor:BACKGROUND_DARK_COLOR];
+    [_showTagList setTagBackgroundColor:DARK_COLOR];
 //    _showTagList.textColor = TEXT_BLACK_COLOR;
     _showTagList.cornerRadius = Size(5);
 //    [_showTagList setTagHighlightColor:BACKGROUND_DARK_COLOR];
@@ -123,7 +123,6 @@
                 }
             }];
             [_tagList setTags:tagArr andSelectTags:_selectTagList];
-            
         }
     }else if (tagList == _showTagList) {
         //删除

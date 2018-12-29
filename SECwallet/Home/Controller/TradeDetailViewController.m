@@ -37,8 +37,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [self setNavgationItemTitle:_tokenCoinModel.name];
     
     [self addSubView];
     [self addNoNetworkView];
@@ -51,6 +49,13 @@
     }else{
         [self requestTransactionHash];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    /**************导航栏布局***************/
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 #pragma TransferViewControllerDelegate 转账成功事件
@@ -72,7 +77,54 @@
 
 - (void)addSubView
 {
-    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight -KNaviHeight -Size(45)) style:UITableViewStyleGrouped];
+    //返回按钮
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KStatusBarHeight+Size(13), Size(25), Size(15))];
+    [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
+    [self.view addSubview:backBT];
+    
+    //标题
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(10), Size(200), Size(30))];
+    titleLb.textColor = TEXT_BLACK_COLOR;
+    titleLb.font = BoldSystemFontOfSize(20);
+    titleLb.text = [NSString stringWithFormat:@"SEC %@",Localized(@"收款",nil)];
+    [self.view addSubview:titleLb];
+    
+    NSArray *titleArr = @[Localized(@"可用", nil),Localized(@"冻结", nil),Localized(@"总计", nil)];
+    NSArray *contentArr = @[_walletModel.balance,_walletModel.balance,_walletModel.balance];
+    NSArray *CNYArr = @[_walletModel.balance,_walletModel.balance,_walletModel.balance];
+    for (int i = 0; i< titleArr.count; i++) {
+        UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(20) +i*Size(35), Size(80), Size(35))];
+        desLb.font = SystemFontOfSize(12);
+        desLb.textColor = TEXT_BLACK_COLOR;
+        desLb.text = titleArr[i];
+        [self.view addSubview:desLb];
+        UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY+Size(5), kScreenWidth -desLb.minX*2 -desLb.width, (desLb.height-Size(5*2))/2)];
+        contentLb.font = SystemFontOfSize(13);
+        contentLb.textColor = TEXT_GREEN_COLOR;
+        contentLb.textAlignment = NSTextAlignmentRight;
+        contentLb.text = contentArr[i];
+        [self.view addSubview:contentLb];
+        UILabel *CNYLb = [[UILabel alloc]initWithFrame:CGRectMake(contentLb.minX, contentLb.maxY, contentLb.width, contentLb.height)];
+        CNYLb.font = SystemFontOfSize(13);
+        CNYLb.textColor = TEXT_GREEN_COLOR;
+        CNYLb.textAlignment = NSTextAlignmentRight;
+        CNYLb.text = CNYArr[i];
+        [self.view addSubview:CNYLb];
+        //横线
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth -desLb.minX*2, Size(0.5))];
+        line.backgroundColor = DIVIDE_LINE_COLOR;
+        [self.view addSubview:line];
+    }
+    
+    UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY+Size(20 +35*3 +15), Size(200), Size(25))];
+    desLb.font = BoldSystemFontOfSize(12);
+    desLb.textColor = TEXT_LightDark_COLOR;
+    desLb.text = Localized(@"最近交易记录", nil);
+    [self.view addSubview:desLb];
+    
+    
+    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, desLb.maxY+Size(10), kScreenWidth, kScreenHeight -desLb.maxY-Size(10 +85)) style:UITableViewStylePlain];
     _infoTableView.showsVerticalScrollIndicator = NO;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
@@ -125,25 +177,14 @@
 }
 
 #pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 2;
-}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? 1 : _dataArrays.count+1;
+    return _dataArrays.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return section == 0 ? Size(3) :Size(8);
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *view = [[UIView alloc]init];
-    view.backgroundColor = DARK_COLOR;
-    return view;
+    return 0.1f;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -152,87 +193,31 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        return Size(95);
-    }else if (indexPath.section == 1 && indexPath.row == 0) {
-        return Size(40);
-    }else{
-        return kTableCellHeight;
-    }
+    return kTableCellHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 || (indexPath.section == 1 && indexPath.row ==0)) {
-        //每个单元格的视图
-        static NSString *itemCell = @"cell_item";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell];
-        if (cell == nil)
-        {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.textLabel.font = SystemFontOfSize(14);
-        cell.textLabel.textColor = COLOR(159, 159, 159, 1);
-        if (indexPath.section == 0 ) {
-            //项目
-//            NSArray *titArr = @[@"可用",@"冻结",@"折合（CNY）"];
-            NSArray *titArr = @[@"可用",@"冻结"];
-            CGFloat width = (kScreenWidth -Size(15)*(titArr.count -1))/titArr.count;
-            for (int i = 0; i<titArr.count; i++) {
-                UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15) +width *i, Size(5), width, Size(25))];
-                titLb.font = SystemFontOfSize(14);
-                titLb.textColor = TEXT_DARK_COLOR;
-                titLb.text = titArr[i];
-                [cell.contentView addSubview:titLb];
-            }
-            
-            NSArray *sumArr = @[_walletModel.balance,@"0.00000000",@"0.00000000"];
-            for (int i = 0; i<titArr.count; i++) {
-                UILabel *sumLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15) +width *i, Size(45), width, Size(15))];
-                sumLb.font = SystemFontOfSize(14);
-                sumLb.textColor = TEXT_BLACK_COLOR;
-                sumLb.text = sumArr[i];
-                [cell.contentView addSubview:sumLb];
-            }
-            //折算
-            NSArray *desArr = @[@"≈0.12",@"≈12.44",@"≈0.00000000"];
-            for (int i = 0; i<titArr.count; i++) {
-                UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15) +width *i, Size(60), width, Size(15))];
-                desLb.font = SystemFontOfSize(14);
-                desLb.textColor = TEXT_BLACK_COLOR;
-                desLb.text = desArr[i];
-//                [cell.contentView addSubview:desLb];
-            }
-            return cell;
-        }else{
-            cell.textLabel.text = @"最近交易记录";
-            return cell;
-        }
-        
-    }else{
-        static NSString *itemCell2 = @"cell_item2";
-        TradeListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell2];
-        if (cell == nil)
-        {
-            cell = [[TradeListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        TradeModel *model = _dataArrays[indexPath.row -1];
-        [cell fillCellWithObject:model];
-        
-        return cell;
+    //每个单元格的视图
+    static NSString *itemCell = @"cell_item";
+    TradeListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemCell];
+    if (cell == nil)
+    {
+        cell = [[TradeListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    TradeModel *model = _dataArrays[indexPath.row];
+    [cell fillCellWithObject:model];
+    
+    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1 && indexPath.row >0) {
-        TradeModel *model = _dataArrays[indexPath.row -1];
-        TradeInfoViewController *viewController = [[TradeInfoViewController alloc] init];
-        viewController.tradeModel = model;
-        [self.navigationController pushViewController:viewController animated:YES];
-    }
+    TradeModel *model = _dataArrays[indexPath.row];
+    TradeInfoViewController *viewController = [[TradeInfoViewController alloc] init];
+    viewController.tradeModel = model;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma 获取交易记录列表

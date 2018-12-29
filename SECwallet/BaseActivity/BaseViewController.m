@@ -55,9 +55,7 @@
     self.view.backgroundColor = BACKGROUND_DARK_COLOR;
     
     navigationImageView.hidden = YES;
-    
-    [self.tabBarController.tabBar setHidden:YES];
-    
+        
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = BACKGROUND_DARK_COLOR;
     self.navigationController.navigationBar.tintColor = BLACK_COLOR;

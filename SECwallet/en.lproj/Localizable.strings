@@ -6,6 +6,10 @@
   Copyright © 2018 通证控股. All rights reserved.
 */
 
+"发现"="Discovery";
+"首页"="Home";
+"我的"="Mine";
+
 "请备份"="Backup";
 "我的钱包"="My Wallet";
 "管理钱包"="Manage Wallet";
@@ -124,7 +128,7 @@
 "密码提示"="Password prompt";
 "马上导入"="Import Now";
 "忘记密码？\n导入助记词或私钥可重置密码"="Forget Password?\nImport Mnemonic or PrivateKey to reset the password";
-"SEC转账"="SEC transfer";
+//"SEC转账"="SEC transfer";
 "收款人钱包地址"="Payee wallet address";
 "转账金额"="Transfer Amount";
 "下一步"="Next Step";
@@ -134,13 +138,15 @@
 "转入地址"="To Address";
 "付款钱包"="Payment Address";
 "金额"="Amount";
-"SEC收款"="SEC Receipt";
+"收款"="Receipt";
 "复制收款地址"="Copy Payment Address";
 "切换账户"="Switch Wallet";
 "SEC轻钱包"="SEC Light Wallet";
-
-
-
+"可用"="Avaliable";
+"冻结"="Frozen";
+"总计"="Amount";
+"最近交易记录"="Recent transaction record";
+"打包中"="Pending";
 
 
 
