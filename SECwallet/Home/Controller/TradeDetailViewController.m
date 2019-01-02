@@ -112,19 +112,23 @@
         CNYLb.text = CNYArr[i];
         [self.view addSubview:CNYLb];
         //横线
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth -desLb.minX*2, Size(0.5))];
-        line.backgroundColor = DIVIDE_LINE_COLOR;
-        [self.view addSubview:line];
+        if (i!=2) {
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth -desLb.minX*2, Size(0.5))];
+            line.backgroundColor = DIVIDE_LINE_COLOR;
+            [self.view addSubview:line];
+        }
     }
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleLb.maxY +Size(20) +3*Size(35), kScreenWidth, Size(0.3))];
+    line.backgroundColor = DIVIDE_LINE_COLOR;
+    [self.view addSubview:line];
     
-    UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY+Size(20 +35*3 +15), Size(200), Size(25))];
+    UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, line.maxY+Size(15), Size(200), Size(25))];
     desLb.font = BoldSystemFontOfSize(12);
     desLb.textColor = TEXT_LightDark_COLOR;
     desLb.text = Localized(@"最近交易记录", nil);
     [self.view addSubview:desLb];
     
-    
-    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, desLb.maxY+Size(10), kScreenWidth, kScreenHeight -desLb.maxY-Size(10 +85)) style:UITableViewStylePlain];
+    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, desLb.maxY+Size(10), kScreenWidth, kScreenHeight -desLb.maxY-Size(10 +75)) style:UITableViewStylePlain];
     _infoTableView.showsVerticalScrollIndicator = NO;
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
@@ -137,14 +141,16 @@
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     [_infoTableView addHeaderWithTarget:self action:@selector(headerRereshing)];
     
+    CGFloat padddingLeft = Size(20);
+    CGFloat btWidth = (kScreenWidth -padddingLeft*2 -Size(10))/2;
     //转账
-    transferBT = [[UIButton alloc] initWithFrame:CGRectMake(0, _infoTableView.maxY, kScreenWidth/2, Size(45))];
-    [transferBT customerBtnStyle:@"" andBkgImg:@"transferBT"];
+    transferBT = [[UIButton alloc] initWithFrame:CGRectMake(padddingLeft, _infoTableView.maxY +Size(15), btWidth, Size(45))];
+    [transferBT goldSmallBtnStyle:Localized(@"转账",nil)];
     [transferBT addTarget:self action:@selector(transferAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:transferBT];
     //收款
-    gatherBT = [[UIButton alloc] initWithFrame:CGRectMake(transferBT.maxX, transferBT.minY, transferBT.width, transferBT.height)];
-    [gatherBT customerBtnStyle:@"" andBkgImg:@"gatherBT"];
+    gatherBT = [[UIButton alloc] initWithFrame:CGRectMake(transferBT.maxX+Size(10), transferBT.minY, transferBT.width, transferBT.height)];
+    [gatherBT goldSmallBtnStyle:Localized(@"收款",nil)];
     [gatherBT addTarget:self action:@selector(gatherAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:gatherBT];
 }

@@ -22,6 +22,7 @@
 "创建钱包"="Creat Wallet";
 "创建一个新钱包"="Create a new SEC wallet";
 "钱包名称"="Wallet Name";
+"钱包名称*"="Wallet Name*";
 "密码提示"="Password Prompt";
 "修改密码"="Change Password";
 "导出私钥"="Export PrivateKey";
@@ -73,11 +74,11 @@
 "官方钱包"="Offical wallet";
 "私钥"="PrivateKey";
 "助记词，按空格分隔"="Mnemonic, separated by spaces";
-"密码"="Password";
+"密码*"="Password*";
 "8~30位数字，英文字母以及特殊字符至少2种组合"="Ex:8~30characters,numbers,contain at least two English letters and special characters";
-"确认密码"="Confirm Password";
+"确认密码*"="Confirm Password*";
 "请再次确认密码"="Repeat the Password again";
-"密码提示（选填）"="Password prompt(optional)";
+"密码提示"="Password prompt";
 "选填"="optional";
 " 我已仔细阅读并同意服务条款"="   I have read and agreed to the Servive and Privacy Policy";
 "开始导入"="Import";
@@ -121,14 +122,15 @@
 "请检查您的助记词"="Please click your mnemonic";
 "完成"="complete";
 "更改密码"="Change Password";
-"当前密码"="Current Password";
+"当前密码*"="Current Password*";
+"当前密码验证失败"="Current Password Error";
 "请输入当前密码"="Please Type in Current Password";
-"新密码"="New Password";
+"新密码*"="New Password*";
 "请输入新密码"="Please Type in new password";
+"请再次输入密码"="Please Type in new password again";
 "密码提示"="Password prompt";
 "马上导入"="Import Now";
 "忘记密码？\n导入助记词或私钥可重置密码"="Forget Password?\nImport Mnemonic or PrivateKey to reset the password";
-//"SEC转账"="SEC transfer";
 "收款人钱包地址"="Payee wallet address";
 "转账金额"="Transfer Amount";
 "下一步"="Next Step";
@@ -146,7 +148,15 @@
 "冻结"="Frozen";
 "总计"="Amount";
 "最近交易记录"="Recent transaction record";
-"打包中"="Pending";
+"(打包中)"="(Pending)";
+"输入密码\n确认密码"="Input Password\nConfirm the password";
+"保存信息中···"="Saveing data...";
+"密码错误"="password error";
+"输入密码"="Input Password";
+"无效的密码\n请重新输入"="Invalid Password.\nPlease Check and try again.";
+"知道了"="Got it";
+"请不要截图"="No taking screenshot";
+"请确保周围没有人，没有相机！请勿使用屏幕截图或照片来保存Keystore文件或相应的QR码。"="Please make sure there are no people around and no cameras!Don’t use a screenshot or photo to keep the Keystore file or the corresponding QR code.";
 
 
 

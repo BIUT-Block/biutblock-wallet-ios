@@ -12,11 +12,13 @@
 #import "ExportKeyStoreViewController.h"
 #import "AddressCodePayViewController.h"
 #import "BackupFileBeforeViewController.h"
+#import "ConfirmPasswordViewController.h"
 
 #define kHeaderHeight    Size(212) +KStatusBarHeight
 
 @interface WalletDetailViewController ()<UITextFieldDelegate>
 {
+    UILabel *titLb;
     UITextField *walletNameTF;     //钱包名称
     UITextField *passwordDesTF;   //密码提示
     UIButton *secretBtn;  //加密按钮
@@ -84,7 +86,7 @@
     desLb.font = SystemFontOfSize(8);
     desLb.text = Localized(@"钱包名称",nil);
     [headerView addSubview:desLb];
-    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth, Size(20))];
+    titLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth, Size(20))];
     titLb.font = BoldSystemFontOfSize(20);
     titLb.textColor = TEXT_BLACK_COLOR;
     titLb.text = _walletModel.walletName;
@@ -203,122 +205,81 @@
         [self.navigationController pushViewController:viewController animated:YES];
     }else if (sender.tag == 1001) {
         //导出私钥
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:Localized(@"请输入钱包密码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            UITextField *pswTF = alertController.textFields.firstObject;
-            if (pswTF.text.length == 0) {
-                [self hudShowWithString:Localized(@"密码不能为空", nil) delayTime:1];
-                return;
-            }else{
-                if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
-                    _privateKeySidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_privateKey];
-                    [self.view addSubview:_privateKeySidePullView];
-                    [_privateKeySidePullView show];
-                }else{
-                    [self hudShowWithString:Localized(@"密码不正确", nil) delayTime:1];
-                    return;
-                }
-            }
-        }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"取消", nil) style:UIAlertActionStyleDefault handler:nil]];
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.keyboardType = UIKeyboardTypeASCIICapable;
-            textField.secureTextEntry = YES;
-        }];
-        [self presentViewController:alertController animated:true completion:nil];
+        ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
+        controller.walletModel = _walletModel;
+        [self presentViewController:controller animated:YES completion:nil];
+        controller.sureBlock = ^() {
+            _privateKeySidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_privateKey];
+            [self.view addSubview:_privateKeySidePullView];
+            [_privateKeySidePullView show];
+        };
+        
     }else if (sender.tag == 1002) {
         //导入KeyStore
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:Localized(@"请输入钱包密码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            UITextField *pswTF = alertController.textFields.firstObject;
-            if (pswTF.text.length == 0) {
-                [self hudShowWithString:Localized(@"密码不能为空", nil) delayTime:1];
-                return;
-            }else{
-                if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
-                    _keystoreSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(268) sidePullViewType:CommonSidePullViewType_keyStore];
-                    [self.view addSubview:_keystoreSidePullView];
-                    [_keystoreSidePullView show];
-                }else{
-                    [self hudShowWithString:Localized(@"密码不正确", nil) delayTime:1];
-                    return;
-                }
-            }
-        }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"取消", nil) style:UIAlertActionStyleDefault handler:nil]];
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.keyboardType = UIKeyboardTypeASCIICapable;
-            textField.secureTextEntry = YES;
-        }];
-        [self presentViewController:alertController animated:true completion:nil];
+        ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
+        controller.walletModel = _walletModel;
+        [self presentViewController:controller animated:YES completion:nil];
+        controller.sureBlock = ^() {
+            CommonSidePullView *keystoreRemindSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_keyStoreRemind];
+            [self.view addSubview:keystoreRemindSidePullView];
+            [keystoreRemindSidePullView show];
+            keystoreRemindSidePullView.dismissBlock = ^() {
+                _keystoreSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(268) sidePullViewType:CommonSidePullViewType_keyStore];
+                [self.view addSubview:_keystoreSidePullView];
+                [_keystoreSidePullView show];
+            };
+        };
     }
 }
 
 #pragma 删除钱包
 -(void)deleteAction
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:Localized(@"请输入钱包密码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UITextField *pswTF = alertController.textFields.firstObject;
-        if (pswTF.text.length == 0) {
-            [self hudShowWithString:Localized(@"密码不能为空", nil) delayTime:1];
-            return;
-        }else{
-            if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
-                NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
-                NSData* datapath = [NSData dataWithContentsOfFile:path];
-                NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
-                NSMutableArray *list = [NSMutableArray array];
-                list = [unarchiver decodeObjectForKey:@"walletList"];
-                [unarchiver finishDecoding];
-                //如果删除的钱包是当前默认的钱包则要清除钱包交易记录数据缓存
-                WalletModel *defaultMode = list[[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue]];
-                if ([defaultMode.walletName isEqualToString:_walletModel.walletName]) {
-                    [CacheUtil clearTokenCoinTradeListCacheFile];
-                }
-                
-                /***********更新当前钱包信息***********/
-                for (int i = 0; i< list.count; i++) {
-                    WalletModel *model = list[i];
-                    if ([model.walletName isEqualToString:_walletModel.walletName]) {
-                        [list removeObject:model];
-                    }
-                }
-                //替换list中当前钱包信息
-                NSMutableData* data = [NSMutableData data];
-                NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-                [archiver encodeObject:list forKey:@"walletList"];
-                [archiver finishEncoding];
-                [data writeToFile:path atomically:YES];
-                /***********更新当前选中的钱包位置信息***********/
-                [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:@"0"];
-                
-                if (list.count > 0) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
-                }
-                
-                [self backAction];
-                
-            }else{
-                [self hudShowWithString:Localized(@"密码不正确", nil) delayTime:1];
-                return;
+    ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
+    controller.walletModel = _walletModel;
+    [self presentViewController:controller animated:YES completion:nil];
+    controller.sureBlock = ^() {
+        NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
+        NSData* datapath = [NSData dataWithContentsOfFile:path];
+        NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
+        NSMutableArray *list = [NSMutableArray array];
+        list = [unarchiver decodeObjectForKey:@"walletList"];
+        [unarchiver finishDecoding];
+        //如果删除的钱包是当前默认的钱包则要清除钱包交易记录数据缓存
+        WalletModel *defaultMode = list[[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue]];
+        if ([defaultMode.walletName isEqualToString:_walletModel.walletName]) {
+            [CacheUtil clearTokenCoinTradeListCacheFile];
+        }
+        
+        /***********更新当前钱包信息***********/
+        for (int i = 0; i< list.count; i++) {
+            WalletModel *model = list[i];
+            if ([model.walletName isEqualToString:_walletModel.walletName]) {
+                [list removeObject:model];
             }
         }
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"取消", nil) style:UIAlertActionStyleDefault handler:nil]];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.keyboardType = UIKeyboardTypeASCIICapable;
-        textField.secureTextEntry = YES;
-    }];
-    [self presentViewController:alertController animated:true completion:nil];
+        //替换list中当前钱包信息
+        NSMutableData* data = [NSMutableData data];
+        NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+        [archiver encodeObject:list forKey:@"walletList"];
+        [archiver finishEncoding];
+        [data writeToFile:path atomically:YES];
+        /***********更新当前选中的钱包位置信息***********/
+        [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:@"0"];
+        if (list.count > 0) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
+        }
+        
+        [self backAction];
+    };
 }
 
 #pragma mark - 保存信息
 -(void)saveData
 {
     [self dismissKeyboardAction];
-    [self createLoadingView:Localized(@"导入钱包中···", nil)];
+    [self createLoadingView:Localized(@"保存信息中···", nil)];
     if (![walletNameTF.text isEqualToString:_walletModel.walletName]) {
         /***********更新当前钱包信息***********/
         NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
@@ -350,7 +311,8 @@
 {
     [self hiddenLoadingView];
     [self hudShowWithString:Localized(@"保存成功", nil) delayTime:1.5];
-//    [_infoTableView reloadData];
+    
+    titLb.text = _walletModel.walletName;
     [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
 }
 
@@ -377,30 +339,15 @@
 #pragma 备份助记词
 -(void)backupAction
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:Localized(@"请输入钱包密码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UITextField *pswTF = alertController.textFields.firstObject;
-        if (pswTF.text.length == 0) {
-            [self hudShowWithString:Localized(@"密码不能为空", nil) delayTime:1];
-            return;
-        }else{
-            if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
-                BackupFileBeforeViewController *controller = [[BackupFileBeforeViewController alloc]init];
-                controller.walletModel = _walletModel;
-                UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:controller];
-                [self presentViewController:navi animated:YES completion:nil];
-            }else{
-                [self hudShowWithString:Localized(@"密码不正确", nil) delayTime:1];
-                return;
-            }
-        }
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"取消", nil) style:UIAlertActionStyleDefault handler:nil]];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.keyboardType = UIKeyboardTypeASCIICapable;
-        textField.secureTextEntry = YES;
-    }];
-    [self presentViewController:alertController animated:true completion:nil];
+    ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
+    controller.walletModel = _walletModel;
+    [self presentViewController:controller animated:YES completion:nil];
+    controller.sureBlock = ^() {
+        BackupFileBeforeViewController *controller = [[BackupFileBeforeViewController alloc]init];
+        controller.walletModel = _walletModel;
+        UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:controller];
+        [self presentViewController:navi animated:YES completion:nil];
+    };
 }
 
 //密码是否加密

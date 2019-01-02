@@ -189,6 +189,38 @@
             [copyBT addTarget:self action:@selector(copyAction:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:copyBT];
             
+        }else if (sidePullViewType == CommonSidePullViewType_keyStoreRemind) {
+            
+            UILabel *tip1Lb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(125), _sidePullViewWidth, Size(20))];
+            tip1Lb.font = BoldSystemFontOfSize(12);
+            tip1Lb.textColor = TEXT_BLACK_COLOR;
+            tip1Lb.text = Localized(@"导出KeyStore", nil);
+            [self addSubview:tip1Lb];
+            
+            UILabel *tit1Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip1Lb.minX, tip1Lb.maxY+Size(30), _sidePullViewWidth-tip1Lb.minX*2, Size(15))];
+            tit1Lb.font = BoldSystemFontOfSize(12);
+            tit1Lb.textColor = TEXT_RED_COLOR;
+            tit1Lb.text = Localized(@"请不要截图", nil);
+            [self addSubview:tit1Lb];
+            UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit1Lb.minX, tit1Lb.maxY, tit1Lb.width, Size(85))];
+            tip2Lb.font = SystemFontOfSize(10);
+            tip2Lb.numberOfLines = 5;
+            tip2Lb.textColor = TEXT_RED_COLOR;
+            tip2Lb.text = Localized(@"请确保周围没有人，没有相机！请勿使用屏幕截图或照片来保存Keystore文件或相应的QR码。", nil);
+            [self addSubview:tip2Lb];
+            //设置行间距
+            NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:tip2Lb.text];
+            NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineSpacing = Size(4);
+            [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
+            tip2Lb.attributedText = msgStr;
+            
+            UIButton *gotBT = [[UIButton alloc] initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY+Size(50), tip2Lb.width, Size(30))];
+            [gotBT goldSmallBtnStyle:Localized(@"Got it",nil)];
+            gotBT.tag = 103;
+            [gotBT addTarget:self action:@selector(copyAction:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:gotBT];
+            
         }
         
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
@@ -201,12 +233,19 @@
     UIPasteboard * pastboard = [UIPasteboard generalPasteboard];
     if (sender.tag == 100) {
         pastboard.string = _currentWallet.address;
+        [self hudShowWithString:@"已复制" delayTime:2];
     }else if (sender.tag == 101) {
         pastboard.string = _currentWallet.privateKey;
+        [self hudShowWithString:@"已复制" delayTime:2];
     }else if (sender.tag == 102) {
         pastboard.string = _currentWallet.keyStore;
+        [self hudShowWithString:@"已复制" delayTime:2];
+    }else if (sender.tag == 103) {
+        [self removeFromSuperview];
+        if (self.dismissBlock) {
+            self.dismissBlock();
+        }
     }
-    [self hudShowWithString:@"已复制" delayTime:2];
 }
 
 - (void)show
@@ -223,9 +262,6 @@
 - (void)dismissSidePullView
 {
     [self removeFromSuperview];
-    if (self.dismissBlock) {
-        self.dismissBlock();
-    }
 }
 
 - (UIViewController *)appRootViewController

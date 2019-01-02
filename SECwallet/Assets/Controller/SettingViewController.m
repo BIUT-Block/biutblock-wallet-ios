@@ -32,11 +32,6 @@
     /**************导航栏布局***************/
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationShowTabView object:nil];
-}
 
 - (void)addContentView
 {
@@ -118,12 +113,12 @@
 #pragma mark - 快捷功能入口点击
 -(void)btnClick:(UIButton *)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
     switch (sender.tag) {
         case 1000:
             //管理钱包
         {
             WalletManageViewController *controller = [[WalletManageViewController alloc]init];
+            controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }
             break;
@@ -131,6 +126,7 @@
             //交易记录
         {
             TradeListViewController *controller = [[TradeListViewController alloc]init];
+            controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }
             break;
@@ -138,6 +134,7 @@
             //地址薄
         {
             AddressListViewController *controller = [[AddressListViewController alloc]init];
+            controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }
             break;
@@ -158,7 +155,6 @@
 #pragma UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationShowTabView object:nil];
     if (buttonIndex == 0) {
         [[Localized sharedInstance]setLanguage:@"zh-Hans"];
     }else{

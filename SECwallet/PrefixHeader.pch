@@ -30,6 +30,7 @@
 #import "UIView+Category.h"
 #import "NSString+Extension.h"
 #import "UIButton+Extension.h"
+#import "UILabel+Extension.h"
 #import "UIButton+WebCache.h"
 #import "UIImageView+WebCache.h"
 #import "CommonAlertView.h"

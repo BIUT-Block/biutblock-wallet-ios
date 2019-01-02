@@ -20,8 +20,6 @@
 #import "CardPageView.h"
 #import "JXMovableCellTableView.h"
 
-#import "BackupFileViewController.h"
-
 #define kHeaderHeight    Size(195)
 #define USD_to_CNY       6.8872
 
@@ -53,8 +51,6 @@
 {
     [super viewDidLoad];
     
-    [self setNavgationRightImage:[UIImage imageNamed:@"more"] withAction:@selector(rightClick)];
-    
     NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
     NSData* datapath = [NSData dataWithContentsOfFile:path];
     NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
@@ -72,8 +68,6 @@
     if (_walletList.count > 1) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
     }
-    
-//    CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:@"Input Password" contentText:@"Invalid Password.\nPlease Check and try again." imageName:@"exclamation_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_exclamation_mark];
 
 }
 
@@ -97,12 +91,6 @@
     if (list.count == 1) {
         [self refreshWallet:0 clearCache:NO];
     }
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationShowTabView object:nil];
 }
 
 //刷新页面数据
@@ -136,6 +124,12 @@
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KNaviHeight +kHeaderHeight/2)];
     headerView.backgroundColor = COLOR(246, 252, 251, 1);
     [self.view addSubview:headerView];
+    
+    UIButton *moreBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(25 +20), KStatusBarHeight+Size(13), Size(25), Size(15))];
+    [moreBT addTarget:self action:@selector(rightClick) forControlEvents:UIControlEventTouchUpInside];
+    [moreBT setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
+    [self.view addSubview:moreBT];
+     
     _walletListPageView = [[CardPageView alloc]initWithFrame:CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight) withWalletList:_walletList];
     _walletListPageView.backgroundColor = COLOR(242, 243, 244, 1);
     _walletListPageView.delegate = self;
@@ -201,7 +195,6 @@
 #pragma mark - JXMovableCellTableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
     //资产详情
     TradeDetailViewController *viewController = [[TradeDetailViewController alloc]init];
     TokenCoinModel *model = _dataArrays[indexPath.section];
@@ -254,18 +247,9 @@
 #pragma mark - 快捷功能入口点击
 -(void)rightClick
 {
-//    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationHiddenTabView object:nil];
-//
-//    AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
-//    viewController.assetsList = assetsList;
-//    [self.navigationController pushViewController:viewController animated:YES];
-    
-    BackupFileViewController *viewController = [[BackupFileViewController alloc]init];
-    viewController.walletModel = currentWallet;
+    AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
+    viewController.assetsList = assetsList;
     [self.navigationController pushViewController:viewController animated:YES];
-//    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-//    [self presentViewController:navi animated:YES completion:nil];
-
 }
 
 #pragma mark - CardPageViewDelegate

@@ -12,8 +12,16 @@
 
 @interface ChangePasswordViewController ()<UITextFieldDelegate>
 {
+    UILabel *pswErrorLb;
+    CommonTableViewCell *pswCell;
     UITextField *passwordTF;       //密码
+    
+    UILabel *newpswErrorLb;
+    CommonTableViewCell *newpswCell;
     UITextField *newpasswordTF;    //新密码
+    
+    UILabel *re_pswErrorLb;
+    CommonTableViewCell *re_pswCell;
     UITextField *re_passwordTF;   //重复新密码
     UITextField *passwordTipTF;   //密码提示
 }
@@ -47,7 +55,7 @@
 
     UIButton *completeBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(60+20), KStatusBarHeight+Size(11), Size(60), Size(24))];
     [completeBT greenBorderBtnStyle:Localized(@"完成",nil) andBkgImg:@"continue"];
-    [completeBT addTarget:self action:@selector(completeAction) forControlEvents:UIControlEventTouchUpInside];
+    [completeBT addTarget:self action:@selector(savePassword) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:completeBT];
     //标题
     UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), completeBT.maxY +Size(10), Size(200), Size(30))];
@@ -57,13 +65,18 @@
     [self.view addSubview:titleLb];
     
     //当前密码
-    CommonTableViewCell *pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     pswCell.frame = CGRectMake(titleLb.minX, titleLb.maxY +Size(30), kScreenWidth -titleLb.minX*2, Size(36));
     [self.view addSubview:pswCell];
+    pswErrorLb = [[UILabel alloc]init];
+    [self.view addSubview:pswErrorLb];
     UILabel *passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(10), 0, Size(90), pswCell.height)];
     passwordDesLb.font = BoldSystemFontOfSize(10);
     passwordDesLb.textColor = TEXT_BLACK_COLOR;
-    passwordDesLb.text = Localized(@"当前密码", nil);
+    passwordDesLb.text = Localized(@"当前密码*", nil);
+    NSMutableAttributedString *pswStr = [[NSMutableAttributedString alloc] initWithString:passwordDesLb.text];
+    [pswStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(passwordDesLb.text.length-1,1)];
+    passwordDesLb.attributedText = pswStr;
     [pswCell addSubview:passwordDesLb];
     passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordDesLb.maxX +Size(10), passwordDesLb.minY, Size(120), pswCell.height)];
     passwordTF.font = SystemFontOfSize(8);
@@ -75,13 +88,18 @@
     [pswCell addSubview:passwordTF];
     
     //新密码
-    CommonTableViewCell *newpswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    newpswCell.frame = CGRectMake(pswCell.minX, pswCell.maxY +Size(8), pswCell.width, pswCell.height);
+    newpswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    newpswCell.frame = CGRectMake(pswCell.minX, pswCell.maxY +Size(15), pswCell.width, pswCell.height);
     [self.view addSubview:newpswCell];
+    newpswErrorLb = [[UILabel alloc]init];
+    [self.view addSubview:newpswErrorLb];
     UILabel *newpasswordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(passwordDesLb.minX, 0, passwordDesLb.width, newpswCell.height)];
     newpasswordDesLb.font = BoldSystemFontOfSize(10);
     newpasswordDesLb.textColor = TEXT_BLACK_COLOR;
-    newpasswordDesLb.text = Localized(@"新密码", nil);
+    newpasswordDesLb.text = Localized(@"新密码*", nil);
+    NSMutableAttributedString *newpswStr = [[NSMutableAttributedString alloc] initWithString:newpasswordDesLb.text];
+    [newpswStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(newpasswordDesLb.text.length-1,1)];
+    newpasswordDesLb.attributedText = newpswStr;
     [newpswCell addSubview:newpasswordDesLb];
     newpasswordTF = [[UITextField alloc] initWithFrame:CGRectMake(newpasswordDesLb.maxX +Size(10), 0, passwordTF.width, newpswCell.height)];
     newpasswordTF.font = SystemFontOfSize(8);
@@ -93,13 +111,18 @@
     [newpswCell addSubview:newpasswordTF];
     
     //确认密码
-    CommonTableViewCell *re_pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    re_pswCell.frame = CGRectMake(newpswCell.minX, newpswCell.maxY +Size(8), pswCell.width, pswCell.height);
+    re_pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    re_pswCell.frame = CGRectMake(newpswCell.minX, newpswCell.maxY +Size(15), pswCell.width, pswCell.height);
     [self.view addSubview:re_pswCell];
+    re_pswErrorLb = [[UILabel alloc]init];
+    [self.view addSubview:re_pswErrorLb];
     UILabel *re_passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(passwordDesLb.minX, 0, passwordDesLb.width, re_pswCell.height)];
     re_passwordDesLb.font = BoldSystemFontOfSize(10);
     re_passwordDesLb.textColor = TEXT_BLACK_COLOR;
-    re_passwordDesLb.text = Localized(@"确认密码", nil);
+    re_passwordDesLb.text = Localized(@"确认密码*", nil);
+    NSMutableAttributedString *re_pswStr = [[NSMutableAttributedString alloc] initWithString:re_passwordDesLb.text];
+    [re_pswStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(re_passwordDesLb.text.length-1,1)];
+    re_passwordDesLb.attributedText = re_pswStr;
     [re_pswCell addSubview:re_passwordDesLb];
     re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordDesLb.maxX +Size(10), 0, passwordTF.width, passwordTF.height)];
     re_passwordTF.font = SystemFontOfSize(8);
@@ -112,7 +135,7 @@
     
     //密码提示
     CommonTableViewCell *pswTipCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    pswTipCell.frame = CGRectMake(re_pswCell.minX, re_pswCell.maxY +Size(8), re_pswCell.width, re_pswCell.height);
+    pswTipCell.frame = CGRectMake(re_pswCell.minX, re_pswCell.maxY +Size(15), re_pswCell.width, re_pswCell.height);
     [self.view addSubview:pswTipCell];
     UILabel *passwordTipDesLb = [[UILabel alloc] initWithFrame:CGRectMake(re_passwordDesLb.minX, 0, re_passwordDesLb.width, pswTipCell.height)];
     passwordTipDesLb.font = BoldSystemFontOfSize(10);
@@ -143,20 +166,54 @@
 {
     [self dismissKeyboardAction];
     if (passwordTF.text.length >30 || passwordTF.text.length <8) {
-        [self hudShowWithString:@"请输入8~30位密码" delayTime:1.5];
+        pswErrorLb.hidden = NO;
+        [pswErrorLb remindError:@"请输入8~30位密码" withY:pswCell.minY-Size(25)];
         return;
+    }else{
+        pswErrorLb.hidden = YES;
     }
     if ([NSString validatePassword:passwordTF.text] == NO) {
-        [self hudShowWithString:@"请输入数字和字母组合密码" delayTime:1.5];
+        pswErrorLb.hidden = NO;
+        [pswErrorLb remindError:@"请输入数字和字母组合密码" withY:pswCell.minY-Size(25)];
         return;
+    }else{
+        pswErrorLb.hidden = YES;
     }
     if (![passwordTF.text isEqualToString:_walletModel.loginPassword]) {
-        [self hudShowWithString:@"当前密码验证失败" delayTime:1.5];
+        pswErrorLb.hidden = NO;
+        [pswErrorLb remindError:@"当前密码验证失败" withY:pswCell.minY-Size(25)];
         return;
+    }else{
+        pswErrorLb.hidden = YES;
+    }
+    
+    if (newpasswordTF.text.length >30 || newpasswordTF.text.length <8) {
+        newpswErrorLb.hidden = NO;
+        [newpswErrorLb remindError:@"请输入8~30位密码" withY:newpswCell.minY-Size(20)];
+        return;
+    }else{
+        newpswErrorLb.hidden = YES;
+    }
+    if ([NSString validatePassword:newpasswordTF.text] == NO) {
+        newpswErrorLb.hidden = NO;
+        [newpswErrorLb remindError:@"请输入数字和字母组合密码" withY:newpswCell.minY-Size(20)];
+        return;
+    }else{
+        newpswErrorLb.hidden = YES;
+    }
+    if (re_passwordTF.text.length == 0) {
+        re_pswErrorLb.hidden = NO;
+        [re_pswErrorLb remindError:@"请再次输入密码" withY:re_pswCell.minY-Size(20)];
+        return;
+    }else{
+        re_pswErrorLb.hidden = YES;
     }
     if (![newpasswordTF.text isEqualToString:re_passwordTF.text]) {
-        [self hudShowWithString:@"两次密码输入不一致，请重新输入！" delayTime:1.5];
+        re_pswErrorLb.hidden = NO;
+        [re_pswErrorLb remindError:@"两次密码输入不一致，请重新输入！" withY:re_pswCell.minY-Size(20)];
         return;
+    }else{
+        re_pswErrorLb.hidden = YES;
     }
     if (newpasswordTF.text.length > 0) {
         [self createLoadingView:nil];

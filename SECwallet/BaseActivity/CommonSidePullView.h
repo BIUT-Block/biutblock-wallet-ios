@@ -13,6 +13,7 @@ typedef enum {
     CommonSidePullViewType_address      = 0,
     CommonSidePullViewType_privateKey   = 1,
     CommonSidePullViewType_keyStore     = 2,
+    CommonSidePullViewType_keyStoreRemind  = 3,
     
 } CommonSidePullViewType;
 

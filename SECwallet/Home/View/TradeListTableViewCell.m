@@ -93,7 +93,9 @@
             _icon.image = [UIImage imageNamed:@"fail"];
         }
         if (obj.status == 2) {
-            _pendingLb.text = Localized(@"打包中", nil);
+            _sum.frame = CGRectMake(_address.maxX, _address.minY, kScreenWidth -_address.maxX -Size(20), _address.height);
+            _pendingLb.frame = CGRectMake(_sum.minX, _sum.maxY, _sum.width, _sum.height);
+            _pendingLb.text = Localized(@"(打包中)", nil);
         }
     }
 }

@@ -164,6 +164,8 @@
 		1B65E89D212BF5C100BB8DE5 /* UIView+SGExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E804212BF5C000BB8DE5 /* UIView+SGExtension.m */; };
 		1B65E89E212BF5C100BB8DE5 /* SGSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E805212BF5C000BB8DE5 /* SGSegmentedControl.m */; };
 		1B65E89F212BF5C100BB8DE5 /* SGImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E806212BF5C000BB8DE5 /* SGImageButton.m */; };
+		1B69436521DC6002005905D8 /* ConfirmPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B69436421DC6002005905D8 /* ConfirmPasswordViewController.m */; };
+		1B69436D21DC9094005905D8 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B69436C21DC9094005905D8 /* UILabel+Extension.m */; };
 		1B79566B21D1CD3D00EF26C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B79566D21D1CD3D00EF26C8 /* Localizable.strings */; };
 		1B79567121D1CE1C00EF26C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B79567321D1CE1C00EF26C8 /* InfoPlist.strings */; };
 		1B79567721D1D1D900EF26C8 /* Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B79567621D1D1D900EF26C8 /* Localized.m */; };
@@ -480,6 +482,10 @@
 		1B65E805212BF5C000BB8DE5 /* SGSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGSegmentedControl.m; sourceTree = "<group>"; };
 		1B65E806212BF5C000BB8DE5 /* SGImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGImageButton.m; sourceTree = "<group>"; };
 		1B65E807212BF5C000BB8DE5 /* UIView+SGExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SGExtension.h"; sourceTree = "<group>"; };
+		1B69436321DC6002005905D8 /* ConfirmPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmPasswordViewController.h; sourceTree = "<group>"; };
+		1B69436421DC6002005905D8 /* ConfirmPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPasswordViewController.m; sourceTree = "<group>"; };
+		1B69436B21DC9094005905D8 /* UILabel+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+Extension.h"; sourceTree = "<group>"; };
+		1B69436C21DC9094005905D8 /* UILabel+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extension.m"; sourceTree = "<group>"; };
 		1B79566C21D1CD3D00EF26C8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1B79566E21D1CD4500EF26C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1B79567221D1CE1C00EF26C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -989,6 +995,8 @@
 				1B65E774212BF5BE00BB8DE5 /* ImportWalletViewController.m */,
 				1B65E76D212BF5BE00BB8DE5 /* WalletDetailViewController.h */,
 				1B65E775212BF5BE00BB8DE5 /* WalletDetailViewController.m */,
+				1B69436321DC6002005905D8 /* ConfirmPasswordViewController.h */,
+				1B69436421DC6002005905D8 /* ConfirmPasswordViewController.m */,
 				1B65E76C212BF5BE00BB8DE5 /* ChangePasswordViewController.h */,
 				1B65E772212BF5BE00BB8DE5 /* ChangePasswordViewController.m */,
 				1B65E778212BF5BE00BB8DE5 /* ExportKeyStoreViewController.h */,
@@ -1056,6 +1064,8 @@
 				1B65E797212BF5C000BB8DE5 /* UIView+Category.m */,
 				1B65E796212BF5C000BB8DE5 /* UIButton+Extension.h */,
 				1B65E7A0212BF5C000BB8DE5 /* UIButton+Extension.m */,
+				1B69436B21DC9094005905D8 /* UILabel+Extension.h */,
+				1B69436C21DC9094005905D8 /* UILabel+Extension.m */,
 				1B65E79A212BF5C000BB8DE5 /* CacheUtil.h */,
 				1B65E7A1212BF5C000BB8DE5 /* CacheUtil.m */,
 				1B65E7A2212BF5C000BB8DE5 /* UIWebView+JS.h */,
@@ -1481,6 +1491,7 @@
 				1B65E80E212BF5C000BB8DE5 /* TradeDetailViewController.m in Sources */,
 				1B79567721D1D1D900EF26C8 /* Localized.m in Sources */,
 				1B65E87A212BF5C100BB8DE5 /* CALScanQRCodeCameraView.m in Sources */,
+				1B69436521DC6002005905D8 /* ConfirmPasswordViewController.m in Sources */,
 				1B65E843212BF5C000BB8DE5 /* AFURLResponseSerialization.m in Sources */,
 				1B65E883212BF5C100BB8DE5 /* MessagePhotoView.m in Sources */,
 				1B65E838212BF5C000BB8DE5 /* IQKeyboardManager.m in Sources */,
@@ -1544,6 +1555,7 @@
 				1B0985A221797C9400B8E994 /* JXMovableCellTableView.m in Sources */,
 				1B09859C217835CA00B8E994 /* CollectionFlowLayout.m in Sources */,
 				1B65E68F212BF55D00BB8DE5 /* AppDelegate.m in Sources */,
+				1B69436D21DC9094005905D8 /* UILabel+Extension.m in Sources */,
 				1B65E861212BF5C100BB8DE5 /* ImportWalletViewController.m in Sources */,
 				1B65E820212BF5C000BB8DE5 /* MJRefreshConst.m in Sources */,
 				1B65E846212BF5C000BB8DE5 /* AFHTTPRequestOperationManager.m in Sources */,
