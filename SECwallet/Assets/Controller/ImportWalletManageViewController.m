@@ -112,6 +112,13 @@
     self.mainScrollView.contentOffset = CGPointMake(offsetX, 0);
     // 2.给对应位置添加对应子控制器
     [self showVc:index];
+    if (index == 0) {
+        [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"continue"];
+    }else if (index == 1) {
+        [tipBT greenBorderBtnStyle:Localized(@"什么是Keystore？",nil) andBkgImg:@"continue"];
+    }else if (index == 2) {
+        [tipBT greenBorderBtnStyle:Localized(@"什么是私钥？",nil) andBkgImg:@"continue"];
+    }
 }
 
 // 添加所有子控制器

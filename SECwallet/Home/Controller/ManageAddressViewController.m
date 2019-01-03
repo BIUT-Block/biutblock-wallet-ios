@@ -12,7 +12,12 @@
 
 @interface ManageAddressViewController ()<ScanQRCodeViewControllerDelegate,UITextFieldDelegate>
 {
+    UILabel *nameErrorLb;
+    UILabel *nameLb;
     UITextField *nameTF;       //姓名
+    
+    UILabel *addressErrorLb;
+    UILabel *addressLb;
     UITextField *addressTF;    //地址
     UIScrollView *addressContentView;
     UITextField *phoneTF;      //电话
@@ -55,11 +60,16 @@
     [self.view addSubview:titleLb];
     
     //姓名
-    UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), titleLb.maxY+Size(35), kScreenWidth -Size(20*2), Size(25))];
+    nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), titleLb.maxY+Size(35), kScreenWidth -Size(20*2), Size(25))];
     nameLb.font = BoldSystemFontOfSize(10);
     nameLb.textColor = TEXT_BLACK_COLOR;
-    nameLb.text = Localized(@"请输入联系人姓名", nil);
+    nameLb.text = Localized(@"联系人姓名*", nil);
+    NSMutableAttributedString *nameStr = [[NSMutableAttributedString alloc] initWithString:nameLb.text];
+    [nameStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(nameLb.text.length-1,1)];
+    nameLb.attributedText = nameStr;
     [self.view addSubview:nameLb];
+    nameErrorLb = [[UILabel alloc]init];
+    [self.view addSubview:nameErrorLb];
     CommonTableViewCell *nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     nameCell.frame = CGRectMake(nameLb.minX, nameLb.maxY, nameLb.width, Size(36));
     [self.view addSubview:nameCell];
@@ -72,11 +82,16 @@
     [nameCell addSubview:nameTF];
     
     
-    UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(nameLb.minX, nameCell.maxY +Size(3), nameLb.width, nameLb.height)];
+    addressLb = [[UILabel alloc]initWithFrame:CGRectMake(nameLb.minX, nameCell.maxY +Size(3), nameLb.width, nameLb.height)];
     addressLb.font = BoldSystemFontOfSize(10);
     addressLb.textColor = TEXT_BLACK_COLOR;
-    addressLb.text = Localized(@"联系人钱包地址", nil);
+    addressLb.text = Localized(@"联系人钱包地址*", nil);
+    NSMutableAttributedString *addressStr = [[NSMutableAttributedString alloc] initWithString:addressLb.text];
+    [addressStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(addressLb.text.length-1,1)];
+    addressLb.attributedText = addressStr;
     [self.view addSubview:addressLb];
+    addressErrorLb = [[UILabel alloc]init];
+    [self.view addSubview:addressErrorLb];
     CommonTableViewCell *addressCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     addressCell.frame = CGRectMake(addressLb.minX, addressLb.maxY, nameCell.width, nameCell.height);
     [self.view addSubview:addressCell];
@@ -179,17 +194,26 @@
 {
     [self dismissKeyboardAction];
     if (nameTF.text.length == 0) {
-        [self hudShowWithString:Localized(@"请输入联系人姓名", nil) delayTime:1.5];
+        nameErrorLb.hidden = NO;
+        [nameErrorLb remindError:@"请输入联系人姓名" withY:nameLb.minY];
         return;
+    }else{
+        nameErrorLb.hidden = YES;
     }
     if (addressTF.text.length == 0) {
-        [self hudShowWithString:Localized(@"请输入收款人钱包地址", nil) delayTime:1.5];
+        addressErrorLb.hidden = NO;
+        [addressErrorLb remindError:@"请输入收款人钱包地址" withY:addressLb.minY];
         return;
+    }else{
+        addressErrorLb.hidden = YES;
     }
     //判断扫描的是否为钱包地址(前缀是0x并且长度为42位)
     if (!([addressTF.text hasPrefix:@"0x"] && addressTF.text.length == 42)) {
-        [self hudShowWithString:Localized(@"地址不正确，请重新输入", nil) delayTime:1.5];
+        addressErrorLb.hidden = NO;
+        [addressErrorLb remindError:@"地址不正确，请重新输入" withY:addressLb.minY];
         return;
+    }else{
+        addressErrorLb.hidden = YES;
     }
     if (phoneTF.text.length > 0) {
         if ([NSString validateMobile:phoneTF.text] == NO) {
@@ -214,8 +238,11 @@
     if (_manageAddressViewType == ManageAddressViewType_add) {
         for (AddressModel *model in list) {
             if ([model.name isEqualToString:nameTF.text] && [model.address isEqualToString:addressTF.text] && [model.phone isEqualToString:phoneTF.text]) {
-                [self hudShowWithString:Localized(@"该地址已存在", nil) delayTime:1.5];
+                addressErrorLb.hidden = NO;
+                [addressErrorLb remindError:@"该地址已存在" withY:addressLb.minY];
                 return;
+            }else{
+                addressErrorLb.hidden = YES;
             }
         }
     }else if (_manageAddressViewType == ManageAddressViewType_edit) {
@@ -233,8 +260,11 @@
         }];
         for (AddressModel *model in list) {
             if ([model.name isEqualToString:nameTF.text] && [model.address isEqualToString:addressTF.text] && [model.phone isEqualToString:phoneTF.text]) {
-                [self hudShowWithString:Localized(@"该地址已存在", nil) delayTime:1.5];
+                addressErrorLb.hidden = NO;
+                [addressErrorLb remindError:@"该地址已存在" withY:addressLb.minY];
                 return;
+            }else{
+                addressErrorLb.hidden = YES;
             }
         }
     }

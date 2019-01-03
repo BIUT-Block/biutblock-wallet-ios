@@ -18,7 +18,7 @@
     
     strValue = [strValue stringByReplacingOccurrencesOfString: @"\n" withString:@"<br/>"];
     strValue = [self replaceStr:@"[w][i][d][t][h][:](\\d+\\.?\\d+)[p][t][;]" withReplacedStr:strValue withPlaceStr:@""];
-    strValue = [self replaceStr:@"(font-size: )(\\d+px)" withReplacedStr:strValue withPlaceStr:@"$114pt"];
+    strValue = [self replaceStr:@"(font-size: )(\\d+px)" withReplacedStr:strValue withPlaceStr:@"$102pt"];
     
     NSMutableString *data_content = [NSMutableString stringWithString:@""];
     [data_content appendString:@"<!DOCTYPE html>"];

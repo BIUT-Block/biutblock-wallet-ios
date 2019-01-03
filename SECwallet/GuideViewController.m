@@ -47,9 +47,8 @@
         [AppDelegateInstance.window makeKeyAndVisible];
     }else{
         CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
-        viewController.titleStr = @"商户协议";
+        viewController.titleStr = @"SEC钱包服务协议";
         viewController.commonHtmlShowViewType = CommonHtmlShowViewType_startRgsProtocol;
-        viewController.isNoBack = YES;
         UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
         AppDelegateInstance.window.rootViewController = navi;
         [AppDelegateInstance.window makeKeyAndVisible];
@@ -116,7 +115,6 @@
         
     }else{
         CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
-        viewController.isNoBack = YES;
         viewController.commonHtmlShowViewType = CommonHtmlShowViewType_startRgsProtocol;
         UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
         AppDelegateInstance.window.rootViewController = navi;

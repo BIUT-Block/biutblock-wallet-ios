@@ -22,6 +22,4 @@ typedef enum {
 @property (nonatomic, copy) NSString *titleStr;
 @property (nonatomic, copy) NSString *adUrl;
 
-@property (nonatomic, assign) BOOL isNoBack;
-
 @end

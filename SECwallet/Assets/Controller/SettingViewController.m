@@ -31,11 +31,12 @@
     [super viewWillAppear:animated];
     /**************导航栏布局***************/
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    self.view.backgroundColor = COLOR(243, 244, 245, 1);
 }
 
 - (void)addContentView
 {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight/2 +Size(20))];
+    UIImageView *headerView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, Size(180))];
     headerView.backgroundColor = LightGreen_COLOR;
     [self.view addSubview:headerView];
     //标题
@@ -44,35 +45,41 @@
     titLb.textColor = TEXT_BLACK_COLOR;
     titLb.text = Localized(@"我的钱包",nil);
     [headerView addSubview:titLb];
+    
+    UIView *btView = [[UIImageView alloc]initWithFrame:CGRectMake(0, headerView.maxY, kScreenWidth, Size(122))];
+    btView.backgroundColor = BACKGROUND_DARK_COLOR;
+    [self.view addSubview:btView];
+    
     NSArray *titArr = @[Localized(@"管理钱包",nil),Localized(@"交易记录",nil)];
     NSArray *imgArr = @[@"manageWalletIcon",@"tradeRecordIcon"];
     //快捷功能入口
     CGFloat btWidth = Size(45);
     CGFloat insert = (kScreenWidth -btWidth *imgArr.count)/(imgArr.count +2);
     for (int i = 0; i< titArr.count; i++) {
-        UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(insert +(insert*2 +btWidth)*i, titLb.maxY +Size(70), btWidth, btWidth)];
+        UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(insert +(insert*2 +btWidth)*i, Size(122-70)/2, btWidth, btWidth)];
         iv.image = [UIImage imageNamed:imgArr[i]];
-        [headerView addSubview:iv];
+        [btView addSubview:iv];
         UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(iv.minX -Size(22), iv.maxY, Size(85), Size(35))];
         lb.font = BoldSystemFontOfSize(10);
         lb.textColor = TEXT_BLACK_COLOR;
         lb.textAlignment = NSTextAlignmentCenter;
         lb.text = titArr[i];
-        [headerView addSubview:lb];
+        [btView addSubview:lb];
         
-        UIButton *lnkBtn = [[UIButton alloc]initWithFrame:CGRectMake(iv.minX, iv.minY, btWidth, btWidth+lb.height)];
+        UIButton *lnkBtn = [[UIButton alloc]initWithFrame:CGRectMake(iv.minX, btView.minY +iv.minY, btWidth, btWidth+lb.height)];
         lnkBtn.tag = 1000+i;
         [lnkBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [headerView addSubview:lnkBtn];
+        [self.view addSubview:lnkBtn];
     }
     //中间线
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2, titLb.maxY +Size(60), Size(0.5), Size(90))];
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2, Size(20), Size(0.5), Size(122 -20 *2))];
     line.backgroundColor = DIVIDE_LINE_COLOR;
-    [headerView addSubview:line];
+    [btView addSubview:line];
     
     //地址薄
     CommonTableViewCell *addressCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    addressCell.frame = CGRectMake(Size(20), headerView.maxY +Size(35), kScreenWidth -Size(20 *2), Size(42));
+    addressCell.frame = CGRectMake(Size(20), btView.maxY +Size(35), kScreenWidth -Size(20 *2), Size(42));
+    addressCell.contentView.backgroundColor = WHITE_COLOR;
     addressCell.icon.image = [UIImage imageNamed:@"addressBook"];
     addressCell.staticTitleLb.text = Localized(@"地址薄",nil);
     addressCell.accessoryIV.image = [UIImage imageNamed:@"accessory_right"];
@@ -84,6 +91,7 @@
     
     CommonTableViewCell *exchangeCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     exchangeCell.frame = CGRectMake(addressCell.minX, addressCell.maxY +Size(8), addressCell.width, addressCell.height);
+    exchangeCell.contentView.backgroundColor = WHITE_COLOR;
     exchangeCell.icon.image = [UIImage imageNamed:@"addressBook"];
     exchangeCell.staticTitleLb.text = Localized(@"切换语言",nil);
     exchangeCell.accessoryIV.image = [UIImage imageNamed:@"accessory_right"];
@@ -157,13 +165,15 @@
 {
     if (buttonIndex == 0) {
         [[Localized sharedInstance]setLanguage:@"zh-Hans"];
-    }else{
+        RootViewController *controller = [[RootViewController alloc] init];
+        AppDelegateInstance.window.rootViewController = controller;
+        [AppDelegateInstance.window makeKeyAndVisible];
+    }else if (buttonIndex == 1) {
         [[Localized sharedInstance]setLanguage:@"en"];
+        RootViewController *controller = [[RootViewController alloc] init];
+        AppDelegateInstance.window.rootViewController = controller;
+        [AppDelegateInstance.window makeKeyAndVisible];
     }
-    
-    RootViewController *controller = [[RootViewController alloc] init];
-    AppDelegateInstance.window.rootViewController = controller;
-    [AppDelegateInstance.window makeKeyAndVisible];
 }
 
 @end

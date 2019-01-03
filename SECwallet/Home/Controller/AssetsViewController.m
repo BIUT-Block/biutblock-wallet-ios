@@ -15,10 +15,11 @@
 #import "TradeDetailViewController.h"
 #import "TokenCoinListViewController.h"
 #import "WalletDetailViewController.h"
-#import <ethers/ethers.h>
 
 #import "CardPageView.h"
 #import "JXMovableCellTableView.h"
+
+#import "CommonHtmlShowViewController.h"
 
 #define kHeaderHeight    Size(195)
 #define USD_to_CNY       6.8872
@@ -250,6 +251,7 @@
     AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
     viewController.assetsList = assetsList;
     [self.navigationController pushViewController:viewController animated:YES];
+    
 }
 
 #pragma mark - CardPageViewDelegate
