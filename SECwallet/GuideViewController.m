@@ -8,7 +8,7 @@
 
 #import "GuideViewController.h"
 #import "RootViewController.h"
-#import "CommonHtmlShowViewController.h"
+#import "SelectEntryViewController.h"
 
 #define Count 4
 
@@ -46,9 +46,7 @@
         AppDelegateInstance.window.rootViewController = self.tabBarController;
         [AppDelegateInstance.window makeKeyAndVisible];
     }else{
-        CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
-        viewController.titleStr = @"SEC钱包服务协议";
-        viewController.commonHtmlShowViewType = CommonHtmlShowViewType_startRgsProtocol;
+        SelectEntryViewController *viewController = [[SelectEntryViewController alloc]init];
         UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
         AppDelegateInstance.window.rootViewController = navi;
         [AppDelegateInstance.window makeKeyAndVisible];
@@ -114,8 +112,7 @@
         }
         
     }else{
-        CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
-        viewController.commonHtmlShowViewType = CommonHtmlShowViewType_startRgsProtocol;
+        SelectEntryViewController *viewController = [[SelectEntryViewController alloc]init];
         UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
         AppDelegateInstance.window.rootViewController = navi;
         [AppDelegateInstance.window makeKeyAndVisible];

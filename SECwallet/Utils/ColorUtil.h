@@ -32,6 +32,9 @@
 // 灰色
 #define DARK_COLOR	    COLOR(245,246,247,1)
 
+//警告色
+#define REMIND_COLOR    COLOR(251,220,225,1)
+
 // 浅蓝色
 #define LightGreen_COLOR    COLOR(246,252,251,1)
 

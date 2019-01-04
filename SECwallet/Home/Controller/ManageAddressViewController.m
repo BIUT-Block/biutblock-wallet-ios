@@ -13,10 +13,12 @@
 @interface ManageAddressViewController ()<ScanQRCodeViewControllerDelegate,UITextFieldDelegate>
 {
     UILabel *nameErrorLb;
+    CommonTableViewCell *nameCell;
     UILabel *nameLb;
     UITextField *nameTF;       //姓名
     
     UILabel *addressErrorLb;
+    CommonTableViewCell *addressCell;
     UILabel *addressLb;
     UITextField *addressTF;    //地址
     UIScrollView *addressContentView;
@@ -70,10 +72,11 @@
     [self.view addSubview:nameLb];
     nameErrorLb = [[UILabel alloc]init];
     [self.view addSubview:nameErrorLb];
-    CommonTableViewCell *nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     nameCell.frame = CGRectMake(nameLb.minX, nameLb.maxY, nameLb.width, Size(36));
     [self.view addSubview:nameCell];
     nameTF = [[UITextField alloc] initWithFrame:CGRectMake(Size(10), 0, nameLb.width-Size(20), nameCell.height)];
+    nameTF.delegate = self;
     nameTF.font = SystemFontOfSize(12);
     nameTF.textColor = TEXT_BLACK_COLOR;
     if (_manageAddressViewType == ManageAddressViewType_edit) {
@@ -92,16 +95,16 @@
     [self.view addSubview:addressLb];
     addressErrorLb = [[UILabel alloc]init];
     [self.view addSubview:addressErrorLb];
-    CommonTableViewCell *addressCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    addressCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     addressCell.frame = CGRectMake(addressLb.minX, addressLb.maxY, nameCell.width, nameCell.height);
     [self.view addSubview:addressCell];
     addressContentView = [[UIScrollView alloc]initWithFrame:CGRectMake(nameTF.minX, 0, addressCell.width -nameTF.minX-Size(45), addressCell.height)];
     addressContentView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
     [addressCell addSubview:addressContentView];
     addressTF = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, addressContentView.width, addressContentView.height)];
+    addressTF.delegate = self;
     addressTF.font = SystemFontOfSize(12);
     addressTF.textColor = TEXT_BLACK_COLOR;
-    addressTF.delegate = self;
     addressTF.keyboardType = UIKeyboardTypeNamePhonePad;
     if (_manageAddressViewType == ManageAddressViewType_edit) {
         addressTF.text = _currentModel.address;
@@ -179,16 +182,25 @@
 #pragma UITextFieldDelegate
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    CGSize size = [textField.text calculateSize:SystemFontOfSize(12) maxWidth:kScreenWidth*2];
-    if (size.width > kScreenWidth -Size(75)) {
-        addressTF.frame = CGRectMake(Size(0), 0, size.width+Size(10), addressContentView.height);
-        [addressContentView setContentSize:CGSizeMake(size.width, addressTF.height)];
-    }else{
-        addressTF.frame = CGRectMake(Size(0), 0, kScreenWidth -Size(15 +45), addressContentView.height);
-        [addressContentView setContentSize:CGSizeMake(kScreenWidth -Size(15 +45), addressTF.height)];
+    if (textField == addressTF) {
+        CGSize size = [textField.text calculateSize:SystemFontOfSize(12) maxWidth:kScreenWidth*2];
+        if (size.width > kScreenWidth -Size(75)) {
+            addressTF.frame = CGRectMake(Size(0), 0, size.width+Size(10), addressContentView.height);
+            [addressContentView setContentSize:CGSizeMake(size.width, addressTF.height)];
+        }else{
+            addressTF.frame = CGRectMake(Size(0), 0, kScreenWidth -Size(15 +45), addressContentView.height);
+            [addressContentView setContentSize:CGSizeMake(kScreenWidth -Size(15 +45), addressTF.height)];
+        }
     }
 }
-
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField == nameTF) {
+        nameCell.contentView.backgroundColor = DARK_COLOR;
+    }else if (textField == addressTF) {
+        addressCell.contentView.backgroundColor = DARK_COLOR;
+    }
+}
 #pragma mark 完成
 -(void)saveAction
 {
@@ -196,24 +208,30 @@
     if (nameTF.text.length == 0) {
         nameErrorLb.hidden = NO;
         [nameErrorLb remindError:@"请输入联系人姓名" withY:nameLb.minY];
+        nameCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         nameErrorLb.hidden = YES;
+        nameCell.contentView.backgroundColor = DARK_COLOR;
     }
     if (addressTF.text.length == 0) {
         addressErrorLb.hidden = NO;
         [addressErrorLb remindError:@"请输入收款人钱包地址" withY:addressLb.minY];
+        addressCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         addressErrorLb.hidden = YES;
+        addressCell.contentView.backgroundColor = DARK_COLOR;
     }
     //判断扫描的是否为钱包地址(前缀是0x并且长度为42位)
     if (!([addressTF.text hasPrefix:@"0x"] && addressTF.text.length == 42)) {
         addressErrorLb.hidden = NO;
         [addressErrorLb remindError:@"地址不正确，请重新输入" withY:addressLb.minY];
+        addressCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         addressErrorLb.hidden = YES;
+        addressCell.contentView.backgroundColor = DARK_COLOR;
     }
     if (phoneTF.text.length > 0) {
         if ([NSString validateMobile:phoneTF.text] == NO) {
@@ -240,9 +258,11 @@
             if ([model.name isEqualToString:nameTF.text] && [model.address isEqualToString:addressTF.text] && [model.phone isEqualToString:phoneTF.text]) {
                 addressErrorLb.hidden = NO;
                 [addressErrorLb remindError:@"该地址已存在" withY:addressLb.minY];
+                addressCell.contentView.backgroundColor = REMIND_COLOR;
                 return;
             }else{
                 addressErrorLb.hidden = YES;
+                addressCell.contentView.backgroundColor = DARK_COLOR;
             }
         }
     }else if (_manageAddressViewType == ManageAddressViewType_edit) {
@@ -262,9 +282,11 @@
             if ([model.name isEqualToString:nameTF.text] && [model.address isEqualToString:addressTF.text] && [model.phone isEqualToString:phoneTF.text]) {
                 addressErrorLb.hidden = NO;
                 [addressErrorLb remindError:@"该地址已存在" withY:addressLb.minY];
+                addressCell.contentView.backgroundColor = REMIND_COLOR;
                 return;
             }else{
                 addressErrorLb.hidden = YES;
+                addressCell.contentView.backgroundColor = DARK_COLOR;
             }
         }
     }

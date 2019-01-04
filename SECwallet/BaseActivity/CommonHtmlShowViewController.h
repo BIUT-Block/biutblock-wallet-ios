@@ -9,9 +9,9 @@
 #import "BaseViewController.h"
 
 typedef enum {
-    CommonHtmlShowViewType_startRgsProtocol =  0,            /**启动页协议*/
-    CommonHtmlShowViewType_RgsProtocol =       1,            /**用户协议*/
-    CommonHtmlShowViewType_other       =       2,            /**其他*/
+    CommonHtmlShowViewType_RgsProtocol =  0,            /**用户协议**/
+    CommonHtmlShowViewType_remindTip =    1,            /**描述介绍*/
+    CommonHtmlShowViewType_other     =    2,            /**其他*/
     
 } CommonHtmlShowViewType;
 

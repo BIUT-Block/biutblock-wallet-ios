@@ -17,14 +17,17 @@
 @interface CreatWalletViewController ()<UITextFieldDelegate>
 {
     UILabel *nameDesLb;
+    CommonTableViewCell *nameCell;
     UITextField *walletNameTF;     //钱包名称
     UILabel *nameErrorLb;
     
     UILabel *passwordDesLb;
+    CommonTableViewCell *pswCell;
     UITextField *passwordTF;       //密码
     UILabel *passwordErrorLb;
     
     UILabel *re_passwordDesLb;
+    CommonTableViewCell *re_pswCell;
     UITextField *re_passwordTF;   //确认密码
     UILabel *re_passwordErrorLb;
     
@@ -109,10 +112,11 @@
     [self.view addSubview:nameDesLb];
     nameErrorLb = [[UILabel alloc]init];
     [self.view addSubview:nameErrorLb];
-    CommonTableViewCell *nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     nameCell.frame = CGRectMake(nameDesLb.minX, nameDesLb.maxY, nameDesLb.width, Size(36));
     [self.view addSubview:nameCell];
     walletNameTF = [[UITextField alloc] initWithFrame:CGRectMake(nameDesLb.minX +Size(10), nameDesLb.maxY, nameCell.width -Size(20), nameCell.height)];
+    walletNameTF.delegate = self;
     walletNameTF.font = SystemFontOfSize(8);
     walletNameTF.textColor = TEXT_BLACK_COLOR;
     walletNameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -129,10 +133,11 @@
     [self.view addSubview:passwordDesLb];
     passwordErrorLb = [[UILabel alloc]init];
     [self.view addSubview:passwordErrorLb];
-    CommonTableViewCell *pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     pswCell.frame = CGRectMake(passwordDesLb.minX, passwordDesLb.maxY, nameCell.width, nameCell.height);
     [self.view addSubview:pswCell];
     passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(pswCell.minX +Size(10), passwordDesLb.maxY, pswCell.width -Size(20), pswCell.height)];
+    passwordTF.delegate = self;
     passwordTF.font = SystemFontOfSize(8);
     passwordTF.textColor = TEXT_BLACK_COLOR;
     passwordTF.placeholder = Localized(@"8~30位数字，英文字母以及特殊字符至少2种组合", nil);
@@ -152,10 +157,11 @@
     [self.view addSubview:re_passwordDesLb];
     re_passwordErrorLb = [[UILabel alloc]init];
     [self.view addSubview:re_passwordErrorLb];
-    CommonTableViewCell *re_pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    re_pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     re_pswCell.frame = CGRectMake(pswCell.minX, re_passwordDesLb.maxY, pswCell.width, pswCell.height);
     [self.view addSubview:re_pswCell];
     re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordTF.minX, re_passwordDesLb.maxY, passwordTF.width, passwordTF.height)];
+    re_passwordTF.delegate = self;
     re_passwordTF.font = SystemFontOfSize(8);
     re_passwordTF.textColor = TEXT_BLACK_COLOR;
     re_passwordTF.placeholder = Localized(@"请再次确认密码", nil);
@@ -181,7 +187,7 @@
     [self.view addSubview:passwordTipTF];
     
     /*****************用户协议*****************/
-    NSString *str = Localized(@" 我已仔细阅读并同意服务条款", nil);
+    NSString *str = Localized(@" 我已仔细阅读并同意", nil);
     CGSize size = [str calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
     agreementBtn = [[UIButton alloc] initWithFrame:CGRectMake(passwordTipDesLb.minX, passwordTipTF.maxY + Size(17),size.width +Size(20), Size(20))];
     [agreementBtn setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
@@ -193,6 +199,17 @@
     [agreementBtn addTarget:self action:@selector(agreementBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:agreementBtn];
     
+    //协议内容
+    NSString *seeStr = Localized(@"服务条款", nil);
+    CGSize seesSize = [seeStr calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
+    UIButton *seeProtocol = [[UIButton alloc]initWithFrame:CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height)];
+    seeProtocol.titleLabel.font = BoldSystemFontOfSize(8);
+    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:Localized(@"服务条款", nil)];
+    [attStr addAttribute:NSForegroundColorAttributeName value:TEXT_GREEN_COLOR range:NSMakeRange(0, attStr.length)];
+    [seeProtocol setAttributedTitle:attStr forState:UIControlStateNormal];
+    [seeProtocol addTarget:self action:@selector(seeProtocol) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:seeProtocol];
+
     /*****************创建钱包*****************/
     creatBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), agreementBtn.maxY +Size(13), kScreenWidth - 2*Size(20), Size(45))];
     [creatBT darkBtnStyle:Localized(@"创建钱包", nil)];
@@ -221,6 +238,16 @@
     }
     return YES;
 }
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField == walletNameTF) {
+        nameCell.contentView.backgroundColor = DARK_COLOR;
+    }else if (textField == passwordTF) {
+        pswCell.contentView.backgroundColor = DARK_COLOR;
+    }else if (textField == re_passwordTF) {
+        re_pswCell.contentView.backgroundColor = DARK_COLOR;
+    }
+}
 //协议
 -(void)agreementBtnAction:(UIButton *)btn
 {
@@ -233,6 +260,14 @@
         creatBT.userInteractionEnabled = YES;
     }
 }
+//查看协议
+-(void)seeProtocol
+{
+    CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
+    viewController.titleStr = @"SEC钱包服务协议";
+    viewController.commonHtmlShowViewType = CommonHtmlShowViewType_RgsProtocol;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
 
 #pragma mark 创建钱包 
 -(void)creatAction
@@ -241,47 +276,59 @@
     if (walletNameTF.text.length == 0) {
         nameErrorLb.hidden = NO;
         [nameErrorLb remindError:@"请输入钱包名称" withY:nameDesLb.minY];
+        nameCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         nameErrorLb.hidden = YES;
+        nameCell.contentView.backgroundColor = DARK_COLOR;
     }
     if (passwordTF.text.length >30 || passwordTF.text.length <8) {
         passwordErrorLb.hidden = NO;
         [passwordErrorLb remindError:@"请输入8~30位密码" withY:passwordDesLb.minY];
+        pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         passwordErrorLb.hidden = YES;
+        pswCell.contentView.backgroundColor = DARK_COLOR;
     }
     if ([NSString validatePassword:passwordTF.text] == NO) {
         passwordErrorLb.hidden = NO;
         [passwordErrorLb remindError:@"请输入数字和字母组合密码" withY:passwordDesLb.minY];
+        pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         passwordErrorLb.hidden = YES;
+        pswCell.contentView.backgroundColor = DARK_COLOR;
     }
     
     if (re_passwordTF.text.length == 0) {
-        re_passwordTF.hidden = NO;
+        re_passwordErrorLb.hidden = NO;
         [re_passwordErrorLb remindError:@"请再次输入密码" withY:re_passwordDesLb.minY];
+        re_pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         re_passwordErrorLb.hidden = YES;
+        re_pswCell.contentView.backgroundColor = DARK_COLOR;
     }
     if (![passwordTF.text isEqualToString:re_passwordTF.text]) {
-        re_passwordTF.hidden = NO;
+        re_passwordErrorLb.hidden = NO;
         [re_passwordErrorLb remindError:@"两次密码输入不一致，请重新输入！" withY:re_passwordDesLb.minY];
+        re_pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
-        re_passwordTF.hidden = YES;
+        re_passwordErrorLb.hidden = YES;
+        re_pswCell.contentView.backgroundColor = DARK_COLOR;
     }
     //判断钱包名是否有重复
     for (WalletModel *model in walletList) {
         if ([walletNameTF.text isEqualToString:model.walletName]) {
             nameErrorLb.hidden = NO;
             [nameErrorLb remindError:@"钱包名已存在" withY:nameDesLb.minY];
+            nameCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             nameErrorLb.hidden = YES;
+            nameCell.contentView.backgroundColor = DARK_COLOR;
         }
     }
     

@@ -80,7 +80,9 @@
 "请再次确认密码"="Repeat the Password again";
 "密码提示"="Password prompt";
 "选填"="optional";
-" 我已仔细阅读并同意服务条款"="   I have read and agreed to the Servive and Privacy Policy";
+" 我已仔细阅读并同意"="   I have read and agreed to";
+"服务条款"="the Servive and Privacy Policy";
+
 "开始导入"="Import";
 "直接复制粘贴以太坊官方钱包keyStore文件内容至输入框。"="Copy and paste the contents of the Ethereum official wallet keystore file directly into the input box. ";
 "keyStore密码"="keyStore password";

@@ -17,7 +17,7 @@
 #define KInputDesViewHeight  Size(25)
 #define KInputTFViewHeight   Size(15)
 
-@interface ImportWalletViewController ()<UITextFieldDelegate,UIAlertViewDelegate,UITextViewDelegate>
+@interface ImportWalletViewController ()<UITextFieldDelegate,UITextViewDelegate>
 {
     UILabel *inputTVErrorLb;
     UITextView *inputTV;
@@ -93,6 +93,7 @@
     pswCell.frame = CGRectMake(inputTV.minX, passwordDesLb.maxY, inputTV.width, Size(36));
     [self.view addSubview:pswCell];
     passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(inputTV.minX +Size(10), passwordDesLb.maxY, pswCell.width -Size(20), pswCell.height)];
+    passwordTF.delegate = self;
     passwordTF.font = SystemFontOfSize(8);
     passwordTF.textColor = TEXT_BLACK_COLOR;
     passwordTF.placeholder = Localized(@"8~30位数字，英文字母以及特殊字符至少2种组合", nil);
@@ -110,12 +111,13 @@
     [re_passwordStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(re_passwordDesLb.text.length-1,1)];
     re_passwordDesLb.attributedText = re_passwordStr;
     [self.view addSubview:re_passwordDesLb];
-    passwordErrorLb = [[UILabel alloc]init];
-    [self.view addSubview:passwordErrorLb];
+    re_passwordErrorLb = [[UILabel alloc]init];
+    [self.view addSubview:re_passwordErrorLb];
     re_pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     re_pswCell.frame = CGRectMake(pswCell.minX, re_passwordDesLb.maxY, pswCell.width, pswCell.height);
     [self.view addSubview:re_pswCell];
     re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordTF.minX, re_passwordDesLb.maxY, passwordTF.width, passwordTF.height)];
+    re_passwordTF.delegate = self;
     re_passwordTF.font = SystemFontOfSize(8);
     re_passwordTF.textColor = TEXT_BLACK_COLOR;
     re_passwordTF.placeholder = Localized(@"请再次确认密码", nil);
@@ -141,7 +143,7 @@
     [self.view addSubview:passwordTipTF];
     
     /*****************用户协议*****************/
-    NSString *str = Localized(@" 我已仔细阅读并同意服务条款", nil);
+    NSString *str = Localized(@" 我已仔细阅读并同意", nil);
     CGSize size = [str calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
     agreementBtn = [[UIButton alloc] initWithFrame:CGRectMake(inputTV.minX, passwordTipTF.maxY + Size(17),size.width +Size(20), Size(20))];
     [agreementBtn setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
@@ -152,6 +154,16 @@
     agreementBtn.selected = NO;
     [agreementBtn addTarget:self action:@selector(agreementBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:agreementBtn];
+    //协议内容
+    NSString *seeStr = Localized(@"服务条款", nil);
+    CGSize seesSize = [seeStr calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
+    UIButton *seeProtocol = [[UIButton alloc]initWithFrame:CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height)];
+    seeProtocol.titleLabel.font = BoldSystemFontOfSize(8);
+    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:Localized(@"服务条款", nil)];
+    [attStr addAttribute:NSForegroundColorAttributeName value:TEXT_GREEN_COLOR range:NSMakeRange(0, attStr.length)];
+    [seeProtocol setAttributedTitle:attStr forState:UIControlStateNormal];
+    [seeProtocol addTarget:self action:@selector(seeProtocol) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:seeProtocol];
     
     /*****************导入钱包*****************/
     importBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), agreementBtn.maxY +Size(13), kScreenWidth - 2*Size(20), Size(45))];
@@ -215,13 +227,12 @@
         importBT.userInteractionEnabled = YES;
     }
 }
-//查看协议内容
--(void)seeProtocol:(UIButton *)btn
+//查看协议
+-(void)seeProtocol
 {
     CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
-    viewController.hidesBottomBarWhenPushed = YES;
+    viewController.titleStr = @"SEC钱包服务协议";
     viewController.commonHtmlShowViewType = CommonHtmlShowViewType_RgsProtocol;
-    viewController.titleStr = @"商户协议";
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -234,37 +245,47 @@
         if (inputTV.text.length == 0) {
             inputTVErrorLb.hidden = NO;
             [inputTVErrorLb remindError:@"请输入助记词" withY:inputTV.minY -KInputDesViewHeight];
+            inputTV.backgroundColor = REMIND_COLOR;
             return;
         }else{
             inputTVErrorLb.hidden = YES;
+            inputTV.backgroundColor = DARK_COLOR;
         }
         if (passwordTF.text.length >30 || passwordTF.text.length <8) {
             passwordErrorLb.hidden = NO;
             [passwordErrorLb remindError:@"请输入8~30位密码" withY:passwordDesLb.minY];
+            pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             passwordErrorLb.hidden = YES;
+            pswCell.contentView.backgroundColor = DARK_COLOR;
         }
         if ([NSString validatePassword:passwordTF.text] == NO) {
             passwordErrorLb.hidden = NO;
             [passwordErrorLb remindError:@"请输入数字和字母组合密码" withY:passwordDesLb.minY];
+            pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             passwordErrorLb.hidden = YES;
+            pswCell.contentView.backgroundColor = DARK_COLOR;
         }
         if (re_passwordTF.text.length == 0) {
             re_passwordErrorLb.hidden = NO;
             [re_passwordErrorLb remindError:@"请再次输入密码" withY:re_passwordDesLb.minY];
+            re_pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             re_passwordErrorLb.hidden = YES;
+            re_pswCell.contentView.backgroundColor = DARK_COLOR;
         }
         if (![passwordTF.text isEqualToString:re_passwordTF.text]) {
             re_passwordErrorLb.hidden = NO;
             [re_passwordErrorLb remindError:@"两次密码输入不一致，请重新输入！" withY:re_passwordDesLb.minY];
+            re_pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             re_passwordErrorLb.hidden = YES;
+            re_pswCell.contentView.backgroundColor = DARK_COLOR;
         }
     
         //导入助记词
@@ -281,14 +302,18 @@
             if (error == HSWalletErrorMnemonicsLength) {
                 inputTVErrorLb.hidden = NO;
                 [inputTVErrorLb remindError:@"助记词长度不够" withY:inputTV.minY -KInputDesViewHeight];
+                inputTV.backgroundColor = REMIND_COLOR;
             }else if (error == HSWalletErrorMnemonicsCount) {
                 inputTVErrorLb.hidden = NO;
                 [inputTVErrorLb remindError:@"助记词个数不够" withY:inputTV.minY -KInputDesViewHeight];
+                inputTV.backgroundColor = REMIND_COLOR;
             }else if (error == HSWalletErrorMnemonicsValidWord) {
                 inputTVErrorLb.hidden = NO;
                 [inputTVErrorLb remindError:@"助记词有误" withY:inputTV.minY -KInputDesViewHeight];
+                inputTV.backgroundColor = REMIND_COLOR;
             }else if (error == HSWalletImportMnemonicsSuc) {
                 inputTVErrorLb.hidden = YES;
+                inputTV.backgroundColor = DARK_COLOR;
                 /*************先获取钱包列表并将最新钱包排在第一位*************/
                 NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
                 NSData* data2 = [NSData dataWithContentsOfFile:path];
@@ -301,6 +326,30 @@
                     if ([inputTV.text isEqualToString:model.mnemonicPhrase]) {
                         CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"温馨提示", nil) contentText:Localized(@"钱包已存在，是否设置为新密码？\n（请牢记钱包新密码）", nil) imageName:@"question_mark" leftButtonTitle:Localized(@"取消", nil) rightButtonTitle:Localized(@"确定", nil) alertViewType:CommonAlertViewType_question_mark];
                         [alert show];
+                        alert.rightBlock = ^() {
+                            /***********更新当前钱包密码***********/
+                            NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
+                            NSData* datapath = [NSData dataWithContentsOfFile:path];
+                            NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
+                            NSMutableArray *list = [NSMutableArray array];
+                            list = [unarchiver decodeObjectForKey:@"walletList"];
+                            [unarchiver finishDecoding];
+                            for (int i = 0; i< list.count; i++) {
+                                WalletModel *model = list[i];
+                                if ([inputTV.text isEqualToString:model.mnemonicPhrase]) {
+                                    [model setLoginPassword:passwordTF.text];
+                                    [list replaceObjectAtIndex:i withObject:model];
+                                }
+                            }
+                            //替换list中当前钱包信息
+                            NSMutableData* data = [NSMutableData data];
+                            NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+                            [archiver encodeObject:list forKey:@"walletList"];
+                            [archiver finishEncoding];
+                            [data writeToFile:path atomically:YES];
+                            
+                            [self backAction];
+                        };
                         return;
                     }
                 }
@@ -341,23 +390,29 @@
         if (inputTV.text.length == 0) {
             inputTVErrorLb.hidden = NO;
             [inputTVErrorLb remindError:@"请输入KeyStore" withY:inputTV.minY -KInputDesViewHeight];
+            inputTV.backgroundColor = REMIND_COLOR;
             return;
         }else{
             inputTVErrorLb.hidden = YES;
+            inputTV.backgroundColor = DARK_COLOR;
         }
         if (passwordTF.text.length >30 || passwordTF.text.length <8) {
             passwordErrorLb.hidden = NO;
             [passwordErrorLb remindError:@"请输入8~30位密码" withY:passwordDesLb.minY];
+            pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             passwordErrorLb.hidden = YES;
+            pswCell.contentView.backgroundColor = DARK_COLOR;
         }
         if ([NSString validatePassword:passwordTF.text] == NO) {
             passwordErrorLb.hidden = NO;
             [passwordErrorLb remindError:@"请输入数字和字母组合密码" withY:passwordDesLb.minY];
+            pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             passwordErrorLb.hidden = YES;
+            pswCell.contentView.backgroundColor = DARK_COLOR;
         }
         //导入KeyStore
         [self createLoadingView:Localized(@"导入钱包中···", nil)];
@@ -373,11 +428,14 @@
             if (error == HSWalletErrorKeyStoreLength) {
                 inputTVErrorLb.hidden = NO;
                 [inputTVErrorLb remindError:@"KeyStore长度不够" withY:inputTV.minY -KInputDesViewHeight];
+                inputTV.backgroundColor = REMIND_COLOR;
             }else if (error == HSWalletErrorKeyStoreValid) {
                 inputTVErrorLb.hidden = NO;
                 [inputTVErrorLb remindError:@"密码不正确" withY:inputTV.minY -KInputDesViewHeight];
+                inputTV.backgroundColor = REMIND_COLOR;
             }else if (error == HSWalletImportKeyStoreSuc) {
                 inputTVErrorLb.hidden = YES;
+                inputTV.backgroundColor = DARK_COLOR;
                 /*************先获取钱包列表并将最新钱包排在第一位*************/
                 NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
                 NSData* data2 = [NSData dataWithContentsOfFile:path];
@@ -390,6 +448,30 @@
                     if ([inputTV.text isEqualToString:model.keyStore]) {
                         CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"温馨提示", nil) contentText:Localized(@"钱包已存在，是否设置为新密码？\n（请牢记钱包新密码）", nil) imageName:@"question_mark" leftButtonTitle:Localized(@"取消", nil) rightButtonTitle:Localized(@"确定", nil) alertViewType:CommonAlertViewType_question_mark];
                         [alert show];
+                        alert.rightBlock = ^() {
+                            /***********更新当前钱包密码***********/
+                            NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
+                            NSData* datapath = [NSData dataWithContentsOfFile:path];
+                            NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
+                            NSMutableArray *list = [NSMutableArray array];
+                            list = [unarchiver decodeObjectForKey:@"walletList"];
+                            [unarchiver finishDecoding];
+                            for (int i = 0; i< list.count; i++) {
+                                WalletModel *model = list[i];
+                                if ([inputTV.text isEqualToString:model.mnemonicPhrase]) {
+                                    [model setLoginPassword:passwordTF.text];
+                                    [list replaceObjectAtIndex:i withObject:model];
+                                }
+                            }
+                            //替换list中当前钱包信息
+                            NSMutableData* data = [NSMutableData data];
+                            NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+                            [archiver encodeObject:list forKey:@"walletList"];
+                            [archiver finishEncoding];
+                            [data writeToFile:path atomically:YES];
+                            
+                            [self backAction];
+                        };
                         return;
                     }
                 }
@@ -431,44 +513,56 @@
         if (inputTV.text.length == 0) {
             inputTVErrorLb.hidden = NO;
             [inputTVErrorLb remindError:@"请输入私钥" withY:inputTV.minY -KInputDesViewHeight];
+            inputTV.backgroundColor = REMIND_COLOR;
             return;
         }else{
             inputTVErrorLb.hidden = YES;
+            inputTV.backgroundColor = DARK_COLOR;
         }
         if (inputTV.text.length != 64) {
             inputTVErrorLb.hidden = NO;
             [inputTVErrorLb remindError:@"请输入正确的私钥" withY:inputTV.minY -KInputDesViewHeight];
+            inputTV.backgroundColor = REMIND_COLOR;
             return;
         }else{
             inputTVErrorLb.hidden = YES;
+            inputTV.backgroundColor = DARK_COLOR;
         }
         if (passwordTF.text.length >30 || passwordTF.text.length <8) {
             passwordErrorLb.hidden = NO;
             [passwordErrorLb remindError:@"请输入8~30位密码" withY:passwordDesLb.minY];
+            pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             passwordErrorLb.hidden = YES;
+            pswCell.contentView.backgroundColor = DARK_COLOR;
         }
         if ([NSString validatePassword:passwordTF.text] == NO) {
             passwordErrorLb.hidden = NO;
             [passwordErrorLb remindError:@"请输入数字和字母组合密码" withY:passwordDesLb.minY];
+            pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             passwordErrorLb.hidden = YES;
+            pswCell.contentView.backgroundColor = DARK_COLOR;
         }
         if (re_passwordTF.text.length == 0) {
             re_passwordErrorLb.hidden = NO;
             [re_passwordErrorLb remindError:@"请再次输入密码" withY:re_passwordDesLb.minY];
+            re_pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             re_passwordErrorLb.hidden = YES;
+            re_pswCell.contentView.backgroundColor = DARK_COLOR;
         }
         if (![passwordTF.text isEqualToString:re_passwordTF.text]) {
             re_passwordErrorLb.hidden = NO;
             [re_passwordErrorLb remindError:@"两次密码输入不一致，请重新输入！" withY:re_passwordDesLb.minY];
+            re_pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             re_passwordErrorLb.hidden = YES;
+            re_pswCell.contentView.backgroundColor = DARK_COLOR;
         }
         //导入私钥
         [self createLoadingView:Localized(@"导入钱包中···", nil)];
@@ -495,6 +589,30 @@
                     if ([inputTV.text isEqualToString:model.privateKey]) {
                         CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"温馨提示", nil) contentText:Localized(@"钱包已存在，是否设置为新密码？\n（请牢记钱包新密码）", nil) imageName:@"question_mark" leftButtonTitle:Localized(@"取消", nil) rightButtonTitle:Localized(@"确定", nil) alertViewType:CommonAlertViewType_question_mark];
                         [alert show];
+                        alert.rightBlock = ^() {
+                            /***********更新当前钱包密码***********/
+                            NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
+                            NSData* datapath = [NSData dataWithContentsOfFile:path];
+                            NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
+                            NSMutableArray *list = [NSMutableArray array];
+                            list = [unarchiver decodeObjectForKey:@"walletList"];
+                            [unarchiver finishDecoding];
+                            for (int i = 0; i< list.count; i++) {
+                                WalletModel *model = list[i];
+                                if ([inputTV.text isEqualToString:model.mnemonicPhrase]) {
+                                    [model setLoginPassword:passwordTF.text];
+                                    [list replaceObjectAtIndex:i withObject:model];
+                                }
+                            }
+                            //替换list中当前钱包信息
+                            NSMutableData* data = [NSMutableData data];
+                            NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+                            [archiver encodeObject:list forKey:@"walletList"];
+                            [archiver finishEncoding];
+                            [data writeToFile:path atomically:YES];
+                            
+                            [self backAction];
+                        };
                         return;
                     }
                 }
@@ -576,33 +694,12 @@
     }
     return YES;
 }
-
-#pragma mark UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+-(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if (buttonIndex == 1) {
-        /***********更新当前钱包密码***********/
-        NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
-        NSData* datapath = [NSData dataWithContentsOfFile:path];
-        NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
-        NSMutableArray *list = [NSMutableArray array];
-        list = [unarchiver decodeObjectForKey:@"walletList"];
-        [unarchiver finishDecoding];
-        for (int i = 0; i< list.count; i++) {
-            WalletModel *model = list[i];
-            if ([inputTV.text isEqualToString:model.mnemonicPhrase]) {
-                [model setLoginPassword:passwordTF.text];
-                [list replaceObjectAtIndex:i withObject:model];
-            }
-        }
-        //替换list中当前钱包信息
-        NSMutableData* data = [NSMutableData data];
-        NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-        [archiver encodeObject:list forKey:@"walletList"];
-        [archiver finishEncoding];
-        [data writeToFile:path atomically:YES];
-        
-        [self backAction];
+    if (textField == passwordTF) {
+        pswCell.contentView.backgroundColor = DARK_COLOR;
+    }else if (textField == re_passwordTF) {
+        re_pswCell.contentView.backgroundColor = DARK_COLOR;
     }
 }
 
@@ -612,6 +709,7 @@
     placeholderLb.hidden = YES;
     [IQKeyboardManager sharedManager].shouldFixTextViewClip = NO;
     [IQKeyboardManager sharedManager].canAdjustTextView = NO;
+    inputTV.backgroundColor = DARK_COLOR;
     return YES;
 }
 - (void)textViewDidEndEditing:(UITextView *)textView

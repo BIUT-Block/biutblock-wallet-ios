@@ -101,7 +101,7 @@
     }else if (sender.tag == 101) {
         CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
         viewController.titleStr = sender.titleLabel.text;
-        viewController.commonHtmlShowViewType = CommonHtmlShowViewType_RgsProtocol;
+        viewController.commonHtmlShowViewType = CommonHtmlShowViewType_remindTip;
         [self.navigationController pushViewController:viewController animated:YES];
     }
 }

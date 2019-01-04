@@ -79,6 +79,7 @@
     passwordDesLb.attributedText = pswStr;
     [pswCell addSubview:passwordDesLb];
     passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordDesLb.maxX +Size(10), passwordDesLb.minY, Size(120), pswCell.height)];
+    passwordTF.delegate = self;
     passwordTF.font = SystemFontOfSize(8);
     passwordTF.textColor = TEXT_BLACK_COLOR;
     passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
@@ -102,6 +103,7 @@
     newpasswordDesLb.attributedText = newpswStr;
     [newpswCell addSubview:newpasswordDesLb];
     newpasswordTF = [[UITextField alloc] initWithFrame:CGRectMake(newpasswordDesLb.maxX +Size(10), 0, passwordTF.width, newpswCell.height)];
+    newpasswordTF.delegate = self;
     newpasswordTF.font = SystemFontOfSize(8);
     newpasswordTF.textColor = TEXT_BLACK_COLOR;
     newpasswordTF.placeholder = Localized(@"8~30位数字，英文字母以及特殊字符至少2种组合", nil);
@@ -125,6 +127,7 @@
     re_passwordDesLb.attributedText = re_pswStr;
     [re_pswCell addSubview:re_passwordDesLb];
     re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordDesLb.maxX +Size(10), 0, passwordTF.width, passwordTF.height)];
+    re_passwordTF.delegate = self;
     re_passwordTF.font = SystemFontOfSize(8);
     re_passwordTF.textColor = TEXT_BLACK_COLOR;
     re_passwordTF.placeholder = Localized(@"请再次确认密码", nil);
@@ -168,52 +171,66 @@
     if (passwordTF.text.length >30 || passwordTF.text.length <8) {
         pswErrorLb.hidden = NO;
         [pswErrorLb remindError:@"请输入8~30位密码" withY:pswCell.minY-Size(25)];
+        pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         pswErrorLb.hidden = YES;
+        pswCell.contentView.backgroundColor = DARK_COLOR;
     }
     if ([NSString validatePassword:passwordTF.text] == NO) {
         pswErrorLb.hidden = NO;
         [pswErrorLb remindError:@"请输入数字和字母组合密码" withY:pswCell.minY-Size(25)];
+        pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         pswErrorLb.hidden = YES;
+        pswCell.contentView.backgroundColor = DARK_COLOR;
     }
     if (![passwordTF.text isEqualToString:_walletModel.loginPassword]) {
         pswErrorLb.hidden = NO;
         [pswErrorLb remindError:@"当前密码验证失败" withY:pswCell.minY-Size(25)];
+        pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         pswErrorLb.hidden = YES;
+        pswCell.contentView.backgroundColor = DARK_COLOR;
     }
     
     if (newpasswordTF.text.length >30 || newpasswordTF.text.length <8) {
         newpswErrorLb.hidden = NO;
         [newpswErrorLb remindError:@"请输入8~30位密码" withY:newpswCell.minY-Size(20)];
+        newpswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         newpswErrorLb.hidden = YES;
+        newpswCell.contentView.backgroundColor = DARK_COLOR;
     }
     if ([NSString validatePassword:newpasswordTF.text] == NO) {
         newpswErrorLb.hidden = NO;
         [newpswErrorLb remindError:@"请输入数字和字母组合密码" withY:newpswCell.minY-Size(20)];
+        newpswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         newpswErrorLb.hidden = YES;
+        newpswCell.contentView.backgroundColor = DARK_COLOR;
     }
     if (re_passwordTF.text.length == 0) {
         re_pswErrorLb.hidden = NO;
         [re_pswErrorLb remindError:@"请再次输入密码" withY:re_pswCell.minY-Size(20)];
+        re_pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         re_pswErrorLb.hidden = YES;
+        re_pswCell.contentView.backgroundColor = DARK_COLOR;
     }
     if (![newpasswordTF.text isEqualToString:re_passwordTF.text]) {
         re_pswErrorLb.hidden = NO;
         [re_pswErrorLb remindError:@"两次密码输入不一致，请重新输入！" withY:re_pswCell.minY-Size(20)];
+        re_pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
         re_pswErrorLb.hidden = YES;
+        re_pswCell.contentView.backgroundColor = DARK_COLOR;
     }
     if (newpasswordTF.text.length > 0) {
         [self createLoadingView:nil];
@@ -262,6 +279,16 @@
         }
     }
     return YES;
+}
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField == passwordTF) {
+        pswCell.contentView.backgroundColor = DARK_COLOR;
+    }else if (textField == newpasswordTF) {
+        newpswCell.contentView.backgroundColor = DARK_COLOR;
+    }else if (textField == re_passwordTF) {
+        re_pswCell.contentView.backgroundColor = DARK_COLOR;
+    }
 }
 
 -(void)importBtnAction
