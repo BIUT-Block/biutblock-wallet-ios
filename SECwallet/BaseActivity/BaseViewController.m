@@ -87,7 +87,7 @@
 -(void) startRequest
 {
     _isLoading = YES;
-    [self createLoadingView:@"正在加载"];
+    [self createLoadingView:nil];
 }
 
 // 返回成功
@@ -149,7 +149,7 @@
     label.textColor = BLACK_COLOR;
     label.textAlignment = 1;
     label.text = string;
-    label.font = BoldSystemFontOfSize(12);
+    label.font = BoldSystemFontOfSize(14);
     self.navigationItem.titleView = label;
 }
 
@@ -161,7 +161,7 @@
                                                                 target:self
                                                                 action:methot];
     leftItem.tintColor = BLACK_COLOR;
-    [leftItem setTitleTextAttributes:@{NSFontAttributeName:SystemFontOfSize(16)} forState:0];
+    [leftItem setTitleTextAttributes:@{NSFontAttributeName:SystemFontOfSize(14)} forState:0];
     self.navigationItem.leftBarButtonItem = leftItem;
     
 }
@@ -186,7 +186,7 @@
                                                                  target:self
                                                                  action:methot];
     rightItem.tintColor = BLACK_COLOR;
-    [rightItem setTitleTextAttributes:@{NSFontAttributeName:SystemFontOfSize(16)} forState:0];
+    [rightItem setTitleTextAttributes:@{NSFontAttributeName:SystemFontOfSize(14)} forState:0];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 

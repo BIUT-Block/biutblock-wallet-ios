@@ -54,7 +54,7 @@
     NSString *mediaType = AVMediaTypeVideo;
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
     if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
-        UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请在iPhone的“设置”-“隐私”-“相机”功能中，找到“云莱付”打开相机访问权限" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        UIAlertView *alert =[[UIAlertView alloc]initWithTitle:Localized(@"温馨提示", nil) message:Localized(@"请在iPhone的“设置”-“隐私”-“相机”功能中，找到“SEC钱包”打开相机访问权限", nil) delegate:self cancelButtonTitle:Localized(@"确定", nil) otherButtonTitles: nil];
         [alert show];
 
         return;

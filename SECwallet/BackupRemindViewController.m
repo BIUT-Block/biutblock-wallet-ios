@@ -9,6 +9,7 @@
 #import "BackupRemindViewController.h"
 #import "BackupFileBeforeViewController.h"
 #import "RootViewController.h"
+#import "ConfirmPasswordViewController.h"
 
 @interface BackupRemindViewController ()
 
@@ -89,30 +90,15 @@
 
 -(void)backupAction
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:Localized(@"请输入密码", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"确定", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UITextField *pswTF = alertController.textFields.firstObject;
-        if (pswTF.text.length == 0) {
-            [self hudShowWithString:Localized(@"密码不能为空", nil) delayTime:1];
-            return;
-        }else{
-            if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
-                BackupFileBeforeViewController *controller = [[BackupFileBeforeViewController alloc]init];
-                controller.walletModel = _walletModel;
-                UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:controller];
-                [self presentViewController:navi animated:YES completion:nil];
-            }else{
-                [self hudShowWithString:Localized(@"密码不正确", nil) delayTime:1];
-                return;
-            }
-        }        
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:Localized(@"取消", nil) style:UIAlertActionStyleDefault handler:nil]];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.keyboardType = UIKeyboardTypeASCIICapable;
-        textField.secureTextEntry = YES;
-    }];
-    [self presentViewController:alertController animated:true completion:nil];
+    ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
+    controller.walletModel = _walletModel;
+    [self presentViewController:controller animated:YES completion:nil];
+    controller.sureBlock = ^() {
+        BackupFileBeforeViewController *controller = [[BackupFileBeforeViewController alloc]init];
+        controller.walletModel = _walletModel;
+        UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:controller];
+        [self presentViewController:navi animated:YES completion:nil];
+    };
 }
 
 @end

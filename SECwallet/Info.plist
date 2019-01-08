@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>zh_CN</string>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
 	<key>CFBundleDisplayName</key>
 	<string>SEC钱包</string>
 	<key>CFBundleExecutable</key>
@@ -93,11 +93,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>CEC钱包需要获取您的相机权限来上传图片，是否同意获取</string>
+	<string>SEC钱包需要获取您的相机权限来上传图片，是否同意获取</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>CEC钱包需要您的同意才能添加图片</string>
+	<string>SEC钱包需要您的同意才能添加图片</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>CEC钱包需要您的同意才能读取媒体资料库</string>
+	<string>SEC钱包需要您的同意才能读取媒体资料库</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

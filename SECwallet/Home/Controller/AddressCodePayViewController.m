@@ -7,9 +7,14 @@
 //
 
 #import "AddressCodePayViewController.h"
+#import "CommonTableViewCell.h"
 
-@interface AddressCodePayViewController ()
+@interface AddressCodePayViewController ()<UITextFieldDelegate>
 {
+    CommonTableViewCell *cell;
+    UILabel *sumErrorLb;
+    UITextField *sumTF;
+    BOOL isError;
 }
 @end
 
@@ -46,11 +51,11 @@
     titleLb.textColor = TEXT_BLACK_COLOR;
     titleLb.font = BoldSystemFontOfSize(20);
     titleLb.textAlignment = NSTextAlignmentCenter;
-    titleLb.text = Localized(@"SEC收款",nil);
+    titleLb.text = [NSString stringWithFormat:@"SEC %@",Localized(@"收款",nil)] ;
     [self.view addSubview:titleLb];
     
     //地址
-    UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(65), titleLb.maxY +Size(60), kScreenWidth -Size(65)*2, Size(40))];
+    UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(65), titleLb.maxY +Size(30), kScreenWidth -Size(65)*2, Size(40))];
     addressLb.font = SystemFontOfSize(10);
     addressLb.textColor = TEXT_DARK_COLOR;
     addressLb.numberOfLines = 2;
@@ -58,8 +63,22 @@
     addressLb.text = _walletModel.address;
     [self.view addSubview:addressLb];
     
+    cell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    cell.frame = CGRectMake(addressLb.minX, addressLb.maxY +Size(15), addressLb.width, Size(30));
+    cell.contentView.backgroundColor = WHITE_COLOR;
+    [self.view addSubview:cell];
+    sumErrorLb = [[UILabel alloc]init];
+    [self.view addSubview:sumErrorLb];
+    sumTF = [[UITextField alloc]initWithFrame:CGRectMake(Size(10), 0, cell.width -Size(10 *2), cell.height)];
+    sumTF.font = SystemFontOfSize(12);
+    sumTF.textColor = TEXT_BLACK_COLOR;
+    sumTF.keyboardType = UIKeyboardTypeDecimalPad;
+    sumTF.delegate = self;
+    [sumTF addTarget:self action:@selector(checkSumAction:) forControlEvents:UIControlEventEditingChanged];
+    [cell.contentView addSubview:sumTF];
+    
     //支付码
-    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(addressLb.minX, addressLb.maxY +Size(15), kScreenWidth-addressLb.minX*2, Size(190))];
+    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(addressLb.minX, cell.maxY +Size(15), kScreenWidth-addressLb.minX*2, Size(190))];
     bkgView.backgroundColor = BACKGROUND_DARK_COLOR;
     [self.view addSubview:bkgView];
     UIImageView *payCode = [[UIImageView alloc]initWithFrame:CGRectMake(Size(20), Size(20), bkgView.width-Size(20 *2), bkgView.height-Size(20 *2))];
@@ -80,6 +99,47 @@
     UIPasteboard * pastboard = [UIPasteboard generalPasteboard];
     pastboard.string = _walletModel.address;
     [self hudShowWithString:@"已复制" delayTime:1];
+}
+
+-(void)checkSumAction:(id)sender
+{
+    UITextField *field = (UITextField *)sender;
+    //限制输入小数点后八位
+    if ([field.text floatValue] > [_walletModel.balance floatValue]) {
+        sumErrorLb.hidden = NO;
+        [sumErrorLb remindError:@"超过最大输入值" withY:cell.minY -Size(20)];
+        cell.contentView.backgroundColor = REMIND_COLOR;
+        isError = YES;
+    }else{
+        sumErrorLb.hidden = YES;
+        cell.contentView.backgroundColor = WHITE_COLOR;
+        isError = NO;
+    }
+    
+    if ([field.text containsString:@"."]) {
+        NSString *decimalStr = [field.text componentsSeparatedByString:@"."].lastObject;
+        if (decimalStr.length > 8) {
+            sumErrorLb.hidden = NO;
+            [sumErrorLb remindError:@"小数点后只允许输入8位" withY:cell.minY -Size(20)];
+            cell.contentView.backgroundColor = REMIND_COLOR;
+            isError = YES;
+            return;
+        }else{
+            sumErrorLb.hidden = YES;
+            cell.contentView.backgroundColor = WHITE_COLOR;
+            isError = NO;
+        }
+    }
+}
+
+#pragma UITextFieldDelegate
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (isError == YES) {
+        sumErrorLb.hidden = YES;
+        cell.contentView.backgroundColor = WHITE_COLOR;
+        textField.text = @"";
+    }
 }
 
 @end

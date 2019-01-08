@@ -17,9 +17,17 @@
 
 @interface TransferViewController ()<TradeDetailViewDelegate,UITextFieldDelegate,AddressListViewControllerDelegate>
 {
+    UILabel *addressLb;
+    UILabel *addressErrorLb;
+    CommonTableViewCell *addressCell;
     UIScrollView *addressContentView;
     UITextField *addressTF;
+    
+    UILabel *moneyDesLb;
+    UILabel *moneyErrorLb;
+    CommonTableViewCell *moneyCell;
     UITextField *moneyTF;
+    
     UITextField *remarkTF;   //备注
     UILabel *gasLb;
 }
@@ -71,12 +79,14 @@
     titleLb.text = [NSString stringWithFormat:@"SEC %@",Localized(@"转账",nil)];
     [self.view addSubview:titleLb];
     
-    UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(45), Size(200), Size(25))];
+    addressLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(45), Size(200), Size(25))];
     addressLb.font = BoldSystemFontOfSize(10);
     addressLb.textColor = TEXT_BLACK_COLOR;
     addressLb.text = Localized(@"收款人钱包地址", nil);
     [self.view addSubview:addressLb];
-    CommonTableViewCell *addressCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    addressErrorLb = [[UILabel alloc]init];
+    [self.view addSubview:addressErrorLb];
+    addressCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     addressCell.frame = CGRectMake(addressLb.minX, addressLb.maxY, kScreenWidth-addressLb.minX*2, Size(36));
     [self.view addSubview:addressCell];
     addressContentView = [[UIScrollView alloc]initWithFrame:CGRectMake(Size(10), 0, addressCell.width -Size(10 +45), addressCell.height)];
@@ -95,15 +105,18 @@
     [addressCell addSubview:addressBtn];
     
     //金额
-    UILabel *moneyDesLb = [[UILabel alloc] initWithFrame:CGRectMake(addressLb.minX, addressCell.maxY +Size(4), addressLb.width, addressLb.height)];
+    moneyDesLb = [[UILabel alloc] initWithFrame:CGRectMake(addressLb.minX, addressCell.maxY +Size(4), addressLb.width, addressLb.height)];
     moneyDesLb.font = BoldSystemFontOfSize(10);
     moneyDesLb.textColor = TEXT_BLACK_COLOR;
     moneyDesLb.text = Localized(@"转账金额", nil);
     [self.view addSubview:moneyDesLb];
-    CommonTableViewCell *moneyCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    moneyErrorLb = [[UILabel alloc]init];
+    [self.view addSubview:moneyErrorLb];
+    moneyCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     moneyCell.frame = CGRectMake(moneyDesLb.minX, moneyDesLb.maxY, addressCell.width,addressCell.height);
     [self.view addSubview:moneyCell];
     moneyTF = [[UITextField alloc] initWithFrame:CGRectMake(Size(10), 0, moneyCell.width -Size(20), moneyCell.height)];
+    moneyTF.delegate = self;
     moneyTF.font = SystemFontOfSize(12);
     moneyTF.textColor = TEXT_BLACK_COLOR;
     moneyTF.keyboardType = UIKeyboardTypeDecimalPad;
@@ -134,53 +147,99 @@
 #pragma UITextFieldDelegate
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    CGSize size = [textField.text calculateSize:SystemFontOfSize(12) maxWidth:kScreenWidth*2];
-    if (size.width > kScreenWidth -Size(75)) {
-        addressTF.frame = CGRectMake(0, 0, size.width, Size(36));
-        [addressContentView setContentSize:CGSizeMake(size.width+Size(10), Size(36))];
-    }else{
-        addressTF.frame = CGRectMake(0, 0, kScreenWidth -Size(15 +45), Size(36));
-        [addressContentView setContentSize:CGSizeMake(kScreenWidth -Size(15 +45), Size(36))];
+    if (textField == addressTF) {
+        CGSize size = [textField.text calculateSize:SystemFontOfSize(12) maxWidth:kScreenWidth*2];
+        if (size.width > kScreenWidth -Size(75)) {
+            addressTF.frame = CGRectMake(0, 0, size.width, Size(36));
+            [addressContentView setContentSize:CGSizeMake(size.width+Size(10), Size(36))];
+        }else{
+            addressTF.frame = CGRectMake(0, 0, kScreenWidth -Size(15 +45), Size(36));
+            [addressContentView setContentSize:CGSizeMake(kScreenWidth -Size(15 +45), Size(36))];
+        }
+    }
+}
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField == addressTF) {
+        addressCell.contentView.backgroundColor = DARK_COLOR;
+    }else if (textField == moneyTF) {
+        moneyCell.contentView.backgroundColor = DARK_COLOR;
     }
 }
 
 #pragma mark 下一步
 -(void)nextAction
 {
-    addressTF.text = @"0xfa9461cc20fbb1b0937aa07ec6afc5e660fe2afd";
     [self dismissKeyboardAction];
     if (addressTF.text.length == 0) {
-        [self hudShowWithString:@"请输入收款人钱包地址" delayTime:1.5];
+        addressErrorLb.hidden = NO;
+        [addressErrorLb remindError:@"请输入收款人钱包地址" withY:addressLb.minY];
+        addressCell.contentView.backgroundColor = REMIND_COLOR;
         return;
+    }else{
+        addressErrorLb.hidden = YES;
+        addressCell.contentView.backgroundColor = DARK_COLOR;
     }
     //判断扫描的是否为钱包地址(前缀是0x并且长度为42位)
     if (!([addressTF.text hasPrefix:@"0x"] && addressTF.text.length == 42)) {
-        [self hudShowWithString:@"地址不正确，请重新输入" delayTime:1.5];
+        addressErrorLb.hidden = NO;
+        [addressErrorLb remindError:@"地址不正确，请重新输入" withY:addressLb.minY];
+        addressCell.contentView.backgroundColor = REMIND_COLOR;
         return;
+    }else{
+        addressErrorLb.hidden = YES;
+        addressCell.contentView.backgroundColor = DARK_COLOR;
     }
     if ([addressTF.text isEqualToString:_walletModel.address]) {
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"同一地址之间不能转账哦" message:@"您的收款地址和当前钱包地址一致" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil,nil];
-        [alertView show];
+        addressErrorLb.hidden = NO;
+        [addressErrorLb remindError:@"同一地址之间不能转账" withY:addressLb.minY];
+        addressCell.contentView.backgroundColor = REMIND_COLOR;
         return;
+    }else{
+        addressErrorLb.hidden = YES;
+        addressCell.contentView.backgroundColor = DARK_COLOR;
     }
     if (moneyTF.text.length == 0) {
-        [self hudShowWithString:@"请输入转账金额" delayTime:1.5];
+        moneyErrorLb.hidden = NO;
+        [moneyErrorLb remindError:@"请输入转账金额" withY:moneyDesLb.minY];
+        moneyCell.contentView.backgroundColor = REMIND_COLOR;
         return;
+    }else{
+        moneyErrorLb.hidden = YES;
+        moneyCell.contentView.backgroundColor = DARK_COLOR;
     }
-    if ([moneyTF.text floatValue] == 0) {
-        [self hudShowWithString:@"转账金额不能为零" delayTime:1.5];
+    if ([moneyTF.text doubleValue] == 0) {
+        moneyErrorLb.hidden = NO;
+        [moneyErrorLb remindError:@"转账金额不能为零" withY:moneyDesLb.minY];
+        moneyCell.contentView.backgroundColor = REMIND_COLOR;
         return;
+    }else{
+        moneyErrorLb.hidden = YES;
+        moneyCell.contentView.backgroundColor = DARK_COLOR;
     }
-    if ([moneyTF.text floatValue] > [_tokenCoinModel.tokenNum floatValue]) {
-        [self hudShowWithString:@"代币余额不足，无法转账" delayTime:1.5];
+    if ([_walletModel.balance doubleValue] < [moneyTF.text doubleValue] && [moneyTF.text doubleValue] > 0) {
+        moneyErrorLb.hidden = NO;
+        [moneyErrorLb remindError:@"余额不足" withY:moneyDesLb.minY];
+        moneyCell.contentView.backgroundColor = REMIND_COLOR;
         return;
+    }else{
+        moneyErrorLb.hidden = YES;
+        moneyCell.contentView.backgroundColor = DARK_COLOR;
     }
-    if ([_walletModel.balance floatValue] == 0) {
-        [self hudShowWithString:@"钱包余额不足，无法转账" delayTime:1.5];
-        return;
+    if ([moneyTF.text containsString:@"."]) {
+        NSString *decimalStr = [moneyTF.text componentsSeparatedByString:@"."].lastObject;
+        if (decimalStr.length > 8) {
+            moneyErrorLb.hidden = NO;
+            [moneyErrorLb remindError:@"小数点后只允许输入8位" withY:moneyDesLb.minY];
+            moneyCell.contentView.backgroundColor = REMIND_COLOR;
+            return;
+        }else{
+            moneyErrorLb.hidden = YES;
+            moneyCell.contentView.backgroundColor = DARK_COLOR;
+        }
     }
     
-    NSString *gasStr = [gasLb.text componentsSeparatedByString:@"eth"].firstObject;
+    NSString *gasStr = [gasLb.text componentsSeparatedByString:@"sec"].firstObject;
     [self.tradeDetailView initTradeDetailViewWith:addressTF.text payAddress:_walletModel.address gasPrice:gasStr sum:moneyTF.text tokenName:_tokenCoinModel.name];
 }
 

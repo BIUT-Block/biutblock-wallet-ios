@@ -123,7 +123,8 @@
 "备份失败"="Backup Failed";
 "Please Check and try again."="Please Check and try again.";
 "请检查您的助记词"="Please click your mnemonic";
-"完成"="complete";
+"完 成"="complete";
+"完成"="Done";
 "更改密码"="Change Password";
 "当前密码*"="Current Password*";
 "当前密码验证失败"="Current Password Error";
@@ -170,8 +171,15 @@
 "\n\n\n\n小贴士：\n\nKeystore 的密码是唯一、不可更改的, 如果想更改钱包密码需要使用助记词或明文私钥重新导入钱包,并使用新密码加密, 生成新的 Keystore。"="\n\n\n\ntip: \n\nkeystore password is unique and immutable, and if you want to change your wallet password, you need to re-import your wallet with a mnemonic or plaintext private key and encrypt it with a new password to generate a new Keystore.";
 "我们常说, 你对钱包中资金的控制取决于相应私钥的所有权和控制权。在区块链交易中, 私钥用于生成支付货币所必须的签名, 以证明资金的所有权。私钥必须始终保持机密, 因为一旦泄露给第三方, 相当于该私钥保护下的资产也拱手相让了。它不同于Keystore是加密过后的私钥文件, 只要密码强度足够强, 即使黑客得到 Keystore, 破解难度也足够大。\n\n存储在用户钱包中的私钥完全独立, 可由用户的钱包软件生成并管理, 无需区块链或者网络连接。\n\n用户的钱包地址由公钥经过 keccak256 计算，截取后 40 位 + 0x 得到的。私钥的样式为64位16进制的哈希值字符串。例如:56f759ece75f0ab1b783893cbe390288978d4d4ff24dd233245b4285fcc31cf6\n\n小贴士：\n\n\n\n用户可以使用明文私钥导入CEC钱包, 用新的密码生成一个新的 Keystore (记得要将旧的 Keystore 删除), 用这种方法来修改钱包密码。"="We often say that your control over the money in your wallet depends on the ownership and control of the corresponding private key. In blockchain trading, the private key is used to generate the signature necessary for the payment currency to prove ownership of the funds. The private key must always be confidential, because once leaked to a third party, the equivalent of the private key under the protection of the assets are also ceded. It is different from Keystore is encrypted after the private key file, as long as the password strength is strong enough, even if the hacker get Keystore, cracking is very difficult enough. \n\n The private key stored in the user's wallet is completely independent and can be generated and managed by the user's wallet software without the need for blockchain or network connectivity. The wallet address of the \n\n user is calculated by the public key after keccak256, and the 40-bit + 0x is obtained after interception. The private key is styled as a 64-bit 16-decimal hash value string. For example: 56f759ece75f0ab1b783893cbe390288978d4d4ff24dd233245b4285fcc31cf6\n\n\n\n tip: \n\n Users can import CEC wallets using the plaintext private key and generate a new one with a new password Keystore (Remember to remove the old Keystore), use this method to modify the wallet password. ";
 
+"超过最大输入值"="Exceeding the maximum input amount";
+//"超过最大输入值"="Exceeding the maximum input amount";
+//"SEC钱包想访问您的相机"="SEC Wallet wants to access your camera";
+//"SEC钱包需要获取您的相机权限来上传图片，是否同意获取"="SEC wallet needs to get your camera permissions to upload images, whether to agree to get";
+//"SEC钱包需要您的同意才能添加图片"="SEC Wallet requires your consent to add a picture";
+"请在iPhone的“设置”-“隐私”-“相机”功能中，找到“SEC钱包”打开相机访问权限"="Please find 'SEC wallet' in the iphone's 'Settings'-'privacy'-'camera' feature to turn on camera access";
 
-
+"扫一扫"="Scan Code";
+"地址不正确，请重新扫描！"="Address is incorrect, please rescan!";
 
 
 /****************HUD提示文本********************/
@@ -180,6 +188,13 @@
 "请输入收款人钱包地址"="Please type in Payee Wallet Address";
 "地址不正确，请重新输入"="The address is incorrect,Try again";
 "号码格式不正确，请重新输入"="The Phone No is incorrect,Try again";
+"同一地址之间不能转账"="No transfer between the same address";
+"请输入转账金额"="Please type in transfer amount";
+"转账金额不能为零"="The transfer amount cannot be zero";
+"余额不足"="Insufficient balance";
+"小数点后只允许输入8位"="Only allow 8 bits after decimal point";
+
+
 "邮箱格式不正确，请重新输入"="The Email format is incorrect,Try again";
 "该地址已存在"="Address already exists";
 "请输入助记词"="Please type in Mnemonics";

@@ -89,20 +89,20 @@
     [lnkBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:lnkBtn];
     
-    CommonTableViewCell *exchangeCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    exchangeCell.frame = CGRectMake(addressCell.minX, addressCell.maxY +Size(8), addressCell.width, addressCell.height);
-    exchangeCell.contentView.backgroundColor = WHITE_COLOR;
-    exchangeCell.icon.image = [UIImage imageNamed:@"addressBook"];
-    exchangeCell.staticTitleLb.text = Localized(@"切换语言",nil);
-    exchangeCell.accessoryIV.image = [UIImage imageNamed:@"accessory_right"];
-    [self.view addSubview:exchangeCell];
-    UIButton *lnkBtn1 = [[UIButton alloc]initWithFrame:exchangeCell.frame];
-    lnkBtn1.tag = 1003;
-    [lnkBtn1 addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:lnkBtn1];
+//    CommonTableViewCell *exchangeCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+//    exchangeCell.frame = CGRectMake(addressCell.minX, addressCell.maxY +Size(8), addressCell.width, addressCell.height);
+//    exchangeCell.contentView.backgroundColor = WHITE_COLOR;
+//    exchangeCell.icon.image = [UIImage imageNamed:@"addressBook"];
+//    exchangeCell.staticTitleLb.text = Localized(@"切换语言",nil);
+//    exchangeCell.accessoryIV.image = [UIImage imageNamed:@"accessory_right"];
+//    [self.view addSubview:exchangeCell];
+//    UIButton *lnkBtn1 = [[UIButton alloc]initWithFrame:exchangeCell.frame];
+//    lnkBtn1.tag = 1003;
+//    [lnkBtn1 addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:lnkBtn1];
     
     //版本提示
-    UILabel *versionLb = [[UILabel alloc]initWithFrame:CGRectMake(0, exchangeCell.maxY +Size(40), kScreenWidth, Size(10))];
+    UILabel *versionLb = [[UILabel alloc]initWithFrame:CGRectMake(0, addressCell.maxY +Size(8) +addressCell.height +Size(40), kScreenWidth, Size(10))];
     versionLb.font = SystemFontOfSize(10);
     versionLb.textColor = TEXT_DARK_COLOR;
     versionLb.textAlignment = NSTextAlignmentCenter;

@@ -48,8 +48,8 @@
     homeNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"icon_tab_selected_01"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     homeNav.tabBarItem.image = [[UIImage imageNamed:@"icon_tab_normal_01"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     homeNav.tabBarItem.titlePositionAdjustment = UIOffsetMake(-5, -5);
-    [homeNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_DARK_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Heiti SC" size:8]} forState:UIControlStateNormal];
-    [homeNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_GREEN_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Heiti SC" size:8]} forState:UIControlStateHighlighted];
+    [homeNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_DARK_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:8]} forState:UIControlStateNormal];
+    [homeNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_GREEN_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:8]} forState:UIControlStateHighlighted];
     
     SettingViewController *vc3 = [[SettingViewController alloc] init];
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:vc3];
@@ -58,8 +58,8 @@
     mineNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"icon_tab_selected_02"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     mineNav.tabBarItem.image = [[UIImage imageNamed:@"icon_tab_normal_02"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     mineNav.tabBarItem.titlePositionAdjustment = UIOffsetMake(-5, -5);
-    [mineNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_DARK_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Heiti SC" size:8]} forState:UIControlStateNormal];
-    [homeNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_GREEN_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Heiti SC" size:8]} forState:UIControlStateHighlighted];
+    [mineNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_DARK_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:8]} forState:UIControlStateNormal];
+    [mineNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_GREEN_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:8]} forState:UIControlStateHighlighted];
     
     // 将子视图控制器放入数组
     NSArray *vcs = @[homeNav, mineNav];

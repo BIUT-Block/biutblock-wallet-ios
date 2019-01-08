@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setNavgationItemTitle:@"扫一扫"];
+    [self setNavgationItemTitle:Localized(@"扫一扫", nil)];
     
     __block ScanQRCodeViewController* blockSelf = self;
     [self setCALScanQRCodeGetMetadataStringValue:^(NSString *codeValue) {
@@ -33,7 +33,7 @@
             [blockSelf.delegate getScanCode:codeValue];
             [blockSelf backAction];
         }else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"地址不正确，请重新扫描！" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:Localized(@"地址不正确，请重新扫描！", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:Localized(@"确定", nil), nil];
             [alertView show];
             [blockSelf backAction];
         }

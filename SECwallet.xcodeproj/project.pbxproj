@@ -769,12 +769,12 @@
 				1B65E6FB212BF5BE00BB8DE5 /* Constants */,
 				1B65E6FE212BF5BE00BB8DE5 /* Resources */,
 				1B65E700212BF5BE00BB8DE5 /* IQKeyboardReturnKeyHandler.h */,
+				1B65E712212BF5BE00BB8DE5 /* IQKeyboardReturnKeyHandler.m */,
 				1B65E701212BF5BE00BB8DE5 /* IQKeyboardManager.h */,
+				1B65E706212BF5BE00BB8DE5 /* IQKeyboardManager.m */,
 				1B65E702212BF5BE00BB8DE5 /* IQSegmentedNextPrevious */,
 				1B65E705212BF5BE00BB8DE5 /* KeyboardManager.h */,
-				1B65E706212BF5BE00BB8DE5 /* IQKeyboardManager.m */,
 				1B65E707212BF5BE00BB8DE5 /* Categories */,
-				1B65E712212BF5BE00BB8DE5 /* IQKeyboardReturnKeyHandler.m */,
 			);
 			path = IQKeyBoardManager;
 			sourceTree = "<group>";
@@ -782,8 +782,8 @@
 		1B65E6EF212BF5BE00BB8DE5 /* IQTextView */ = {
 			isa = PBXGroup;
 			children = (
-				1B65E6F0212BF5BE00BB8DE5 /* IQTextView.m */,
 				1B65E6F1212BF5BE00BB8DE5 /* IQTextView.h */,
+				1B65E6F0212BF5BE00BB8DE5 /* IQTextView.m */,
 			);
 			path = IQTextView;
 			sourceTree = "<group>";
@@ -791,14 +791,14 @@
 		1B65E6F2212BF5BE00BB8DE5 /* IQToolbar */ = {
 			isa = PBXGroup;
 			children = (
-				1B65E6F3212BF5BE00BB8DE5 /* IQUIView+IQKeyboardToolbar.h */,
-				1B65E6F4212BF5BE00BB8DE5 /* IQToolbar.m */,
-				1B65E6F5212BF5BE00BB8DE5 /* IQTitleBarButtonItem.m */,
-				1B65E6F6212BF5BE00BB8DE5 /* IQBarButtonItem.m */,
-				1B65E6F7212BF5BE00BB8DE5 /* IQUIView+IQKeyboardToolbar.m */,
 				1B65E6F8212BF5BE00BB8DE5 /* IQToolbar.h */,
+				1B65E6F4212BF5BE00BB8DE5 /* IQToolbar.m */,
+				1B65E6F3212BF5BE00BB8DE5 /* IQUIView+IQKeyboardToolbar.h */,
+				1B65E6F7212BF5BE00BB8DE5 /* IQUIView+IQKeyboardToolbar.m */,
 				1B65E6F9212BF5BE00BB8DE5 /* IQBarButtonItem.h */,
+				1B65E6F6212BF5BE00BB8DE5 /* IQBarButtonItem.m */,
 				1B65E6FA212BF5BE00BB8DE5 /* IQTitleBarButtonItem.h */,
+				1B65E6F5212BF5BE00BB8DE5 /* IQTitleBarButtonItem.m */,
 			);
 			path = IQToolbar;
 			sourceTree = "<group>";

@@ -19,7 +19,7 @@
 #import "CardPageView.h"
 #import "JXMovableCellTableView.h"
 
-#import "CommonHtmlShowViewController.h"
+#import "BackupFileViewController.h"
 
 #define kHeaderHeight    Size(195)
 #define USD_to_CNY       6.8872
@@ -69,7 +69,6 @@
     if (_walletList.count > 1) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
     }
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -248,9 +247,13 @@
 #pragma mark - 快捷功能入口点击
 -(void)rightClick
 {
-    AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
-    viewController.assetsList = assetsList;
-    [self.navigationController pushViewController:viewController animated:YES];
+//    AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
+//    viewController.assetsList = assetsList;
+//    [self.navigationController pushViewController:viewController animated:YES];
+    
+    BackupFileViewController *controller = [[BackupFileViewController alloc]init];
+    controller.walletModel = currentWallet;
+    [self.navigationController pushViewController:controller animated:YES];
     
 }
 

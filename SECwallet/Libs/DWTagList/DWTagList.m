@@ -168,11 +168,11 @@
         gotPreviousFrame = YES;
         
         //默认状态
-        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
-        [tagView setCornerRadius:self.cornerRadius];
-        [tagView setBorderColor:TEXT_GREEN_COLOR.CGColor];
-        [tagView setBorderWidth:Size(0.5)];
-        [tagView setTextColor:TEXT_GREEN_COLOR];
+        [tagView setBackgroundColor:lblBackgroundColor];
+        [tagView setCornerRadius:_cornerRadius];
+        [tagView setBorderColor:_borderColor.CGColor];
+        [tagView setBorderWidth:_borderWidth];
+        [tagView setTextColor:_textColor];
         
         //选中状态
         for (NSString *selectStr in selectTextArray) {
@@ -189,7 +189,6 @@
         [tagView setTextShadowOffset:self.textShadowOffset];
         [tagView setTag:tag];
         [tagView setDelegate:self];
-        
         tag++;
         
         [self addSubview:tagView];
@@ -366,10 +365,10 @@
         [_button setFrame:self.frame];
         [self addSubview:_button];
         
-        [self.layer setMasksToBounds:YES];
-        [self.layer setCornerRadius:CORNER_RADIUS];
-        [self.layer setBorderColor:BORDER_COLOR.CGColor];
-        [self.layer setBorderWidth:BORDER_WIDTH];
+//        [self.layer setMasksToBounds:YES];
+//        [self.layer setCornerRadius:CORNER_RADIUS];
+//        [self.layer setBorderColor:BORDER_COLOR.CGColor];
+//        [self.layer setBorderWidth:BORDER_WIDTH];
     }
     return self;
 }

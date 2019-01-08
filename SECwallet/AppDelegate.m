@@ -35,7 +35,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = BACKGROUND_DARK_COLOR;
     
-    [[Localized sharedInstance]initLanguage];
+//    [[Localized sharedInstance]initLanguage];
+    //默认使用英文
+    [[Localized sharedInstance]setLanguage:@"en"];
     
     self.guideView = [[GuideViewController alloc] init];
     self.window.rootViewController = self.guideView;

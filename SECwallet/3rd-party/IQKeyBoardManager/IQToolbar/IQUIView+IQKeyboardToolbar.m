@@ -205,10 +205,8 @@
     }
  	
 	NSMutableArray *items = [[NSMutableArray alloc] init];
-    
     {
         CGRect buttonFrame;
-        
         if (IQ_IS_IOS7_OR_GREATER)
         {
             /*
@@ -235,8 +233,12 @@
     [items addObject:nilButton];
     
     //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-    IQBarButtonItem *doneButton = [[IQBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:target action:action];
+//    IQBarButtonItem *doneButton = [[IQBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:target action:action];
+    IQBarButtonItem *doneButton =[[IQBarButtonItem alloc] initWithTitle:Localized(@"完成", nil) style:UIBarButtonItemStyleDone target:target action:action];
+    [doneButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12],NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [doneButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12],NSFontAttributeName, nil] forState:UIControlStateHighlighted];
     [items addObject:doneButton];
+    
     
     //  Adding button to toolBar.
     [toolbar setItems:items];
@@ -390,7 +392,9 @@
     
     //  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
 //    IQBarButtonItem *doneButton =[[IQBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:target action:doneAction];
-    IQBarButtonItem *doneButton =[[IQBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:target action:doneAction];
+    IQBarButtonItem *doneButton =[[IQBarButtonItem alloc] initWithTitle:Localized(@"完成", nil) style:UIBarButtonItemStyleDone target:target action:doneAction];
+    [doneButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12],NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [doneButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12],NSFontAttributeName, nil] forState:UIControlStateHighlighted];
     [items addObject:doneButton];
     
     //  Adding button to toolBar.
@@ -434,7 +438,10 @@
 	
 	//  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
 //    IQBarButtonItem *doneButton =[[IQBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:target action:doneAction];
-	IQBarButtonItem *doneButton =[[IQBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:target action:doneAction];
+	IQBarButtonItem *doneButton =[[IQBarButtonItem alloc] initWithTitle:Localized(@"完成", nil) style:UIBarButtonItemStyleDone target:target action:doneAction];
+    [doneButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12],NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [doneButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:12],NSFontAttributeName, nil] forState:UIControlStateHighlighted];
+    
 	if (IQ_IS_IOS7_OR_GREATER)
     {
         //        UIBarButtonItem *prev = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:105 target:target action:previousAction];

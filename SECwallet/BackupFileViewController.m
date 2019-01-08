@@ -72,17 +72,19 @@
     bkgView.layer.cornerRadius = Size(5);
     [self.view addSubview:bkgView];
     _showTagList = [[DWTagList alloc]initWithFrame:CGRectMake(Size(30), bkgView.minY +Size(10), kScreenWidth - Size(30)*2, bkgView.height -Size(5*2))];
-    [_showTagList setTagBackgroundColor:DARK_COLOR];
-//    _showTagList.textColor = TEXT_BLACK_COLOR;
+    [_showTagList setTagBackgroundColor:COLOR(186, 187, 188, 1)];
     _showTagList.cornerRadius = Size(5);
-//    [_showTagList setTagHighlightColor:BACKGROUND_DARK_COLOR];
+    _showTagList.borderWidth = 0;
+    _showTagList.textColor = WHITE_COLOR;
     [_showTagList setTagDelegate:self];
     [self.view addSubview:_showTagList];
     
     _tagList = [[DWTagList alloc] initWithFrame:CGRectMake(titleLb.minX, bkgView.maxY +Size(20), kScreenWidth - titleLb.minX*2, Size(100))];
-//    [_tagList setTagBackgroundColor:COLOR(209, 163, 101, 1)];
-//    [_tagList setTagHighlightColor:COLOR(200,3,16,1)];
+    [_tagList setTagBackgroundColor:WHITE_COLOR];
     _tagList.cornerRadius = Size(5);
+    _tagList.borderWidth = Size(0.5);
+    _tagList.textColor = TEXT_GREEN_COLOR;
+    _tagList.borderColor = TEXT_GREEN_COLOR;
     NSArray *tagArr = [_walletModel.mnemonicPhrase componentsSeparatedByString:@" "];
     //打乱数组顺序
     tagArr = [tagArr sortedArrayUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {

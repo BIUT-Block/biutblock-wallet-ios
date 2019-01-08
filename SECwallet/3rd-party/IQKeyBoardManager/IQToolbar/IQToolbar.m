@@ -125,7 +125,6 @@
 -(void)setTitleFont:(UIFont *)titleFont
 {
     _titleFont = titleFont;
-    
     for (UIBarButtonItem *item in self.items)
     {
         if ([item isKindOfClass:[IQTitleBarButtonItem class]])
