@@ -82,7 +82,10 @@
 "选填"="optional";
 " 我已仔细阅读并同意"="   I have read and agreed to";
 "服务条款"="the Servive and Privacy Policy";
-
+"挖矿"="Mined";
+"交易打包中"="Transfer Pending";
+"转入成功"="Receive Successful";
+"转出成功"="Send Successful";
 "开始导入"="Import";
 "直接复制粘贴以太坊官方钱包keyStore文件内容至输入框。"="Copy and paste the contents of the Ethereum official wallet keystore file directly into the input box. ";
 "keyStore密码"="keyStore password";
@@ -104,7 +107,7 @@
 "钱包已存在，是否设置为新密码？\n（请牢记钱包新密码）"="The wallet already exists.Is it set to a new password?\n(Please keep in mind the new password of the wallet)";
 "温馨提示"="Are you sure";
 "请输入钱包密码"="Please type in Wallet password";
-"密码用于保护私钥和交易授权，强度非常重要。\nSEC钱包不存储密码，也无法帮您找回，请务必牢记。"="Password is used to protect the private key and transaction authorization, and the strength is very important. \nSEC wallet don’t store password and nor retrieved for you. Please keep in mind.";
+"密码用于保护私钥和交易授权，强度非常重要。SEC钱包不存储密码，也无法帮您找回，请务必牢记。"="Password is used to protect the private key and transaction authorization, and the strength is very important. SEC wallet don’t store password and nor retrieved for you. Please keep in mind.";
 "例如：wallet01"="ex:wallet01";
 "确定"="Determine";
 "请输入密码"="Please Type in password";
@@ -120,7 +123,9 @@
 "请按照顺序点击助记词，以确认你备份的助记词正确。"=
 "Please click on the mnemonic in order to confirm that your backup mnemonic is correct.";
 "确认"="Sure";
+"确 认"="Confirm";
 "备份失败"="Backup Failed";
+"交易失败"="Transfer Failed";
 "Please Check and try again."="Please Check and try again.";
 "请检查您的助记词"="Please click your mnemonic";
 "完 成"="complete";
@@ -135,8 +140,8 @@
 "密码提示"="Password prompt";
 "马上导入"="Import Now";
 "忘记密码？\n导入助记词或私钥可重置密码"="Forget Password?\nImport Mnemonic or PrivateKey to reset the password";
-"收款人钱包地址"="Payee wallet address";
-"转账金额"="Transfer Amount";
+"收款人钱包地址*"="Payee wallet address*";
+"转账金额*"="Transfer Amount*";
 "下一步"="Next Step";
 "交易详情"="Transaction Detail";
 "订单信息"="Order information";
@@ -180,7 +185,7 @@
 
 "扫一扫"="Scan Code";
 "地址不正确，请重新扫描！"="Address is incorrect, please rescan!";
-
+"暂无记录"="No Record Found";
 
 /****************HUD提示文本********************/
 "数据获取失败"="Data acquisition failed";

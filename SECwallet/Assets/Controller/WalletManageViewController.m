@@ -72,7 +72,7 @@
     [self.view addSubview:bottomView];
     UIButton *importBT = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth/2 -Size(60))/2, Size(50), Size(60), Size(60))];
     importBT.titleLabel.font = BoldSystemFontOfSize(10);
-    [importBT setImage:[UIImage imageNamed:@"wallet0"] forState:UIControlStateNormal];
+    [importBT setImage:[UIImage imageNamed:@"importWallet"] forState:UIControlStateNormal];
     [importBT setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     [importBT setTitle:Localized(@"导入钱包",nil) forState:UIControlStateNormal];
     importBT.titleEdgeInsets = UIEdgeInsetsMake(0, -importBT.imageView.frame.size.width, -importBT.imageView.frame.size.height-Size(20)/2, 0);
@@ -89,7 +89,7 @@
     [bottomView addSubview:desLb1];
     UIButton *creatBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth/2 +(kScreenWidth/2 -importBT.width)/2, importBT.minY, importBT.width, importBT.height)];
     creatBT.titleLabel.font = BoldSystemFontOfSize(10);
-    [creatBT setImage:[UIImage imageNamed:@"wallet1"] forState:UIControlStateNormal];
+    [creatBT setImage:[UIImage imageNamed:@"createWallet"] forState:UIControlStateNormal];
     [creatBT setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     [creatBT setTitle:Localized(@"创建钱包",nil) forState:UIControlStateNormal];
     creatBT.titleEdgeInsets = UIEdgeInsetsMake(0, -creatBT.imageView.frame.size.width, -creatBT.imageView.frame.size.height-Size(20)/2, 0);

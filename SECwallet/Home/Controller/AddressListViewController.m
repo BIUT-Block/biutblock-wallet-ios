@@ -66,8 +66,11 @@
     //无地址薄视图
     _noneContactView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     [self.view addSubview:_noneContactView];
-    UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(0, Size(187), kScreenWidth, Size(20))];
-    lb.font = SystemFontOfSize(12);
+    UIImageView *noneIV = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(65))/2, Size(140), Size(65), Size(65))];
+    noneIV.image = [UIImage imageNamed:@"noContact"];
+    [_noneContactView addSubview:noneIV];
+    UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(0, noneIV.maxY, kScreenWidth, Size(40))];
+    lb.font = BoldSystemFontOfSize(15);
     lb.textColor = COLOR(175, 176, 177, 1);
     lb.textAlignment = NSTextAlignmentCenter;
     lb.text = Localized(@"暂无联系人", nil);
@@ -145,10 +148,10 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = DARK_COLOR;
     cell.imageView.image = [UIImage imageNamed:@""];
-    cell.textLabel.font = BoldSystemFontOfSize(12);
+    cell.textLabel.font = BoldSystemFontOfSize(13);
     cell.textLabel.textColor = TEXT_BLACK_COLOR;
     cell.detailTextLabel.font = BoldSystemFontOfSize(12);
-    cell.detailTextLabel.textColor = COLOR(209, 210, 211, 1);
+    cell.detailTextLabel.textColor = COLOR(165, 165, 165, 1);
     
     AddressModel *model = _dataArrays[indexPath.section];
     cell.textLabel.text = [NSString stringWithFormat:@"      %@  %@",model.name,model.phone];

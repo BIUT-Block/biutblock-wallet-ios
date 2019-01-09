@@ -358,7 +358,7 @@
                 //随机生成用户名
                 NSString *nameStr = [NSString getRandomStringWithNum:8];
                 //随机生成钱包ICON
-                int i = arc4random() % 6;
+                int i = arc4random() % 2;
                 NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
                 /*************默认钱包信息*************/
                 NSArray *privateKeyArr = [privateKey componentsSeparatedByString:@"x"];
@@ -481,7 +481,7 @@
                 //随机生成用户名
                 NSString *nameStr = [NSString getRandomStringWithNum:8];
                 //随机生成钱包ICON
-                int i = arc4random() % 6;
+                int i = arc4random() % 2;
                 NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
                 /*************默认钱包信息*************/
                 NSArray *privateKeyArr = [privateKey componentsSeparatedByString:@"x"];
@@ -622,7 +622,7 @@
                 //随机生成用户名
                 NSString *nameStr = [NSString getRandomStringWithNum:8];
                 //随机生成钱包ICON
-                int i = arc4random() % 6;
+                int i = arc4random() % 2;
                 NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
                 /*************默认钱包信息*************/
                 NSArray *privateKeyArr = [privateKey componentsSeparatedByString:@"x"];

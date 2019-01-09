@@ -12,7 +12,7 @@
 
 @interface TradeModel : NSObject
 
-@property (nonatomic, assign) int type;         //类型（1转入 2转出）
+@property (nonatomic, assign) int type;         //类型
 @property (nonatomic, copy) NSString *icon;     //图标
 @property (nonatomic, copy) NSString *tokenAddress;   //代币合约地址
 @property (nonatomic, copy) NSString *transferAddress;  //转账地址

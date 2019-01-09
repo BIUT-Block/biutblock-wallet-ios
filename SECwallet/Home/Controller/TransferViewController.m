@@ -80,9 +80,12 @@
     [self.view addSubview:titleLb];
     
     addressLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(45), Size(200), Size(25))];
-    addressLb.font = BoldSystemFontOfSize(10);
+    addressLb.font = BoldSystemFontOfSize(11);
     addressLb.textColor = TEXT_BLACK_COLOR;
-    addressLb.text = Localized(@"收款人钱包地址", nil);
+    addressLb.text = Localized(@"收款人钱包地址*", nil);
+    NSMutableAttributedString *addressStr = [[NSMutableAttributedString alloc] initWithString:addressLb.text];
+    [addressStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(addressLb.text.length-1,1)];
+    addressLb.attributedText = addressStr;
     [self.view addSubview:addressLb];
     addressErrorLb = [[UILabel alloc]init];
     [self.view addSubview:addressErrorLb];
@@ -99,16 +102,21 @@
     addressTF.keyboardType = UIKeyboardTypeNamePhonePad;
     [addressContentView addSubview:addressTF];
     //地址薄
-    UIButton *addressBtn = [[UIButton alloc] initWithFrame:CGRectMake(addressCell.width -Size(20 +20), (addressCell.height -Size(20))/2, Size(20), Size(20))];
-    [addressBtn setBackgroundImage:[UIImage imageNamed:@"contact"] forState:UIControlStateNormal];
+    UIButton *addressBtn = [[UIButton alloc] initWithFrame:CGRectMake(addressCell.width -Size(30), 0, Size(30), addressCell.height)];
     [addressBtn addTarget:self action:@selector(addressListBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [addressCell addSubview:addressBtn];
+    UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(addressCell.width -Size(8 +20), (addressCell.height -Size(10))/2, Size(8), Size(10))];
+    iv.image = [UIImage imageNamed:@"addressBook"];
+    [addressCell addSubview:iv];
     
     //金额
     moneyDesLb = [[UILabel alloc] initWithFrame:CGRectMake(addressLb.minX, addressCell.maxY +Size(4), addressLb.width, addressLb.height)];
-    moneyDesLb.font = BoldSystemFontOfSize(10);
+    moneyDesLb.font = BoldSystemFontOfSize(11);
     moneyDesLb.textColor = TEXT_BLACK_COLOR;
-    moneyDesLb.text = Localized(@"转账金额", nil);
+    moneyDesLb.text = Localized(@"转账金额*", nil);
+    NSMutableAttributedString *moneyStr = [[NSMutableAttributedString alloc] initWithString:moneyDesLb.text];
+    [moneyStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(moneyDesLb.text.length-1,1)];
+    moneyDesLb.attributedText = moneyStr;
     [self.view addSubview:moneyDesLb];
     moneyErrorLb = [[UILabel alloc]init];
     [self.view addSubview:moneyErrorLb];
@@ -125,7 +133,7 @@
     
     //备注
     UILabel *remarkLb = [[UILabel alloc]initWithFrame:CGRectMake(moneyDesLb.minX, moneyCell.maxY +Size(4), moneyDesLb.width, moneyDesLb.height)];
-    remarkLb.font = BoldSystemFontOfSize(10);
+    remarkLb.font = BoldSystemFontOfSize(11);
     remarkLb.textColor = TEXT_BLACK_COLOR;
     remarkLb.text = Localized(@"备注", nil);
     [self.view addSubview:remarkLb];

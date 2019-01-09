@@ -63,7 +63,7 @@
     
     //姓名
     nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), titleLb.maxY+Size(35), kScreenWidth -Size(20*2), Size(25))];
-    nameLb.font = BoldSystemFontOfSize(10);
+    nameLb.font = BoldSystemFontOfSize(11);
     nameLb.textColor = TEXT_BLACK_COLOR;
     nameLb.text = Localized(@"联系人姓名*", nil);
     NSMutableAttributedString *nameStr = [[NSMutableAttributedString alloc] initWithString:nameLb.text];
@@ -86,7 +86,7 @@
     
     
     addressLb = [[UILabel alloc]initWithFrame:CGRectMake(nameLb.minX, nameCell.maxY +Size(3), nameLb.width, nameLb.height)];
-    addressLb.font = BoldSystemFontOfSize(10);
+    addressLb.font = BoldSystemFontOfSize(11);
     addressLb.textColor = TEXT_BLACK_COLOR;
     addressLb.text = Localized(@"联系人钱包地址*", nil);
     NSMutableAttributedString *addressStr = [[NSMutableAttributedString alloc] initWithString:addressLb.text];
@@ -112,13 +112,13 @@
     [addressContentView addSubview:addressTF];
     //扫一扫
     UIButton *scanBtn = [[UIButton alloc] initWithFrame:CGRectMake(addressCell.width -Size(20 +20), (addressCell.height -Size(20))/2, Size(20), Size(20))];
-    [scanBtn setBackgroundImage:[UIImage imageNamed:@"scanIcon2"] forState:UIControlStateNormal];
+    [scanBtn setImage:[UIImage imageNamed:@"scan"] forState:UIControlStateNormal];
     [scanBtn addTarget:self action:@selector(scanAction) forControlEvents:UIControlEventTouchUpInside];
     [addressCell addSubview:scanBtn];
 
     //手机号
     UILabel *phoneLb = [[UILabel alloc]initWithFrame:CGRectMake(addressLb.minX, addressCell.maxY +Size(4), addressLb.width, addressLb.height)];
-    phoneLb.font = BoldSystemFontOfSize(10);
+    phoneLb.font = BoldSystemFontOfSize(11);
     phoneLb.textColor = TEXT_BLACK_COLOR;
     phoneLb.text = Localized(@"手机号码", nil);
     [self.view addSubview:phoneLb];
@@ -136,7 +136,7 @@
 
     //邮箱
     UILabel *emailLb = [[UILabel alloc]initWithFrame:CGRectMake(phoneCell.minX, phoneCell.maxY+Size(4), phoneCell.width, phoneLb.height)];
-    emailLb.font = BoldSystemFontOfSize(10);
+    emailLb.font = BoldSystemFontOfSize(11);
     emailLb.textColor = TEXT_BLACK_COLOR;
     emailLb.text = Localized(@"邮箱", nil);
     [self.view addSubview:emailLb];
@@ -154,7 +154,7 @@
 
     //备注
     UILabel *remarkLb = [[UILabel alloc]initWithFrame:CGRectMake(nameLb.minX, emailCell.maxY +Size(4), nameLb.width, nameLb.height)];
-    remarkLb.font = BoldSystemFontOfSize(10);
+    remarkLb.font = BoldSystemFontOfSize(11);
     remarkLb.textColor = TEXT_BLACK_COLOR;
     remarkLb.text = Localized(@"备注", nil);
     [self.view addSubview:remarkLb];

@@ -93,7 +93,7 @@
     [headerView addSubview:titLb];
     //头像
     UIImageView *headerIcon = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(50))/2, titLb.maxY +Size(25), Size(50), Size(50))];
-    headerIcon.image = [UIImage imageNamed:_walletModel.walletIcon];
+    headerIcon.image = [UIImage imageNamed:@"myWallet"];
     [headerView addSubview:headerIcon];
     //总资产
     UILabel *totalSumLb = [[UILabel alloc]initWithFrame:CGRectMake(0, headerIcon.maxY +Size(20), kScreenWidth, Size(10))];
@@ -115,7 +115,7 @@
     nameCell.frame = CGRectMake(Size(20), headerView.maxY +Size(22), kScreenWidth -Size(20 *2), Size(36));
     [self.view addSubview:nameCell];
     UILabel *nameDesLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15), 0, Size(85), nameCell.height)];
-    nameDesLb.font = SystemFontOfSize(10);
+    nameDesLb.font = BoldSystemFontOfSize(10);
     nameDesLb.textColor = TEXT_BLACK_COLOR;
     nameDesLb.text = Localized(@"钱包名称",nil);
     [nameCell.contentView addSubview:nameDesLb];
@@ -133,7 +133,7 @@
         pswTipCell.frame = CGRectMake(nameCell.minX, nameCell.maxY +Size(7), nameCell.width, nameCell.height);
         [self.view addSubview:pswTipCell];
         UILabel *pswTipDesLb = [[UILabel alloc]initWithFrame:CGRectMake(nameDesLb.minX, 0, nameDesLb.width, nameDesLb.height)];
-        pswTipDesLb.font = SystemFontOfSize(10);
+        pswTipDesLb.font = BoldSystemFontOfSize(10);
         pswTipDesLb.textColor = TEXT_BLACK_COLOR;
         pswTipDesLb.text = Localized(@"密码提示",nil);
         [pswTipCell.contentView addSubview:pswTipDesLb];
@@ -147,22 +147,22 @@
         [pswTipCell.contentView addSubview:passwordDesTF];
         /*****************密码可见、不可见*****************/
         secretBtn = [[UIButton alloc] initWithFrame:CGRectMake(pswTipCell.width -Size(18 +10), (pswTipCell.height -Size(14))/2, Size(18), Size(14))];
-        [secretBtn setBackgroundImage:[UIImage imageNamed:@"secrecy"] forState:UIControlStateNormal];
-        [secretBtn setBackgroundImage:[UIImage imageNamed:@"noSecrecy"] forState:UIControlStateSelected];
+        [secretBtn setImage:[UIImage imageNamed:@"secrecy"] forState:UIControlStateNormal];
+        [secretBtn setImage:[UIImage imageNamed:@"noSecrecy"] forState:UIControlStateSelected];
         [secretBtn addTarget:self action:@selector(secretBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [pswTipCell.contentView addSubview:secretBtn];
     }else{
         pswTipCell.frame = CGRectMake(nameCell.minX, nameCell.maxY, nameCell.width, 0);
     }
     
-    NSArray *iconArr = @[@"addressBook",@"addressBook",@"addressBook"];
+    NSArray *iconArr = @[@"lock",@"corner-up-right",@"corner-up-right"];
     NSArray *titArr = @[Localized(@"修改密码",nil),Localized(@"导出私钥",nil),Localized(@"导出KeyStore",nil)];
     for (int i = 0; i< iconArr.count; i++) {
         CommonTableViewCell *staticCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         staticCell.frame = CGRectMake(pswTipCell.minX, pswTipCell.maxY +Size(7) +(nameCell.height +Size(7))*i, pswTipCell.width, nameCell.height);
-        staticCell.icon.image = [UIImage imageNamed:iconArr[i]];
+        staticCell.smallIcon.image = [UIImage imageNamed:iconArr[i]];
         staticCell.staticTitleLb.text = titArr[i];
-        staticCell.accessoryIV.image = [UIImage imageNamed:@"accessory_right"];
+        staticCell.accessoryIV.image = [UIImage imageNamed:@"rightArrow"];
         [self.view addSubview:staticCell];
         UIButton *lnkBtn = [[UIButton alloc]initWithFrame:staticCell.frame];
         lnkBtn.tag = 1000+i;

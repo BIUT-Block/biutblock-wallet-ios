@@ -28,7 +28,7 @@
     self.navigationController.navigationBar.tintColor = BLACK_COLOR;
     
     //设置返回back
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"left_back"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
     
     navigationImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     
@@ -61,7 +61,7 @@
     self.navigationController.navigationBar.tintColor = BLACK_COLOR;
     
     //设置返回back
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"left_back"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
     
 }
 

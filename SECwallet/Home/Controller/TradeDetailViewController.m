@@ -17,7 +17,7 @@
 {
     BOOL isHeaderRefresh;
     NSMutableArray *_dataArrays;  //交易列表列表
-    UIImageView *_noRemindView;
+    UIView *_noneListView;
     //转账
     UIButton *transferBT;
     //收款
@@ -95,7 +95,7 @@
     NSArray *CNYArr = @[_walletModel.balance,_walletModel.balance,_walletModel.balance];
     for (int i = 0; i< titleArr.count; i++) {
         UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(20) +i*Size(35), Size(80), Size(35))];
-        desLb.font = SystemFontOfSize(12);
+        desLb.font = SystemFontOfSize(14);
         desLb.textColor = TEXT_BLACK_COLOR;
         desLb.text = titleArr[i];
         [self.view addSubview:desLb];
@@ -107,7 +107,7 @@
         [self.view addSubview:contentLb];
         UILabel *CNYLb = [[UILabel alloc]initWithFrame:CGRectMake(contentLb.minX, contentLb.maxY, contentLb.width, contentLb.height)];
         CNYLb.font = SystemFontOfSize(13);
-        CNYLb.textColor = TEXT_GREEN_COLOR;
+        CNYLb.textColor = TEXT_DARK_COLOR;
         CNYLb.textAlignment = NSTextAlignmentRight;
         CNYLb.text = CNYArr[i];
         [self.view addSubview:CNYLb];
@@ -141,6 +141,19 @@
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     [_infoTableView addHeaderWithTarget:self action:@selector(headerRereshing)];
     
+    _noneListView = [[UIView alloc]initWithFrame:CGRectMake(0, _infoTableView.minY, kScreenWidth, _infoTableView.height)];
+    [self.view addSubview:_noneListView];
+    UIImageView *noneIV = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(60))/2, Size(60), Size(60), Size(60))];
+    noneIV.image = [UIImage imageNamed:@"noRecordFound"];
+    [_noneListView addSubview:noneIV];
+    UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(0, noneIV.maxY, kScreenWidth, Size(40))];
+    lb.font = BoldSystemFontOfSize(15);
+    lb.textColor = COLOR(175, 176, 177, 1);
+    lb.textAlignment = NSTextAlignmentCenter;
+    lb.text = Localized(@"暂无记录", nil);
+    [_noneListView addSubview:lb];
+    _noneListView.hidden = YES;
+    
     CGFloat padddingLeft = Size(20);
     CGFloat btWidth = (kScreenWidth -padddingLeft*2 -Size(10))/2;
     //转账
@@ -161,7 +174,7 @@
     if (connectNetwork == YES) {
         [self readTradeRecordListCache];
         isHeaderRefresh = YES;
-        [_noRemindView removeFromSuperview];
+        _noneListView.hidden = YES;
         _isLoading  = NO;
         [self requestTransactionHash];
     }else{
@@ -266,7 +279,7 @@
                 [archiver encodeObject:_dataArrays forKey:fileName];
                 [archiver finishEncoding];
                 [data writeToFile:path atomically:YES];
-                [_noRemindView removeFromSuperview];
+                _noneListView.hidden = YES;
                 [_infoTableView reloadData];
                 
                 //当刷新出了新数据则弹出提示  recodeListCache
@@ -277,10 +290,7 @@
             }else{
                 _dataArrays = [NSMutableArray array];
                 [_infoTableView reloadData];
-                [_noRemindView removeFromSuperview];
-                _noRemindView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth -Size(200))/2, (kScreenHeight -Size(220))/2, Size(200), Size(200))];
-                _noRemindView.image = [UIImage imageNamed:@"noTradeInfoBkg"];
-                [_infoTableView addSubview:_noRemindView];
+                _noneListView.hidden = NO;
             }
             
             _infoTableView.hidden = NO;
@@ -291,10 +301,7 @@
         }else{
             _dataArrays = [NSMutableArray array];
             [_infoTableView reloadData];
-            [_noRemindView removeFromSuperview];
-            _noRemindView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth -Size(200))/2, (kScreenHeight -Size(220))/2, Size(200), Size(200))];
-            _noRemindView.image = [UIImage imageNamed:@"noTradeInfoBkg"];
-            [_infoTableView addSubview:_noRemindView];
+            _noneListView.hidden = NO;
             
             _infoTableView.hidden = NO;
             transferBT.hidden = NO;

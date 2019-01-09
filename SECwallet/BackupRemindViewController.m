@@ -43,12 +43,12 @@
     titleLb.text = Localized(@"备份钱包",nil);
     [self.view addSubview:titleLb];
     
-    UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(95))/2, titleLb.maxY +Size(35), Size(95), Size(95))];
-    icon.image = [UIImage imageNamed:@"backupIcon"];
+    UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(105))/2, titleLb.maxY +Size(40), Size(105), Size(85))];
+    icon.image = [UIImage imageNamed:@"backupWallet"];
     [self.view addSubview:icon];
     
     UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(0, icon.maxY +Size(55), kScreenWidth, Size(10))];
-    desLb.font = SystemFontOfSize(8);
+    desLb.font = SystemFontOfSize(10);
     desLb.textColor = TEXT_GREEN_COLOR;
     desLb.textAlignment = NSTextAlignmentCenter;
     desLb.text = Localized(@"最后一步", nil);
@@ -60,16 +60,16 @@
     remindLb.text = Localized(@"立即备份您的钱包！", nil);
     [self.view addSubview:remindLb];
     
-    UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(40), remindLb.maxY, kScreenWidth -Size(40*2), Size(50))];
-    contentLb.font = SystemFontOfSize(9);
-    contentLb.textColor = TEXT_BLACK_COLOR;
+    UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), remindLb.maxY, kScreenWidth -Size(20*2), Size(50))];
+    contentLb.font = SystemFontOfSize(10);
+    contentLb.textColor = COLOR(85, 101, 110, 1);
     contentLb.numberOfLines = 3;
     contentLb.text = Localized(@"备份钱包：导出[助记词]并抄写到安全的地方，千万不要保存到网络上。\n然后尝试转入，转出小额资产开始使用。", nil);
-    NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:contentLb.text];
-    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing = Size(2);
-    [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
-    contentLb.attributedText = msgStr;
+//    NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:contentLb.text];
+//    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    paragraphStyle.lineSpacing = Size(2);
+//    [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
+//    contentLb.attributedText = msgStr;
     [self.view addSubview:contentLb];
     contentLb.textAlignment = NSTextAlignmentCenter;
     /*****************下一步*****************/

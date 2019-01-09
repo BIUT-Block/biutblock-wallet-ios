@@ -131,18 +131,18 @@
         }else if (sidePullViewType == CommonSidePullViewType_keyStore) {
             
             UILabel *tip1Lb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(125), _sidePullViewWidth, Size(20))];
-            tip1Lb.font = SystemFontOfSize(12);
+            tip1Lb.font = BoldSystemFontOfSize(12);
             tip1Lb.textColor = TEXT_BLACK_COLOR;
             tip1Lb.text = Localized(@"导出KeyStore", nil);
             [self addSubview:tip1Lb];
             
             UILabel *tit1Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip1Lb.minX, tip1Lb.maxY+Size(30), Size(100), Size(15))];
-            tit1Lb.font = SystemFontOfSize(12);
-            tit1Lb.textColor = TEXT_DARK_COLOR;
+            tit1Lb.font = BoldSystemFontOfSize(12);
+            tit1Lb.textColor = TEXT_BLACK_COLOR;
             tit1Lb.text = Localized(@"离线保存", nil);
             [self addSubview:tit1Lb];
-            UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit1Lb.minX, tit1Lb.maxY, Size(230), Size(55))];
-            tip2Lb.font = SystemFontOfSize(10);
+            UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit1Lb.minX, tit1Lb.maxY, Size(240), Size(60))];
+            tip2Lb.font = SystemFontOfSize(11);
             tip2Lb.numberOfLines = 3;
             tip2Lb.textColor = COLOR(156, 173, 180, 1);
             tip2Lb.text = Localized(@"请将Keystore文件复制并粘贴到安全的离线位置进行保存。不要保存到电子邮件，记事本，网络，聊天App，这是非常危险的。", nil);
@@ -154,14 +154,14 @@
             [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
             tip2Lb.attributedText = msgStr;
             
-            UILabel *tit2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY+Size(15), Size(200), Size(15))];
-            tit2Lb.font = SystemFontOfSize(12);
-            tit2Lb.textColor = TEXT_DARK_COLOR;
+            UILabel *tit2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY+Size(5), tip2Lb.width, Size(20))];
+            tit2Lb.font = BoldSystemFontOfSize(12);
+            tit2Lb.textColor = TEXT_BLACK_COLOR;
             tit2Lb.text = Localized(@"不要网上传输", nil);
             [self addSubview:tit2Lb];
-            UILabel *tip3Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit2Lb.minX, tit2Lb.maxY, tip2Lb.width, tip2Lb.height)];
-            tip3Lb.font = SystemFontOfSize(10);
-            tip3Lb.numberOfLines = 3;
+            UILabel *tip3Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit2Lb.minX, tit2Lb.maxY+Size(5), tip2Lb.width, tip2Lb.height)];
+            tip3Lb.font = SystemFontOfSize(11);
+            tip3Lb.numberOfLines = 4;
             tip3Lb.textColor = COLOR(156, 173, 180, 1);
             tip3Lb.text = Localized(@"不要通过网络工具传输密钥库文件。一旦被黑客入侵，将导致无法弥补的资产损失。通过扫描QR码传输离线设备。", nil);
             [self addSubview:tip3Lb];

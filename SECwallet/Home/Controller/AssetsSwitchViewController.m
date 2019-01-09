@@ -101,7 +101,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     WalletModel *model = _assetsList[indexPath.section];
-    cell.icon.image = [UIImage imageNamed:model.walletIcon];
+    cell.bigIcon.image = [UIImage imageNamed:model.walletIcon];
     cell.staticTitleLb.text = model.walletName;
     
     if (indexPath.section == [[AppDefaultUtil sharedInstance].defaultWalletIndex integerValue]) {

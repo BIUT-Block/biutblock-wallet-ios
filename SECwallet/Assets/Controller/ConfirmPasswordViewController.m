@@ -44,8 +44,8 @@
     [cancelBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cancelBT];
     //图片
-    UIImageView *IV = [[UIImageView alloc] initWithFrame:CGRectMake(Size(20), cancelBT.maxY +Size(40), Size(55), Size(55))];
-    IV.image = [UIImage imageNamed:@"wallet1"];
+    UIImageView *IV = [[UIImageView alloc] initWithFrame:CGRectMake(Size(20), cancelBT.maxY +Size(50), Size(42), Size(45))];
+    IV.image = [UIImage imageNamed:@"confirmPassword"];
     [self.view addSubview:IV];
     
     UILabel *tipLb = [[UILabel alloc]initWithFrame:CGRectMake(IV.minX, IV.maxY+Size(35), kScreenWidth -IV.minX*2, Size(55))];
@@ -62,15 +62,18 @@
     
     //密码
     UILabel *passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(tipLb.minX, tipLb.maxY +Size(25), tipLb.width, Size(25))];
-    passwordDesLb.font = BoldSystemFontOfSize(10);
+    passwordDesLb.font = BoldSystemFontOfSize(11);
     passwordDesLb.textColor = TEXT_BLACK_COLOR;
-    passwordDesLb.text = Localized(@"密码", nil);
+    passwordDesLb.text = Localized(@"密码*", nil);
+    NSMutableAttributedString *passwordStr = [[NSMutableAttributedString alloc] initWithString:passwordDesLb.text];
+    [passwordStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(passwordDesLb.text.length-1,1)];
+    passwordDesLb.attributedText = passwordStr;
     [self.view addSubview:passwordDesLb];
     CommonTableViewCell *pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     pswCell.frame = CGRectMake(passwordDesLb.minX, passwordDesLb.maxY, passwordDesLb.width, Size(36));
     [self.view addSubview:pswCell];
     passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(pswCell.minX +Size(10), passwordDesLb.maxY, pswCell.width -Size(20), pswCell.height)];
-    passwordTF.font = SystemFontOfSize(8);
+    passwordTF.font = SystemFontOfSize(12);
     passwordTF.textColor = TEXT_BLACK_COLOR;
     passwordTF.placeholder = Localized(@"请输入当前密码", nil);
     passwordTF.keyboardType = UIKeyboardTypeASCIICapable;

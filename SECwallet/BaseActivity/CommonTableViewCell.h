@@ -11,7 +11,8 @@
 @interface CommonTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *bkgIV;
-@property (nonatomic, strong) UIImageView *icon;
+@property (nonatomic, strong) UIImageView *bigIcon;
+@property (nonatomic, strong) UIImageView *smallIcon;
 @property (nonatomic, strong) UILabel *staticTitleLb;
 @property (nonatomic, strong) UIImageView *accessoryIV;
 

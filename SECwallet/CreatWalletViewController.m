@@ -90,9 +90,9 @@
     [self.view addSubview:titleLb];
     
     UILabel *tipLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY, kScreenWidth -titleLb.minX*2, Size(35))];
-    tipLb.font = SystemFontOfSize(8);
+    tipLb.font = SystemFontOfSize(9);
     tipLb.textColor = TEXT_BLACK_COLOR;
-    tipLb.text = Localized(@"密码用于保护私钥和交易授权，强度非常重要。\nSEC钱包不存储密码，也无法帮您找回，请务必牢记。", nil);
+    tipLb.text = Localized(@"密码用于保护私钥和交易授权，强度非常重要。SEC钱包不存储密码，也无法帮您找回，请务必牢记。", nil);
     tipLb.numberOfLines = 3;
     //设置行间距
     NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:tipLb.text];
@@ -117,7 +117,7 @@
     [self.view addSubview:nameCell];
     walletNameTF = [[UITextField alloc] initWithFrame:CGRectMake(nameDesLb.minX +Size(10), nameDesLb.maxY, nameCell.width -Size(20), nameCell.height)];
     walletNameTF.delegate = self;
-    walletNameTF.font = SystemFontOfSize(8);
+    walletNameTF.font = SystemFontOfSize(12);
     walletNameTF.textColor = TEXT_BLACK_COLOR;
     walletNameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     walletNameTF.placeholder = Localized(@"例如：wallet01", nil);
@@ -138,7 +138,7 @@
     [self.view addSubview:pswCell];
     passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(pswCell.minX +Size(10), passwordDesLb.maxY, pswCell.width -Size(20), pswCell.height)];
     passwordTF.delegate = self;
-    passwordTF.font = SystemFontOfSize(8);
+    passwordTF.font = SystemFontOfSize(12);
     passwordTF.textColor = TEXT_BLACK_COLOR;
     passwordTF.placeholder = Localized(@"8~30位数字，英文字母以及特殊字符至少2种组合", nil);
     passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
@@ -162,7 +162,7 @@
     [self.view addSubview:re_pswCell];
     re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordTF.minX, re_passwordDesLb.maxY, passwordTF.width, passwordTF.height)];
     re_passwordTF.delegate = self;
-    re_passwordTF.font = SystemFontOfSize(8);
+    re_passwordTF.font = SystemFontOfSize(12);
     re_passwordTF.textColor = TEXT_BLACK_COLOR;
     re_passwordTF.placeholder = Localized(@"请再次确认密码", nil);
     re_passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
@@ -180,7 +180,7 @@
     pswTipCell.frame = CGRectMake(re_pswCell.minX, passwordTipDesLb.maxY, re_pswCell.width, re_pswCell.height);
     [self.view addSubview:pswTipCell];
     passwordTipTF = [[UITextField alloc] initWithFrame:CGRectMake(re_passwordTF.minX, passwordTipDesLb.maxY, re_passwordTF.width, re_passwordTF.height)];
-    passwordTipTF.font = SystemFontOfSize(10);
+    passwordTipTF.font = SystemFontOfSize(12);
     passwordTipTF.textColor = TEXT_BLACK_COLOR;
     passwordTipTF.placeholder = Localized(@"选填", nil);
     passwordTipTF.delegate = self;
@@ -193,7 +193,7 @@
     [agreementBtn setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     [agreementBtn setTitle:str forState:UIControlStateNormal];
     agreementBtn.titleLabel.font = BoldSystemFontOfSize(8);
-    [agreementBtn setImage:[UIImage imageNamed:@"invest_protocolun"] forState:UIControlStateNormal];
+    [agreementBtn setImage:[UIImage imageNamed:@"assets_protocolun"] forState:UIControlStateNormal];
     [agreementBtn setImage:[UIImage imageNamed:@"invest_protocol"] forState:UIControlStateSelected];
     agreementBtn.selected = NO;
     [agreementBtn addTarget:self action:@selector(agreementBtnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -205,7 +205,7 @@
     UIButton *seeProtocol = [[UIButton alloc]initWithFrame:CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height)];
     seeProtocol.titleLabel.font = BoldSystemFontOfSize(8);
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:Localized(@"服务条款", nil)];
-    [attStr addAttribute:NSForegroundColorAttributeName value:TEXT_GREEN_COLOR range:NSMakeRange(0, attStr.length)];
+    [attStr addAttribute:NSForegroundColorAttributeName value:COLOR(56, 142, 218, 1) range:NSMakeRange(0, attStr.length)];
     [seeProtocol setAttributedTitle:attStr forState:UIControlStateNormal];
     [seeProtocol addTarget:self action:@selector(seeProtocol) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:seeProtocol];
@@ -345,7 +345,7 @@
         /*************默认钱包信息*************/
         address = @"0xa2ff742445303c6faced63922f2cde818f62e840";
         //随机生成钱包ICON
-        int i = arc4random() % 6;
+        int i = arc4random() % 2;
         NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
         tempModel = [[WalletModel alloc]initWithWalletName:walletNameTF.text andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKey andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:0 andIsFromMnemonicImport:0];
         

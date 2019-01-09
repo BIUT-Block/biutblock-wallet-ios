@@ -46,13 +46,13 @@
     [self addSubview:_infoView];
     
     //返回按钮
-    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), Size(10), Size(15), Size(15))];
-    [backBT setBackgroundImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+    UIButton *backBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), Size(20), Size(15), Size(15))];
+    [backBT setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
     [backBT addTarget:self action:@selector(tradeDetailViewHidden) forControlEvents:UIControlEventTouchUpInside];
     [_infoView addSubview:backBT];
     //交易详情
     UILabel *detailLb = [[UILabel alloc]initWithFrame:CGRectMake(0, Size(20), kScreenWidth, Size(20))];
-    detailLb.font = BoldSystemFontOfSize(12);
+    detailLb.font = BoldSystemFontOfSize(14);
     detailLb.textColor = COLOR(56, 142, 218, 1);
     detailLb.textAlignment = NSTextAlignmentCenter;
     detailLb.text = Localized(@"交易详情", nil);
@@ -61,9 +61,9 @@
     NSArray *titArr =@[Localized(@"订单信息", nil),Localized(@"转入地址", nil),Localized(@"付款钱包", nil),Localized(@"金额", nil)];
     NSArray *contentArr =@[Localized(@"转账", nil),[NSString addressToAsterisk:payAddress],[NSString addressToAsterisk:adress],[NSString stringWithFormat:@"%@ SEC",sum]];
     for (int i = 0; i< titArr.count; i++) {
-        UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), detailLb.maxY+Size(35) +Size(30)*i, Size(90), Size(30))];
-        titLb.font = SystemFontOfSize(12);
-        titLb.textColor = TEXT_LightDark_COLOR;
+        UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), detailLb.maxY+Size(35) +Size(30)*i, Size(100), Size(30))];
+        titLb.font = SystemFontOfSize(13);
+        titLb.textColor = COLOR(147, 147, 148, 1);
         titLb.text = titArr[i];
         [_infoView addSubview:titLb];
         UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titLb.maxX, titLb.minY, kScreenWidth -titLb.maxX -Size(20), titLb.height)];
@@ -76,7 +76,7 @@
     
     /*****************确认*****************/
     UIButton *confirmBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), detailLb.maxY +Size(180), kScreenWidth - 2*Size(20), Size(45))];
-    [confirmBT goldBigBtnStyle:Localized(@"确认", nil)];
+    [confirmBT goldBigBtnStyle:Localized(@"确 认", nil)];
     [confirmBT addTarget:self action:@selector(nextAction) forControlEvents:UIControlEventTouchUpInside];
     [_infoView addSubview:confirmBT];
     

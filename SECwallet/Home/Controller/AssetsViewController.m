@@ -19,7 +19,7 @@
 #import "CardPageView.h"
 #import "JXMovableCellTableView.h"
 
-#import "BackupFileViewController.h"
+#import "SelectEntryViewController.h"
 
 #define kHeaderHeight    Size(195)
 #define USD_to_CNY       6.8872
@@ -127,7 +127,7 @@
     
     UIButton *moreBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(25 +20), KStatusBarHeight+Size(13), Size(25), Size(15))];
     [moreBT addTarget:self action:@selector(rightClick) forControlEvents:UIControlEventTouchUpInside];
-    [moreBT setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
+    [moreBT setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
     [self.view addSubview:moreBT];
      
     _walletListPageView = [[CardPageView alloc]initWithFrame:CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight) withWalletList:_walletList];
@@ -247,13 +247,13 @@
 #pragma mark - 快捷功能入口点击
 -(void)rightClick
 {
-//    AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
-//    viewController.assetsList = assetsList;
-//    [self.navigationController pushViewController:viewController animated:YES];
+    AssetsSwitchViewController *viewController = [[AssetsSwitchViewController alloc]init];
+    viewController.assetsList = assetsList;
+    viewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:viewController animated:YES];
     
-    BackupFileViewController *controller = [[BackupFileViewController alloc]init];
-    controller.walletModel = currentWallet;
-    [self.navigationController pushViewController:controller animated:YES];
+//    SelectEntryViewController *controller = [[SelectEntryViewController alloc]init];
+//    [self.navigationController pushViewController:controller animated:YES];
     
 }
 

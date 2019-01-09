@@ -36,12 +36,12 @@
 -(void) initView
 {
     //图标
-    _icon = [[UIImageView alloc] initWithFrame:CGRectMake(Size(20), (kTableCellHeight -Size(15))/2, Size(15), Size(15))];
+    _icon = [[UIImageView alloc] initWithFrame:CGRectMake(Size(20), (kTableCellHeight -Size(20))/2, Size(20), Size(20))];
     [self addSubview:_icon];
     
     //地址
     _address = [[UIButton alloc] initWithFrame:CGRectMake(_icon.maxX +Size(10), _icon.minY -Size(3), Size(100), Size(10))];
-    _address.titleLabel.font = BoldSystemFontOfSize(9);
+    _address.titleLabel.font = BoldSystemFontOfSize(10);
     [_address setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     _address.userInteractionEnabled = NO;
     [self addSubview:_address];
@@ -72,27 +72,37 @@
     if ([self.object isMemberOfClass:[TradeModel class]]) {
         TradeModel *obj = self.object;
         
-        //类型（1转入 2转出）
+        //类型（1转入 2转出 3挖矿）
         if (obj.type == 1) {
-            _icon.image = [UIImage imageNamed:@"gatherIcon"];  //转入
+            _icon.image = [UIImage imageNamed:@"recived"];  //转入
             [_address setTitle:obj.transferAddress forState:UIControlStateNormal];
             _time.text = obj.time;
             _sum.textColor = TEXT_GREEN_COLOR;
              _sum.text = [NSString stringWithFormat:@"+%@ SEC",obj.sum];
   
-        }else{
-            _icon.image = [UIImage imageNamed:@"transferIcon"];  //转出
+        }else if (obj.type == 2) {
+            _icon.image = [UIImage imageNamed:@"sent"];  //转出
             [_address setTitle:obj.gatherAddress forState:UIControlStateNormal];
             _time.text = obj.time;
             _sum.textColor = TEXT_RED_COLOR;
             _sum.text = [NSString stringWithFormat:@"-%@ SEC",obj.sum];
+        }else{
+            _icon.image = [UIImage imageNamed:@"minied"];  //转出
+            [_address setTitle:obj.transferAddress forState:UIControlStateNormal];
+            _time.text = obj.time;
+            _sum.frame = CGRectMake(_address.maxX, _address.minY, kScreenWidth -_address.maxX -Size(20), _address.height);
+            _pendingLb.frame = CGRectMake(_sum.minX, _sum.maxY, _sum.width, _sum.height);
+            _pendingLb.text = [NSString stringWithFormat:@"(%@)",Localized(@"挖矿", nil)];
+            _sum.textColor = TEXT_RED_COLOR;
+            _sum.text = [NSString stringWithFormat:@"+%@ SEC",obj.sum];
         }
         
         //交易状态(1成功 0失败 2打包中)
         if (obj.status == 0) {
-            _icon.image = [UIImage imageNamed:@"fail"];
+            _icon.image = [UIImage imageNamed:@"transferFailed"];
         }
         if (obj.status == 2) {
+            _icon.image = [UIImage imageNamed:@"pending"];
             _sum.frame = CGRectMake(_address.maxX, _address.minY, kScreenWidth -_address.maxX -Size(20), _address.height);
             _pendingLb.frame = CGRectMake(_sum.minX, _sum.maxY, _sum.width, _sum.height);
             _pendingLb.text = Localized(@"(打包中)", nil);
