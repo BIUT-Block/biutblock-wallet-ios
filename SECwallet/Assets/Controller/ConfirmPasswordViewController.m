@@ -40,7 +40,7 @@
 {
     
     UIButton *cancelBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(70+20), KStatusBarHeight+Size(11), Size(70), Size(24))];
-    [cancelBT greenBorderBtnStyle:Localized(@"取消",nil) andBkgImg:@"continue"];
+    [cancelBT greenBorderBtnStyle:Localized(@"取消",nil) andBkgImg:@"centerRightBtn"];
     [cancelBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cancelBT];
     //图片

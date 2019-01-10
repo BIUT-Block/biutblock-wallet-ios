@@ -52,7 +52,7 @@
     //标准
     _staticTitleLb = [[UILabel alloc] initWithFrame:CGRectMake(_bigIcon.maxX +Size(15), 0, Size(100), self.height)];
     _staticTitleLb.textColor = TEXT_BLACK_COLOR;
-    _staticTitleLb.font = SystemFontOfSize(11);
+    _staticTitleLb.font = SystemFontOfSize(12);
     [self addSubview:_staticTitleLb];
     
     //描述
@@ -98,28 +98,27 @@
     if ([self.object isMemberOfClass:[TradeModel class]]) {
         
         TradeModel *obj = self.object;
-        _titleLb.font = SystemFontOfSize(9);
-        _contentLb.font = SystemFontOfSize(7);
+        _titleLb.font = BoldSystemFontOfSize(10);
+        _contentLb.font = SystemFontOfSize(8);
         _subDetailLb.frame = CGRectMake(self.width/2-Size(12), 0, self.width/2, self.height);
-        _subDetailLb.font = SystemFontOfSize(9);
+        _subDetailLb.font = BoldSystemFontOfSize(10);
+        
         //类型（1转入 2转出）
         if (obj.type == 1) {
-            _bigIcon.image = [UIImage imageNamed:@"gatherIcon"];  //转入
             _titleLb.text = [NSString addressToAsterisk:obj.transferAddress];
             _contentLb.text = obj.time;
             _subDetailLb.text = [NSString stringWithFormat:@"+%@ SEC",obj.sum];
 
-        }else{
-            _bigIcon.image = [UIImage imageNamed:@"transferIcon"];  //转出
+        }else if (obj.type == 2) {
             _titleLb.text = [NSString addressToAsterisk:obj.transferAddress];
             _contentLb.text = obj.time;
             _subDetailLb.text = [NSString stringWithFormat:@"-%@ SEC",obj.sum];
+        }else{
+            _titleLb.text = [NSString addressToAsterisk:obj.transferAddress];
+            _contentLb.text = obj.time;
+            _subDetailLb.text = [NSString stringWithFormat:@"+%@ SEC",obj.sum];
         }
 
-        //交易状态(1成功 0失败 2打包中)
-        if (obj.status == 0) {
-            _bigIcon.image = [UIImage imageNamed:@"fail"];
-        }
         if (obj.status == 2) {
             _subDetailLb.text = Localized(@"打包中",nil);
         }

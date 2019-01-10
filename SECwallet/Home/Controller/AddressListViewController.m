@@ -18,6 +18,7 @@
     UIView *_noneContactView;
 }
 @property (nonatomic, strong) UITableView *infoTableView;
+@property (nonatomic, strong) NSIndexPath* editingIndexPath;
 
 @end
 
@@ -27,7 +28,11 @@
     [super viewDidLoad];
     
     if (_isDelegate == YES) {
-       [self setNavgationRightImage:[UIImage imageNamed:@"scanIcon1"] withAction:@selector(scanAction)];
+        UIButton *scanBT = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, Size(70), Size(24))];
+        [scanBT greenBorderBtnStyle:Localized(@"扫一扫",nil) andBkgImg:@"rightBtn"];
+        [scanBT addTarget:self action:@selector(scanAction) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:scanBT];
+        [self.navigationItem setRightBarButtonItem:rightItem];
     }
     
     [self addSubView];
@@ -76,7 +81,8 @@
     lb.text = Localized(@"暂无联系人", nil);
     [_noneContactView addSubview:lb];
     UIButton *bt = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth -Size(180))/2, lb.maxY+Size(73), Size(180), Size(45))];
-    [bt customerBtnStyle:Localized(@"点击添加",nil) andBkgImg:@"continue"];
+//    [bt customerBtnStyle:Localized(@"点击添加",nil) andBkgImg:@"continue"];
+    [bt goldBigBtnStyle:Localized(@"点击添加",nil)];
     [bt addTarget:self action:@selector(addAddressAction) forControlEvents:UIControlEventTouchUpInside];
     [_noneContactView addSubview:bt];
     
@@ -157,7 +163,7 @@
     cell.textLabel.text = [NSString stringWithFormat:@"      %@  %@",model.name,model.phone];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"      %@",[NSString addressToAsterisk:model.address]];
     //编辑按钮
-    UIButton *editBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(40), Size(57-35)/2, Size(40), Size(35))];
+    UIButton *editBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(60), Size(57-35)/2, Size(40), Size(35))];
     editBT.tag = indexPath.row;
     [editBT setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
     [editBT addTarget:self action:@selector(editAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -189,7 +195,6 @@
 {
     return YES;
 }
-
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:Localized(@"删除", nil) handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
@@ -210,6 +215,66 @@
         }
     }];
     return @[deleteAction];
+}
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.editingIndexPath = indexPath;
+    [self.view setNeedsLayout];
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.editingIndexPath = nil;
+}
+
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    
+    if (self.editingIndexPath){
+        [self configSwipeButtons];
+    }
+}
+
+-(void)configSwipeButtons
+{
+    if (@available(iOS 11.0, *)){
+        // iOS 11层级 (Xcode 9编译): UITableView -> UISwipeActionPullView
+        for (UIView *subview in _infoTableView.subviews) {
+            if ([subview isKindOfClass:NSClassFromString(@"UISwipeActionPullView")] && [subview.subviews count] >= 1) {
+                // 和iOS 10的按钮顺序相反
+                subview.backgroundColor = TEXT_RED_COLOR;
+                UIButton *deleteButton = subview.subviews[0];
+                [self configDeleteButton:deleteButton];
+            }
+        }
+    }else{
+        // iOS 8-10层级: UITableView -> UITableViewCell -> UITableViewCellDeleteConfirmationView
+        UITableViewCell *tableCell = [_infoTableView cellForRowAtIndexPath:self.editingIndexPath];
+        for (UIView *subview in tableCell.subviews) {
+            if ([subview isKindOfClass:NSClassFromString(@"UITableViewCellDeleteConfirmationView")]) {
+                UIView *confirmView = (UIView *)[subview.subviews firstObject];
+                //改背景颜色
+                confirmView.backgroundColor = TEXT_RED_COLOR;
+                for (UIView *sub in confirmView.subviews) {
+                    //添加图片
+                    if ([sub isKindOfClass:NSClassFromString(@"UIView")]) {
+                        UIView *deleteView = sub;
+                        UIImageView *imageView = [[UIImageView alloc] init];
+                        imageView.image = [UIImage imageNamed:@"address_cell_delete"];
+                        [deleteView addSubview:imageView];
+                    }
+                }
+                break;
+            }
+        }
+    }
+}
+
+- (void)configDeleteButton:(UIButton*)deleteButton{
+    if (deleteButton) {
+        [deleteButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+        [deleteButton setBackgroundColor:TEXT_RED_COLOR];
+    }
 }
 
 #pragma 扫一扫

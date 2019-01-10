@@ -41,7 +41,7 @@
         self.backgroundColor = BACKGROUND_DARK_COLOR;
         [self initData];
         cellWidth = self.frame.size.width -Size(40);
-        cellHeight = self.frame.size.height -Size(15);
+        cellHeight = self.frame.size.height -Size(35);
         itemSpacing = Size(5);
         _walletArray = walletList;
         
@@ -52,8 +52,8 @@
 
 -(void)initData
 {
-    _collectionViewRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height -Size(15));
-    _pageControlRect = CGRectMake(0, _collectionViewRect.origin.y +_collectionViewRect.size.height -Size(12), kScreenWidth, Size(15));
+    _collectionViewRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height -Size(35));
+    _pageControlRect = CGRectMake(0, _collectionViewRect.origin.y +_collectionViewRect.size.height +Size(12), kScreenWidth, Size(15));
 }
 
 -(void)initSubviews{
@@ -107,41 +107,23 @@
     CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];
     
     WalletModel *model = _walletArray[indexPath.row];
-    //随机分配背景
-    NSString *bkgStr;
-    if (indexPath.row == 0 || (indexPath.row)%3 == 0) {
-        bkgStr = @"walletBkg0";
-    }
-    if (indexPath.row == 1 || (indexPath.row-1)%3 == 0) {
-        bkgStr = @"walletBkg1";
-    }
-    if (indexPath.row == 2 || (indexPath.row-2)%3 == 0) {
-        bkgStr = @"walletBkg2";
-    }
-    cell.bkgIV.image = [UIImage imageNamed:bkgStr];
-    
-    cell.headerIV.image = [UIImage imageNamed:model.walletIcon];
-    CGSize size = [model.walletName calculateSize:SystemFontOfSize(16) maxWidth:cell.frame.size.width];
-    cell.nameLb.frame = CGRectMake((cellWidth -size.width)/2, cell.headerIV.maxY +Size(2), size.width, Size(25));
+    cell.bkgIV.image = [UIImage imageNamed:@"walletBkg0"];
     cell.nameLb.text = model.walletName;
+    cell.totalSumLb.text = [NSString stringWithFormat:@"%@",model.balance];
+    [cell.addressBT setTitle:model.address forState:UIControlStateNormal];
+    [cell.addressBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.addressBT.tag = 1000;
     //备份按钮
-    cell.backupBT.frame = CGRectMake(cell.nameLb.maxX +Size(10), cell.nameLb.minY +Size(25 -18)/2, Size(50), Size(18));
+    [cell.backupBT setTitle:Localized(@"请备份", nil) forState:UIControlStateNormal];
     if (model.isBackUpMnemonic == NO) {
         cell.backupBT.hidden = NO;
+        cell.backupBT.tag = 1001;
         [cell.backupBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        cell.backupBT.tag = 1000;
     }else{
         cell.backupBT.hidden = YES;
     }
-    
-    [cell.addressBT setTitle:model.address forState:UIControlStateNormal];
-    cell.totalSumLb.text = [NSString stringWithFormat:@"≈%@",model.balance];
-    [cell.addressBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    cell.addressBT.tag = 1001;
-    
-    [cell.addBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    cell.addBT.tag = 1002;
-    
+    [cell.codeBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.codeBT.tag = 1000;
     return cell;
 }
 
@@ -179,15 +161,13 @@
 {
     switch (sender.tag) {
         case 1000:
-            //助记词备份事件
         {
-            [self.delegate backUpMnemonicAction];
+            [self.delegate showAddressCodeAction];
         }
             break;
         case 1001:
-            //二维码收款事件
         {
-            [self.delegate showAddressCodeAction];
+            [self.delegate backUpMnemonicAction];
         }
             break;
         case 1002:

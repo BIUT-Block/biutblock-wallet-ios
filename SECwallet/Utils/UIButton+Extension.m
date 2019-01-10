@@ -50,40 +50,15 @@
     [self setBackgroundImage:[UIImage imageNamed:@"goldSmallBtn"] forState:UIControlStateNormal];
 }
 
-// 金色大圆角小按钮
--(void)goldSmallBtnStyle1:(NSString *)title{
-    self.layer.masksToBounds = YES;
-    [self setAdjustsImageWhenHighlighted:NO];
-    [self setTitleColor: BACKGROUND_DARK_COLOR forState:UIControlStateNormal];
-    self.titleLabel.font = BoldSystemFontOfSize(12);
-    [self setTitle:title forState:UIControlStateNormal];
-    [self setBackgroundImage:[UIImage imageNamed:@"goldSmallBtn1"] forState:UIControlStateNormal];
-}
-
 // 灰色风格按钮
 -(void)darkBtnStyle:(NSString *)title
 {
     self.layer.masksToBounds = YES;
     [self setAdjustsImageWhenHighlighted:NO];
-    self.layer.cornerRadius = Size(5);
     [self setTitleColor:WHITE_COLOR forState:UIControlStateNormal];
-    [self setTitle:title forState:UIControlStateNormal];
     self.titleLabel.font = BoldSystemFontOfSize(12);
-    self.backgroundColor = COLOR(227, 227, 227, 1);
-     [self setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-}
-
-// 灰色边框风格按钮
--(void)darkBorderBtnStyle:(NSString *)title{
-    self.layer.borderWidth = Size(1);
-    self.layer.cornerRadius = Size(23);
-    self.layer.masksToBounds = YES;
-    [self setAdjustsImageWhenHighlighted:NO];
-    [self setTitleColor:COLOR(195, 195, 195, 1) forState:UIControlStateNormal];
     [self setTitle:title forState:UIControlStateNormal];
-    self.titleLabel.font = BoldSystemFontOfSize(12);
-    self.backgroundColor = BACKGROUND_DARK_COLOR;
-    self.layer.borderColor = DARK_COLOR.CGColor;
+    [self setBackgroundImage:[UIImage imageNamed:@"darkBigBtn"] forState:UIControlStateNormal];
 }
 
 - (UIImage *) buttonImageFromColor:(UIColor *)color {

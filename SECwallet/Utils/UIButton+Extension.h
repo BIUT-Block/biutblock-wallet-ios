@@ -22,13 +22,8 @@
 // 金色小按钮
 -(void)goldSmallBtnStyle:(NSString *)title;
 
-// 金色大圆角小按钮
--(void)goldSmallBtnStyle1:(NSString *)title;
-
 // 灰色风格按钮
 -(void)darkBtnStyle:(NSString *)title;
 
-// 灰色边框风格按钮
--(void)darkBorderBtnStyle:(NSString *)title;
 
 @end

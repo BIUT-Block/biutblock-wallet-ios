@@ -71,12 +71,12 @@
     [headerView addSubview:backBT];
     
     UIButton *QRcodeBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(55 +15 +40 +20), KStatusBarHeight+Size(11), Size(55), Size(24))];
-    [QRcodeBT greenBorderBtnStyle:Localized(@"二维码",nil) andBkgImg:@"continue"];
+    [QRcodeBT greenBorderBtnStyle:Localized(@"二维码",nil) andBkgImg:@"centerRightBtn"];
     [QRcodeBT addTarget:self action:@selector(showAddressCodeAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:QRcodeBT];
     
     UIButton *saveBT = [[UIButton alloc] initWithFrame:CGRectMake(QRcodeBT.maxX +Size(15), QRcodeBT.minY, Size(40), QRcodeBT.height)];
-    [saveBT greenBorderBtnStyle:Localized(@"保存",nil) andBkgImg:@"continue"];
+    [saveBT greenBorderBtnStyle:Localized(@"保存",nil) andBkgImg:@"smallRightBtn"];
     [saveBT addTarget:self action:@selector(saveData) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:saveBT];
     
@@ -182,12 +182,12 @@
         [self.view addSubview:backupBT];
 
         UIButton *deleteBT = [[UIButton alloc] initWithFrame:CGRectMake(backupBT.maxX+Size(10), backupBT.minY, backupBT.width, backupBT.height)];
-        [deleteBT goldSmallBtnStyle:Localized(@"删除钱包",nil)];
+        [deleteBT customerBtnStyle:Localized(@"删除钱包",nil) andBkgImg:@"deletewallet"];
         [deleteBT addTarget:self action:@selector(deleteAction) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:deleteBT];
     }else{
         UIButton *deleteBT = [[UIButton alloc] initWithFrame:CGRectMake(padddingLeft, btY, kScreenWidth - 2*padddingLeft, Size(45))];
-        [deleteBT goldBigBtnStyle:Localized(@"删除钱包",nil)];
+        [deleteBT customerBtnStyle:Localized(@"删除钱包",nil) andBkgImg:@"deletewalletBig"];
         [deleteBT addTarget:self action:@selector(deleteAction) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:deleteBT];
     }

@@ -39,6 +39,7 @@
     UITextField *passwordTipTF;
     
     UIButton *agreementBtn;
+    UIButton *seeProtocol;
     UIButton *importBT;
     
     UILabel *importTipLb;
@@ -149,18 +150,18 @@
     [agreementBtn setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     [agreementBtn setTitle:str forState:UIControlStateNormal];
     agreementBtn.titleLabel.font = BoldSystemFontOfSize(8);
-    [agreementBtn setImage:[UIImage imageNamed:@"invest_protocolun"] forState:UIControlStateNormal];
-    [agreementBtn setImage:[UIImage imageNamed:@"invest_protocol"] forState:UIControlStateSelected];
+    [agreementBtn setImage:[UIImage imageNamed:@"assets_protocolun"] forState:UIControlStateNormal];
+    [agreementBtn setImage:[UIImage imageNamed:@"assets_protocol"] forState:UIControlStateSelected];
     agreementBtn.selected = NO;
     [agreementBtn addTarget:self action:@selector(agreementBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:agreementBtn];
     //协议内容
     NSString *seeStr = Localized(@"服务条款", nil);
     CGSize seesSize = [seeStr calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
-    UIButton *seeProtocol = [[UIButton alloc]initWithFrame:CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height)];
+    seeProtocol = [[UIButton alloc]initWithFrame:CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height)];
     seeProtocol.titleLabel.font = BoldSystemFontOfSize(8);
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:Localized(@"服务条款", nil)];
-    [attStr addAttribute:NSForegroundColorAttributeName value:TEXT_GREEN_COLOR range:NSMakeRange(0, attStr.length)];
+    [attStr addAttribute:NSForegroundColorAttributeName value:COLOR(56, 142, 218, 1) range:NSMakeRange(0, attStr.length)];
     [seeProtocol setAttributedTitle:attStr forState:UIControlStateNormal];
     [seeProtocol addTarget:self action:@selector(seeProtocol) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:seeProtocol];
@@ -204,6 +205,7 @@
         passwordTipTF.hidden = YES;
         
         agreementBtn.frame = CGRectMake(inputTV.minX, pswCell.maxY + Size(17),size.width +Size(20), Size(20));
+        seeProtocol.frame = CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height);
         importBT.frame = CGRectMake(Size(20), agreementBtn.maxY +Size(13), kScreenWidth - 2*Size(20), Size(45));
         
         placeholderLb.text = Localized(@"keystore文本内容", nil);

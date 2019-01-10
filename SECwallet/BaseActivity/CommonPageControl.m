@@ -10,7 +10,7 @@
 
 @implementation CommonPageControl
 
-#define dotW          Size(4.5)
+#define dotW          Size(5)
 #define activeDotW    Size(5)
 #define margin        Size(5)
 

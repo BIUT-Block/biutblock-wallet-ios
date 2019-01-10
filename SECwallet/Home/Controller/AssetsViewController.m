@@ -121,8 +121,8 @@
 
 - (void)addSubView
 {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, KNaviHeight +kHeaderHeight/2)];
-    headerView.backgroundColor = COLOR(246, 252, 251, 1);
+    UIImageView *headerView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, Size(165))];
+    headerView.image = [UIImage imageNamed:@"walletHomeBg"];
     [self.view addSubview:headerView];
     
     UIButton *moreBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(25 +20), KStatusBarHeight+Size(13), Size(25), Size(15))];
@@ -131,7 +131,7 @@
     [self.view addSubview:moreBT];
      
     _walletListPageView = [[CardPageView alloc]initWithFrame:CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight) withWalletList:_walletList];
-    _walletListPageView.backgroundColor = COLOR(242, 243, 244, 1);
+    _walletListPageView.backgroundColor = CLEAR_COLOR;
     _walletListPageView.delegate = self;
     [self.view addSubview:_walletListPageView];
     

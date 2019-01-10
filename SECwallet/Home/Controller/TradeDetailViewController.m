@@ -163,7 +163,7 @@
     [self.view addSubview:transferBT];
     //收款
     gatherBT = [[UIButton alloc] initWithFrame:CGRectMake(transferBT.maxX+Size(10), transferBT.minY, transferBT.width, transferBT.height)];
-    [gatherBT goldSmallBtnStyle:Localized(@"收款",nil)];
+    [gatherBT customerBtnStyle:Localized(@"收款",nil) andBkgImg:@"receipt"];
     [gatherBT addTarget:self action:@selector(gatherAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:gatherBT];
 }

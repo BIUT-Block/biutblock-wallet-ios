@@ -33,13 +33,15 @@
 
 - (void)loadViewControllers
 {
-//    DiscoveryViewController *vc1 = [[DiscoveryViewController alloc] init];
-//    UINavigationController *discoveryNav = [[UINavigationController alloc] initWithRootViewController:vc1];
-//    discoveryNav.tabBarItem = [[UITabBarItem alloc]initWithTitle:Localized(@"发现", nil) image:[UIImage imageNamed:@"icon_tab_normal_01"] selectedImage:[UIImage imageNamed:@"icon_tab_selected_01"]];
-//    discoveryNav.tabBarItem.tag = 100;
-//    discoveryNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"icon_tab_selected_01"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    discoveryNav.tabBarItem.image = [[UIImage imageNamed:@"icon_tab_normal_01"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    [discoveryNav.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObject:TEXT_GREEN_COLOR forKey:NSForegroundColorAttributeName] forState:UIControlStateSelected];
+    DiscoveryViewController *vc1 = [[DiscoveryViewController alloc] init];
+    UINavigationController *discoveryNav = [[UINavigationController alloc] initWithRootViewController:vc1];
+    discoveryNav.tabBarItem = [[UITabBarItem alloc]initWithTitle:Localized(@"发现", nil) image:[UIImage imageNamed:@"discovery"] selectedImage:[UIImage imageNamed:@"discoveryActive"]];
+    discoveryNav.tabBarItem.tag = 100;
+    discoveryNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"discoveryActive"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    discoveryNav.tabBarItem.image = [[UIImage imageNamed:@"discovery"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    discoveryNav.tabBarItem.titlePositionAdjustment = UIOffsetMake(-5, -5);
+    [discoveryNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_DARK_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:8]} forState:UIControlStateNormal];
+    [discoveryNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_GREEN_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:8]} forState:UIControlStateHighlighted];
     
     AssetsViewController *vc2 = [[AssetsViewController alloc] init];
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:vc2];
@@ -62,7 +64,7 @@
     [mineNav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:TEXT_GREEN_COLOR,NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:8]} forState:UIControlStateHighlighted];
     
     // 将子视图控制器放入数组
-    NSArray *vcs = @[homeNav, mineNav];
+    NSArray *vcs = @[discoveryNav, homeNav, mineNav];
     // 添加标签控制器
     [self setViewControllers:vcs animated:YES];
 }

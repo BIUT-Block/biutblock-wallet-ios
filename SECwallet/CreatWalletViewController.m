@@ -79,7 +79,7 @@
         backBT.hidden = YES;
     }
     UIButton *importBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(70+20), KStatusBarHeight+Size(11), Size(70), Size(24))];
-    [importBT greenBorderBtnStyle:Localized(@"导入钱包",nil) andBkgImg:@"continue"];
+    [importBT greenBorderBtnStyle:Localized(@"导入钱包",nil) andBkgImg:@"centerRightBtn"];
     [importBT addTarget:self action:@selector(importAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:importBT];
     //标题
@@ -194,7 +194,7 @@
     [agreementBtn setTitle:str forState:UIControlStateNormal];
     agreementBtn.titleLabel.font = BoldSystemFontOfSize(8);
     [agreementBtn setImage:[UIImage imageNamed:@"assets_protocolun"] forState:UIControlStateNormal];
-    [agreementBtn setImage:[UIImage imageNamed:@"invest_protocol"] forState:UIControlStateSelected];
+    [agreementBtn setImage:[UIImage imageNamed:@"assets_protocol"] forState:UIControlStateSelected];
     agreementBtn.selected = NO;
     [agreementBtn addTarget:self action:@selector(agreementBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:agreementBtn];
@@ -343,7 +343,6 @@
     [HSEther hs_createWithPwd:passwordTF.text block:^(NSString *address, NSString *keyStore, NSString *mnemonicPhrase, NSString *privateKey) {
         [self hiddenLoadingView];
         /*************默认钱包信息*************/
-        address = @"0xa2ff742445303c6faced63922f2cde818f62e840";
         //随机生成钱包ICON
         int i = arc4random() % 2;
         NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];

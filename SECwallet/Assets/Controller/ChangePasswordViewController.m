@@ -54,7 +54,7 @@
     [self.view addSubview:backBT];
 
     UIButton *completeBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(60+20), KStatusBarHeight+Size(11), Size(60), Size(24))];
-    [completeBT greenBorderBtnStyle:Localized(@"完成",nil) andBkgImg:@"continue"];
+    [completeBT greenBorderBtnStyle:Localized(@"完成",nil) andBkgImg:@"smallRightBtn"];
     [completeBT addTarget:self action:@selector(savePassword) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:completeBT];
     //标题
@@ -159,7 +159,9 @@
     desLb.text = Localized(@"忘记密码？\n导入助记词或私钥可重置密码", nil);
     [self.view addSubview:desLb];
     UIButton *importBtn = [[UIButton alloc] initWithFrame:CGRectMake(desLb.minX, desLb.maxY+Size(20), kScreenWidth-desLb.minX*2, Size(35))];
-    [importBtn greenBorderBtnStyle:Localized(@"马上导入",nil) andBkgImg:@"continue"];
+    [importBtn customerBtnStyle:[NSString stringWithFormat:@"         %@",Localized(@"马上导入",nil)] andBkgImg:@"importNow"];
+    importBtn.titleLabel.font = SystemFontOfSize(10);
+    [importBtn setTitleColor:TEXT_GREEN_COLOR forState:UIControlStateNormal];
     [importBtn addTarget:self action:@selector(importBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:importBtn];
 }

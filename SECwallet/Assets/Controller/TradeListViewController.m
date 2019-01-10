@@ -108,7 +108,7 @@
     
     //交换钱包按钮
     UIButton *exchangeBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(65 +20), desLb.maxY-Size(2), Size(65), Size(25))];
-    [exchangeBT greenBorderBtnStyle:Localized(@"切换钱包",nil) andBkgImg:@"continue"];
+    [exchangeBT greenBorderBtnStyle:Localized(@"切换钱包",nil) andBkgImg:@"centerRightBtn"];
     [exchangeBT addTarget:self action:@selector(exchangeAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:exchangeBT];
     
@@ -206,6 +206,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     TradeModel *model = _dataArrays[indexPath.section];
+    cell.bigIcon.image = [UIImage imageNamed:_walletModel.walletIcon];
     [cell fillCellWithObject:model];
     return cell;
 }

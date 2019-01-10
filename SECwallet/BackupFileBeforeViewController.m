@@ -82,7 +82,7 @@
     
     /*****************下一步*****************/
     UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(titleLb.minX, bkgView.maxY +Size(25), kScreenWidth -titleLb.minX*2, Size(45))];
-    [nextBT goldBigBtnStyle:@"下一步"];
+    [nextBT goldBigBtnStyle:Localized(@"下一步", nil)];
     [nextBT addTarget:self action:@selector(nextAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBT];
 }

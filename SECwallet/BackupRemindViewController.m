@@ -33,7 +33,7 @@
 -(void)setupUI
 {
     UIButton *backupBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(45+20), KStatusBarHeight+Size(11), Size(45), Size(24))];
-    [backupBT greenBorderBtnStyle:Localized(@"跳过",nil) andBkgImg:@"continue"];
+    [backupBT greenBorderBtnStyle:Localized(@"跳过",nil) andBkgImg:@"smallRightBtn"];
     [backupBT addTarget:self action:@selector(jumpAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backupBT];
     //标题

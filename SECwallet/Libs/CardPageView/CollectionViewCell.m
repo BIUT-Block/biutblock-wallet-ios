@@ -24,46 +24,29 @@
         _bkgIV.layer.masksToBounds = YES;
         [self.contentView addSubview:_bkgIV];
         
-        //头像
-        _headerIV = [[UIImageView alloc]initWithFrame:CGRectMake((self.frame.size.width -Size(40))/2, Size(8), Size(40), Size(40))];
-        [self.contentView addSubview:_headerIV];
-        
-        _nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(10), 0, Size(150), Size(40))];
-        _nameLb.font = SystemFontOfSize(16);
-        _nameLb.textColor = BACKGROUND_DARK_COLOR;
-        _nameLb.textAlignment = NSTextAlignmentCenter;
+        _nameLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), Size(20), self.width/2, Size(30))];
+        _nameLb.font = SystemFontOfSize(20);
+        _nameLb.textColor = WHITE_COLOR;
         [self.contentView addSubview:_nameLb];
         
-        _backupBT = [[UIButton alloc]initWithFrame:CGRectMake(_nameLb.maxX +Size(10), _nameLb.minY +Size(25 -18)/2, Size(50), Size(18))];
-        [_backupBT setBackgroundImage:[UIImage imageNamed:@"backup1"] forState:UIControlStateNormal];
-        [self.contentView addSubview:_backupBT];
-        
+        _totalSumLb = [[UILabel alloc]initWithFrame:CGRectMake(_nameLb.minX, _nameLb.maxY +Size(35), self.width, Size(20))];
+        _totalSumLb.font = BoldSystemFontOfSize(15);
+        _totalSumLb.textColor = WHITE_COLOR;
+        [self.contentView addSubview:_totalSumLb];
         //地址
-        _addressBT = [[UIButton alloc]initWithFrame:CGRectMake(self.width/4, _nameLb.maxY +Size(40), self.width/2, Size(15))];
-        _addressBT.titleLabel.font = SystemFontOfSize(12);
-        [_addressBT setTitleColor:BACKGROUND_DARK_COLOR forState:UIControlStateNormal];
-        [_addressBT setImage:[UIImage imageNamed:@"codeIcon"] forState:UIWindowLevelNormal];
-        _addressBT.contentEdgeInsets = UIEdgeInsetsMake(0, -Size(10), 0, 0);
-        _addressBT.imageEdgeInsets = UIEdgeInsetsMake(0, _addressBT.titleLabel.width + self.width/2, 0, -_addressBT.titleLabel.width - self.width/2);
-        _addressBT.titleEdgeInsets = UIEdgeInsetsMake(0, -_addressBT.currentImage.size.width, 0, _addressBT.currentImage.size.width);
-        _addressBT.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        _addressBT = [[UIButton alloc]initWithFrame:CGRectMake(_totalSumLb.minX, _totalSumLb.maxY, self.width/2, Size(15))];
+        _addressBT.titleLabel.font = SystemFontOfSize(10);
+        [_addressBT setTitleColor:COLOR(254, 255, 255, 1) forState:UIControlStateNormal];
         [self.contentView addSubview:_addressBT];
         
-        _totalSumLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(10), _addressBT.maxY, self.width, Size(30))];
-        _totalSumLb.font = SystemFontOfSize(28);
-        _totalSumLb.textColor = BACKGROUND_DARK_COLOR;
-        [self.contentView addSubview:_totalSumLb];
-        //描述
-        UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(_totalSumLb.minX, _totalSumLb.maxY, _totalSumLb.width, Size(10))];
-        desLb.font = SystemFontOfSize(12);
-        desLb.textColor = BACKGROUND_DARK_COLOR;
-        desLb.text = @"总资产";
-        [self.contentView addSubview:desLb];
+        _backupBT = [[UIButton alloc]initWithFrame:CGRectMake(self.width -Size(50 +25), _totalSumLb.minY +Size(5), Size(50), Size(20))];
+        _backupBT.titleLabel.font = SystemFontOfSize(10);
+        [_backupBT setTitleColor:COLOR(1, 216, 108, 1) forState:UIControlStateNormal];
+        [self.contentView addSubview:_backupBT];
 
-        //添加按钮
-        _addBT = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width -Size(20 +10), self.frame.size.height -Size(55), Size(20), Size(20))];
-        [_addBT setBackgroundImage:[UIImage imageNamed:@"addIcon"] forState:UIControlStateNormal];
-//        [self.contentView addSubview:_addBT];
+        //二维码
+        _codeBT = [[UIButton alloc]initWithFrame:CGRectMake(_addressBT.minX, _addressBT.maxY +Size(10), Size(25), Size(25))];
+        [self.contentView addSubview:_codeBT];
         
     }
     return self;

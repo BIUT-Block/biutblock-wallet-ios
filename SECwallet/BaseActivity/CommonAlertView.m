@@ -265,7 +265,7 @@
     }
     
     CAKeyframeAnimation* animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    animation.duration = 0.2f;// 动画时间
+    animation.duration = 0.15f;// 动画时间
     NSMutableArray *values = [NSMutableArray array];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 1.0)]];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];

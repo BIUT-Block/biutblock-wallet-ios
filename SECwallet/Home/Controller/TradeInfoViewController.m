@@ -43,7 +43,7 @@
     [headerView addSubview:backBT];
     
     UIButton *moreBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(65 +20), KStatusBarHeight+Size(11), Size(65), Size(24))];
-    [moreBT greenBorderBtnStyle:Localized(@"查看更多",nil) andBkgImg:@"continue"];
+    [moreBT greenBorderBtnStyle:Localized(@"查看更多",nil) andBkgImg:@"centerRightBtn"];
     [moreBT addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:moreBT];
     

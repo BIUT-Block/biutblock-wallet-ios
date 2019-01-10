@@ -41,7 +41,7 @@
         layer.shadowOpacity = Size(0.3);
         //关闭按钮
         UIButton *closeBT = [[UIButton alloc] initWithFrame:CGRectMake(_sidePullViewWidth -Size(40 +15), Size(28), Size(40), Size(24))];
-        [closeBT greenBorderBtnStyle:Localized(@"关闭",nil) andBkgImg:@"continue"];
+        [closeBT greenBorderBtnStyle:Localized(@"关闭",nil) andBkgImg:@"smallRightBtn"];
         [closeBT addTarget:self action:@selector(dismissSidePullView) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:closeBT];
         
@@ -184,7 +184,7 @@
             [self addSubview:contentTV];
             
             UIButton *copyBT = [[UIButton alloc] initWithFrame:CGRectMake(contentTV.minX, contentTV.maxY+Size(15), contentTV.width, Size(30))];
-            [copyBT goldSmallBtnStyle:Localized(@"复制Keystore",nil)];
+            [copyBT customerBtnStyle:Localized(@"复制Keystore",nil) andBkgImg:@"copyKeystore"];
             copyBT.tag = 102;
             [copyBT addTarget:self action:@selector(copyAction:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:copyBT];
@@ -216,7 +216,8 @@
             tip2Lb.attributedText = msgStr;
             
             UIButton *gotBT = [[UIButton alloc] initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY+Size(50), tip2Lb.width, Size(30))];
-            [gotBT goldSmallBtnStyle:Localized(@"Got it",nil)];
+            [gotBT customerBtnStyle:Localized(@"Got it",nil) andBkgImg:@"got_it"];
+            [gotBT setTitleColor:TEXT_RED_COLOR forState:UIControlStateNormal];
             gotBT.tag = 103;
             [gotBT addTarget:self action:@selector(copyAction:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:gotBT];

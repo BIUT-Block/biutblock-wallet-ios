@@ -37,7 +37,6 @@
 - (void)addContentView
 {
     UIImageView *headerView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, Size(165))];
-//    headerView.backgroundColor = LightGreen_COLOR;
     headerView.image = [UIImage imageNamed:@"walletHomeBg"];
     [self.view addSubview:headerView];
     //标题

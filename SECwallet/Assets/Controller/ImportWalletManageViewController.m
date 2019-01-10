@@ -51,7 +51,7 @@
     [self.view addSubview:backBT];
     
     tipBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(100+20), KStatusBarHeight+Size(11), Size(100), Size(24))];
-    [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"continue"];
+    [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"bigRightBtn"];
     [tipBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     tipBT.tag = 101;
     [self.view addSubview:tipBT];
@@ -113,11 +113,11 @@
     // 2.给对应位置添加对应子控制器
     [self showVc:index];
     if (index == 0) {
-        [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"continue"];
+        [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"bigRightBtn"];
     }else if (index == 1) {
-        [tipBT greenBorderBtnStyle:Localized(@"什么是Keystore？",nil) andBkgImg:@"continue"];
+        [tipBT greenBorderBtnStyle:Localized(@"什么是Keystore？",nil) andBkgImg:@"bigRightBtn"];
     }else if (index == 2) {
-        [tipBT greenBorderBtnStyle:Localized(@"什么是私钥？",nil) andBkgImg:@"continue"];
+        [tipBT greenBorderBtnStyle:Localized(@"什么是私钥？",nil) andBkgImg:@"bigRightBtn"];
     }
 }
 
@@ -148,11 +148,11 @@
     vc.view.frame = CGRectMake(offsetX, 0, kScreenWidth, kScreenHeight -Size(30) -KNaviHeight);
     
     if (index == 0) {
-        [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"continue"];
+        [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"bigRightBtn"];
     }else if (index == 1) {
-        [tipBT greenBorderBtnStyle:Localized(@"什么是Keystore？",nil) andBkgImg:@"continue"];
+        [tipBT greenBorderBtnStyle:Localized(@"什么是Keystore？",nil) andBkgImg:@"bigRightBtn"];
     }else if (index == 2) {
-        [tipBT greenBorderBtnStyle:Localized(@"什么是私钥？",nil) andBkgImg:@"continue"];
+        [tipBT greenBorderBtnStyle:Localized(@"什么是私钥？",nil) andBkgImg:@"bigRightBtn"];
     }
 }
 
@@ -167,11 +167,11 @@
     [self.SG titleBtnSelectedWithScrollView:scrollView];
     
     if (index == 0) {
-        [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"continue"];
+        [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"bigRightBtn"];
     }else if (index == 1) {
-        [tipBT greenBorderBtnStyle:Localized(@"什么是Keystore？",nil) andBkgImg:@"continue"];
+        [tipBT greenBorderBtnStyle:Localized(@"什么是Keystore？",nil) andBkgImg:@"bigRightBtn"];
     }else if (index == 2) {
-        [tipBT greenBorderBtnStyle:Localized(@"什么是私钥？",nil) andBkgImg:@"continue"];
+        [tipBT greenBorderBtnStyle:Localized(@"什么是私钥？",nil) andBkgImg:@"bigRightBtn"];
     }
 }
 
