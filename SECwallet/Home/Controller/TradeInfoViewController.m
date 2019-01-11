@@ -42,11 +42,6 @@
     [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
     [headerView addSubview:backBT];
     
-    UIButton *moreBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(65 +20), KStatusBarHeight+Size(11), Size(65), Size(24))];
-    [moreBT greenBorderBtnStyle:Localized(@"查看更多",nil) andBkgImg:@"centerRightBtn"];
-    [moreBT addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:moreBT];
-    
     //标题
     UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(15), Size(200), Size(20))];
     desLb.textColor = TEXT_BLACK_COLOR;
@@ -135,13 +130,24 @@
         [bottomView addSubview:contentLb];
     }
 
+    UIButton *moreBT = [[UIButton alloc] initWithFrame:CGRectMake(0, kScreenHeight -Size(25+15), kScreenWidth, Size(25))];
+    moreBT.titleLabel.font = SystemFontOfSize(8);
+    [moreBT setTitleColor:COLOR(56, 142, 218, 1) forState:UIControlStateNormal];
+    [moreBT setImage:[UIImage imageNamed:@"sec1"] forState:UIControlStateNormal];
+    [moreBT setTitle:[NSString stringWithFormat:@"     %@",Localized(@"打开SEC浏览器查看更多详情",nil)] forState:UIControlStateNormal];
+    [moreBT addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:moreBT];
+
 }
 
 #pragma 查看更多信息
 -(void)moreAction
 {
-    NSURL *jumpURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",SECBrowserUrl,_tradeModel.tradeNum]];
-    [[UIApplication sharedApplication] openURL:jumpURL];
+    CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
+    viewController.titleStr = @"SEC钱包服务协议";
+    viewController.adUrl = [NSString stringWithFormat:@"%@%@",SECBrowserUrl,_tradeModel.tradeNum];
+    viewController.commonHtmlShowViewType = CommonHtmlShowViewType_other;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end

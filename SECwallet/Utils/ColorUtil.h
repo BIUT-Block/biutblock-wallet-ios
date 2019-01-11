@@ -18,7 +18,7 @@
 #define Navi_COLOR	COLOR(52,152,219,1)
 
 //app标签栏背景色
-#define Tabbar_COLOR  [UIColor whiteColor]
+#define Tabbar_COLOR  COLOR(251,253,253,1)
 
 //无色
 #define CLEAR_COLOR	[UIColor clearColor]

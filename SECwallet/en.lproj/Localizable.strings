@@ -71,11 +71,13 @@
 "什么是Keystore？"="What is a Keystore?";
 "什么是私钥？"="What is a PrivateKey?";
 "助记词"="Mnemonic";
-"官方钱包"="Offical wallet";
+"官方钱包"="Keystore";
 "私钥"="PrivateKey";
 "助记词，按空格分隔"="Mnemonic, separated by spaces";
 "密码*"="Password*";
-"8~30位数字，英文字母以及特殊字符至少2种组合"="Ex:8~30characters,numbers,contain at least two English letters and special characters";
+"8~30位数字，英文字母以及特殊字符至少2种组合"="8-30characters,at least two numbers,English letters and special characters";
+
+
 "确认密码*"="Confirm Password*";
 "请再次确认密码"="Repeat the Password again";
 "密码提示"="Password prompt";
@@ -97,7 +99,7 @@
 "新增地址"="Add Contact";
 "编辑地址"="Edit Contact";
 "联系人姓名*"="Contact name*";
-"请输入联系人姓名"="Please type in contact name";
+"请输入联系人姓名"="Input contact name";
 "联系人钱包地址*"="Payee Wallet Address*";
 "手机号码"="Phone No";
 "邮箱"="Email";
@@ -106,11 +108,11 @@
 "保存修改"="Save Change";
 "钱包已存在，是否设置为新密码？\n（请牢记钱包新密码）"="The wallet already exists.Is it set to a new password?\n(Please keep in mind the new password of the wallet)";
 "温馨提示"="Are you sure";
-"请输入钱包密码"="Please type in Wallet password";
+"请输入钱包密码"="Input Wallet password";
 "密码用于保护私钥和交易授权，强度非常重要。SEC钱包不存储密码，也无法帮您找回，请务必牢记。"="Password is used to protect the private key and transaction authorization, and the strength is very important. SEC wallet don’t store password and nor retrieved for you. Please keep in mind.";
 "例如：wallet01"="ex:wallet01";
 "确定"="Determine";
-"请输入密码"="Please Type in password";
+"请输入密码"="Input Password";
 "跳过"="Skip";
 "备份钱包"="Backup Wallet";
 "最后一步"="The Last Step";
@@ -126,17 +128,16 @@
 "确 认"="Confirm";
 "备份失败"="Backup Failed";
 "交易失败"="Transfer Failed";
-"Please Check and try again."="Please Check and try again.";
 "请检查您的助记词"="Please click your mnemonic";
 "完 成"="complete";
 "完成"="Done";
 "更改密码"="Change Password";
 "当前密码*"="Current Password*";
 "当前密码验证失败"="Current Password Error";
-"请输入当前密码"="Please Type in Current Password";
+"请输入当前密码"="Input Current Password";
 "新密码*"="New Password*";
-"请输入新密码"="Please Type in new password";
-"请再次输入密码"="Please Type in new password again";
+"请输入新密码"="Input new password";
+"请再次输入密码"="Repeat The Password";
 "密码提示"="Password prompt";
 "马上导入"="Import Now";
 "忘记密码？\n导入助记词或私钥可重置密码"="Forget Password?\nImport Mnemonic or PrivateKey to reset the password";
@@ -184,15 +185,19 @@
 "暂无记录"="No Record Found";
 "交易所"="Exchanges";
 "游戏"="Games";
+"分享"="Share";
+"打开SEC浏览器查看更多详情"="Enter SECBlock for more details";
+"钱包个数超过限制"="The number of wallets exceeded the limit";
+
 
 /****************HUD提示文本********************/
 "数据获取失败"="Data acquisition failed";
 "删除"="Delete";
-"请输入收款人钱包地址"="Please type in Payee Wallet Address";
+"请输入收款人钱包地址"="Input Payee Wallet Address";
 "地址不正确，请重新输入"="The address is incorrect,Try again";
 "号码格式不正确，请重新输入"="The Phone No is incorrect,Try again";
 "同一地址之间不能转账"="No transfer between the same address";
-"请输入转账金额"="Please type in transfer amount";
+"请输入转账金额"="Input transfer amount";
 "转账金额不能为零"="The transfer amount cannot be zero";
 "余额不足"="Insufficient balance";
 "小数点后只允许输入8位"="Only allow 8 bits after decimal point";
@@ -200,10 +205,10 @@
 
 "邮箱格式不正确，请重新输入"="The Email format is incorrect,Try again";
 "该地址已存在"="Address already exists";
-"请输入助记词"="Please type in Mnemonics";
-"请输入8~30位密码"="Please type in 8~30characters password";
-"请输入数字和字母组合密码"="Please type in a Numbers and letters password";
-"两次密码输入不一致，请重新输入！"="Repeat the Password fail,Try again";
+"请输入助记词"="Input Mnemonics";
+"请输入8~30位密码"="Input 8~30characters password";
+"请输入数字和字母组合密码"="Input a Numbers and letters password";
+"两次密码输入不一致，请重新输入！"="Two passwords are inconsistent,Try again";
 "助记词长度不够"="Mnemonics is error length";
 "助记词个数不够"="Mnemonics is error count";
 "助记词有误"="Mnemonics error";
@@ -217,9 +222,9 @@
 "私钥长度不够"="PrivateKey is error length";
 "私钥导入成功"="PrivateKey import success";
 "导入失败，请重新输入"="Import faild,Try again";
-"密码不能为空"="Password can't be blank";
+"密码不能为空"="Input Password";
 "密码不正确"="Password is error";
 "保存成功"="Successfully saved";
-"钱包名已存在"="The wallet name already exists";
-"请输入钱包名称"="Please type in wallet name";
+"钱包已存在"="Wallet Exists";
+"请输入钱包名称"="Input Wallet Name";
 

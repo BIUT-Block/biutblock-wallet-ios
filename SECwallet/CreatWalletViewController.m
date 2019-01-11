@@ -323,13 +323,19 @@
     for (WalletModel *model in walletList) {
         if ([walletNameTF.text isEqualToString:model.walletName]) {
             nameErrorLb.hidden = NO;
-            [nameErrorLb remindError:@"钱包名已存在" withY:nameDesLb.minY];
+            [nameErrorLb remindError:@"钱包已存在" withY:nameDesLb.minY];
             nameCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
             nameErrorLb.hidden = YES;
             nameCell.contentView.backgroundColor = DARK_COLOR;
         }
+    }
+    
+    //判断钱包超过10个
+    if (walletList.count == 10) {
+        [self hudShowWithString:Localized(@"钱包个数超过限制", nil) delayTime:2];
+        return;
     }
     
     [self requestCreatWalletBy:passwordTF.text];

@@ -134,7 +134,7 @@
     HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     HUD.labelFont = SystemFontOfSize(10);
     HUD.cornerRadius = Size(5);
-    HUD.color = COLOR(68, 83, 91, 1);
+    HUD.color = BLACK_COLOR;
     HUD.margin = Size(10);
     HUD.mode = MBProgressHUDModeText;
     HUD.labelText = str;

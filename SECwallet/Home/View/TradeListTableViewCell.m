@@ -40,7 +40,7 @@
     [self addSubview:_icon];
     
     //地址
-    _address = [[UIButton alloc] initWithFrame:CGRectMake(_icon.maxX +Size(10), _icon.minY -Size(3), Size(100), Size(10))];
+    _address = [[UIButton alloc] initWithFrame:CGRectMake(_icon.maxX +Size(10), _icon.minY, Size(100), Size(10))];
     _address.titleLabel.font = BoldSystemFontOfSize(10);
     [_address setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     _address.userInteractionEnabled = NO;

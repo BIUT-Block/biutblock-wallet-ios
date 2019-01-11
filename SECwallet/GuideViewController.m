@@ -45,6 +45,7 @@
         // 2 作为根视图控制器
         AppDelegateInstance.window.rootViewController = self.tabBarController;
         [AppDelegateInstance.window makeKeyAndVisible];
+        
     }else{
         SelectEntryViewController *viewController = [[SelectEntryViewController alloc]init];
         UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
@@ -100,7 +101,7 @@
         // 2 作为根视图控制器
         AppDelegateInstance.window.rootViewController = self.tabBarController;
         [AppDelegateInstance.window makeKeyAndVisible];
-        
+
         [UIView animateWithDuration:3 animations:^{
             _scrollView.alpha = 1;
         } completion:^(BOOL finished) {

@@ -14,6 +14,8 @@
 #import "ethers/JsonRpcProvider.h"
 #import "ethers/SecureData.h"
 #import "CommonTableViewCell.h"
+#import "ConfirmPasswordViewController.h"
+#import "SECwallet-Swift.h"
 
 @interface TransferViewController ()<TradeDetailViewDelegate,UITextFieldDelegate,AddressListViewControllerDelegate>
 {
@@ -54,7 +56,7 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboardAction)];
     [self.view addGestureRecognizer:tap];
-    
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -251,140 +253,48 @@
     [self.tradeDetailView initTradeDetailViewWith:addressTF.text payAddress:_walletModel.address gasPrice:gasStr sum:moneyTF.text tokenName:_tokenCoinModel.name];
 }
 
--(void)tipBtnAction
-{
-    [self dismissKeyboardAction];
-    CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
-    viewController.hidesBottomBarWhenPushed = YES;
-    viewController.commonHtmlShowViewType = CommonHtmlShowViewType_RgsProtocol;
-    viewController.titleStr = @"什么是GAS费用？";
-    [self.navigationController pushViewController:viewController animated:YES];
-}
-
 #pragma TradeDetailViewDelegate
 -(void)clickFinish
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请输入钱包密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UITextField *pswTF = alertController.textFields.firstObject;
-        if (pswTF.text.length == 0) {
-            [self hudShowWithString:@"密码不能为空" delayTime:1];
-            return;
-        }else{
-            if ([pswTF.text isEqualToString:_walletModel.loginPassword]) {
-                /***************************开始转账****************************/
-                [self createLoadingView:Localized(@"正在转账...", nil)];
-//                __block Account *a;
-//                __block JsonRpcProvider *e = [[JsonRpcProvider alloc]initWithChainId:ChainIdHomestead url:[NSURL URLWithString:BaseServerUrl]];
-//                NSData *jsonData = [_walletModel.keyStore dataUsingEncoding:NSUTF8StringEncoding];
-//                NSError *err;
-//                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-//                                                                    options:NSJSONReadingMutableContainers
-//                                                                      error:&err];
-//                //地址
-//                __block NSString *addressStr = [NSString stringWithFormat:@"0x%@",dic[@"address"]];
-//                __block Transaction *transaction = [Transaction transactionWithFromAddress:[Address addressWithString:addressStr]];
-//                //1 account自己解密
-//                NSLog(@"1 开始新建钱包");
-//                __block Signature *signature;
-////                NSString *r_str;NSString *s_str;NSString *v_str;
-//                [Account decryptSecretStorageJSON:_walletModel.keyStore password:_walletModel.walletPassword callback:^(Account *account, NSError *NSError) {
-//                    if (NSError == nil){
-//                        a = account;
-//                        transaction.nonce = 1;  //????
-//                        NSLog(@"4 开始获取gasPrice");
-//                        transaction.gasPrice = [BigNumber bigNumberWithDecimalString:@"0"];
-//                        transaction.toAddress = [Address addressWithString:addressTF.text];
-//                        //转账金额
-//                        BigNumber *b = [BigNumber bigNumberWithDecimalString:moneyTF.text];
-//                        transaction.value = b;
-//                        //如果是eth转账
-//                        transaction.gasLimit = [BigNumber bigNumberWithDecimalString:@"0"];
-//                        transaction.data = [SecureData secureDataWithCapacity:0].data;
-//                        //签名
-//                        [a sign:transaction];
-//                        //发送
-////                        NSData *signedTransaction = [transaction serialize];
-//                        NSLog(@"6 开始转账");
-//                        signature = transaction.signature;
-//                        NSLog(@"\n%@\n%@\n%d",[SecureData dataToHexString:signature.r],[SecureData dataToHexString:signature.s],signature.v);
-//
-//                    }else{
-//                        NSLog(@"密码错误");
-//                    }
-//                }];
-//
-//
-                //地址去掉0x
-                NSString *from = [_walletModel.address componentsSeparatedByString:@"x"].lastObject;
-                NSString *to = [addressTF.text componentsSeparatedByString:@"x"].lastObject;
-                NSString *value = [NSString hex_16_StringFromDecimal:[moneyTF.text integerValue]];
-                value = moneyTF.text;
-                NSString *timestamp = [NSString stringWithFormat:@"%0.f",[[NSDate dateWithTimeIntervalSinceNow:0] timeIntervalSince1970]*1000];
-//                NSDictionary *data = @{@"v":@(signature.v),@"r":[[SecureData dataToHexString:signature.r] componentsSeparatedByString:@"x"].lastObject,@"s":[[SecureData dataToHexString:signature.s] componentsSeparatedByString:@"x"].lastObject};
-                NSString *inputData = remarkTF.text.length > 0 ? remarkTF.text : @"";
-                
-                //            timestamp: 1543457005562, // number
-                //            from: 'fa9461cc20fbb1b0937aa07ec6afc5e660fe2afd', // 40 bytes address
-                //            to: '8df9628de741b3d42c6f4a29ed4572b0f05fe8b4', // 40 bytes address
-                //            value: '110.5235', // string
-                //            gasLimit: '0', // string, temporarily set to 0
-                //            gas: '0', // string, temporarily set to 0
-                //            gasPrice: '0', // string, temporarily set to 0
-                //            inputData: 'Sec test transaction', // string, user defined extra messages
-                //            data: {
-                //            v: 28, // number
-                //            r: 'f17c29dd068953a474675a65f59c75c6189c426d1c60f43570cc7220ca3616c3', // 64 bytes string
-                //            s: '54f9ff243b903b7419dd566f277eedadf6aa55161f5d5e42005af29b14577902' // 64 bytes string
-                //            }
-                
-                NSDictionary *data = @{@"v":@(28
-                             ),@"r":@"f17c29dd068953a474675a65f59c75c6189c426d1c60f43570cc7220ca3616c3",@"s":@"54f9ff243b903b7419dd566f277eedadf6aa55161f5d5e42005af29b14577902"};
-                from = @"fa9461cc20fbb1b0937aa07ec6afc5e660fe2afd";
-                to = @"8df9628de741b3d42c6f4a29ed4572b0f05fe8b4";
-                value = @"110.5235";
-                timestamp = @"1543457005562";
-                inputData = @"Sec test transaction";
-                
-                AFJSONRPCClient *client = [AFJSONRPCClient clientWithEndpointURL:[NSURL URLWithString:BaseServerUrl]];
-                [client invokeMethod:@"sec_sendRawTransaction" withParameters:@[@{@"timestamp":@([timestamp integerValue]),
-                                                                                  @"from":from,
-                                                                                  @"to":to,
-                                                                                  @"value":value,
-                                                                                  @"gasLimit":@"0",
-                                                                                  @"gas":@"0",
-                                                                                  @"gasPrice":@"0",
-                                                                                  @"inputData":inputData,
-                                                                                  @"data":data}] requestId:@(1) success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                                                                      NSDictionary *dic = responseObject;
-                                                                                      NSInteger status = [dic[@"status"] integerValue];
-                                                                                      if (status == 1) {
-                                                                                          [self hiddenLoadingView];
-                                                                                          [self hudShowWithString:@"转账成功" delayTime:3];
-                                                                                          //延迟执行
-                                                                                          [self performSelector:@selector(delayMethod) withObject:nil afterDelay:4.0];
-                                                                                      }
-                                                                                      
-                                                                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                                                      [self hiddenLoadingView];
-                                                                                      UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"转账失败" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
-                                                                                      [alert show];
-                                                                                  }];
-                
-                
-                
-            }else{
-                [self hudShowWithString:@"密码不正确" delayTime:1];
-                return;
-            }
-        }
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.keyboardType = UIKeyboardTypeASCIICapable;
-        textField.secureTextEntry = YES;
-    }];
-    [self presentViewController:alertController animated:true completion:nil];
+    ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
+    controller.walletModel = _walletModel;
+    [self presentViewController:controller animated:YES completion:nil];
+    controller.sureBlock = ^() {
+        /***************************开始转账****************************/
+        [self createLoadingView:Localized(@"正在转账...", nil)];
+        //去掉0x
+        NSString *privateKey = [_walletModel.privateKey componentsSeparatedByString:@"x"].lastObject;
+        NSString *from = [_walletModel.address componentsSeparatedByString:@"x"].lastObject;
+        NSString *to = [addressTF.text componentsSeparatedByString:@"x"].lastObject;
+        NSString *value = moneyTF.text;
+        NSString *inputData = remarkTF.text.length > 0 ? remarkTF.text : @"";
+        NSString *jsonStr = [NSString stringWithFormat:@"{\"privateKey\":\"%@\",\"walletAddress\":\"%@\",\"address\":\"%@\",\"amount\":\"%@\",\"data\":\"%@\"}",privateKey,from,to,value,inputData];
+        SentimentAnalyzer *sent = [[SentimentAnalyzer alloc]init];
+        [sent analyze:jsonStr completion:^(NSString *value) {
+            NSString *dicStr = [value substringFromIndex:1];
+            dicStr = [dicStr substringToIndex:dicStr.length-1];
+            NSDictionary *dic = [NSString parseJSONStringToNSDictionary:dicStr];
+            NSMutableDictionary *ddd = [[NSMutableDictionary alloc]initWithDictionary:dic];
+            [ddd removeObjectForKey:@"contractAddress"];
+            NSLog(@"********%@",ddd);
+            
+            AFJSONRPCClient *client = [AFJSONRPCClient clientWithEndpointURL:[NSURL URLWithString:BaseServerUrl]];
+            [client invokeMethod:@"sec_sendRawTransaction" withParameters:@[ddd] requestId:@(1) success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSDictionary *dic = responseObject;
+                NSInteger status = [dic[@"status"] integerValue];
+                if (status == 1) {
+                    [self hiddenLoadingView];
+                    [self hudShowWithString:@"转账成功" delayTime:3];
+                    //延迟执行
+                    [self performSelector:@selector(delayMethod) withObject:nil afterDelay:4.0];
+                }
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [self hiddenLoadingView];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"转账失败" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+                [alert show];
+            }];
+        }];
+    };
 }
 
 -(void)delayMethod

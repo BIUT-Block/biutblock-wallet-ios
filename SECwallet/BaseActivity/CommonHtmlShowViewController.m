@@ -86,6 +86,12 @@
         }
         
     }else if (_commonHtmlShowViewType == CommonHtmlShowViewType_other) {
+        _infoWebView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kScreenHeight -KNaviHeight);
+        //分享按钮
+        UIButton *shareBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(45 +15), (KNaviHeight-Size(24))/2+Size(8), Size(45), Size(24))];
+        [shareBT greenBorderBtnStyle:Localized(@"分享", nil) andBkgImg:@"smallRightBtn"];
+        [shareBT addTarget:self action:@selector(shareAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:shareBT];
         [_infoWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_adUrl]]];
     }
 }
@@ -102,6 +108,15 @@
     }else{
         [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '70%'"];
     }
+}
+
+-(void)shareAction
+{
+    NSURL *url = [NSURL URLWithString:_adUrl];
+    NSArray *activityItems = @[@"",url];
+    UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:activityItems applicationActivities:nil];
+    activityController.modalInPopover = true;
+    [self.navigationController presentViewController:activityController animated:YES completion:nil];
 }
 
 @end

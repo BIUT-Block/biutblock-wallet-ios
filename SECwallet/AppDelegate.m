@@ -48,6 +48,8 @@
     
     // 启动图片延时: 2秒
     [NSThread sleepForTimeInterval:2];
+    
+    [[NSNotificationCenter defaultCenter]  postNotificationName:NotificationUpdateTab object:[NSString stringWithFormat:@"%d",1]];
         
     return YES;
 }

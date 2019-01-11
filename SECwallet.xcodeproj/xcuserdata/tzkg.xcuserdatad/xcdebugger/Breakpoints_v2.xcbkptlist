@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SECwallet/Libs/DWTagList/DWTagList.m"
-            timestampString = "568712993.948963"
+            timestampString = "568864079.8377661"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "274"
@@ -170,7 +170,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SECwallet/3rd-party/IQKeyBoardManager/IQToolbar/IQUIView+IQKeyboardToolbar.m"
-            timestampString = "568800400.176132"
+            timestampString = "568871850.642617"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "47"
@@ -186,13 +186,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SECwallet/3rd-party/IQKeyBoardManager/IQToolbar/IQUIView+IQKeyboardToolbar.m"
-            timestampString = "568800400.176309"
+            timestampString = "568871850.642679"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "125"
             endingLineNumber = "125"
             landmarkName = "-addRightButtonOnKeyboardWithText:target:action:titleText:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SECwallet/3rd-party/SentimentAnalyzer.swift"
+            timestampString = "568871850.642727"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -49,6 +49,8 @@
     NSTimer *_importTimer;   //导入计时器
     int _timing; //定时
     BOOL hasImportSuccess;
+    
+    NSMutableArray *walletList;
 }
 
 @end
@@ -57,6 +59,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
+    NSData* data2 = [NSData dataWithContentsOfFile:path];
+    NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data2];
+    walletList = [NSMutableArray array];
+    walletList = [unarchiver decodeObjectForKey:@"walletList"];
+    [unarchiver finishDecoding];
     
     [self initSubViews];
 }
@@ -95,7 +104,7 @@
     [self.view addSubview:pswCell];
     passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(inputTV.minX +Size(10), passwordDesLb.maxY, pswCell.width -Size(20), pswCell.height)];
     passwordTF.delegate = self;
-    passwordTF.font = SystemFontOfSize(8);
+    passwordTF.font = SystemFontOfSize(10);
     passwordTF.textColor = TEXT_BLACK_COLOR;
     passwordTF.placeholder = Localized(@"8~30位数字，英文字母以及特殊字符至少2种组合", nil);
     passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
@@ -119,7 +128,7 @@
     [self.view addSubview:re_pswCell];
     re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordTF.minX, re_passwordDesLb.maxY, passwordTF.width, passwordTF.height)];
     re_passwordTF.delegate = self;
-    re_passwordTF.font = SystemFontOfSize(8);
+    re_passwordTF.font = SystemFontOfSize(10);
     re_passwordTF.textColor = TEXT_BLACK_COLOR;
     re_passwordTF.placeholder = Localized(@"请再次确认密码", nil);
     re_passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
@@ -193,9 +202,10 @@
         passwordDesLb.frame = CGRectMake(inputTV.minX, inputTV.maxY +Size(20), inputTV.width, KInputDesViewHeight);
         passwordDesLb.text = Localized(@"keyStore密码", nil);
         pswCell.frame = CGRectMake(inputTV.minX, passwordDesLb.maxY, inputTV.width, Size(36));
-        passwordTF.frame = CGRectMake(inputTV.minX, passwordDesLb.maxY, inputTV.width, pswCell.height);
+        passwordTF.frame = CGRectMake(inputTV.minX +Size(10), passwordDesLb.maxY, inputTV.width-Size(20), pswCell.height);
         passwordTF.placeholder = nil;
         passwordTF.secureTextEntry = YES;
+        passwordTF.placeholder = Localized(@"keyStore密码", nil);
         passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         re_pswCell.hidden = YES;
         re_passwordDesLb.hidden = YES;
@@ -289,6 +299,11 @@
             re_passwordErrorLb.hidden = YES;
             re_pswCell.contentView.backgroundColor = DARK_COLOR;
         }
+        //判断钱包超过10个
+        if (walletList.count == 10) {
+            [self hudShowWithString:Localized(@"钱包个数超过限制", nil) delayTime:2];
+            return;
+        }
     
         //导入助记词
         [self createLoadingView:Localized(@"导入钱包中···", nil)];
@@ -355,10 +370,8 @@
                         return;
                     }
                 }
-                //不存在就保存钱包
-//                [self hudShowWithString:Localized(@"助记词导入成功", nil) delayTime:1.5];
-                //随机生成用户名
-                NSString *nameStr = [NSString getRandomStringWithNum:8];
+                //导入无须判断重名
+                NSString *nameStr = @"New Import";
                 //随机生成钱包ICON
                 int i = arc4random() % 2;
                 NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
@@ -477,11 +490,8 @@
                         return;
                     }
                 }
-                
-                //不存在就保存钱包
-                [self hudShowWithString:Localized(@"KeyStore导入成功", nil) delayTime:1.5];
-                //随机生成用户名
-                NSString *nameStr = [NSString getRandomStringWithNum:8];
+
+                NSString *nameStr = @"New Import";
                 //随机生成钱包ICON
                 int i = arc4random() % 2;
                 NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
@@ -619,10 +629,7 @@
                     }
                 }
                 
-                //不存在就保存钱包
-                [self hudShowWithString:Localized(@"私钥导入成功", nil) delayTime:1.5];
-                //随机生成用户名
-                NSString *nameStr = [NSString getRandomStringWithNum:8];
+                NSString *nameStr = @"New Import";
                 //随机生成钱包ICON
                 int i = arc4random() % 2;
                 NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
