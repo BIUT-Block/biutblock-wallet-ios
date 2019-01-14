@@ -40,7 +40,7 @@
         layer.shadowColor = [UIColor darkGrayColor].CGColor;
         layer.shadowOpacity = Size(0.3);
         //关闭按钮
-        UIButton *closeBT = [[UIButton alloc] initWithFrame:CGRectMake(_sidePullViewWidth -Size(40 +15), Size(28), Size(40), Size(24))];
+        UIButton *closeBT = [[UIButton alloc] initWithFrame:CGRectMake(_sidePullViewWidth -Size(40 +15), KStatusBarHeight +Size(8), Size(40), Size(24))];
         [closeBT greenBorderBtnStyle:Localized(@"关闭",nil) andBkgImg:@"smallRightBtn"];
         [closeBT addTarget:self action:@selector(dismissSidePullView) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:closeBT];
@@ -295,8 +295,10 @@
     if (!_backView) {
         _backView = [[UIView alloc] initWithFrame:topVC.view.bounds];
         _backView.backgroundColor = BLACK_COLOR;
-        _backView.alpha = 0.0f;
+        _backView.alpha = 0.1f;
         _backView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissSidePullView)];
+        [_backView addGestureRecognizer:tap];
     }
     [topVC.view addSubview:_backView];
     
@@ -315,9 +317,9 @@
 - (void)hudShowWithString:(NSString *)str delayTime:(CGFloat)time{
     
     HUD = [MBProgressHUD showHUDAddedTo:AppDelegateInstance.window animated:YES];
-    HUD.labelFont = SystemFontOfSize(10);
+    HUD.labelFont = SystemFontOfSize(12);
     HUD.cornerRadius = Size(5);
-    HUD.color = COLOR(68, 83, 91, 1);
+    HUD.color = BLACK_COLOR;
     HUD.margin = Size(10);
     HUD.mode = MBProgressHUDModeText;
     HUD.labelText = str;

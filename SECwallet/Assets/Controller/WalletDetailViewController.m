@@ -24,10 +24,6 @@
     UIButton *secretBtn;  //加密按钮
 }
 
-@property (nonatomic, strong) CommonSidePullView *codeSidePullView;
-@property (nonatomic, strong) CommonSidePullView *privateKeySidePullView;
-@property (nonatomic, strong) CommonSidePullView *keystoreSidePullView;
-
 @end
 
 @implementation WalletDetailViewController
@@ -81,7 +77,7 @@
     [self.view addSubview:saveBT];
     
     //标题
-    UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(52), Size(100), Size(10))];
+    UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(10), Size(100), Size(10))];
     desLb.textColor = TEXT_LightDark_COLOR;
     desLb.font = SystemFontOfSize(8);
     desLb.text = Localized(@"钱包名称",nil);
@@ -209,9 +205,9 @@
         controller.walletModel = _walletModel;
         [self presentViewController:controller animated:YES completion:nil];
         controller.sureBlock = ^() {
-            _privateKeySidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_privateKey];
-            [self.view addSubview:_privateKeySidePullView];
-            [_privateKeySidePullView show];
+            CommonSidePullView *privateKeySidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_privateKey];
+            [self.view addSubview:privateKeySidePullView];
+            [privateKeySidePullView show];
         };
         
     }else if (sender.tag == 1002) {
@@ -224,9 +220,9 @@
             [self.view addSubview:keystoreRemindSidePullView];
             [keystoreRemindSidePullView show];
             keystoreRemindSidePullView.dismissBlock = ^() {
-                _keystoreSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(268) sidePullViewType:CommonSidePullViewType_keyStore];
-                [self.view addSubview:_keystoreSidePullView];
-                [_keystoreSidePullView show];
+                CommonSidePullView *keystoreSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(268) sidePullViewType:CommonSidePullViewType_keyStore];
+                [self.view addSubview:keystoreSidePullView];
+                [keystoreSidePullView show];
             };
         };
     }
@@ -270,7 +266,6 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
         }
-        
         [self backAction];
     };
 }
@@ -304,14 +299,13 @@
         [data writeToFile:path atomically:YES];
     }
     //延迟执行
-    [self performSelector:@selector(delayMethod) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(delayMethod) withObject:nil afterDelay:0.5];
 }
 
 -(void)delayMethod
 {
     [self hiddenLoadingView];
-    [self hudShowWithString:Localized(@"保存成功", nil) delayTime:1.5];
-    
+//    [self hudShowWithString:Localized(@"保存成功", nil) delayTime:1.5];
     titLb.text = _walletModel.walletName;
     [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
 }
@@ -319,21 +313,9 @@
 #pragma 收款码
 -(void)showAddressCodeAction
 {
-    _codeSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_address];
-    [self.view addSubview:_codeSidePullView];
-    for (UIView *view in self.view.subviews) {
-        if (![view isKindOfClass:[CommonSidePullView class]]) {
-            view.userInteractionEnabled = NO;
-        }
-    }
-    [_codeSidePullView show];
-    _codeSidePullView.dismissBlock = ^() {
-        for (UIView *view in self.view.subviews) {
-            if (![view isKindOfClass:[CommonSidePullView class]]) {
-                view.userInteractionEnabled = YES;
-            }
-        }
-    };
+    CommonSidePullView *codeSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_address];
+    [self.view addSubview:codeSidePullView];
+    [codeSidePullView show];
 }
 
 #pragma 备份助记词

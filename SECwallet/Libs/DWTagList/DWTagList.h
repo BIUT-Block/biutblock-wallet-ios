@@ -58,7 +58,10 @@
                     font:(UIFont*)font
       constrainedToWidth:(CGFloat)maxWidth
                  padding:(CGSize)padding
-            minimumWidth:(CGFloat)minimumWidth;
+            minimumWidth:(CGFloat)minimumWidth
+             selectArray:(NSArray *)selectArray
+               textArray:(NSArray *)textArray;
+
 - (void)setLabelText:(NSString*)text;
 - (void)setCornerRadius:(CGFloat)cornerRadius;
 - (void)setBorderColor:(CGColorRef)borderColor;

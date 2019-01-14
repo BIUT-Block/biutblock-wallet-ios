@@ -29,7 +29,6 @@
 {
     float _alertViewHeight;
     BOOL _leftLeave;
-    
     int _alertViewType;      //视图类型
 }
 
@@ -101,12 +100,33 @@
             msgLb.attributedText = msgStr;
             msgLb.textAlignment = NSTextAlignmentCenter;
             
-            _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -kButtonWidth)/2, kAlertHeight_exclamation_mark -kButtonHeight -Size(30), kButtonWidth, kButtonHeight)];
-            [_leftBtn setTitleColor:COLOR(45, 121, 209, 1) forState:UIControlStateNormal];
-            _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
-            [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-            [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:_leftBtn];
+            if (rigthTitle.length == 0) {
+                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -kButtonWidth)/2, kAlertHeight_exclamation_mark -kButtonHeight -Size(30), kButtonWidth, kButtonHeight)];
+                [_leftBtn setTitleColor:COLOR(45, 121, 209, 1) forState:UIControlStateNormal];
+                _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
+                [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
+                [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:_leftBtn];
+            }else{
+                int insert = (kAlertWidth -kButtonWidth*2)/2;
+                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(insert, kAlertHeight_exclamation_mark -kButtonHeight -Size(20), kButtonWidth, kButtonHeight)];
+                [_leftBtn setTitleColor:COLOR(126, 145, 155, 1) forState:UIControlStateNormal];
+                _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
+                [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
+                [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:_leftBtn];
+                //中间线
+                UIView *line = [[UIView alloc]initWithFrame:CGRectMake(_leftBtn.maxX, _leftBtn.minY, Size(0.6), kButtonHeight)];
+                line.backgroundColor = COLOR(198, 200, 201, 1);
+                [self addSubview:line];
+                
+                _rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(line.maxX, _leftBtn.minY, kButtonWidth, kButtonHeight)];
+                [_rightBtn setTitleColor:COLOR(42, 213, 129, 1) forState:UIControlStateNormal];
+                _rightBtn.titleLabel.font = BoldSystemFontOfSize(15);
+                [_rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
+                [_rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:_rightBtn];
+            }
             
         }else if (alertViewType == CommonAlertViewType_question_mark) {
             
@@ -254,7 +274,21 @@
     [topVC.view addSubview:self];
     
     if (_alertType == CommonAlertViewType_remind) {
-        self.alpha = 0.9;
+        //添加毛玻璃效果
+        if (IS_OS_8_OR_LATER) {
+            UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+            UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+            effectView.frame = AppDelegateInstance.window.frame;
+            effectView.alpha = 0.85;
+            [topVC.view addSubview:effectView];
+        }else{
+            UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:AppDelegateInstance.window.frame];
+            toolbar.barStyle = UIBarStyleBlackTranslucent;
+            toolbar.alpha = 0.85;
+            [topVC.view addSubview:toolbar];
+        }
+        [topVC.view bringSubviewToFront:self];
+        self.backgroundColor = CLEAR_COLOR;
     }else{
         //设置阴影
         CALayer *layer = [self layer];
@@ -263,7 +297,6 @@
         layer.shadowColor = [UIColor darkGrayColor].CGColor;
         layer.shadowOpacity = Size(0.3);
     }
-    
     CAKeyframeAnimation* animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
     animation.duration = 0.15f;// 动画时间
     NSMutableArray *values = [NSMutableArray array];
@@ -271,11 +304,16 @@
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
     animation.values = values;
     [self.layer addAnimation:animation forKey:nil];
-    
 }
 
 - (void)dismissAlert
 {
+    UIViewController *topVC = [self appRootViewController];
+    for (UIView *view in topVC.view.subviews) {
+        if ([view isKindOfClass:[UIVisualEffectView class]] || [view isKindOfClass:[UIToolbar class]]) {
+            [view removeFromSuperview];
+        }
+    }
     [self removeFromSuperview];
     if (self.dismissBlock) {
         self.dismissBlock();
@@ -319,7 +357,6 @@
         return;
     }
     UIViewController *topVC = [self appRootViewController];
-
     if (!_backView) {
         _backView = [[UIView alloc] initWithFrame:topVC.view.bounds];
         _backView.backgroundColor = BLACK_COLOR;

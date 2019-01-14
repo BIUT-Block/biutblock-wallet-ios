@@ -23,9 +23,8 @@
     NSMutableArray *_dataArrays;  //交易列表
     UIView *_noneListView;
     
-    UIView *_noNetworkView;
     BOOL connectNetwork;
-    BOOL hasGetDataInfo;   //是否获取了数据
+    NSArray *recodeListCache;   //缓存的数据
 }
 @property (nonatomic, strong) UITableView *infoTableView;
 @property (nonatomic, strong) WalletModel *walletModel;
@@ -37,9 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self addSubView];
-    [self addNoNetworkView];
-    
+    [self addSubView];    
     //网络监听
     [self networkManager];
 
@@ -68,11 +65,11 @@
     NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletRecodeList"];
     NSData* data = [NSData dataWithContentsOfFile:path];
     NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
-    NSArray *recodeList = [NSMutableArray array];
-    recodeList = [unarchiver decodeObjectForKey:@"walletRecodeList"];
+    recodeListCache = [NSMutableArray array];
+    recodeListCache = [unarchiver decodeObjectForKey:@"walletRecodeList"];
     [unarchiver finishDecoding];
-    if (recodeList !=nil) {
-        _dataArrays = [NSMutableArray arrayWithArray:recodeList];
+    if (recodeListCache !=nil) {
+        _dataArrays = [NSMutableArray arrayWithArray:recodeListCache];
         [_infoTableView reloadData];
     }else{
         [self requestTransactionList];
@@ -143,17 +140,10 @@
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing
 {
-    if (connectNetwork == YES) {
-        isHeaderRefresh = YES;
-        _noneListView.hidden = YES;
-        _isLoading  = NO;
-        [self requestTransactionList];
-    }else{
-        [self hiddenRefreshView];
-        _infoTableView.hidden = YES;
-        self.view.backgroundColor = BACKGROUND_DARK_COLOR;
-        _noNetworkView.hidden = NO;
-    }
+    isHeaderRefresh = YES;
+    _noneListView.hidden = YES;
+    _isLoading  = NO;
+    [self requestTransactionList];
 }
 
 // 隐藏刷新视图
@@ -267,7 +257,6 @@
             }
             
         }else{
-            
             _dataArrays = [NSMutableArray array];
             [_infoTableView reloadData];
             _noneListView.hidden = NO;
@@ -278,9 +267,10 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self hiddenLoadingView];
         [self hiddenRefreshView];
-        _dataArrays = [NSMutableArray array];
-        [_infoTableView reloadData];
-        _noneListView.hidden = NO;
+        if (recodeListCache != nil) {
+            _noneListView.hidden = YES;
+        }
+        [self hudShowWithString:Localized(@"数据获取失败", nil) delayTime:1];
     }];
 }
 
@@ -300,40 +290,21 @@
     [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         _isLoading  = NO;
         [self hiddenRefreshView];
+        [self hiddenLoadingView];
         if (status == 0) {
             //无网络视图
             connectNetwork = NO;
-            _infoTableView.hidden = YES;
-            _noneListView.hidden = YES;
-            self.view.backgroundColor = BACKGROUND_DARK_COLOR;
-            _noNetworkView.hidden = NO;
+            CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"链接错误", nil) contentText:Localized(@"暂无网络链接", nil) imageName:@"networkError" leftButtonTitle:Localized(@"取消", nil) rightButtonTitle:Localized(@"重试", nil) alertViewType:CommonAlertViewType_exclamation_mark];
+            [alert show];
+            alert.rightBlock = ^() {
+                [self refreshNetworkAction];
+            };
         }else{
             connectNetwork = YES;
+            _noneListView.hidden = YES;
+            [_infoTableView reloadData];
         }
     }];
-}
--(void)addNoNetworkView
-{
-    _noNetworkView = [[UIView alloc] initWithFrame:CGRectMake(0, Size(8), kScreenWidth, kScreenHeight)];
-    _noNetworkView.backgroundColor = BACKGROUND_DARK_COLOR;
-    [self.view addSubview:_noNetworkView];
-    _noNetworkView.hidden = YES;
-    
-    UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(150))/2, Size(120), Size(150), Size(120))];
-    iv.image = [UIImage imageNamed:@"noNetwork"];
-    [_noNetworkView addSubview:iv];
-    UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(0, iv.maxY +Size(30), kScreenWidth, Size(20))];
-    lb.font = SystemFontOfSize(14);
-    lb.textColor = TEXT_BLACK_COLOR;
-    lb.textAlignment = NSTextAlignmentCenter;
-    lb.text = @"你的钱包掉～掉线了！";
-    [_noNetworkView addSubview:lb];
-    UIButton *bt = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth -Size(100))/2, lb.maxY, Size(100), Size(30))];
-    bt.titleLabel.font = SystemFontOfSize(14);
-    [bt setTitleColor:TEXT_GREEN_COLOR forState:UIControlStateNormal];
-    [bt setTitle:@"点击重试" forState:UIControlStateNormal];
-    [bt addTarget:self action:@selector(refreshNetworkAction) forControlEvents:UIControlEventTouchUpInside];
-    [_noNetworkView addSubview:bt];
 }
 
 -(void)refreshNetworkAction

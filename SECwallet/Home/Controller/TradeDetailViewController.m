@@ -28,7 +28,6 @@
     UIButton *transferBT;
     UIButton *gatherBT;
     
-    UIView *_noNetworkView;
     BOOL connectNetwork;
     NSArray *recodeListCache;   //缓存的数据
 }
@@ -44,7 +43,6 @@
     [super viewDidLoad];
     
     [self addSubView];
-    [self addNoNetworkView];
     [self readTradeRecordListCache];
     //网络监听
     [self networkManager];
@@ -213,10 +211,11 @@
         [self requestTransactionHash];
     }else{
         [self hiddenRefreshView];
-        _infoTableView.hidden = YES;
-        transferBT.hidden = YES;
-        gatherBT.hidden = YES;
-        _noNetworkView.hidden = NO;
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"链接错误", nil) contentText:Localized(@"暂无网络链接", nil) imageName:@"networkError" leftButtonTitle:Localized(@"取消", nil) rightButtonTitle:Localized(@"重试", nil) alertViewType:CommonAlertViewType_exclamation_mark];
+        [alert show];
+        alert.rightBlock = ^() {
+            [self refreshNetworkAction];
+        };
     }
 }
 
@@ -352,25 +351,15 @@
                 _noneListView.hidden = NO;
             }
             
-            _infoTableView.hidden = NO;
-            transferBT.hidden = NO;
-            gatherBT.hidden = NO;
-            _noNetworkView.hidden = YES;
-            
         }else{
             _dataArrays = [NSMutableArray array];
             [_infoTableView reloadData];
             _noneListView.hidden = NO;
-            
-            _infoTableView.hidden = NO;
-            transferBT.hidden = NO;
-            gatherBT.hidden = NO;
-            _noNetworkView.hidden = YES;
         }
         isHeaderRefresh = NO;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"获取区块详情失败");
+        [self hudShowWithString:Localized(@"数据获取失败", nil) delayTime:4.5];
         [self hiddenLoadingView];
         [self hiddenRefreshView];
     }];
@@ -403,44 +392,20 @@
         [self hiddenRefreshView];
         if (status == 0) {
             connectNetwork = NO;
+            [self hiddenLoadingView];
+            [self hiddenRefreshView];
             //无网络视图
             if (recodeListCache == nil) {
-                _infoTableView.hidden = YES;
-                transferBT.hidden = YES;
-                gatherBT.hidden = YES;
-                _noNetworkView.hidden = NO;
+                CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"链接错误", nil) contentText:Localized(@"暂无网络链接", nil) imageName:@"networkError" leftButtonTitle:Localized(@"取消", nil) rightButtonTitle:Localized(@"重试", nil) alertViewType:CommonAlertViewType_exclamation_mark];
+                [alert show];
+                alert.rightBlock = ^() {
+                    [self refreshNetworkAction];
+                };
             }
         }else{
             connectNetwork = YES;
-            _infoTableView.hidden = NO;
-            transferBT.hidden = NO;
-            gatherBT.hidden = NO;
-            _noNetworkView.hidden = YES;
         }
     }];
-}
-
--(void)addNoNetworkView
-{
-    _noNetworkView = [[UIView alloc] initWithFrame:CGRectMake(0, -Size(20), kScreenWidth, kScreenHeight)];
-    [self.view addSubview:_noNetworkView];
-    _noNetworkView.hidden = YES;
-    
-    UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake((kScreenWidth -Size(150))/2, Size(120), Size(150), Size(120))];
-    iv.image = [UIImage imageNamed:@"noNetwork"];
-    [_noNetworkView addSubview:iv];
-    UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(0, iv.maxY +Size(30), kScreenWidth, Size(20))];
-    lb.font = SystemFontOfSize(14);
-    lb.textColor = TEXT_BLACK_COLOR;
-    lb.textAlignment = NSTextAlignmentCenter;
-    lb.text = @"你的钱包掉～掉线了！";
-    [_noNetworkView addSubview:lb];
-    UIButton *bt = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth -Size(100))/2, lb.maxY, Size(100), Size(30))];
-    bt.titleLabel.font = SystemFontOfSize(14);
-    [bt setTitleColor:TEXT_GREEN_COLOR forState:UIControlStateNormal];
-    [bt setTitle:@"点击重试" forState:UIControlStateNormal];
-    [bt addTarget:self action:@selector(refreshNetworkAction) forControlEvents:UIControlEventTouchUpInside];
-    [_noNetworkView addSubview:bt];
 }
 
 -(void)refreshNetworkAction

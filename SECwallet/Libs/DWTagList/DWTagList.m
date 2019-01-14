@@ -11,7 +11,7 @@
 #define CORNER_RADIUS Size(12.0f)
 #define LABEL_MARGIN_DEFAULT Size(8.0f)
 #define BOTTOM_MARGIN_DEFAULT Size(8.0f)
-#define FONT_SIZE_DEFAULT Size(10)
+#define FONT_SIZE_DEFAULT Size(9)
 #define HORIZONTAL_PADDING_DEFAULT Size(8.0f)
 #define VERTICAL_PADDING_DEFAULT Size(5.0f)
 #define TEXT_SHADOW_COLOR [UIColor clearColor]
@@ -151,8 +151,10 @@
                constrainedToWidth:self.frame.size.width - (self.horizontalPadding * 2)
                           padding:CGSizeMake(self.horizontalPadding, self.verticalPadding)
                      minimumWidth:self.minimumWidth
+                      selectArray:selectTextArray
+                           textArray:textArray
          ];
-        
+
         if (gotPreviousFrame) {
             CGRect newRect = CGRectZero;
             if (previousFrame.origin.x + previousFrame.size.width + tagView.frame.size.width + self.labelMargin > self.frame.size.width) {
@@ -175,13 +177,15 @@
         [tagView setTextColor:_textColor];
         
         //选中状态
-        for (NSString *selectStr in selectTextArray) {
-            if ([selectStr isEqualToString:text]) {
-                [tagView setBackgroundColor:COLOR(56, 142, 218, 1)];
-                [tagView setCornerRadius:Size(10)];
-                [tagView setBorderWidth:Size(0)];
-                [tagView setBorderColor:COLOR(56, 142, 218, 1).CGColor];
-                [tagView setTextColor:WHITE_COLOR];
+        if (![textArray isEqualToArray:selectTextArray]) {
+            for (NSString *selectStr in selectTextArray) {
+                if ([selectStr isEqualToString:text]) {
+                    [tagView setBackgroundColor:COLOR(56, 142, 218, 1)];
+                    [tagView setCornerRadius:Size(12)];
+                    [tagView setBorderWidth:Size(0)];
+                    [tagView setBorderColor:COLOR(56, 142, 218, 1).CGColor];
+                    [tagView setTextColor:WHITE_COLOR];
+                }
             }
         }
         
@@ -331,11 +335,9 @@
 }
 
 #pragma mark - DWTagViewDelegate
-
 - (void)tagViewWantsToBeDeleted:(DWTagView *)tagView {
     NSMutableArray *mTextArray = [self.textArray mutableCopy];
     [mTextArray removeObject:tagView.label.text];
-//    [self setTags:mTextArray];
     [self setTags:mTextArray andSelectTags:@[]];
     
     if ([self.tagDelegate respondsToSelector:@selector(tagListTagsChanged:)]) {
@@ -357,23 +359,17 @@
         [_label setShadowColor:TEXT_SHADOW_COLOR];
         [_label setShadowOffset:TEXT_SHADOW_OFFSET];
         [_label setBackgroundColor:[UIColor clearColor]];
-        [_label setTextAlignment:NSTextAlignmentCenter];
         [self addSubview:_label];
         
         _button = [UIButton buttonWithType:UIButtonTypeCustom];
         _button.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [_button setFrame:self.frame];
         [self addSubview:_button];
-        
-//        [self.layer setMasksToBounds:YES];
-//        [self.layer setCornerRadius:CORNER_RADIUS];
-//        [self.layer setBorderColor:BORDER_COLOR.CGColor];
-//        [self.layer setBorderWidth:BORDER_WIDTH];
     }
     return self;
 }
 
-- (void)updateWithString:(id)text font:(UIFont*)font constrainedToWidth:(CGFloat)maxWidth padding:(CGSize)padding minimumWidth:(CGFloat)minimumWidth
+- (void)updateWithString:(id)text font:(UIFont*)font constrainedToWidth:(CGFloat)maxWidth padding:(CGSize)padding minimumWidth:(CGFloat)minimumWidth selectArray:(NSArray *)selectArray textArray:(NSArray *)textArray
 {
     CGSize textSize = CGSizeZero;
     BOOL isTextAttributedString = [text isKindOfClass:[NSAttributedString class]];
@@ -381,33 +377,45 @@
     if (isTextAttributedString) {
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:text];
         [attributedString addAttributes:@{NSFontAttributeName: font} range:NSMakeRange(0, ((NSAttributedString *)text).string.length)];
-	
 		NSString *str2 = attributedString.string;
 		if (str2.length > 10) {
-			
 			str2 = [str2 substringToIndex:10];
 		}
 		textSize = [str2 sizeWithFont:font forWidth:maxWidth lineBreakMode:NSLineBreakByTruncatingTail];
 		_label.attributedText = [attributedString copy];
-
     } else {
-
 		NSString *str = text;
 		if (str.length > 10) {
-			
 			str = [str substringToIndex:10];
 		}
 		textSize = [str sizeWithFont:font forWidth:maxWidth lineBreakMode:NSLineBreakByTruncatingTail];
 		_label.text = text;
     }
     
-    textSize.width = MAX(textSize.width, minimumWidth);
-    textSize.height += padding.height*2;
+    textSize.width = MAX(textSize.width+Size(15), minimumWidth+Size(15));
+    textSize.height += padding.height*2 +Size(3);
     
     self.frame = CGRectMake(0, 0, textSize.width+padding.width*2, textSize.height);
     _label.frame = CGRectMake(padding.width, 0, MIN(textSize.width, self.frame.size.width), textSize.height);
 	_label.font = font;
     [_button setAccessibilityLabel:self.label.text];
+    
+    if ([textArray isEqualToArray:selectArray]) {
+        [_label setTextAlignment:NSTextAlignmentLeft];
+        [_button setImage:[UIImage imageNamed:@"closeGray"] forState:UIControlStateNormal];
+        [_button setImageEdgeInsets:UIEdgeInsetsMake(0, self.frame.size.width-Size(20), 0, 0)];
+        _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    }else{
+        if ([selectArray containsObject:self.label.text]) {
+            [_label setTextAlignment:NSTextAlignmentLeft];
+            [_button setImage:[UIImage imageNamed:@"checkBlue"] forState:UIControlStateNormal];
+            [_button setImageEdgeInsets:UIEdgeInsetsMake(0, self.frame.size.width-Size(20), 0, 0)];
+            _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        }else{
+            [_label setTextAlignment:NSTextAlignmentCenter];
+            [_button setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        }
+    }
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius

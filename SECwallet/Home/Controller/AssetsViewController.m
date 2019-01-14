@@ -19,7 +19,7 @@
 #import "CardPageView.h"
 #import "JXMovableCellTableView.h"
 
-#import "SelectEntryViewController.h"
+#import "BackupFileViewController.h"
 
 #define kHeaderHeight    Size(195)
 #define USD_to_CNY       6.8872
@@ -37,12 +37,12 @@
     UIButton *noNetworkBT;
     BOOL hasGetDataInfo;   //是否获取了数据
     
+    BOOL fromNotifi;
+    UIButton *moreBT;
 }
 
 @property (nonatomic, strong) CardPageView *walletListPageView;   //钱包列表滚动视图
 @property (nonatomic, strong) JXMovableCellTableView *infoTableView;
-
-@property (nonatomic, strong) CommonSidePullView *codeSidePullView;
 
 @end
 
@@ -97,6 +97,7 @@
 -(void)updateData
 {
     //清除记录缓存
+    fromNotifi = YES;
     [CacheUtil clearTokenCoinTradeListCacheFile];
     [self refreshWallet:[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue] clearCache:YES];
 }
@@ -125,7 +126,7 @@
     headerView.image = [UIImage imageNamed:@"walletHomeBg"];
     [self.view addSubview:headerView];
     
-    UIButton *moreBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(25 +20), KStatusBarHeight+Size(13), Size(25), Size(15))];
+    moreBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(25 +20), KStatusBarHeight+Size(13), Size(25), Size(15))];
     [moreBT addTarget:self action:@selector(rightClick) forControlEvents:UIControlEventTouchUpInside];
     [moreBT setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
     [self.view addSubview:moreBT];
@@ -252,7 +253,8 @@
     viewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:YES];
     
-//    SelectEntryViewController *controller = [[SelectEntryViewController alloc]init];
+//    BackupFileViewController *controller = [[BackupFileViewController alloc]init];
+//    controller.walletModel = currentWallet;
 //    [self.navigationController pushViewController:controller animated:YES];
     
 }
@@ -301,7 +303,9 @@
     currentWallet = _walletList[page];
     assetsList = _walletList;
     
-    [self createLoadingView:nil];
+    if (fromNotifi == NO) {
+        [self createLoadingView:nil];
+    }
     AFJSONRPCClient *client = [AFJSONRPCClient clientWithEndpointURL:[NSURL URLWithString:BaseServerUrl]];
     //地址去掉0x
     NSString *from = [currentWallet.address componentsSeparatedByString:@"x"].lastObject;
@@ -348,6 +352,8 @@
             [self addSubView];
             [self addNoNetworkView];
         }else{
+            _walletListPageView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight);
+            _infoTableView.frame = CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
             [_infoTableView reloadData];
         }
         
@@ -368,18 +374,24 @@
         if (status == 0) {
             //无网络视图
             noNetworkBT.hidden = NO;
+            _walletListPageView.frame = CGRectMake(0, noNetworkBT.maxY, kScreenWidth, kHeaderHeight);
+            _infoTableView.frame = CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
         }else{
             noNetworkBT.hidden = YES;
+            _walletListPageView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight);
+            _infoTableView.frame = CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
         }
     }];
 }
 -(void)addNoNetworkView
 {
     //提示视图
-    noNetworkBT = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, Size(20))];
+    noNetworkBT = [[UIButton alloc]initWithFrame:CGRectMake(Size(20), KNaviHeight, kScreenWidth -Size(40), Size(34))];
     noNetworkBT.userInteractionEnabled = NO;
-    [noNetworkBT setBackgroundColor:CLEAR_COLOR];
-    [noNetworkBT setBackgroundImage:[UIImage imageNamed:@"noNetworkTip"] forState:UIControlStateNormal];
+    [noNetworkBT setBackgroundImage:[UIImage imageNamed:@"networkHeader"] forState:UIControlStateNormal];
+    noNetworkBT.titleLabel.font = SystemFontOfSize(10);
+    [noNetworkBT setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
+    [noNetworkBT setTitle:[NSString stringWithFormat:@"  %@",Localized(@"当前没有网络连接", nil)] forState:UIControlStateNormal];
     [self.view addSubview:noNetworkBT];
     noNetworkBT.hidden = YES;
 }

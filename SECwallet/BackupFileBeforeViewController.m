@@ -63,6 +63,7 @@
     NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = Size(3);
     [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
+    [msgStr addAttribute:NSForegroundColorAttributeName value:COLOR(56, 142, 218, 1) range:NSMakeRange(45, 17)];
     remindLb.attributedText = msgStr;
     [self.view addSubview:remindLb];
     

@@ -67,16 +67,21 @@
     remindLb.attributedText = msgStr;
     [self.view addSubview:remindLb];
     
-    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(15), remindLb.width, Size(100))];
+    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(15), remindLb.width, Size(110))];
     bkgView.backgroundColor = DARK_COLOR;
     bkgView.layer.cornerRadius = Size(5);
     [self.view addSubview:bkgView];
     _showTagList = [[DWTagList alloc]initWithFrame:CGRectMake(Size(30), bkgView.minY +Size(10), kScreenWidth - Size(30)*2, bkgView.height -Size(5*2))];
+    if (IS_iPhoneX) {
+        bkgView.frame = CGRectMake(remindLb.minX, remindLb.maxY +Size(15), remindLb.width, Size(140));
+        _showTagList.frame = CGRectMake(Size(30), bkgView.minY +Size(20), kScreenWidth - Size(30)*2, bkgView.height -Size(5*2));
+    }
     [_showTagList setTagBackgroundColor:COLOR(186, 187, 188, 1)];
-    _showTagList.cornerRadius = Size(5);
+    _showTagList.cornerRadius = Size(12);
     _showTagList.borderWidth = 0;
     _showTagList.textColor = WHITE_COLOR;
     [_showTagList setTagDelegate:self];
+    _showTagList.showTagMenu = YES;
     [self.view addSubview:_showTagList];
     
     _tagList = [[DWTagList alloc] initWithFrame:CGRectMake(titleLb.minX, bkgView.maxY +Size(20), kScreenWidth - titleLb.minX*2, Size(100))];
@@ -97,10 +102,11 @@
     }];
     [_tagList setTags:tagArr andSelectTags:@[]];
     [_tagList setTagDelegate:self];
+    _showTagList.showTagMenu = NO;
     [self.view addSubview:_tagList];
     
     /*****************确认*****************/
-    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(titleLb.minX, _tagList.maxY +Size(25), kScreenWidth -titleLb.minX*2, Size(45))];
+    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(titleLb.minX, _tagList.maxY +Size(15), kScreenWidth -titleLb.minX*2, Size(45))];
     [nextBT goldBigBtnStyle:Localized(@"确认", nil)];
     [nextBT addTarget:self action:@selector(comfirmAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBT];
@@ -112,7 +118,7 @@
     if (tagList == _tagList) {
         if (![_selectTagList containsObject:tagName]) {
             [_selectTagList addObject:tagName];
-            [_showTagList setTags:_selectTagList andSelectTags:@[]];
+            [_showTagList setTags:_selectTagList andSelectTags:_selectTagList];
             
             NSArray *tagArr = [_walletModel.mnemonicPhrase componentsSeparatedByString:@" "];
             //打乱数组顺序
@@ -129,7 +135,7 @@
     }else if (tagList == _showTagList) {
         //删除
         [_selectTagList removeObject:tagName];
-        [_showTagList setTags:_selectTagList andSelectTags:@[]];
+        [_showTagList setTags:_selectTagList andSelectTags:_selectTagList];
         NSArray *tagArr = [_walletModel.mnemonicPhrase componentsSeparatedByString:@" "];
         //打乱数组顺序
         tagArr = [tagArr sortedArrayUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {

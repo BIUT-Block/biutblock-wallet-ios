@@ -34,9 +34,6 @@
     });
     
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(updateSelectedItem:) name:NotificationUpdateTab object:nil];
-    
-    self.selectedIndex = 1;
-
 }
 
 -(void)skipTwoVc{
@@ -55,9 +52,9 @@
     tabBarBG.tag = 1000;
     [self.tabBar addSubview:tabBarBG];
     
-    NSArray *titleArr = @[Localized(@"发现", nil),Localized(@"首页", nil),Localized(@"我的", nil)];
-    NSArray *iconArr = @[@"discovery",@"home",@"settings"];
-    CGFloat itemWidth = (kScreenWidth -Size(20 *2))/3;
+    NSArray *titleArr = @[Localized(@"首页", nil),Localized(@"我的", nil)];
+    NSArray *iconArr = @[@"home",@"settings"];
+    CGFloat itemWidth = (kScreenWidth -Size(20 *2))/titleArr.count;
     for (int i = 0; i < [[self viewControllers] count]; i++) {
         TabBarIconView *iconView = [[TabBarIconView alloc] initWithFrame:CGRectMake(Size(20) +itemWidth *i, 0, itemWidth, KTabbarHeight)];
         iconView.delegate = self;
@@ -65,7 +62,7 @@
         [iconView.iconButton setImage:[UIImage imageNamed:iconArr[i]] forState:UIControlStateNormal];
         [iconView.iconButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@Active",iconArr[i]]] forState:UIControlStateSelected];
         iconView.textLabel.text = titleArr[i];
-        if (i == 1) {
+        if (i == 0) {
             [iconView isSelected:YES];
         }else{
             [iconView isSelected:NO];
@@ -77,9 +74,6 @@
 
 - (void)loadViewControllers
 {
-    DiscoveryViewController *vc1 = [[DiscoveryViewController alloc] init];
-    UINavigationController *discoveryNav = [[UINavigationController alloc] initWithRootViewController:vc1];
-    
     AssetsViewController *vc2 = [[AssetsViewController alloc] init];
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:vc2];
     
@@ -87,7 +81,7 @@
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:vc3];
     
     // 将子视图控制器放入数组
-    NSArray *vcs = @[discoveryNav, homeNav, mineNav];
+    NSArray *vcs = @[homeNav, mineNav];
     // 添加标签控制器
     [self setViewControllers:vcs animated:YES];
     

@@ -67,6 +67,9 @@
     [super layoutSubviews];
     // 如果支持横竖屏幕，通过[UIApplication sharedApplication].statusBarOrientation;
     _textLabel.frame = CGRectMake(0, self.frame.size.height-kTextLabelHeight-Size(5), self.frame.size.width, kTextLabelHeight);
+    if (IS_iPhoneX) {
+        _textLabel.frame = CGRectMake(0, self.frame.size.height-kTextLabelHeight-Size(32), self.frame.size.width, kTextLabelHeight);
+    }
 }
 
 #pragma mark - Action Method

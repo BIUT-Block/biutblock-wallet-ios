@@ -153,22 +153,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SECwallet/Libs/DWTagList/DWTagList.m"
-            timestampString = "568864079.8377661"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
-            landmarkName = "-touchDragInside:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "SECwallet/3rd-party/IQKeyBoardManager/IQToolbar/IQUIView+IQKeyboardToolbar.m"
             timestampString = "568871850.642617"
             startingColumnNumber = "9223372036854775807"

@@ -77,7 +77,10 @@
 "密码*"="Password*";
 "8~30位数字，英文字母以及特殊字符至少2种组合"="8-30characters,at least two numbers,English letters and special characters";
 
-
+"链接错误"="Connection Error";
+"暂无网络链接"="No Network Connection";
+"重试"="Retry";
+"当前没有网络连接"="There is currently no network connection";
 "确认密码*"="Confirm Password*";
 "请再次确认密码"="Repeat the Password again";
 "密码提示"="Password prompt";
@@ -128,7 +131,7 @@
 "确 认"="Confirm";
 "备份失败"="Backup Failed";
 "交易失败"="Transfer Failed";
-"请检查您的助记词"="Please click your mnemonic";
+"请检查您的助记词"="Please check your mnemonic";
 "完 成"="complete";
 "完成"="Done";
 "更改密码"="Change Password";
