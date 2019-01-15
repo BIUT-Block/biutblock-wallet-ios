@@ -268,25 +268,25 @@
         NSString *to = [addressTF.text componentsSeparatedByString:@"x"].lastObject;
         NSString *value = moneyTF.text;
         NSString *inputData = remarkTF.text.length > 0 ? remarkTF.text : @"";
-        NSString *jsonStr = [NSString stringWithFormat:@"{\"privateKey\":\"%@\",\"walletAddress\":\"%@\",\"address\":\"%@\",\"amount\":\"%@\",\"data\":\"%@\"}",privateKey,from,to,value,inputData];
-        SentimentAnalyzer *sent = [[SentimentAnalyzer alloc]init];
-        [sent analyze:jsonStr completion:^(NSString *value) {
-            NSString *dicStr = [value substringFromIndex:1];
-            dicStr = [dicStr substringToIndex:dicStr.length-1];
-            NSDictionary *dic = [NSString parseJSONStringToNSDictionary:dicStr];
+        NSString *jsonStr = [NSString stringWithFormat:@"{\"privateKey\":\"%@\",\"from\":\"%@\",\"to\":\"%@\",\"value\":\"%@\",\"inputData\":\"%@\"}",privateKey,from,to,value,inputData];
+        SECBlockJSAPI *secAPI = [[SECBlockJSAPI alloc]init];
+        [secAPI txSign:jsonStr completion:^(NSString * value) {
+            NSDictionary *dic = [NSString parseJSONStringToNSDictionary:value];
             NSMutableDictionary *ddd = [[NSMutableDictionary alloc]initWithDictionary:dic];
-            [ddd removeObjectForKey:@"contractAddress"];
-            NSLog(@"********%@",ddd);
-            
             AFJSONRPCClient *client = [AFJSONRPCClient clientWithEndpointURL:[NSURL URLWithString:BaseServerUrl]];
             [client invokeMethod:@"sec_sendRawTransaction" withParameters:@[ddd] requestId:@(1) success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSDictionary *dic = responseObject;
                 NSInteger status = [dic[@"status"] integerValue];
                 if (status == 1) {
                     [self hiddenLoadingView];
-                    [self hudShowWithString:@"转账成功" delayTime:3];
-                    //延迟执行
-                    [self performSelector:@selector(delayMethod) withObject:nil afterDelay:4.0];
+//                    [self hudShowWithString:@"转账成功" delayTime:3];
+                    [self backAction];
+                    [self.delegate transferSuccess:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
+                    
+                }else{
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"转账失败" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+                    [alert show];
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [self hiddenLoadingView];
@@ -297,12 +297,6 @@
     };
 }
 
--(void)delayMethod
-{
-    int sum = [_tokenCoinModel.tokenNum intValue] - [moneyTF.text intValue];
-    _tokenCoinModel.tokenNum = [NSString stringWithFormat:@"%d",sum];
-    [self backAction];
-}
 #pragma 地址薄
 -(void)addressListBtnAction
 {

@@ -12,6 +12,7 @@
 #import "RootViewController.h"
 #import "IQKeyboardManager.h"
 #import "CommonTableViewCell.h"
+#import "SECwallet-Swift.h"
 
 #define KInputTVViewHeight   Size(100)
 #define KInputDesViewHeight  Size(25)
@@ -313,22 +314,14 @@
             hasImportSuccess = NO;
             _importTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countdown) userInfo:nil repeats:YES];
         });
-        [HSEther hs_inportMnemonics:inputTV.text pwd:passwordTF.text block:^(NSString *address, NSString *keyStore, NSString *mnemonicPhrase, NSString *privateKey, BOOL suc, HSWalletError error) {
-            [self hiddenLoadingView];
-            hasImportSuccess = YES;
-            if (error == HSWalletErrorMnemonicsLength) {
-                inputTVErrorLb.hidden = NO;
-                [inputTVErrorLb remindError:@"助记词长度不够" withY:inputTV.minY -KInputDesViewHeight];
-                inputTV.backgroundColor = REMIND_COLOR;
-            }else if (error == HSWalletErrorMnemonicsCount) {
-                inputTVErrorLb.hidden = NO;
-                [inputTVErrorLb remindError:@"助记词个数不够" withY:inputTV.minY -KInputDesViewHeight];
-                inputTV.backgroundColor = REMIND_COLOR;
-            }else if (error == HSWalletErrorMnemonicsValidWord) {
+
+        SECBlockJSAPI *secAPI = [[SECBlockJSAPI alloc]init];
+        [secAPI mnemonicToPrivKey:inputTV.text completion:^(NSString * privateKey) {
+            if ([privateKey isEqualToString:@"undefined"]) {
                 inputTVErrorLb.hidden = NO;
                 [inputTVErrorLb remindError:@"助记词有误" withY:inputTV.minY -KInputDesViewHeight];
                 inputTV.backgroundColor = REMIND_COLOR;
-            }else if (error == HSWalletImportMnemonicsSuc) {
+            }else{
                 inputTVErrorLb.hidden = YES;
                 inputTV.backgroundColor = DARK_COLOR;
                 /*************先获取钱包列表并将最新钱包排在第一位*************/
@@ -370,32 +363,38 @@
                         return;
                     }
                 }
-                //导入无须判断重名
-                NSString *nameStr = @"New Import";
-                //随机生成钱包ICON
-                int i = arc4random() % 2;
-                NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
-                /*************默认钱包信息*************/
-                NSArray *privateKeyArr = [privateKey componentsSeparatedByString:@"x"];
-                WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyArr.lastObject andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:1];
-                NSMutableData* data = [NSMutableData data];
-                NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-                if (list.count > 0) {
-                    [list insertObject:model atIndex:list.count];
-                    [archiver encodeObject:list forKey:@"walletList"];
-                    [archiver finishEncoding];
-                    [data writeToFile:path atomically:YES];
-                    [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:[NSString stringWithFormat:@"%ld",list.count-1]];
-                }else{
-                    NSMutableArray *list1 = [NSMutableArray array];
-                    [list1 insertObject:model atIndex:0];
-                    [archiver encodeObject:list1 forKey:@"walletList"];
-                    [archiver finishEncoding];
-                    [data writeToFile:path atomically:YES];
-                    [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:@"0"];
-                }
                 
-                [self backToHomeAction];
+                [HSEther hs_importWalletForPrivateKey:privateKey pwd:passwordTF.text block:^(NSString *address, NSString *keyStore, NSString *mnemonicPhrase, NSString *privateKey, BOOL suc, HSWalletError error) {
+                    [self hiddenLoadingView];
+                    hasImportSuccess = YES;
+                    if (error == HSWalletImportPrivateKeySuc) {
+                        //导入无须判断重名
+                        NSString *nameStr = @"New Import";
+                        //随机生成钱包ICON
+                        int i = arc4random() % 2;
+                        NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
+                        /*************默认钱包信息*************/
+                        NSArray *privateKeyArr = [privateKey componentsSeparatedByString:@"x"];
+                        WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyArr.lastObject andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:1];
+                        NSMutableData* data = [NSMutableData data];
+                        NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+                        if (list.count > 0) {
+                            [list insertObject:model atIndex:list.count];
+                            [archiver encodeObject:list forKey:@"walletList"];
+                            [archiver finishEncoding];
+                            [data writeToFile:path atomically:YES];
+                            [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:[NSString stringWithFormat:@"%ld",list.count-1]];
+                        }else{
+                            NSMutableArray *list1 = [NSMutableArray array];
+                            [list1 insertObject:model atIndex:0];
+                            [archiver encodeObject:list1 forKey:@"walletList"];
+                            [archiver finishEncoding];
+                            [data writeToFile:path atomically:YES];
+                            [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:@"0"];
+                        }
+                        [self backToHomeAction];
+                    }
+                }];
             }
         }];
         
@@ -520,7 +519,6 @@
         }];
         
     }else if (_importWalletType == ImportWalletType_privateKey) {
-        
         //验证输入
         if (inputTV.text.length == 0) {
             inputTVErrorLb.hidden = NO;
@@ -588,7 +586,6 @@
             [self hiddenLoadingView];
             hasImportSuccess = YES;
             if (error == HSWalletImportPrivateKeySuc) {
-                
                 /*************先获取钱包列表并将最新钱包排在第一位*************/
                 NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
                 NSData* data2 = [NSData dataWithContentsOfFile:path];
@@ -632,7 +629,7 @@
                 NSString *nameStr = @"New Import";
                 //随机生成钱包ICON
                 int i = arc4random() % 2;
-                NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
+                  NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
                 /*************默认钱包信息*************/
                 NSArray *privateKeyArr = [privateKey componentsSeparatedByString:@"x"];
                 WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyArr.lastObject andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:0];

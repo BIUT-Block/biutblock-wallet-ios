@@ -48,7 +48,7 @@
     dataArrays = [unarchiver decodeObjectForKey:@"walletList"];
     [unarchiver finishDecoding];
     for (WalletModel *model in dataArrays) {
-        if ([model.walletName isEqualToString:_walletModel.walletName]) {
+        if ([model.privateKey isEqualToString:_walletModel.privateKey]) {
             _walletModel = model;
         }
     }
@@ -243,14 +243,14 @@
         [unarchiver finishDecoding];
         //如果删除的钱包是当前默认的钱包则要清除钱包交易记录数据缓存
         WalletModel *defaultMode = list[[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue]];
-        if ([defaultMode.walletName isEqualToString:_walletModel.walletName]) {
+        if ([defaultMode.privateKey isEqualToString:_walletModel.privateKey]) {
             [CacheUtil clearTokenCoinTradeListCacheFile];
         }
         
         /***********更新当前钱包信息***********/
         for (int i = 0; i< list.count; i++) {
             WalletModel *model = list[i];
-            if ([model.walletName isEqualToString:_walletModel.walletName]) {
+            if ([model.privateKey isEqualToString:_walletModel.privateKey]) {
                 [list removeObject:model];
             }
         }
@@ -285,7 +285,7 @@
         [unarchiver finishDecoding];
         for (int i = 0; i< list.count; i++) {
             WalletModel *model = list[i];
-            if ([model.walletName isEqualToString:_walletModel.walletName]) {
+            if ([model.privateKey isEqualToString:_walletModel.privateKey]) {
                 [model setWalletName:walletNameTF.text];
                 [list replaceObjectAtIndex:i withObject:model];
                 _walletModel = list[i];

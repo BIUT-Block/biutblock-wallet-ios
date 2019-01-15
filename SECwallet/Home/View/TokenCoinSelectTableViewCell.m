@@ -105,7 +105,7 @@
     [unarchiver finishDecoding];
     for (int i = 0; i< list.count; i++) {
         WalletModel *model = list[i];
-        if ([model.walletName isEqualToString:_walletModel.walletName]) {
+        if ([model.privateKey isEqualToString:_walletModel.privateKey]) {
             _walletModel = model;
         }
     }
@@ -131,7 +131,7 @@
     /***********更新当前钱包信息***********/
     for (int i = 0; i< list.count; i++) {
         WalletModel *model = list[i];
-        if ([model.walletName isEqualToString:_walletModel.walletName]) {
+        if ([model.privateKey isEqualToString:_walletModel.privateKey]) {
             [model setTokenCoinList:mutList];
             [list replaceObjectAtIndex:i withObject:model];
         }

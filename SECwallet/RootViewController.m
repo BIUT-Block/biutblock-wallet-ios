@@ -36,20 +36,11 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(updateSelectedItem:) name:NotificationUpdateTab object:nil];
 }
 
--(void)skipTwoVc{
-    
-}
-
 - (void)customTabBarView
 {
-    // 1 移除UITabBarButton
-    for (UIView *subView in [self.tabBar subviews]) {
-        [subView removeFromSuperview];
-    }
-    // 2 添加背景视图
+    //添加背景视图
     UIImageView *tabBarBG = [[UIImageView alloc] initWithFrame:self.tabBar.bounds];
     tabBarBG.backgroundColor = Tabbar_COLOR;
-    tabBarBG.tag = 1000;
     [self.tabBar addSubview:tabBarBG];
     
     NSArray *titleArr = @[Localized(@"首页", nil),Localized(@"我的", nil)];

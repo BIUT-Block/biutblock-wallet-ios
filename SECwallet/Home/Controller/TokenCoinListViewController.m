@@ -123,7 +123,7 @@
     [unarchiver finishDecoding];
     for (int i = 0; i< list.count; i++) {
         WalletModel *model = list[i];
-        if ([model.walletName isEqualToString:_walletModel.walletName]) {
+        if ([model.privateKey isEqualToString:_walletModel.privateKey]) {
             currentModel = model;
         }
     }

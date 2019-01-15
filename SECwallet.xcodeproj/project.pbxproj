@@ -166,7 +166,6 @@
 		1B65E89F212BF5C100BB8DE5 /* SGImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E806212BF5C000BB8DE5 /* SGImageButton.m */; };
 		1B69436521DC6002005905D8 /* ConfirmPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B69436421DC6002005905D8 /* ConfirmPasswordViewController.m */; };
 		1B69436D21DC9094005905D8 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B69436C21DC9094005905D8 /* UILabel+Extension.m */; };
-		1B6D252F21E84CB800632DB4 /* SentimentAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6D252E21E84CB800632DB4 /* SentimentAnalyzer.swift */; };
 		1B79566B21D1CD3D00EF26C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B79566D21D1CD3D00EF26C8 /* Localizable.strings */; };
 		1B79567121D1CE1C00EF26C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B79567321D1CE1C00EF26C8 /* InfoPlist.strings */; };
 		1B79567721D1D1D900EF26C8 /* Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B79567621D1D1D900EF26C8 /* Localized.m */; };
@@ -175,9 +174,10 @@
 		1B8A77C621366DE4003BF708 /* RgsProtocol.docx in Resources */ = {isa = PBXBuildFile; fileRef = 1B8A77C521366DE4003BF708 /* RgsProtocol.docx */; };
 		1BC7A13B21E72D9A004C3C21 /* DappModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC7A13A21E72D9A004C3C21 /* DappModel.m */; };
 		1BC7A13E21E73767004C3C21 /* TabBarIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC7A13D21E73766004C3C21 /* TabBarIconView.m */; };
-		1BC7A14C21E84C55004C3C21 /* Sentimentalist.bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 1BC7A14A21E84C55004C3C21 /* Sentimentalist.bundle.js */; };
 		1BD081AC21C2041E006E1EEA /* ethers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BD081AA21C2041E006E1EEA /* ethers.framework */; };
 		1BD081AD21C2041E006E1EEA /* HSEther.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BD081AB21C2041E006E1EEA /* HSEther.a */; };
+		1BDB0A6C21ED741D00D85484 /* SECBlockJSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDB0A6A21ED741D00D85484 /* SECBlockJSAPI.swift */; };
+		1BDB0A6D21ED741D00D85484 /* SECSDK.bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 1BDB0A6B21ED741D00D85484 /* SECSDK.bundle.js */; };
 		1BEEF3F02193D7DB00075F19 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEEF3EE2193D7DB00075F19 /* LoadingView.m */; };
 		1BEEF3F32193DC2A00075F19 /* CommonActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEEF3F22193DC2A00075F19 /* CommonActivityIndicatorView.m */; };
 /* End PBXBuildFile section */
@@ -490,7 +490,6 @@
 		1B69436421DC6002005905D8 /* ConfirmPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPasswordViewController.m; sourceTree = "<group>"; };
 		1B69436B21DC9094005905D8 /* UILabel+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+Extension.h"; sourceTree = "<group>"; };
 		1B69436C21DC9094005905D8 /* UILabel+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extension.m"; sourceTree = "<group>"; };
-		1B6D252E21E84CB800632DB4 /* SentimentAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentimentAnalyzer.swift; sourceTree = "<group>"; };
 		1B6D253321E863D900632DB4 /* SECwallet-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SECwallet-Bridging-Header.h"; sourceTree = "<group>"; };
 		1B79566C21D1CD3D00EF26C8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1B79566E21D1CD4500EF26C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -508,10 +507,11 @@
 		1BC7A13A21E72D9A004C3C21 /* DappModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DappModel.m; sourceTree = "<group>"; };
 		1BC7A13C21E73766004C3C21 /* TabBarIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarIconView.h; sourceTree = "<group>"; };
 		1BC7A13D21E73766004C3C21 /* TabBarIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarIconView.m; sourceTree = "<group>"; };
-		1BC7A14A21E84C55004C3C21 /* Sentimentalist.bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Sentimentalist.bundle.js; sourceTree = "<group>"; };
 		1BD081A921C2041E006E1EEA /* HSEther.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSEther.h; sourceTree = "<group>"; };
 		1BD081AA21C2041E006E1EEA /* ethers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ethers.framework; sourceTree = "<group>"; };
 		1BD081AB21C2041E006E1EEA /* HSEther.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = HSEther.a; sourceTree = "<group>"; };
+		1BDB0A6A21ED741D00D85484 /* SECBlockJSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SECBlockJSAPI.swift; sourceTree = "<group>"; };
+		1BDB0A6B21ED741D00D85484 /* SECSDK.bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SECSDK.bundle.js; sourceTree = "<group>"; };
 		1BEEF3EE2193D7DB00075F19 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		1BEEF3EF2193D7DB00075F19 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
 		1BEEF3F12193DC2A00075F19 /* CommonActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonActivityIndicatorView.h; sourceTree = "<group>"; };
@@ -603,8 +603,8 @@
 				1B65E67D212BF55B00BB8DE5 /* BackupFileViewController.h */,
 				1B65E687212BF55C00BB8DE5 /* BackupFileViewController.m */,
 				1B8A77C521366DE4003BF708 /* RgsProtocol.docx */,
-				1BC7A14A21E84C55004C3C21 /* Sentimentalist.bundle.js */,
-				1B6D252E21E84CB800632DB4 /* SentimentAnalyzer.swift */,
+				1BDB0A6A21ED741D00D85484 /* SECBlockJSAPI.swift */,
+				1BDB0A6B21ED741D00D85484 /* SECSDK.bundle.js */,
 				1B6D253321E863D900632DB4 /* SECwallet-Bridging-Header.h */,
 				1B65E78E212BF5BF00BB8DE5 /* Network */,
 				1B65E785212BF5BF00BB8DE5 /* BaseActivity */,
@@ -997,8 +997,8 @@
 		1B65E769212BF5BE00BB8DE5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1B65E776212BF5BE00BB8DE5 /* SettingViewController.m */,
 				1B65E771212BF5BE00BB8DE5 /* SettingViewController.h */,
+				1B65E776212BF5BE00BB8DE5 /* SettingViewController.m */,
 				1B65E773212BF5BE00BB8DE5 /* TradeListViewController.h */,
 				1B65E76B212BF5BE00BB8DE5 /* TradeListViewController.m */,
 				1B65E777212BF5BE00BB8DE5 /* WalletManageViewController.h */,
@@ -1414,6 +1414,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BDB0A6D21ED741D00D85484 /* SECSDK.bundle.js in Resources */,
 				1B65E888212BF5C100BB8DE5 /* No.png in Resources */,
 				1B65E887212BF5C100BB8DE5 /* OK.png in Resources */,
 				1B8A77C621366DE4003BF708 /* RgsProtocol.docx in Resources */,
@@ -1432,7 +1433,6 @@
 				1B65E88B212BF5C100BB8DE5 /* fanhui.png in Resources */,
 				1B65E885212BF5C100BB8DE5 /* AssetsPickerChecked@2x.png in Resources */,
 				1B65E822212BF5C000BB8DE5 /* MJRefresh.bundle in Resources */,
-				1BC7A14C21E84C55004C3C21 /* Sentimentalist.bundle.js in Resources */,
 				1B65E88A212BF5C100BB8DE5 /* AssetsPickerVideo@2x.png in Resources */,
 				1B65E88D212BF5C100BB8DE5 /* addImage.png in Resources */,
 				1B65E869212BF5C100BB8DE5 /* Assets.xcassets in Resources */,
@@ -1458,6 +1458,7 @@
 				1B65E89C212BF5C100BB8DE5 /* VOSegment.m in Sources */,
 				1BEEF3F32193DC2A00075F19 /* CommonActivityIndicatorView.m in Sources */,
 				1B65E5FC212BEFB000BB8DE5 /* main.m in Sources */,
+				1BDB0A6C21ED741D00D85484 /* SECBlockJSAPI.swift in Sources */,
 				1B09859E217835CA00B8E994 /* CollectionViewCell.m in Sources */,
 				1B65E84B212BF5C000BB8DE5 /* MBProgressHUD.m in Sources */,
 				1B65E83C212BF5C000BB8DE5 /* IQUIView+Hierarchy.m in Sources */,
@@ -1518,7 +1519,6 @@
 				1B65E860212BF5C100BB8DE5 /* ChangePasswordViewController.m in Sources */,
 				1B65E856212BF5C100BB8DE5 /* SDWebImagePrefetcher.m in Sources */,
 				1B65E845212BF5C000BB8DE5 /* AFURLConnectionOperation.m in Sources */,
-				1B6D252F21E84CB800632DB4 /* SentimentAnalyzer.swift in Sources */,
 				1B65E690212BF55D00BB8DE5 /* BackupFileViewController.m in Sources */,
 				1B09858B2176E7A400B8E994 /* AddressListViewController.m in Sources */,
 				1B65E80B212BF5C000BB8DE5 /* AssetsSwitchViewController.m in Sources */,

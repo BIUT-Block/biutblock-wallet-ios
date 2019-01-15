@@ -47,7 +47,9 @@
     [Bugly startWithAppId:kBuglyAppId];
     // 启动图片延时: 2秒
     [NSThread sleepForTimeInterval:2];
-        
+    
+//    [[NSNotificationCenter defaultCenter]  postNotificationName:NotificationUpdateTab object:[NSString stringWithFormat:@"%d",0]];
+    
     return YES;
 }
 

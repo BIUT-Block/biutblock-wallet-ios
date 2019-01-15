@@ -48,6 +48,8 @@
     [self networkManager];
     if (recodeListCache != nil) {
         _dataArrays = [NSMutableArray arrayWithArray:recodeListCache];
+        //计算代币总额,冻结资产
+        [self calculateSum:_dataArrays];
         [_infoTableView reloadData];
     }else{
         [self requestTransactionHash];
@@ -59,14 +61,32 @@
     [super viewWillAppear:animated];
     /**************导航栏布局***************/
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [self requestSECblance];
+}
+-(void)requestSECblance
+{
+    AFJSONRPCClient *client = [AFJSONRPCClient clientWithEndpointURL:[NSURL URLWithString:BaseServerUrl]];
+    //地址去掉0x
+    NSString *from = [_walletModel.address componentsSeparatedByString:@"x"].lastObject;
+    [client invokeMethod:@"sec_getBalance" withParameters:@[from,@"latest"] requestId:@(1) success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = responseObject;
+        NSInteger status = [dic[@"status"] integerValue];
+        if (status == 1) {
+            _walletModel.balance = [NSString jsonUtils:dic[@"value"]];
+        }else{
+            _walletModel.balance = @"0";
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self hudShowWithString:Localized(@"数据获取失败", nil) delayTime:1.5];
+    }];
 }
 
 #pragma TransferViewControllerDelegate 转账成功事件
-//-(void)transferSuccess:(TokenCoinModel *)tokenCoinModel
-//{
+-(void)transferSuccess:(TokenCoinModel *)tokenCoinModel
+{
 //    _tokenCoinModel = tokenCoinModel;
-//    [self requestTransactionHash];
-//}
+    [self requestTransactionHash];
+}
 -(void) readTradeRecordListCache
 {
     /*************获取交易列表*************/
@@ -278,7 +298,6 @@
     if (isHeaderRefresh == NO) {
         [self createLoadingView:nil];
     }
-
     //地址去掉0x
     NSString *from = [_walletModel.address componentsSeparatedByString:@"x"].lastObject;
     AFJSONRPCClient *client = [AFJSONRPCClient clientWithEndpointURL:[NSURL URLWithString:BaseServerUrl]];
@@ -321,29 +340,7 @@
                 }
                 
                 //计算代币总额,冻结资产
-                CGFloat secSum = 10; CGFloat frozenSum = 0;
-                for (TradeModel *model in _dataArrays) {
-                    if (model.status == 1) {
-                        if (model.type == 1) {
-                            secSum += [model.sum floatValue];
-                        }else{
-                            secSum -= [model.sum floatValue];
-                        }
-                    }
-                    if (model.status == 2) {
-                        if (model.type == 1) {
-                            frozenSum += [model.sum floatValue];
-                        }else{
-                            frozenSum -= [model.sum floatValue];
-                        }
-                    }
-                }
-                secSumLb.text = [NSString stringWithFormat:@"%.8f",secSum];
-                secCNYLb.text = [NSString stringWithFormat:@"%.8f",secSum];
-                frozenLb.text = [NSString stringWithFormat:@"%.8f",frozenSum];
-                frozenCNYLb.text = [NSString stringWithFormat:@"%.8f",frozenSum];
-                amountLb.text = [NSString stringWithFormat:@"%.8f",secSum+frozenSum];
-                amountCNYLb.text = [NSString stringWithFormat:@"%.8f",secSum+frozenSum];
+                [self calculateSum:_dataArrays];
                 
             }else{
                 _dataArrays = [NSMutableArray array];
@@ -363,6 +360,27 @@
         [self hiddenLoadingView];
         [self hiddenRefreshView];
     }];
+}
+
+-(void)calculateSum:(NSArray *)dataArrays
+{
+    //冻结资产
+    CGFloat frozenSum = 0;
+    for (TradeModel *model in dataArrays) {
+        if (model.status == 2) {
+            if (model.type == 1) {
+                frozenSum += [model.sum doubleValue];
+            }else{
+                frozenSum -= [model.sum doubleValue];
+            }
+        }
+    }
+    secSumLb.text = [NSString stringWithFormat:@"%.8f",[_walletModel.balance doubleValue]];
+    secCNYLb.text = [NSString stringWithFormat:@"%.8f",[_walletModel.balance doubleValue]];
+    frozenLb.text = [NSString stringWithFormat:@"%.8f",frozenSum];
+    frozenCNYLb.text = [NSString stringWithFormat:@"%.8f",frozenSum];
+    amountLb.text = [NSString stringWithFormat:@"%.8f",[_walletModel.balance doubleValue]+frozenSum];
+    amountCNYLb.text = [NSString stringWithFormat:@"%.8f",[_walletModel.balance doubleValue]+frozenSum];
 }
 
 #pragma 转账

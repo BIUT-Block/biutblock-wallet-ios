@@ -245,7 +245,7 @@
         [unarchiver finishDecoding];
         for (int i = 0; i< list.count; i++) {
             WalletModel *model = list[i];
-            if ([model.walletName isEqualToString:_walletModel.walletName]) {
+            if ([model.privateKey isEqualToString:_walletModel.privateKey]) {
                 [model setLoginPassword:newpasswordTF.text];
                 [model setPasswordTip:passwordTipTF.text];
                 [list replaceObjectAtIndex:i withObject:model];

@@ -76,7 +76,6 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     self.view.backgroundColor = COLOR(241, 242, 243, 1);
-    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         //网络监听
         [self networkManager];
@@ -188,7 +187,7 @@
     TokenCoinModel *model = _dataArrays[indexPath.section];
     cell.imageView.image = [UIImage imageNamed:model.icon];
     cell.textLabel.text = model.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f",[model.tokenNum floatValue]];
+    cell.detailTextLabel.text = model.tokenNum;
     
     return cell;
 }
@@ -233,7 +232,7 @@
     /***********更新当前钱包信息***********/
     for (int i = 0; i< list.count; i++) {
         WalletModel *model = list[i];
-        if ([model.walletName isEqualToString:currentWallet.walletName]) {
+        if ([model.privateKey isEqualToString:currentWallet.privateKey]) {
             [list replaceObjectAtIndex:i withObject:currentWallet];
         }
     }
@@ -325,7 +324,7 @@
         //更新当前钱包余额
         for (int i = 0; i< _walletList.count; i++) {
             WalletModel *model = _walletList[i];
-            if ([model.walletName isEqualToString:currentWallet.walletName]) {
+            if ([model.privateKey isEqualToString:currentWallet.privateKey]) {
                 [_walletList replaceObjectAtIndex:i withObject:currentWallet];
                 break;
             }
