@@ -51,7 +51,7 @@
 //static CGFloat const btn_Margin = 15;
 
 /** 按钮字体的大小(字号) */
-static CGFloat const btn_fondOfSize = 10;
+static CGFloat const btn_fondOfSize = 11;
 /** 指示器的高度 */
 static CGFloat const indicatorViewHeight = 2;
 /** 点击按钮时, 指示器的动画移动时间 */

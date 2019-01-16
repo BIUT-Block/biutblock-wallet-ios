@@ -79,7 +79,7 @@
     inputTV = [[UITextView alloc]initWithFrame:CGRectMake(Size(20), Size(48), kScreenWidth -Size(20)*2, KInputTVViewHeight)];
     inputTV.backgroundColor = DARK_COLOR;
     inputTV.layer.cornerRadius = Size(8);
-    inputTV.font = SystemFontOfSize(14);
+    inputTV.font = SystemFontOfSize(12);
     inputTV.textColor = TEXT_BLACK_COLOR;
     inputTV.autocapitalizationType = UITextAutocapitalizationTypeNone;
     inputTV.delegate = self;
@@ -155,11 +155,11 @@
     
     /*****************用户协议*****************/
     NSString *str = Localized(@" 我已仔细阅读并同意", nil);
-    CGSize size = [str calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
+    CGSize size = [str calculateSize:BoldSystemFontOfSize(9) maxWidth:kScreenWidth];
     agreementBtn = [[UIButton alloc] initWithFrame:CGRectMake(inputTV.minX, passwordTipTF.maxY + Size(17),size.width +Size(20), Size(20))];
     [agreementBtn setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     [agreementBtn setTitle:str forState:UIControlStateNormal];
-    agreementBtn.titleLabel.font = BoldSystemFontOfSize(8);
+    agreementBtn.titleLabel.font = BoldSystemFontOfSize(9);
     [agreementBtn setImage:[UIImage imageNamed:@"assets_protocolun"] forState:UIControlStateNormal];
     [agreementBtn setImage:[UIImage imageNamed:@"assets_protocol"] forState:UIControlStateSelected];
     agreementBtn.selected = NO;
@@ -167,9 +167,9 @@
     [self.view addSubview:agreementBtn];
     //协议内容
     NSString *seeStr = Localized(@"服务条款", nil);
-    CGSize seesSize = [seeStr calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
+    CGSize seesSize = [seeStr calculateSize:BoldSystemFontOfSize(9) maxWidth:kScreenWidth];
     seeProtocol = [[UIButton alloc]initWithFrame:CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height)];
-    seeProtocol.titleLabel.font = BoldSystemFontOfSize(8);
+    seeProtocol.titleLabel.font = BoldSystemFontOfSize(9);
     NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:Localized(@"服务条款", nil)];
     [attStr addAttribute:NSForegroundColorAttributeName value:COLOR(56, 142, 218, 1) range:NSMakeRange(0, attStr.length)];
     [seeProtocol setAttributedTitle:attStr forState:UIControlStateNormal];
@@ -187,7 +187,7 @@
     if (_importWalletType == ImportWalletType_keyStore) {
         
         importTipLb = [[UILabel alloc] initWithFrame:CGRectMake(inputTV.minX, Size(55), inputTV.width, Size(40))];
-        importTipLb.font = SystemFontOfSize(10);
+        importTipLb.font = SystemFontOfSize(11);
         importTipLb.textColor = TEXT_DARK_COLOR;
         importTipLb.numberOfLines = 2;
         importTipLb.text = Localized(@"直接复制粘贴以太坊官方钱包keyStore文件内容至输入框。", nil);

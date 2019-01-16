@@ -77,7 +77,7 @@
     _SG.segmentedControlIndicatorType = SGSegmentedControlIndicatorTypeBottom;
     _SG.titleColorStateSelected = TEXT_GREEN_COLOR;
     _SG.indicatorColor = TEXT_GREEN_COLOR;
-    _SG.titleColorStateNormal = COLOR(222, 223, 234, 1);
+    _SG.titleColorStateNormal = COLOR(176, 175, 175, 1);
     [self.view addSubview:_SG];
     //横线
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(Size(20), _SG.maxY -Size(2), kScreenWidth -Size(20)*2, Size(0.5))];

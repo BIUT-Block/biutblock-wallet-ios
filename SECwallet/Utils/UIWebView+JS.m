@@ -15,11 +15,11 @@
 -(void) loadHTMLString:(NSString *)content
 {
     NSString *strValue =  [NSString jsonUtils:content];
-    
+
     strValue = [strValue stringByReplacingOccurrencesOfString: @"\n" withString:@"<br/>"];
     strValue = [self replaceStr:@"[w][i][d][t][h][:](\\d+\\.?\\d+)[p][t][;]" withReplacedStr:strValue withPlaceStr:@""];
     strValue = [self replaceStr:@"(font-size: )(\\d+px)" withReplacedStr:strValue withPlaceStr:@"$102pt"];
-    
+
     NSMutableString *data_content = [NSMutableString stringWithString:@""];
     [data_content appendString:@"<!DOCTYPE html>"];
     [data_content appendString:@"<html>"];
@@ -30,7 +30,7 @@
     }else{
         [data_content appendString:@"<meta id=\"viewport\" name=\"viewport\" content=\"width=device-width,initial-scale=1.0, minimum-scale=0.1, maximum-scale=2.0,user-scalable=yes\" />"];
     }
-    
+
     [data_content appendString:@"<meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />"];
     [data_content appendString:@"<meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\" />"];
     [data_content appendString:@"<meta name=\"black\" name=\"apple-mobile-web-app-status-bar-style\" />"];
@@ -39,13 +39,13 @@
     [data_content appendString:[NSString stringWithFormat:@"<base href=\"%@\" />", BaseServerUrl]];
     [data_content appendString:@"</head>"];
     [data_content appendString:@"<body>"];
-    
-    [data_content appendString:@"<div style=\"line-height:1.5em;color:#404040;padding:0 0 0 0\">"];
+
+    [data_content appendString:@"<div style=\"line-height:2em;color:#404040;padding:0 0 0 0\">"];
     
     [data_content appendString:strValue];
-    
+
     [data_content appendString:@"</div>"];
-    
+
     [data_content appendString:@"<script type=\"text/javascript\">"];
     [data_content appendString:@"var imgArray = document.getElementsByTagName(\"img\");"];
     [data_content appendString:@"var length = imgArray.length;"];
@@ -60,11 +60,11 @@
     // 表示不是表情图片.
     [data_content appendString:@"img.style.width = \"100%\";"];
     [data_content appendString:@"img.style.height = \"auto\";"];
-    
+
     [data_content appendString:@"}"];
     [data_content appendString:@"}"];
     [data_content appendString:@"</script>"];
-    
+
     [data_content appendString:@"</body>"];
     [data_content appendString:@"</html>"];
     

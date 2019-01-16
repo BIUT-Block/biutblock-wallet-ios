@@ -15,7 +15,7 @@
 // 测试服务器
 #define BaseServerUrl   @"http://13.209.3.183:3002/"
 #define LocalServerUrl  @"http://103.60.111.204:3000/"
-#define SECBrowserUrl   @"http://scan.secblock.io/tokentxdetails?hash=/"
+#define SECBrowserUrl   @"http://35.158.171.46:3001/tokentxdetails?hash="
 
 
 /**************友盟统计参数*****************/

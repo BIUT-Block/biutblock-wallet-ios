@@ -110,7 +110,8 @@
     cell.bkgIV.image = [UIImage imageNamed:@"walletBkg0"];
     cell.nameLb.text = model.walletName;
     cell.totalSumLb.text = [NSString stringWithFormat:@"%@",model.balance];
-    [cell.addressBT setTitle:model.address forState:UIControlStateNormal];
+    [cell.addressBT setTitle:[NSString addressToAsterisk:model.address] forState:UIControlStateNormal];
+    cell.addressBT.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [cell.addressBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.addressBT.tag = 1000;
     //备份按钮

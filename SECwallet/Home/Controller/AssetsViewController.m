@@ -19,10 +19,7 @@
 #import "CardPageView.h"
 #import "JXMovableCellTableView.h"
 
-#import "BackupFileViewController.h"
-
 #define kHeaderHeight    Size(195)
-#define USD_to_CNY       6.8872
 
 @interface AssetsViewController ()<JXMovableCellTableViewDataSource,JXMovableCellTableViewDelegate,CardPageViewDelegate>
 {
@@ -251,11 +248,6 @@
     viewController.assetsList = assetsList;
     viewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:YES];
-    
-//    BackupFileViewController *controller = [[BackupFileViewController alloc]init];
-//    controller.walletModel = currentWallet;
-//    [self.navigationController pushViewController:controller animated:YES];
-    
 }
 
 #pragma mark - CardPageViewDelegate

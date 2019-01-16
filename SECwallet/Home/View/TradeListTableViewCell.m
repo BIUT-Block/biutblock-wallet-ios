@@ -14,7 +14,7 @@
 @property (nonatomic , strong) id object;
 
 @property (nonatomic, strong) UIImageView *icon;
-@property (nonatomic, strong) UIButton *address;
+@property (nonatomic, strong) UILabel *address;
 @property (nonatomic, strong) UILabel *time;
 @property (nonatomic, strong) UILabel *sum;
 @property (nonatomic, strong) UILabel *pendingLb;
@@ -40,10 +40,9 @@
     [self addSubview:_icon];
     
     //地址
-    _address = [[UIButton alloc] initWithFrame:CGRectMake(_icon.maxX +Size(10), _icon.minY, Size(100), Size(10))];
-    _address.titleLabel.font = BoldSystemFontOfSize(10);
-    [_address setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
-    _address.userInteractionEnabled = NO;
+    _address = [[UILabel alloc] initWithFrame:CGRectMake(_icon.maxX +Size(10), _icon.minY, Size(120), Size(10))];
+    _address.font = BoldSystemFontOfSize(10);
+    _address.textColor = TEXT_BLACK_COLOR;
     [self addSubview:_address];
     
     //时间
@@ -75,20 +74,20 @@
         //类型（1转入 2转出 3挖矿）
         if (obj.type == 1) {
             _icon.image = [UIImage imageNamed:@"recived"];  //转入
-            [_address setTitle:obj.transferAddress forState:UIControlStateNormal];
+            _address.text = [NSString addressToAsterisk:obj.transferAddress];
             _time.text = obj.time;
             _sum.textColor = TEXT_GREEN_COLOR;
              _sum.text = [NSString stringWithFormat:@"+%@ SEC",obj.sum];
   
         }else if (obj.type == 2) {
             _icon.image = [UIImage imageNamed:@"sent"];  //转出
-            [_address setTitle:obj.gatherAddress forState:UIControlStateNormal];
+            _address.text = [NSString addressToAsterisk:obj.gatherAddress];
             _time.text = obj.time;
             _sum.textColor = TEXT_RED_COLOR;
             _sum.text = [NSString stringWithFormat:@"-%@ SEC",obj.sum];
         }else{
             _icon.image = [UIImage imageNamed:@"minied"];  //转出
-            [_address setTitle:obj.transferAddress forState:UIControlStateNormal];
+            _address.text = [NSString addressToAsterisk:obj.transferAddress];
             _time.text = obj.time;
             _sum.frame = CGRectMake(_address.maxX, _address.minY, kScreenWidth -_address.maxX -Size(20), _address.height);
             _pendingLb.frame = CGRectMake(_sum.minX, _sum.maxY, _sum.width, _sum.height);

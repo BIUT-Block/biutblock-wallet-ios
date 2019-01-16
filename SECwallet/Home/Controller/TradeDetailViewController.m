@@ -16,11 +16,8 @@
 @interface TradeDetailViewController()<UITableViewDelegate,UITableViewDataSource,TransferViewControllerDelegate>
 {
     UILabel *secSumLb;
-    UILabel *secCNYLb;
     UILabel *frozenLb;
-    UILabel *frozenCNYLb;
     UILabel *amountLb;
-    UILabel *amountCNYLb;
     
     BOOL isHeaderRefresh;
     NSMutableArray *_dataArrays;  //交易列表列表
@@ -115,7 +112,6 @@
     
     NSArray *titleArr = @[Localized(@"可用", nil),Localized(@"冻结", nil),Localized(@"总计", nil)];
     NSArray *contentArr = @[_walletModel.balance,@"",_walletModel.balance];
-    NSArray *CNYArr = @[_walletModel.balance,@"",_walletModel.balance];
     for (int i = 0; i< titleArr.count; i++) {
         UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(20) +i*Size(35), Size(80), Size(35))];
         desLb.font = SystemFontOfSize(14);
@@ -123,46 +119,27 @@
         desLb.text = titleArr[i];
         [self.view addSubview:desLb];
         if (i == 0) {
-            secSumLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY+Size(5), kScreenWidth -desLb.minX*2 -desLb.width, (desLb.height-Size(5*2))/2)];
+            secSumLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY, kScreenWidth -desLb.minX*2 -desLb.width, desLb.height)];
             secSumLb.font = SystemFontOfSize(13);
             secSumLb.textColor = TEXT_GREEN_COLOR;
             secSumLb.textAlignment = NSTextAlignmentRight;
             secSumLb.text = contentArr[i];
             [self.view addSubview:secSumLb];
-            secCNYLb = [[UILabel alloc]initWithFrame:CGRectMake(secSumLb.minX, secSumLb.maxY, secSumLb.width, secSumLb.height)];
-            secCNYLb.font = SystemFontOfSize(13);
-            secCNYLb.textColor = TEXT_DARK_COLOR;
-            secCNYLb.textAlignment = NSTextAlignmentRight;
-            secCNYLb.text = CNYArr[i];
-            [self.view addSubview:secCNYLb];
         }else if (i == 1) {
-            frozenLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY+Size(5), kScreenWidth -desLb.minX*2 -desLb.width, (desLb.height-Size(5*2))/2)];
+            frozenLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY+Size(5), secSumLb.width, secSumLb.height)];
             frozenLb.font = SystemFontOfSize(13);
             frozenLb.textColor = TEXT_GREEN_COLOR;
             frozenLb.textAlignment = NSTextAlignmentRight;
             frozenLb.text = contentArr[i];
             [self.view addSubview:frozenLb];
-            frozenCNYLb = [[UILabel alloc]initWithFrame:CGRectMake(frozenLb.minX, frozenLb.maxY, frozenLb.width, frozenLb.height)];
-            frozenCNYLb.font = SystemFontOfSize(13);
-            frozenCNYLb.textColor = TEXT_DARK_COLOR;
-            frozenCNYLb.textAlignment = NSTextAlignmentRight;
-            frozenCNYLb.text = CNYArr[i];
-            [self.view addSubview:frozenCNYLb];
         }else if (i == 2) {
-            amountLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY+Size(5), kScreenWidth -desLb.minX*2 -desLb.width, (desLb.height-Size(5*2))/2)];
+            amountLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY+Size(5), secSumLb.width, secSumLb.height)];
             amountLb.font = SystemFontOfSize(13);
             amountLb.textColor = TEXT_GREEN_COLOR;
             amountLb.textAlignment = NSTextAlignmentRight;
             amountLb.text = contentArr[i];
             [self.view addSubview:amountLb];
-            amountCNYLb = [[UILabel alloc]initWithFrame:CGRectMake(amountLb.minX, amountLb.maxY, amountLb.width, amountLb.height)];
-            amountCNYLb.font = SystemFontOfSize(13);
-            amountCNYLb.textColor = TEXT_DARK_COLOR;
-            amountCNYLb.textAlignment = NSTextAlignmentRight;
-            amountCNYLb.text = CNYArr[i];
-            [self.view addSubview:amountCNYLb];
         }
-        
         //横线
         if (i!=2) {
             UIView *line = [[UIView alloc]initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth -desLb.minX*2, Size(0.5))];
@@ -338,15 +315,13 @@
                 if (_dataArrays.count > recodeListCache.count && isHeaderRefresh == YES) {
                     [self hudShowWithString:[NSString stringWithFormat:@"已更新%ld条数据",_dataArrays.count-recodeListCache.count] delayTime:3];
                 }
-                
-                //计算代币总额,冻结资产
-                [self calculateSum:_dataArrays];
-                
             }else{
                 _dataArrays = [NSMutableArray array];
                 [_infoTableView reloadData];
                 _noneListView.hidden = NO;
             }
+            //计算代币总额,冻结资产
+            [self calculateSum:_dataArrays];
             
         }else{
             _dataArrays = [NSMutableArray array];
@@ -370,17 +345,12 @@
         if (model.status == 2) {
             if (model.type == 1) {
                 frozenSum += [model.sum doubleValue];
-            }else{
-                frozenSum -= [model.sum doubleValue];
             }
         }
     }
     secSumLb.text = [NSString stringWithFormat:@"%.8f",[_walletModel.balance doubleValue]];
-    secCNYLb.text = [NSString stringWithFormat:@"%.8f",[_walletModel.balance doubleValue]];
     frozenLb.text = [NSString stringWithFormat:@"%.8f",frozenSum];
-    frozenCNYLb.text = [NSString stringWithFormat:@"%.8f",frozenSum];
     amountLb.text = [NSString stringWithFormat:@"%.8f",[_walletModel.balance doubleValue]+frozenSum];
-    amountCNYLb.text = [NSString stringWithFormat:@"%.8f",[_walletModel.balance doubleValue]+frozenSum];
 }
 
 #pragma 转账

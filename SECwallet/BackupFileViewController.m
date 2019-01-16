@@ -43,20 +43,20 @@
     [self.view addSubview:backBT];
     
     //标题
-    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(15), Size(200), Size(30))];
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(35), Size(200), Size(30))];
     titleLb.textColor = TEXT_BLACK_COLOR;
     titleLb.font = BoldSystemFontOfSize(20);
     titleLb.text = Localized(@"备份助记词",nil);
     [self.view addSubview:titleLb];
     
-    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(10), kScreenWidth, Size(20))];
-    titLb.font = SystemFontOfSize(10);
+    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(30), kScreenWidth, Size(20))];
+    titLb.font = SystemFontOfSize(11);
     titLb.textColor = TEXT_DARK_COLOR;
     titLb.text = Localized(@"确认你的钱包助记词", nil);
-//    [self.view addSubview:titLb];
+    [self.view addSubview:titLb];
     
-    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, backBT.maxY +Size(10), kScreenWidth -Size(20)*2, Size(30))];
-    remindLb.font = SystemFontOfSize(10);
+    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titLb.maxY +Size(10), kScreenWidth -Size(20)*2, Size(30))];
+    remindLb.font = SystemFontOfSize(11);
     remindLb.textColor = TEXT_DARK_COLOR;
     remindLb.numberOfLines = 2;
     remindLb.text = Localized(@"请按照顺序点击助记词，以确认你备份的助记词正确。", nil);
@@ -65,26 +65,22 @@
     paragraphStyle.lineSpacing = Size(3);
     [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
     remindLb.attributedText = msgStr;
-//    [self.view addSubview:remindLb];
+    [self.view addSubview:remindLb];
     
-    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, titleLb.maxY +Size(5), remindLb.width, Size(200))];
+    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(15), remindLb.width, Size(140))];
     bkgView.backgroundColor = DARK_COLOR;
     bkgView.layer.cornerRadius = Size(5);
     [self.view addSubview:bkgView];
     _showTagList = [[DWTagList alloc]initWithFrame:CGRectMake(Size(30), bkgView.minY +Size(8), kScreenWidth - Size(30)*2, bkgView.height -Size(5*2))];
-    if (IS_iPhoneX) {
-        bkgView.frame = CGRectMake(remindLb.minX, remindLb.maxY +Size(15), remindLb.width, Size(140));
-        _showTagList.frame = CGRectMake(Size(30), bkgView.minY +Size(20), kScreenWidth - Size(30)*2, bkgView.height -Size(5*2));
-    }
     [_showTagList setTagBackgroundColor:COLOR(186, 187, 188, 1)];
-    _showTagList.cornerRadius = Size(12);
+    _showTagList.cornerRadius = Size(9);
     _showTagList.borderWidth = 0;
     _showTagList.textColor = WHITE_COLOR;
     [_showTagList setTagDelegate:self];
     _showTagList.showTagMenu = YES;
     [self.view addSubview:_showTagList];
     
-    _tagList = [[DWTagList alloc] initWithFrame:CGRectMake(titleLb.minX, bkgView.maxY +Size(10), kScreenWidth - titleLb.minX*2, Size(190))];
+    _tagList = [[DWTagList alloc] initWithFrame:CGRectMake(titleLb.minX, bkgView.maxY +Size(10), kScreenWidth - titleLb.minX*2, Size(130))];
     [_tagList setTagBackgroundColor:WHITE_COLOR];
     _tagList.cornerRadius = Size(5);
     _tagList.borderWidth = Size(0.5);
@@ -106,7 +102,7 @@
     [self.view addSubview:_tagList];
     
     /*****************确认*****************/
-    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(titleLb.minX, _tagList.maxY +Size(15), kScreenWidth -titleLb.minX*2, Size(45))];
+    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(titleLb.minX, _tagList.maxY +Size(12), kScreenWidth -titleLb.minX*2, Size(45))];
     [nextBT goldBigBtnStyle:Localized(@"确认", nil)];
     [nextBT addTarget:self action:@selector(comfirmAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBT];

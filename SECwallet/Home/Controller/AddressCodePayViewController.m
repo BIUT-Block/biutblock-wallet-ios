@@ -98,7 +98,7 @@
 {
     UIPasteboard * pastboard = [UIPasteboard generalPasteboard];
     pastboard.string = _walletModel.address;
-    [self hudShowWithString:@"已复制" delayTime:1];
+    [self hudShowWithString:Localized(@"已复制", nil) delayTime:1];
 }
 
 -(void)checkSumAction:(id)sender

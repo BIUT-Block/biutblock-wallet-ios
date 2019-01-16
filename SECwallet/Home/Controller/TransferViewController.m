@@ -275,22 +275,22 @@
             NSMutableDictionary *ddd = [[NSMutableDictionary alloc]initWithDictionary:dic];
             AFJSONRPCClient *client = [AFJSONRPCClient clientWithEndpointURL:[NSURL URLWithString:BaseServerUrl]];
             [client invokeMethod:@"sec_sendRawTransaction" withParameters:@[ddd] requestId:@(1) success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [self hiddenLoadingView];
                 NSDictionary *dic = responseObject;
                 NSInteger status = [dic[@"status"] integerValue];
                 if (status == 1) {
-                    [self hiddenLoadingView];
 //                    [self hudShowWithString:@"转账成功" delayTime:3];
                     [self backAction];
                     [self.delegate transferSuccess:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
                     
                 }else{
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"转账失败" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:Localized(@"转账失败", nil) message:nil delegate:nil cancelButtonTitle:Localized(@"知道了", nil) otherButtonTitles:nil, nil];
                     [alert show];
                 }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [self hiddenLoadingView];
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"转账失败" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"转账失败" message:nil delegate:nil cancelButtonTitle:Localized(@"知道了", nil) otherButtonTitles:nil, nil];
                 [alert show];
             }];
         }];

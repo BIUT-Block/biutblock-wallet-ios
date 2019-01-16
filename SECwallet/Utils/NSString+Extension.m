@@ -302,8 +302,8 @@
 // 把地址中间位变成星号
 +(NSString *)addressToAsterisk:(NSString *)address
 {
-    NSString *str1 = [address substringWithRange:NSMakeRange(0,8)];
-    NSString *str2 = [address substringWithRange:NSMakeRange(address.length-8,8)];
+    NSString *str1 = [address substringWithRange:NSMakeRange(0,10)];
+    NSString *str2 = [address substringWithRange:NSMakeRange(address.length-10,10)];
     return [NSString stringWithFormat:@"%@...%@",str1,str2];
 }
 

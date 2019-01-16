@@ -130,11 +130,10 @@
         _desLb.text = Localized(@"钱包名称",nil);
         _titleLb.text = obj.walletName;
         _contentLb.text = [NSString stringWithFormat:@"%@ SEC",obj.balance];
-        _detailLb.text = obj.address;
+        _detailLb.text = [NSString addressToAsterisk:obj.address];
         if (obj.isBackUpMnemonic == NO) {
             _subDetailLb.text = Localized(@"请备份",nil);
         }
-        
         _accessoryIV.image = [UIImage imageNamed:@"rightArrow"];
     }
 }

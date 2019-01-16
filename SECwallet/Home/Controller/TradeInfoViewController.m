@@ -41,7 +41,6 @@
     [backBT addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     [backBT setImage:[UIImage imageNamed:@"backIcon"] forState:UIControlStateNormal];
     [headerView addSubview:backBT];
-    
     //标题
     UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(15), Size(200), Size(20))];
     desLb.textColor = TEXT_BLACK_COLOR;
@@ -145,6 +144,7 @@
 {
     CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
     viewController.titleStr = @"SEC钱包服务协议";
+    //http://35.158.171.46:3001/tokentxdetails?hash=0dd11179f4a2288c37b66b703af97371fe67bee6cdd3b21de548afa88500c2bf
     viewController.adUrl = [NSString stringWithFormat:@"%@%@",SECBrowserUrl,_tradeModel.tradeNum];
     viewController.commonHtmlShowViewType = CommonHtmlShowViewType_other;
     [self.navigationController pushViewController:viewController animated:YES];

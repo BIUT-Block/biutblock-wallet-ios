@@ -39,7 +39,7 @@
         [self addSubview:view];
         [self setClipsToBounds:YES];
         self.automaticResize = DEFAULT_AUTOMATIC_RESIZE;
-        self.highlightedBackgroundColor = COLOR(3, 117, 226, 1);
+        self.highlightedBackgroundColor = COLOR(56, 142, 218, 1);
         self.font = [UIFont systemFontOfSize:FONT_SIZE_DEFAULT];
         self.labelMargin = LABEL_MARGIN_DEFAULT;
         self.bottomMargin = BOTTOM_MARGIN_DEFAULT;
@@ -61,7 +61,7 @@
     if (self) {
         [self addSubview:view];
         [self setClipsToBounds:YES];
-        self.highlightedBackgroundColor = COLOR(3, 117, 226, 1);
+        self.highlightedBackgroundColor = COLOR(56, 142, 218, 1);
         self.font = [UIFont systemFontOfSize:FONT_SIZE_DEFAULT];
         self.labelMargin = LABEL_MARGIN_DEFAULT;
         self.bottomMargin = BOTTOM_MARGIN_DEFAULT;
@@ -181,7 +181,7 @@
             for (NSString *selectStr in selectTextArray) {
                 if ([selectStr isEqualToString:text]) {
                     [tagView setBackgroundColor:COLOR(56, 142, 218, 1)];
-                    [tagView setCornerRadius:Size(12)];
+                    [tagView setCornerRadius:Size(9)];
                     [tagView setBorderWidth:Size(0)];
                     [tagView setBorderColor:COLOR(56, 142, 218, 1).CGColor];
                     [tagView setTextColor:WHITE_COLOR];
@@ -264,7 +264,7 @@
     DWTagView *tagView = (DWTagView *)[button superview];
     //选中状态
     if ([selectTextArray containsObject:tagView.label.text]) {
-        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
+        [tagView setBackgroundColor:[self getBackgroundColor]];
     }else{
         [tagView setBackgroundColor:[self getBackgroundColor]];
     }
@@ -276,7 +276,7 @@
     DWTagView *tagView = (DWTagView *)[button superview];
     //选中状态
     if ([selectTextArray containsObject:tagView.label.text]) {
-        [tagView setBackgroundColor:BACKGROUND_DARK_COLOR];
+        [tagView setBackgroundColor:[self getBackgroundColor]];
     }else{
         [tagView setBackgroundColor:[self getBackgroundColor]];
     }
@@ -392,30 +392,13 @@
 		_label.text = text;
     }
     
-    textSize.width = MAX(textSize.width+Size(15), minimumWidth+Size(15));
-    textSize.height += padding.height*2 +Size(3);
+    textSize.width = MAX(textSize.width, minimumWidth);
+    textSize.height += padding.height*2 -Size(3);
     
     self.frame = CGRectMake(0, 0, textSize.width+padding.width*2, textSize.height);
     _label.frame = CGRectMake(padding.width, 0, MIN(textSize.width, self.frame.size.width), textSize.height);
 	_label.font = font;
     [_button setAccessibilityLabel:self.label.text];
-    
-    if ([textArray isEqualToArray:selectArray]) {
-        [_label setTextAlignment:NSTextAlignmentLeft];
-        [_button setImage:[UIImage imageNamed:@"closeGray"] forState:UIControlStateNormal];
-        [_button setImageEdgeInsets:UIEdgeInsetsMake(0, self.frame.size.width-Size(20), 0, 0)];
-        _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    }else{
-        if ([selectArray containsObject:self.label.text]) {
-            [_label setTextAlignment:NSTextAlignmentLeft];
-            [_button setImage:[UIImage imageNamed:@"checkBlue"] forState:UIControlStateNormal];
-            [_button setImageEdgeInsets:UIEdgeInsetsMake(0, self.frame.size.width-Size(20), 0, 0)];
-            _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        }else{
-            [_label setTextAlignment:NSTextAlignmentCenter];
-            [_button setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-        }
-    }
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius

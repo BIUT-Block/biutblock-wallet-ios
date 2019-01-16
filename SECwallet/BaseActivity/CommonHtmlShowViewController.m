@@ -53,6 +53,7 @@
     _infoWebView.scrollView.showsHorizontalScrollIndicator = NO;
     _infoWebView.delegate = self;
     _infoWebView.opaque=NO;
+    _infoWebView.dataDetectorTypes = UIDataDetectorTypeNone;
     [self.view addSubview:_infoWebView];
     
     if (_commonHtmlShowViewType == CommonHtmlShowViewType_RgsProtocol) {
@@ -67,16 +68,163 @@
         if ([_titleStr isEqualToString:@"什么是GAS费用？"]) {
             [_infoWebView loadHTMLString:@"在一个公链上，任何人都可以读写数据。读取数据是免费的，但是向公有链中写数据时需要花费一定费用的，这种开销有助于阻止垃圾内容，并通过支付保护其安全性。网络上的任何节点（每个包含账本拷贝的链接设备都被称作节点）都可以参与称作挖矿的方式来保护网络。由于挖矿需要计算能力和电费，所以矿工们的服务需要得到一定的报酬，这也是矿工费的由来。\n矿工会优先打包gas合理，gas price高的交易。如果用户交易时所支付的矿工费非常低，那么这笔交易可能不会被矿工打包，从而造成交易失败。\nCEC的交易费用（也是以太坊的交易费用）=gas 数量*gas price（gas单价，以太币计价）"];
         }else if ([_titleStr isEqualToString:Localized(@"什么是助记词？", nil)]) {
+            NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineSpacing = Size(3);
             
-            [_infoWebView loadHTMLString:Localized(@"助记词的重要性！\n\n助记词是明文私钥的另一种表现形式, 最早是由BIP39提案提出, 其目的是为了帮助用户记忆复杂的私钥 (64位的哈希值)。\n \n     助记词一般由12、15、18、21个单词构成, 这些单词都取自一个固定词库, 其生成顺序也是按照一定算法而来, 所以用户没必要担心随便输入12个单词就会生成一个地址。虽然助记词和 Keystore 都可以作为私钥的另一种表现形式, 但与 Keystore 不同的是, 助记词是未经加密的私钥, 没有任何安全性可言,任何人得到了你的助记词, 可以不费吹灰之力的夺走你的资产。\n所以在用户在备份助记词之后, 一定要注意三点:\n\n1. 尽可能采用物理介质备份, 例如用笔抄在纸上等, 尽可能不要采用截屏或者拍照之后放在联网的设备里,以防被黑客窃取。\n\n2. 多次验证备份的助记词是否正确, 一旦抄错一两个单词, 那么将对后续找回正确的助记词带来巨大的困难;\n\n3. 将备份后的助记词妥善保管, 做好防盗防丢措施。\n\n\n\n小贴士：\n\n用户可以使用备份的助记词, 重新导入CEC钱包 ,用新的密码生成一个新的 Keystore, 用这种方法来修改钱包密码。", nil)];
+            UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, _infoWebView.width, Size(10))];
+            lb1.font = SystemFontOfSize(10);
+            lb1.textColor = TEXT_DARK_COLOR;
+            lb1.text = @"The importance of Phrase";
+            [_infoWebView addSubview:lb1];
+            
+            UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb1.maxY+Size(10), _infoWebView.width, Size(40))];
+            lb2.font = SystemFontOfSize(10);
+            lb2.textColor = TEXT_DARK_COLOR;
+            lb2.numberOfLines = 3;
+            lb2.text = @"The Phrase is another manifestation of the plaintext private key, first proposed by the BIP39 proposal, to help users remember complex private keys (64-bit hashes).";
+            NSMutableAttributedString *lb2Str = [[NSMutableAttributedString alloc] initWithString:lb2.text];
+            [lb2Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb2Str.length)];
+            lb2.attributedText = lb2Str;
+            [_infoWebView addSubview:lb2];
+            
+            UILabel *lb3 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb2.maxY+Size(10), _infoWebView.width, Size(90))];
+            lb3.font = SystemFontOfSize(10);
+            lb3.textColor = TEXT_DARK_COLOR;
+            lb3.numberOfLines = 8;
+            lb3.text = @"Phrase are generally composed of 12, 15, 18, 21 or 24 words. These words are taken from a fixed vocabulary. The order of generation is also based on a certain algorithm, So there is no need to worry about Generating an address by simply typing 12 words. Although both mnemonics and Keystore can be used as another form of private key, unlike Keystore, the Phrase is an unencrypted private key, without any security, anyone who has received your Phrase can take your assets without any hassle.";
+            NSMutableAttributedString *lb3Str = [[NSMutableAttributedString alloc] initWithString:lb3.text];
+            [lb3Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb3Str.length)];
+            lb3.attributedText = lb3Str;
+            [_infoWebView addSubview:lb3];
+            
+            UILabel *lb4 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb3.maxY+Size(10), _infoWebView.width, Size(190))];
+            lb4.font = SystemFontOfSize(10);
+            lb4.textColor = TEXT_DARK_COLOR;
+            lb4.numberOfLines = 20;
+            lb4.text = @"So after backup the Phrase, you should be sure to pay attention to three points:\n\n1. Use physical media backup as much as possible, such as using a pen to copy on paper, as far as possible not to take screenshots or take photos and put them on networked devices to prevent hackers from stealing\n\n2. Verify that the backup Phrase is correct multiple times. Once you have mistyped one or two words, it will bring great difficulties to the subsequent retrieval of the correct Phrase;\n\n3. Keep the backup Phrase in a safe place and take anti-theft and anti-lost measures.";
+            NSMutableAttributedString *lb4Str = [[NSMutableAttributedString alloc] initWithString:lb4.text];
+            [lb4Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb4Str.length)];
+            lb4.attributedText = lb4Str;
+            [_infoWebView addSubview:lb4];
+            
+            UILabel *lb5 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb4.maxY+Size(5), _infoWebView.width, Size(80))];
+            lb5.font = SystemFontOfSize(10);
+            lb5.textColor = TEXT_RED_COLOR;
+            lb5.numberOfLines = 6;
+            lb5.text = @"Tips:\nUsers can use the backup Phrase to re-import the SEC wallet, generate a new Keystore with the new password, and modify the wallet password in this way.";
+            NSMutableAttributedString *lb5Str = [[NSMutableAttributedString alloc] initWithString:lb5.text];
+            [lb5Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb5Str.length)];
+            lb5.attributedText = lb5Str;
+            [_infoWebView addSubview:lb5];
             
         }else if ([_titleStr isEqualToString:Localized(@"什么是Keystore？", nil)]) {
-            NSString *keystoreStr = @"{\"version\":\3\",\"id\":\"b7467fcb-3c8b-41bebccf-73d43a08c1b7\",\"address\":\"540f18196da5a533fa36577a81de55f0a2f4e751\",\"Crypto\":\"{\"ciphertext\":\"78ed11b8b6bf29b00f52b42b8542df0e4a6ac078e626af7edcf885c3b68154a4\",\"cipherparams\"{\"iv\":\"4516579601d96695fe30ace985a9066f\"},\"cipher\":\"aes-128ctr\",\"kdf\":\"scrypt\",\"kdfparams\"{\"dklen\"32,\"salt\":\"6276cfda7d40872352c801db5871e5a3368a8d0994cea39ed936760db78d1cdc\",\"n\":1024,\"r\":8,\"p\":1},\"mac\":\"d889a5dc609c3f312a41394cc47640676d2612501a6f8c837ed55598336db\"}\"";
-            NSString *infoStr = [NSString stringWithFormat:@"%@%@%@",Localized(@"Keystore文件是以太坊钱包存储私钥的一种文件格式 (JSON)。它使用用户自定义密码加密，以起到一定程度上的保护作用, 而保护的程度取决于用户加密该钱包的密码强度, 如果类似于 123456 这样的密码, 是极为不安全的。\n\n在使用 Keystore 时有两点需要注意:\n\n1. 使用不常用, 并且尽可能复杂的密码加密 Keystore文件;\n\n2. 一定要记住加密 Keystore 的密码, 一旦忘记密码,那么你就失去了 Keystore 的使用权, 并且CEC钱包无法帮你找回密码, 所以一定要妥善保管好 Keystore以及密码。\n\n下面是 Keystore 的样式:\n\n", nil),keystoreStr,Localized(@"\n\n\n\n小贴士：\n\nKeystore 的密码是唯一、不可更改的, 如果想更改钱包密码需要使用助记词或明文私钥重新导入钱包,并使用新密码加密, 生成新的 Keystore。", nil)];
-            [_infoWebView loadHTMLString:infoStr];
+
+            _infoWebView.frame = CGRectMake(titleLb.minX, KNaviHeight +Size(25), titleLb.width, kScreenHeight -titleLb.maxY);
+            NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineSpacing = Size(3);
+            UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, _infoWebView.width, Size(70))];
+            lb1.font = SystemFontOfSize(10);
+            lb1.textColor = TEXT_DARK_COLOR;
+            lb1.numberOfLines = 5;
+            lb1.text = @"The Keystore file is a file format (JSON) in which the SEC wallet stores private keys. It uses user-defined password encryption to provide a degree of protection, and the degree of protection depends on the password strength of the user encrypting the wallet. If a password like 123456 is extremely insecure.";
+            NSMutableAttributedString *lb1Str = [[NSMutableAttributedString alloc] initWithString:lb1.text];
+            [lb1Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb1Str.length)];
+            lb1.attributedText = lb1Str;
+            [_infoWebView addSubview:lb1];
+            
+            UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb1.maxY+Size(10), _infoWebView.width, Size(90))];
+            lb2.font = SystemFontOfSize(10);
+            lb2.textColor = TEXT_DARK_COLOR;
+            lb2.numberOfLines = 20;
+            lb2.text = @"There are two notes when using Keystore:\n1. Encrypt keystore files with passwords that are not commonly used and as complex as possible;\n2. Be sure to remember the password of the encrypted Keystore. Once you forget the password, you will lose the right to use the Keystore, and the SEC wallet will not be able to retrieve the password for you, so be sure to keep the Keystore and password.";
+            NSMutableAttributedString *lb2Str = [[NSMutableAttributedString alloc] initWithString:lb2.text];
+            [lb2Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb2Str.length)];
+            lb2.attributedText = lb2Str;
+            [_infoWebView addSubview:lb2];
+            
+            UILabel *lb3 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb2.maxY+Size(10), _infoWebView.width, Size(10))];
+            lb3.font = SystemFontOfSize(10);
+            lb3.textColor = TEXT_DARK_COLOR;
+            lb3.text = @"Here is the style of the keystore:";
+            [_infoWebView addSubview:lb3];
+            
+            UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(0, KNaviHeight +Size(25)+lb1.height +lb2.height+lb3.height+Size(30), kScreenWidth, Size(200))];
+            bkgView.backgroundColor = DARK_COLOR;
+            [self.view addSubview:bkgView];
+            UILabel *lb4 = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), Size(5), _infoWebView.width, bkgView.height -Size(10))];
+            lb4.font = SystemFontOfSize(7);
+            lb4.textColor = TEXT_DARK_COLOR;
+            lb4.numberOfLines = 100;
+            lb4.text = @"{\n\"version\":\3\",\n\"id\":\"b7467fcb-3c8b-41bebccf-73d43a08c1b7\",\n\"address\":\"540f18196da5a533fa36577a81de55f0a2f4e751\",\n\"Crypto\":\"{\n\"ciphertext\":\"78ed11b8b6bf29b00f52b42b8542df0e4a6ac078e626af7edcf885c3b68154a4\",\n\"cipherparams\"{\n\"iv\":\"4516579601d96695fe30ace985a9066f\"},\n\"cipher\":\"aes-128ctr\",\n\"kdf\":\"scrypt\",\n\"kdfparams\"{\n\"dklen\"32,\n\"salt\":\"6276cfda7d40872352c801db5871e5a3368a8d0994cea39ed936760db78d1cdc\",\n\"n\":1024,\n\"r\":8,\n\"p\":1},\n\"mac\":\"d889a5dc609c3f312a41394cc47640676d2612501a6f8c837ed55598336db\"\n}\n}";
+            paragraphStyle.lineSpacing = Size(2);
+            NSMutableAttributedString *lb4Str = [[NSMutableAttributedString alloc] initWithString:lb4.text];
+            [lb4Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb4Str.length)];
+            lb4.attributedText = lb4Str;
+            [bkgView addSubview:lb4];
+            
+            UILabel *lb5 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb3.maxY+Size(200 +5), _infoWebView.width, Size(80))];
+            lb5.font = SystemFontOfSize(10);
+            lb5.textColor = TEXT_RED_COLOR;
+            lb5.numberOfLines = 6;
+            lb5.text = @"Tips:\nKeystore password is unique and unchangeable. If you want to change the wallet password, you need to re-import it with a mnemonic or plaintext private key and encrypt it with a new one to generate a new Keystore.";
+            NSMutableAttributedString *lb5Str = [[NSMutableAttributedString alloc] initWithString:lb5.text];
+            [lb5Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb5Str.length)];
+            lb5.attributedText = lb5Str;
+            [_infoWebView addSubview:lb5];
             
         }else if ([_titleStr isEqualToString:Localized(@"什么是私钥？", nil)]) {
-            [_infoWebView loadHTMLString:Localized(@"我们常说, 你对钱包中资金的控制取决于相应私钥的所有权和控制权。在区块链交易中, 私钥用于生成支付货币所必须的签名, 以证明资金的所有权。私钥必须始终保持机密, 因为一旦泄露给第三方, 相当于该私钥保护下的资产也拱手相让了。它不同于Keystore是加密过后的私钥文件, 只要密码强度足够强, 即使黑客得到 Keystore, 破解难度也足够大。\n\n存储在用户钱包中的私钥完全独立, 可由用户的钱包软件生成并管理, 无需区块链或者网络连接。\n\n用户的钱包地址由公钥经过 keccak256 计算，截取后 40 位 + 0x 得到的。私钥的样式为64位16进制的哈希值字符串。例如:56f759ece75f0ab1b783893cbe390288978d4d4ff24dd233245b4285fcc31cf6\n\n小贴士：\n\n\n\n用户可以使用明文私钥导入CEC钱包, 用新的密码生成一个新的 Keystore (记得要将旧的 Keystore 删除), 用这种方法来修改钱包密码。", nil)];
+            NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineSpacing = Size(3);
+            
+            UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(0, Size(5), _infoWebView.width, Size(80))];
+            lb1.font = SystemFontOfSize(10);
+            lb1.textColor = TEXT_DARK_COLOR;
+            lb1.numberOfLines = 5;
+            lb1.text = @"We often say that your control over the funds in your wallet depends on the ownership and control of the corresponding private key. In blockchain transactions, the private key is used to generate the signature necessary to pay the currency to prove ownership of the funds.";
+            NSMutableAttributedString *lb1Str = [[NSMutableAttributedString alloc] initWithString:lb1.text];
+            [lb1Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb1Str.length)];
+            lb1.attributedText = lb1Str;
+            [_infoWebView addSubview:lb1];
+            
+            UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb1.maxY+Size(10), _infoWebView.width, Size(80))];
+            lb2.font = SystemFontOfSize(10);
+            lb2.textColor = TEXT_DARK_COLOR;
+            lb2.numberOfLines = 6;
+            lb2.text = @"The private key must always be kept secret, because once it is leaked to a third one, the assets under the protection of the private key are also handed over. It is different from Keystore. Keystore is an encrypted private key file. As long as the password strength is strong enough, even if the hacker gets Keystore, The difficulty of cracking is also large enough. ";
+            NSMutableAttributedString *lb2Str = [[NSMutableAttributedString alloc] initWithString:lb2.text];
+            [lb2Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb2Str.length)];
+            lb2.attributedText = lb2Str;
+            [_infoWebView addSubview:lb2];
+            
+            UILabel *lb3 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb2.maxY+Size(10), _infoWebView.width, Size(50))];
+            lb3.font = SystemFontOfSize(10);
+            lb3.textColor = TEXT_DARK_COLOR;
+            lb3.numberOfLines = 3;
+            lb3.text = @"The private keys stored in the user's wallet are completely independent and can be generated and managed by the user's wallet software without blockchain or network connection. ";
+            NSMutableAttributedString *lb3Str = [[NSMutableAttributedString alloc] initWithString:lb3.text];
+            [lb3Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb3Str.length)];
+            lb3.attributedText = lb3Str;
+            [_infoWebView addSubview:lb3];
+            
+            UILabel *lb4 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb3.maxY+Size(10), _infoWebView.width, Size(80))];
+            lb4.font = SystemFontOfSize(10);
+            lb4.textColor = TEXT_DARK_COLOR;
+            lb4.numberOfLines = 6;
+            lb4.text = @"The user's wallet address is calculated by the public key via keccak256 and truncated by 40 bits + 0x. The private key is a 64-bit hexadecimal hash string, for example: 56f759ece75f0ab1b783893cbe390288978d4d4ff24dd233245b4285fcc31cf6";
+            NSMutableAttributedString *lb4Str = [[NSMutableAttributedString alloc] initWithString:lb4.text];
+            [lb4Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb4Str.length)];
+            lb4.attributedText = lb4Str;
+            [_infoWebView addSubview:lb4];
+            
+            UILabel *lb5 = [[UILabel alloc]initWithFrame:CGRectMake(0, lb4.maxY+Size(15), _infoWebView.width, Size(80))];
+            lb5.font = SystemFontOfSize(10);
+            lb5.textColor = TEXT_RED_COLOR;
+            lb5.numberOfLines = 6;
+            lb5.text = @"Tips:\nUsers can use the clear text private key to import the SEC wallet, use the new password to generate a new Keystore (remember to delete the old Keystore), and use this method to modify the wallet password.";
+            NSMutableAttributedString *lb5Str = [[NSMutableAttributedString alloc] initWithString:lb5.text];
+            [lb5Str addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, lb5Str.length)];
+            lb5.attributedText = lb5Str;
+            [_infoWebView addSubview:lb5];
             
         }else{
             NSString *ducumentLocation = [[NSBundle mainBundle]pathForResource:@"RgsProtocol" ofType:@"docx"];
