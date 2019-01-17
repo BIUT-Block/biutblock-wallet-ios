@@ -35,8 +35,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = BACKGROUND_DARK_COLOR;
     
-//    [[Localized sharedInstance]initLanguage];
-    //默认使用英文
     [[Localized sharedInstance]setLanguage:@"en"];
     
     self.guideView = [[GuideViewController alloc] init];
@@ -47,9 +45,7 @@
     [Bugly startWithAppId:kBuglyAppId];
     // 启动图片延时: 2秒
     [NSThread sleepForTimeInterval:2];
-    
-//    [[NSNotificationCenter defaultCenter]  postNotificationName:NotificationUpdateTab object:[NSString stringWithFormat:@"%d",0]];
-    
+        
     return YES;
 }
 

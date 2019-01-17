@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 //--- 跳转通知
-#define NotificationUpdateTab                  @"update_tab"
 #define NotificationUpdateWalletPageView       @"update_WalletPageView"      //通知切换钱包列表
 #define NotificationUpdateWalletInfoUI         @"update_WalletInfoUI"      //通知更新钱包主页面
 

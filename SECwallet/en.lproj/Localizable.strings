@@ -10,6 +10,12 @@
 "首页"="Home";
 "我的"="My";
 
+"发现新版本"="Find New Version";
+"新版本特性"="New version features";
+"是否升级？"="Upgrading or not";
+"马上升级"="Now";
+"稍后升级"="Later";
+"版本号"="Version";
 "请备份"="Backup";
 "我的钱包"="My Wallet";
 "管理钱包"="Manage Wallet";
@@ -207,7 +213,6 @@
 "余额不足"="Insufficient balance";
 "小数点后只允许输入8位"="Only allow 8 bits after decimal point";
 
-
 "邮箱格式不正确，请重新输入"="The Email format is incorrect,Try again";
 "该地址已存在"="Address already exists";
 "请输入助记词"="Input Mnemonics";
@@ -218,11 +223,11 @@
 "助记词个数不够"="Mnemonics is error count";
 "助记词有误"="Mnemonics error";
 "助记词导入成功"="Mnemonics import success";
-"请输入KeyStore"="Please type in KeyStore";
+"请输入KeyStore"="Input KeyStore";
 "KeyStore长度不够"="KeyStore is error length";
 "密码不正确"="Password is error";
 "KeyStore导入成功"="KeyStore import success";
-"请输入私钥"="Please type in PrivateKey";
+"请输入私钥"="Input PrivateKey";
 "请输入正确的私钥"="PrivateKey is error";
 "私钥长度不够"="PrivateKey is error length";
 "私钥导入成功"="PrivateKey import success";

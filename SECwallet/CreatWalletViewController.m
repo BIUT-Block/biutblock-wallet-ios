@@ -142,6 +142,11 @@
     passwordTF.font = SystemFontOfSize(12);
     passwordTF.textColor = TEXT_BLACK_COLOR;
     passwordTF.placeholder = Localized(@"8~30位数字，英文字母以及特殊字符至少2种组合", nil);
+    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:passwordTF.placeholder];
+    [placeholder addAttribute:NSFontAttributeName
+                        value:SystemFontOfSize(8)
+                        range:NSMakeRange(0, passwordTF.placeholder.length)];
+    passwordTF.attributedPlaceholder = placeholder;
     passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
     passwordTF.secureTextEntry = YES;
     passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;

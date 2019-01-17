@@ -14,7 +14,12 @@
 #import "AddressListViewController.h"
 #import "RootViewController.h"
 
-@interface SettingViewController ()<UIActionSheetDelegate>
+@interface SettingViewController ()
+{
+    int _updateType;     //1不升级  2升级 3强制升级
+    NSString *APP_DownloadUrl;
+    UIButton *remindBT;
+}
 
 @end
 
@@ -32,6 +37,29 @@
     /**************导航栏布局***************/
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     self.view.backgroundColor = COLOR(243, 244, 245, 1);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //请求数据
+        [self checkVersion];
+    });
+}
+#pragma mark 版本检测
+-(void)checkVersion
+{
+    NSURL *zoneUrl = [NSURL URLWithString:@"http://scan.secblock.io/publishversionapi"];
+    NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+    NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
+    if (data != nil) {
+        NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        _updateType = [[dataDic objectForKey:@"status"] intValue];
+        APP_DownloadUrl = [dataDic objectForKey:@"link"];
+        if (_updateType == 2 || _updateType == 3) {
+            remindBT.hidden = NO;
+        }else{
+            remindBT.hidden = YES;
+        }
+    }else{
+        remindBT.hidden = YES;
+    }
 }
 
 - (void)addContentView
@@ -88,35 +116,32 @@
     [lnkBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:lnkBtn];
     
-//    CommonTableViewCell *exchangeCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-//    exchangeCell.frame = CGRectMake(addressCell.minX, addressCell.maxY +Size(8), addressCell.width, addressCell.height);
-//    exchangeCell.contentView.backgroundColor = WHITE_COLOR;
-//    exchangeCell.icon.image = [UIImage imageNamed:@"addressBook"];
-//    exchangeCell.staticTitleLb.text = Localized(@"切换语言",nil);
-//    exchangeCell.accessoryIV.image = [UIImage imageNamed:@"rightArrow"];
-//    [self.view addSubview:exchangeCell];
-//    UIButton *lnkBtn1 = [[UIButton alloc]initWithFrame:exchangeCell.frame];
-//    lnkBtn1.tag = 1003;
-//    [lnkBtn1 addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:lnkBtn1];
-    
     //版本提示
     UILabel *versionLb = [[UILabel alloc]initWithFrame:CGRectMake(0, addressCell.maxY +Size(40), kScreenWidth, Size(10))];
     versionLb.font = SystemFontOfSize(10);
     versionLb.textColor = TEXT_DARK_COLOR;
     versionLb.textAlignment = NSTextAlignmentCenter;
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    versionLb.text = [NSString stringWithFormat:@"V%@",app_Version];;
+    versionLb.text = [NSString stringWithFormat:@"%@：V%@",Localized(@"版本号", nil),app_Version];;
     [self.view addSubview:versionLb];
-    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(0, versionLb.maxY, kScreenWidth, Size(10))];
-    remindLb.font = SystemFontOfSize(10);
-    remindLb.textColor = TEXT_DARK_COLOR;
-    remindLb.textAlignment = NSTextAlignmentCenter;
-    remindLb.text = Localized(@"版本更新", nil);
-    [self.view addSubview:remindLb];
-    
+    remindBT = [[UIButton alloc]initWithFrame:CGRectMake(0, versionLb.maxY, kScreenWidth, Size(20))];
+    remindBT.titleLabel.font = SystemFontOfSize(10);
+    [remindBT setTitleColor:TEXT_DARK_COLOR forState:UIControlStateNormal];
+    [remindBT setTitle:Localized(@"版本更新", nil) forState:UIControlStateNormal];
+    [remindBT addTarget:self action:@selector(updateAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:remindBT];
+    remindBT.hidden = YES;
 }
 
+-(void)updateAction
+{
+    //升级跳转
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
+    //立即重启
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        exit(0);
+    });
+}
 #pragma mark - 快捷功能入口点击
 -(void)btnClick:(UIButton *)sender
 {
@@ -145,33 +170,8 @@
             [self.navigationController pushViewController:controller animated:YES];
         }
             break;
-        case 1003:
-            //切换语言
-        {
-            UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:Localized(@"切换语言",nil) delegate:self cancelButtonTitle:Localized(@"取消",nil) destructiveButtonTitle:Localized(@"简体中文", nil) otherButtonTitles:Localized(@"英文", nil), nil];
-            sheet.actionSheetStyle = UIActionSheetStyleDefault;
-            [sheet showInView:self.view];
-            sheet.delegate = self;
-        }
-            break;
         default:
             break;
-    }
-}
-
-#pragma UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        [[Localized sharedInstance]setLanguage:@"zh-Hans"];
-        RootViewController *controller = [[RootViewController alloc] init];
-        AppDelegateInstance.window.rootViewController = controller;
-        [AppDelegateInstance.window makeKeyAndVisible];
-    }else if (buttonIndex == 1) {
-        [[Localized sharedInstance]setLanguage:@"en"];
-        RootViewController *controller = [[RootViewController alloc] init];
-        AppDelegateInstance.window.rootViewController = controller;
-        [AppDelegateInstance.window makeKeyAndVisible];
     }
 }
 

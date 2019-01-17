@@ -16,6 +16,10 @@
 #define kTagItem 100
 
 @interface RootViewController ()<TabBarIconViewDelegate>
+{
+    int _updateType;     //1不升级  2升级 3强制升级
+    NSString *APP_DownloadUrl;
+}
 
 @end
 
@@ -25,15 +29,80 @@
     [super viewDidLoad];
     //隐藏底部黑线
     [self.tabBar setClipsToBounds:YES];
-    
     // 加载子视图控制器
     [self loadViewControllers];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self customTabBarView];
     });
-    
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(updateSelectedItem:) name:NotificationUpdateTab object:nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //请求数据
+        [self checkVersion];
+    });
+}
+
+#pragma mark 版本检测
+-(void)checkVersion
+{
+    NSURL *zoneUrl = [NSURL URLWithString:@"http://scan.secblock.io/publishversionapi"];
+    NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+    NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
+    if (data != nil) {
+        NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        NSString *versionName = [dataDic objectForKey:@"version"];
+        NSString *msg = [dataDic objectForKey:@"describ"];
+        _updateType = [[dataDic objectForKey:@"status"] intValue];
+        APP_DownloadUrl = [dataDic objectForKey:@"link"];
+        //1不升级  2非强制升级 3强制升级
+        if (_updateType == 2) {
+            //有app更新弹框
+            [self updateVersionByMsg:msg andVersionName:versionName andIsMust:NO];
+            
+        }else if (_updateType == 3) {
+            //有app更新弹框
+            [self updateVersionByMsg:msg andVersionName:versionName andIsMust:YES];
+        }
+    }else{
+        
+    }
+}
+
+-(void)updateVersionByMsg:(NSString *)msg andVersionName:(NSString *)versionName andIsMust:(BOOL)isMust
+{
+    if (isMust) {
+        UIAlertView* alertview =[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@V%@",Localized(@"发现新版本", nil),versionName] message:[NSString stringWithFormat:@"%@:\n%@\n%@",Localized(@"新版本特性", nil),msg, Localized(@"是否升级？", nil)] delegate:self cancelButtonTitle:nil otherButtonTitles:Localized(@"马上升级", nil), nil];
+        [alertview show];
+    }else{
+        UIAlertView* alertview =[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@V%@",Localized(@"发现新版本", nil),versionName] message:[NSString stringWithFormat:@"%@:\n%@\n%@",Localized(@"新版本特性", nil),msg, Localized(@"是否升级？", nil)] delegate:self cancelButtonTitle:Localized(@"稍后升级", nil) otherButtonTitles:Localized(@"马上升级", nil), nil];
+        [alertview show];
+    }
+}
+
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (_updateType == 3 && buttonIndex == 0) {
+        //升级跳转
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
+        //立即重启
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            exit(0);
+        });
+        
+    }else if (_updateType == 2 && buttonIndex == 1) {
+        //升级跳转
+        [alertView dismissWithClickedButtonIndex:0 animated:YES];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
+        //立即重启
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            exit(0);
+        });
+    }
 }
 
 - (void)customTabBarView
@@ -76,12 +145,6 @@
     // 添加标签控制器
     [self setViewControllers:vcs animated:YES];
     
-}
-
--(void) updateSelectedItem:(NSNotification *)notification
-{
-    NSString *itemIndex = (NSString *)[notification object];
-    [self setTabIndex:[itemIndex intValue] + kTagItem];
 }
 
 #pragma mark - TabBarIconViewDelegate
