@@ -52,7 +52,6 @@
             _walletModel = model;
         }
     }
-    
 }
 
 - (void)addSubView
@@ -263,7 +262,6 @@
         /***********更新当前选中的钱包位置信息***********/
         [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:@"0"];
         if (list.count > 0) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
             [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
         }
         [self backAction];
@@ -305,7 +303,6 @@
 -(void)delayMethod
 {
     [self hiddenLoadingView];
-//    [self hudShowWithString:Localized(@"保存成功", nil) delayTime:1.5];
     titLb.text = _walletModel.walletName;
     [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
 }

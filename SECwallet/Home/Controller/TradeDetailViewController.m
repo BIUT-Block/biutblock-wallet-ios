@@ -81,8 +81,9 @@
 #pragma TransferViewControllerDelegate 转账成功事件
 -(void)transferSuccess:(TokenCoinModel *)tokenCoinModel
 {
-//    _tokenCoinModel = tokenCoinModel;
     [self requestTransactionHash];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
+    
 }
 -(void) readTradeRecordListCache
 {

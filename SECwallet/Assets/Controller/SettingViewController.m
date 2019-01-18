@@ -93,7 +93,7 @@
         lb.textAlignment = NSTextAlignmentCenter;
         lb.text = titArr[i];
         [btView addSubview:lb];
-        UIButton *lnkBtn = [[UIButton alloc]initWithFrame:CGRectMake(iv.minX, btView.minY +iv.minY, btWidth, btWidth+lb.height)];
+        UIButton *lnkBtn = [[UIButton alloc]initWithFrame:CGRectMake(lb.minX, btView.minY +iv.minY, lb.width, btWidth+lb.height)];
         lnkBtn.tag = 1000+i;
         [lnkBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:lnkBtn];

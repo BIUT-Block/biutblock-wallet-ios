@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 
 //--- 跳转通知
-#define NotificationUpdateWalletPageView       @"update_WalletPageView"      //通知切换钱包列表
-#define NotificationUpdateWalletInfoUI         @"update_WalletInfoUI"      //通知更新钱包主页面
+#define NotificationUpdateWalletPageView       @"update_WalletPageView"      //通知更新钱包列表
 
 #define Size(x) ((x)*kScreenWidth/320.f)  //屏幕适配
 

@@ -78,9 +78,9 @@
     [pswStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(passwordDesLb.text.length-1,1)];
     passwordDesLb.attributedText = pswStr;
     [pswCell addSubview:passwordDesLb];
-    passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordDesLb.maxX +Size(10), passwordDesLb.minY, Size(120), pswCell.height)];
+    passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordDesLb.maxX +Size(10), passwordDesLb.minY, Size(160), pswCell.height)];
     passwordTF.delegate = self;
-    passwordTF.font = SystemFontOfSize(8);
+    passwordTF.font = SystemFontOfSize(12);
     passwordTF.textColor = TEXT_BLACK_COLOR;
     passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
     passwordTF.placeholder = Localized(@"请输入当前密码", nil);
@@ -104,9 +104,14 @@
     [newpswCell addSubview:newpasswordDesLb];
     newpasswordTF = [[UITextField alloc] initWithFrame:CGRectMake(newpasswordDesLb.maxX +Size(10), 0, passwordTF.width, newpswCell.height)];
     newpasswordTF.delegate = self;
-    newpasswordTF.font = SystemFontOfSize(8);
+    newpasswordTF.font = SystemFontOfSize(12);
     newpasswordTF.textColor = TEXT_BLACK_COLOR;
     newpasswordTF.placeholder = Localized(@"8~30位数字，英文字母以及特殊字符至少2种组合", nil);
+    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:newpasswordTF.placeholder];
+    [placeholder addAttribute:NSFontAttributeName
+                        value:SystemFontOfSize(8)
+                        range:NSMakeRange(0, newpasswordTF.placeholder.length)];
+    newpasswordTF.attributedPlaceholder = placeholder;
     newpasswordTF.keyboardType = UIKeyboardTypeASCIICapable;
     newpasswordTF.secureTextEntry = YES;
     newpasswordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -128,7 +133,7 @@
     [re_pswCell addSubview:re_passwordDesLb];
     re_passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordDesLb.maxX +Size(10), 0, passwordTF.width, passwordTF.height)];
     re_passwordTF.delegate = self;
-    re_passwordTF.font = SystemFontOfSize(8);
+    re_passwordTF.font = SystemFontOfSize(12);
     re_passwordTF.textColor = TEXT_BLACK_COLOR;
     re_passwordTF.placeholder = Localized(@"请再次确认密码", nil);
     re_passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
@@ -146,14 +151,14 @@
     passwordTipDesLb.text = Localized(@"密码提示", nil);
     [pswTipCell addSubview:passwordTipDesLb];
     passwordTipTF = [[UITextField alloc] initWithFrame:CGRectMake(passwordTipDesLb.maxX +Size(10), 0, re_passwordTF.width, pswTipCell.height)];
-    passwordTipTF.font = SystemFontOfSize(10);
+    passwordTipTF.font = SystemFontOfSize(12);
     passwordTipTF.textColor = TEXT_BLACK_COLOR;
     passwordTipTF.placeholder = Localized(@"选填", nil);
     passwordTipTF.delegate = self;
     [pswTipCell addSubview:passwordTipTF];
     
     UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(70), pswTipCell.maxY +Size(30), pswTipCell.width, Size(30))];
-    desLb.font = SystemFontOfSize(9);
+    desLb.font = SystemFontOfSize(10);
     desLb.textColor = TEXT_DARK_COLOR;
     desLb.numberOfLines = 2;
     desLb.text = Localized(@"忘记密码？\n导入助记词或私钥可重置密码", nil);

@@ -16,12 +16,14 @@
 #import "TokenCoinListViewController.h"
 #import "WalletDetailViewController.h"
 
-#import "CardPageView.h"
+#import "WalletListCollectionViewCell.h"
+#import "WalletListFlowLayout.h"
+#import "CommonPageControl.h"
 #import "JXMovableCellTableView.h"
 
 #define kHeaderHeight    Size(195)
 
-@interface AssetsViewController ()<JXMovableCellTableViewDataSource,JXMovableCellTableViewDelegate,CardPageViewDelegate>
+@interface AssetsViewController ()<JXMovableCellTableViewDataSource,JXMovableCellTableViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate>
 {
     NSMutableArray *_walletList;  //钱包列表
     WalletModel *currentWallet;
@@ -38,7 +40,8 @@
     UIButton *moreBT;
 }
 
-@property (nonatomic, strong) CardPageView *walletListPageView;   //钱包列表滚动视图
+@property (nonatomic,strong) UICollectionView *walletListView;
+@property (nonatomic,strong) CommonPageControl *pageControl;
 @property (nonatomic, strong) JXMovableCellTableView *infoTableView;
 
 @end
@@ -61,11 +64,9 @@
     [self addNoNetworkView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:NotificationUpdateWalletPageView object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUI) name:NotificationUpdateWalletInfoUI object:nil];
     
-    if (_walletList.count > 1) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
-    }
+    [self refreshWallet:[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue] clearCache:YES];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -77,30 +78,13 @@
         //网络监听
         [self networkManager];
     });
-    /***********获取当前钱包信息***********/
-    NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
-    NSData* datapath = [NSData dataWithContentsOfFile:path];
-    NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
-    NSMutableArray *list = [NSMutableArray array];
-    list = [unarchiver decodeObjectForKey:@"walletList"];
-    [unarchiver finishDecoding];
-    if (list.count == 1) {
-        [self refreshWallet:0 clearCache:NO];
-    }
 }
 
 //刷新页面数据
 -(void)updateData
 {
-    //清除记录缓存
     fromNotifi = YES;
-    [CacheUtil clearTokenCoinTradeListCacheFile];
-    [self refreshWallet:[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue] clearCache:YES];
-}
-
-//刷新页面
--(void)updateUI
-{
+    
     NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
     NSData* datapath = [NSData dataWithContentsOfFile:path];
     NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:datapath];
@@ -108,12 +92,14 @@
     _walletList = [unarchiver decodeObjectForKey:@"walletList"];
     [unarchiver finishDecoding];
     currentWallet = _walletList[[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue]];
+    [_walletListView reloadData];
     
-    for (UIView *view in self.view.subviews) {
-        [view removeFromSuperview];
-    }
-    [self addSubView];
-    [self addNoNetworkView];
+    [self refreshWallet:[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue] clearCache:YES];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[AppDefaultUtil sharedInstance].defaultWalletIndex integerValue] inSection:0];
+    [_walletListView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    _pageControl.numberOfPages = _walletList.count;
+    _pageControl.currentPage = [[AppDefaultUtil sharedInstance].defaultWalletIndex intValue];
+    fromNotifi = NO;
 }
 
 - (void)addSubView
@@ -126,13 +112,29 @@
     [moreBT addTarget:self action:@selector(rightClick) forControlEvents:UIControlEventTouchUpInside];
     [moreBT setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
     [self.view addSubview:moreBT];
-     
-    _walletListPageView = [[CardPageView alloc]initWithFrame:CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight) withWalletList:_walletList];
-    _walletListPageView.backgroundColor = CLEAR_COLOR;
-    _walletListPageView.delegate = self;
-    [self.view addSubview:_walletListPageView];
+
+    UICollectionViewFlowLayout *layout = [[WalletListFlowLayout alloc]init];
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    layout.minimumLineSpacing = Size(10);   //列间距
+    layout.minimumInteritemSpacing = Size(5);  //item之间的间距
+    layout.itemSize = CGSizeMake(kScreenWidth-Size(40), kHeaderHeight-Size(35));
+    _walletListView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight -Size(35)) collectionViewLayout:layout];
+    [_walletListView registerClass:[WalletListCollectionViewCell class] forCellWithReuseIdentifier:@"CollectionViewCell"];
+    _walletListView.backgroundColor = CLEAR_COLOR;
+    _walletListView.showsHorizontalScrollIndicator = NO;
+    _walletListView.delegate = self;
+    _walletListView.dataSource = self;
+    [self.view addSubview:_walletListView];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[AppDefaultUtil sharedInstance].defaultWalletIndex integerValue] inSection:0];
+    [_walletListView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    _pageControl = [[CommonPageControl alloc]initWithFrame:CGRectMake(0, _walletListView.maxY, kScreenWidth, Size(36))];
+    _pageControl.numberOfPages = _walletList.count;
+    [_pageControl setPageIndicatorTintColor:COLOR(215, 216, 217, 1)];
+    [_pageControl setCurrentPageIndicatorTintColor:TEXT_GREEN_COLOR];
+    [self.view addSubview:_pageControl];
+    _pageControl.currentPage = [[AppDefaultUtil sharedInstance].defaultWalletIndex intValue];
     
-    _infoTableView = [[JXMovableCellTableView alloc]initWithFrame:CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight) style:UITableViewStyleGrouped];
+    _infoTableView = [[JXMovableCellTableView alloc]initWithFrame:CGRectMake(Size(20), _pageControl.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight) style:UITableViewStyleGrouped];
     _infoTableView.backgroundColor = CLEAR_COLOR;
     _infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _infoTableView.showsVerticalScrollIndicator = NO;
@@ -140,6 +142,53 @@
     _infoTableView.dataSource = self;
     _infoTableView.longPressGesture.minimumPressDuration = 0.5;
     [self.view addSubview:_infoTableView];
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return _walletList.count;
+}
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    if (_walletList.count == 1) {
+        return UIEdgeInsetsMake(0, Size(25), 0, Size(25));
+    }else{
+        return UIEdgeInsetsMake(0, Size(20), 0, Size(20));
+    }
+}
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    WalletListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];
+    WalletModel *model = _walletList[indexPath.row];
+    cell.bkgIV.image = [UIImage imageNamed:@"walletBkg0"];
+    cell.nameLb.text = model.walletName;
+    cell.totalSumLb.text = [NSString stringWithFormat:@"%@",model.balance];
+    [cell.addressBT setTitle:[NSString addressToAsterisk:model.address] forState:UIControlStateNormal];
+    cell.addressBT.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [cell.addressBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.addressBT.tag = 1000;
+    //备份按钮
+    [cell.backupBT setTitle:Localized(@"请备份", nil) forState:UIControlStateNormal];
+    if (model.isBackUpMnemonic == NO) {
+        cell.backupBT.hidden = NO;
+        cell.backupBT.tag = 1001;
+        [cell.backupBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        cell.backupBT.hidden = YES;
+    }
+    [cell.codeBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.codeBT.tag = 1000;
+    return cell;
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    int index = (scrollView.contentOffset.x+_walletListView.width/2)/(kScreenWidth -Size(40));
+    _pageControl.currentPage = index;
+}
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    int index = (scrollView.contentOffset.x+_walletListView.width/2)/(kScreenWidth -Size(40)+Size(5));
+    [self refreshWallet:index clearCache:YES];
 }
 
 #pragma mark - JXMovableCellTableViewDataSource
@@ -189,7 +238,7 @@
     return cell;
 }
 
-#pragma mark - JXMovableCellTableViewDelegate
+#pragma mark - UICollectionViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //资产详情
@@ -250,31 +299,6 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-#pragma mark - CardPageViewDelegate
--(void)backUpMnemonicAction
-{
-    WalletDetailViewController *viewController = [[WalletDetailViewController alloc]init];
-    viewController.walletModel = currentWallet;
-    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-    [self presentViewController:navi animated:YES completion:nil];
-}
-
--(void)showAddressCodeAction
-{
-    AddressCodePayViewController *viewController = [[AddressCodePayViewController alloc] init];
-    viewController.walletModel = currentWallet;
-    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-    [self presentViewController:navi animated:YES completion:nil];
-}
-
--(void)addTokenCoinAction
-{
-    TokenCoinListViewController *viewController = [[TokenCoinListViewController alloc]init];
-    viewController.walletModel = currentWallet;
-    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-    [self presentViewController:navi animated:YES completion:nil];
-}
-
 -(void)refreshWallet:(int)page clearCache:(BOOL)clearCache
 {
     /***********更新当前选中的钱包位置信息***********/
@@ -283,7 +307,6 @@
     if (clearCache == YES) {
         [CacheUtil clearTokenCoinTradeListCacheFile];
     }
-    
     //重新获取钱包
     NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
     NSData* datapath = [NSData dataWithContentsOfFile:path];
@@ -293,7 +316,7 @@
     [unarchiver finishDecoding];
     currentWallet = _walletList[page];
     assetsList = _walletList;
-    
+
     if (fromNotifi == NO) {
         [self createLoadingView:nil];
     }
@@ -329,25 +352,16 @@
         [archiver finishEncoding];
         [data writeToFile:path atomically:YES];
         
+        [_walletListView reloadData];
+        
         /*************获取钱包代币信息*************/
         TokenCoinModel *model = [[TokenCoinModel alloc]init];
         model.icon = @"SEC";
         model.name = @"SEC";
         model.tokenNum = currentWallet.balance;
         _dataArrays = [NSMutableArray arrayWithObject:model];
-        
-        if (assetsList.count == 1) {
-            for (UIView *view in self.view.subviews) {
-                [view removeFromSuperview];
-            }
-            [self addSubView];
-            [self addNoNetworkView];
-        }else{
-            _walletListPageView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight);
-            _infoTableView.frame = CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
-            [_infoTableView reloadData];
-        }
-        
+        [_infoTableView reloadData];
+                
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self hiddenLoadingView];
         [self hudShowWithString:Localized(@"数据获取失败", nil) delayTime:1.5];
@@ -365,12 +379,14 @@
         if (status == 0) {
             //无网络视图
             noNetworkBT.hidden = NO;
-            _walletListPageView.frame = CGRectMake(0, noNetworkBT.maxY, kScreenWidth, kHeaderHeight);
-            _infoTableView.frame = CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
+            _walletListView.frame = CGRectMake(0, noNetworkBT.maxY, kScreenWidth, kHeaderHeight-Size(35));
+            _pageControl.frame = CGRectMake(0, _walletListView.maxY, kScreenWidth, Size(36));
+            _infoTableView.frame = CGRectMake(Size(20), _pageControl.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
         }else{
             noNetworkBT.hidden = YES;
-            _walletListPageView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight);
-            _infoTableView.frame = CGRectMake(Size(20), _walletListPageView.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
+            _walletListView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight -Size(35));
+            _pageControl.frame = CGRectMake(0, _walletListView.maxY, kScreenWidth, Size(36));
+            _infoTableView.frame = CGRectMake(Size(20), _pageControl.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
         }
     }];
 }
@@ -385,6 +401,30 @@
     [noNetworkBT setTitle:[NSString stringWithFormat:@"  %@",Localized(@"当前没有网络连接", nil)] forState:UIControlStateNormal];
     [self.view addSubview:noNetworkBT];
     noNetworkBT.hidden = YES;
+}
+
+-(void)btnClick:(UIButton *)sender
+{
+    switch (sender.tag) {
+        case 1000:
+        {
+            AddressCodePayViewController *viewController = [[AddressCodePayViewController alloc] init];
+            viewController.walletModel = currentWallet;
+            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
+            [self presentViewController:navi animated:YES completion:nil];
+        }
+            break;
+        case 1001:
+        {
+            WalletDetailViewController *viewController = [[WalletDetailViewController alloc]init];
+            viewController.walletModel = currentWallet;
+            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
+            [self presentViewController:navi animated:YES completion:nil];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 @end

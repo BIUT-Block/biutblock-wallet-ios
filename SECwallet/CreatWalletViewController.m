@@ -11,7 +11,6 @@
 #import "RootViewController.h"
 #import "BackupRemindViewController.h"
 #import "ImportWalletManageViewController.h"
-#import "CommonHtmlShowViewController.h"
 #import "WalletModel.h"
 #import "SECwallet-Swift.h"
 
@@ -33,7 +32,6 @@
     UILabel *re_passwordErrorLb;
     
     UITextField *passwordTipTF;   //密码提示
-    UIButton *agreementBtn;  //用户协议
     
     UIButton *creatBT;
     WalletModel *tempModel;
@@ -191,33 +189,9 @@
     passwordTipTF.placeholder = Localized(@"选填", nil);
     passwordTipTF.delegate = self;
     [self.view addSubview:passwordTipTF];
-    
-    /*****************用户协议*****************/
-    NSString *str = Localized(@" 我已仔细阅读并同意", nil);
-    CGSize size = [str calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
-    agreementBtn = [[UIButton alloc] initWithFrame:CGRectMake(passwordTipDesLb.minX, passwordTipTF.maxY + Size(17),size.width +Size(20), Size(20))];
-    [agreementBtn setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
-    [agreementBtn setTitle:str forState:UIControlStateNormal];
-    agreementBtn.titleLabel.font = BoldSystemFontOfSize(8);
-    [agreementBtn setImage:[UIImage imageNamed:@"assets_protocolun"] forState:UIControlStateNormal];
-    [agreementBtn setImage:[UIImage imageNamed:@"assets_protocol"] forState:UIControlStateSelected];
-    agreementBtn.selected = NO;
-    [agreementBtn addTarget:self action:@selector(agreementBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:agreementBtn];
-    
-    //协议内容
-    NSString *seeStr = Localized(@"服务条款", nil);
-    CGSize seesSize = [seeStr calculateSize:BoldSystemFontOfSize(8) maxWidth:kScreenWidth];
-    UIButton *seeProtocol = [[UIButton alloc]initWithFrame:CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height)];
-    seeProtocol.titleLabel.font = BoldSystemFontOfSize(8);
-    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:Localized(@"服务条款", nil)];
-    [attStr addAttribute:NSForegroundColorAttributeName value:COLOR(56, 142, 218, 1) range:NSMakeRange(0, attStr.length)];
-    [seeProtocol setAttributedTitle:attStr forState:UIControlStateNormal];
-    [seeProtocol addTarget:self action:@selector(seeProtocol) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:seeProtocol];
 
     /*****************创建钱包*****************/
-    creatBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), agreementBtn.maxY +Size(13), kScreenWidth - 2*Size(20), Size(45))];
+    creatBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), passwordTipTF.maxY +Size(40), kScreenWidth - 2*Size(20), Size(45))];
     [creatBT darkBtnStyle:Localized(@"创建钱包", nil)];
     [creatBT addTarget:self action:@selector(creatAction) forControlEvents:UIControlEventTouchUpInside];
     creatBT.userInteractionEnabled = NO;
@@ -254,25 +228,15 @@
         re_pswCell.contentView.backgroundColor = DARK_COLOR;
     }
 }
-//协议
--(void)agreementBtnAction:(UIButton *)btn
+-(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    agreementBtn.selected = !agreementBtn.selected;
-    if (!agreementBtn.selected) {
-        [creatBT darkBtnStyle:Localized(@"创建钱包", nil)];
-        creatBT.userInteractionEnabled = NO;
-    }else{
+    if (walletNameTF.text.length > 0 && passwordTF.text.length > 0 && re_passwordTF.text.length > 0) {
         [creatBT goldBigBtnStyle:Localized(@"创建钱包", nil)];
         creatBT.userInteractionEnabled = YES;
+    }else{
+        [creatBT darkBtnStyle:Localized(@"创建钱包", nil)];
+        creatBT.userInteractionEnabled = NO;
     }
-}
-//查看协议
--(void)seeProtocol
-{
-    CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
-    viewController.titleStr = @"SEC钱包服务协议";
-    viewController.commonHtmlShowViewType = CommonHtmlShowViewType_RgsProtocol;
-    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark 创建钱包 
@@ -361,7 +325,7 @@
             //随机生成钱包ICON
             int i = arc4random() % 2;
             NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
-            tempModel = [[WalletModel alloc]initWithWalletName:walletNameTF.text andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKey andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:0 andIsFromMnemonicImport:0];
+            tempModel = [[WalletModel alloc]initWithWalletName:walletNameTF.text andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:0 andIsFromMnemonicImport:0];
             
             /*************先获取钱包列表将最新钱包排在末尾并设置为默认钱包*************/
             NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];

@@ -65,11 +65,6 @@
     contentLb.textColor = COLOR(85, 101, 110, 1);
     contentLb.numberOfLines = 3;
     contentLb.text = Localized(@"备份钱包：导出[助记词]并抄写到安全的地方，千万不要保存到网络上。\n然后尝试转入，转出小额资产开始使用。", nil);
-//    NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:contentLb.text];
-//    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-//    paragraphStyle.lineSpacing = Size(2);
-//    [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
-//    contentLb.attributedText = msgStr;
     [self.view addSubview:contentLb];
     contentLb.textAlignment = NSTextAlignmentCenter;
     /*****************下一步*****************/
@@ -85,7 +80,6 @@
     RootViewController *controller = [[RootViewController alloc] init];
     AppDelegateInstance.window.rootViewController = controller;
     [AppDelegateInstance.window makeKeyAndVisible];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
 }
 
 -(void)backupAction

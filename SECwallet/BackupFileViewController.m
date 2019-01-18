@@ -186,10 +186,6 @@
             RootViewController *controller = [[RootViewController alloc] init];
             AppDelegateInstance.window.rootViewController = controller;
             [AppDelegateInstance.window makeKeyAndVisible];
-            
-            /*************创建钱包成功后删除之前代币数据缓存*************/
-            [CacheUtil clearTokenCoinTradeListCacheFile];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
         };
     }else{
         CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"备份失败", nil) contentText:Localized(@"请检查您的助记词", nil) imageName:@"exclamation_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_exclamation_mark];

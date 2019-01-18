@@ -87,20 +87,19 @@
 "暂无网络链接"="No Network Connection";
 "重试"="Retry";
 "当前没有网络连接"="There is currently no network connection";
-"确认密码*"="Confirm Password*";
-"请再次确认密码"="Repeat the Password again";
+"确认密码*"="Repeat Password*";
+"请再次确认密码"="Repeat Password again";
 "密码提示"="Password prompt";
 "选填"="optional";
-" 我已仔细阅读并同意"="   I have read and agreed to";
-"服务条款"="the Servive and Privacy Policy";
 "挖矿"="Mined";
 "交易打包中"="Transfer Pending";
 "转入成功"="Receive Successful";
 "转出成功"="Send Successful";
 "开始导入"="Start Importing";
 "直接复制粘贴以太坊官方钱包keyStore文件内容至输入框。"="Copy and paste the contents of the Ethereum official wallet keystore file directly into the input box. ";
-"keyStore密码"="keyStore password";
-"keystore文本内容"="keystore text content";
+"KeyStore密码*"="KeyStore password*";
+"KeyStore密码"="KeyStore password";
+"Keystore文本内容"="Keystore text content";
 "明文私钥"="privateKey";
 
 "点击添加"="Click to Add";
@@ -146,7 +145,7 @@
 "请输入当前密码"="Input Current Password";
 "新密码*"="New Password*";
 "请输入新密码"="Input new password";
-"请再次输入密码"="Repeat The Password";
+"请再次输入密码"="Repeat Password";
 "密码提示"="Password prompt";
 "马上导入"="Import Now";
 "忘记密码？\n导入助记词或私钥可重置密码"="Forget Password?\nImport Mnemonic or PrivateKey to reset the password";
@@ -198,7 +197,7 @@
 "游戏"="Games";
 "分享"="Share";
 "打开SEC浏览器查看更多详情"="Enter SECBlock for more details";
-"钱包个数超过限制"="The number of wallets exceeded the limit";
+"钱包个数超过10个"="The limit number of wallets is 10";
 
 
 /****************HUD提示文本********************/
@@ -218,14 +217,14 @@
 "请输入助记词"="Input Mnemonics";
 "请输入8~30位密码"="Input 8~30characters password";
 "请输入数字和字母组合密码"="Input a Numbers and letters password";
-"两次密码输入不一致，请重新输入！"="Two passwords are inconsistent,Try again";
+"两次密码输入不一致，请重新输入！"="Two passwords are inconsistent";
 "助记词长度不够"="Mnemonics is error length";
 "助记词个数不够"="Mnemonics is error count";
 "助记词有误"="Mnemonics error";
 "助记词导入成功"="Mnemonics import success";
 "请输入KeyStore"="Input KeyStore";
 "KeyStore长度不够"="KeyStore is error length";
-"密码不正确"="Password is error";
+"keyStore解密失败"="KeyStore decrypt error";
 "KeyStore导入成功"="KeyStore import success";
 "请输入私钥"="Input PrivateKey";
 "请输入正确的私钥"="PrivateKey is error";
@@ -233,7 +232,6 @@
 "私钥导入成功"="PrivateKey import success";
 "导入失败，请重新输入"="Import faild,Try again";
 "密码不能为空"="Input Password";
-"密码不正确"="Password is error";
 "保存成功"="Successfully saved";
 "钱包已存在"="Wallet Exists";
 "请输入钱包名称"="Input Wallet Name";

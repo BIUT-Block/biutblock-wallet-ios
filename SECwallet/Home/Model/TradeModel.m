@@ -22,6 +22,9 @@
         }
         //转账地址
         _transferAddress = [NSString jsonUtils:dictionary[@"TxFrom"]];
+        if ([_transferAddress isEqualToString:@"0000000000000000000000000000000000000000"]) {
+            _type = 3;
+        }
         _sum = [NSString jsonUtils:dictionary[@"Value"]];
         
         NSString *statusStr = [NSString jsonUtils:dictionary[@"TxReceiptStatus"]];
@@ -33,6 +36,7 @@
         }else if ([statusStr isEqualToString:@"pending"]) {
             _status = 2;
         }
+        
         NSInteger gasPrice = [[NSString jsonUtils:dictionary[@"GasPrice"]] integerValue];
         NSInteger gasUsed = [[NSString jsonUtils:dictionary[@"GasUsedByTxn"]] integerValue];
         NSInteger gas = gasPrice * gasUsed;  //CumulativeGasUsed

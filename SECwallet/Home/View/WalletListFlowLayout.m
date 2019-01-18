@@ -1,35 +1,20 @@
 //
-//  CollectionFlowLayout.m
-//  CollectionCardPage
+//  WalletListFlowLayout.m
+//  SECwallet
 //
-//  Created by ymj_work on 16/5/23.
-//  Copyright © 2016年 ymj_work. All rights reserved.
+//  Created by 通证控股 on 2019/1/18.
+//  Copyright © 2019 通证控股. All rights reserved.
 //
 
-#import "CollectionFlowLayout.h"
+#import "WalletListFlowLayout.h"
 
-@interface CollectionFlowLayout ()
-
-@property (nonatomic, assign) NSInteger currentPage;
-
-@end
-
-@implementation CollectionFlowLayout
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:NotificationUpdateWalletPageView object:nil];
-    }
-    return self;
-}
+@implementation WalletListFlowLayout
 
 -(void)prepareLayout{
     [super prepareLayout];
     //每个section的inset，用来设定最左和最右item距离边界的距离，此处设置在中间
     CGFloat inset = (self.collectionView.frame.size.width - self.itemSize.width) /2;
-    self.sectionInset = UIEdgeInsetsMake(0, inset, 0, inset);    
+    self.sectionInset = UIEdgeInsetsMake(0, inset, 0, inset);
 }
 
 -(BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds{
@@ -42,27 +27,6 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[AppDefaultUtil sharedInstance].defaultWalletIndex integerValue] inSection:0];
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
-
-////cell缩放的设置
-//-(NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect{
-//    //取出父类算出的布局属性
-//    //不能直接修改需要copy
-//    NSArray * original = [super layoutAttributesForElementsInRect:rect];
-//    NSArray * attsArray = [[NSArray alloc] initWithArray:original copyItems:YES];
-//    //    NSArray *attsArray = [super layoutAttributesForElementsInRect:rect];
-//    
-//    //collectionView中心点的值
-//    //屏幕中心点对应于collectionView中content位置
-//    CGFloat centerX = self.collectionView.frame.size.width / 2 + self.collectionView.contentOffset.x;
-//    //cell中的item一个个取出来进行更改
-//    for (UICollectionViewLayoutAttributes *atts in attsArray) {
-//        // cell的中心点x 和 屏幕中心点 的距离
-//        CGFloat space = ABS(atts.center.x - centerX);
-//        CGFloat scale = 1 - (space/self.collectionView.frame.size.width/5);
-//        atts.transform = CGAffineTransformMakeScale(scale, scale);
-//    }
-//    return attsArray;
-//}
 
 //设置滑动停止时的collectionView的位置
 -(CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity{
@@ -90,6 +54,5 @@
     proposedContentOffset.x += minSpace;
     return proposedContentOffset;
 }
-
 
 @end

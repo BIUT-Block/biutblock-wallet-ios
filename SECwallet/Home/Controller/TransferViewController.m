@@ -279,10 +279,8 @@
                 NSDictionary *dic = responseObject;
                 NSInteger status = [dic[@"status"] integerValue];
                 if (status == 1) {
-//                    [self hudShowWithString:@"转账成功" delayTime:3];
                     [self backAction];
                     [self.delegate transferSuccess:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
                     
                 }else{
                     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:Localized(@"转账失败", nil) message:nil delegate:nil cancelButtonTitle:Localized(@"知道了", nil) otherButtonTitles:nil, nil];

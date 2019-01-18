@@ -7,7 +7,6 @@
 //
 
 #import "ImportWalletViewController.h"
-#import "CommonHtmlShowViewController.h"
 #import "WalletModel.h"
 #import "RootViewController.h"
 #import "IQKeyboardManager.h"
@@ -39,8 +38,6 @@
     UILabel *passwordTipDesLb;
     UITextField *passwordTipTF;
     
-    UIButton *agreementBtn;
-    UIButton *seeProtocol;
     UIButton *importBT;
     
     UILabel *importTipLb;
@@ -158,31 +155,8 @@
     passwordTipTF.delegate = self;
     [self.view addSubview:passwordTipTF];
     
-    /*****************用户协议*****************/
-    NSString *str = Localized(@" 我已仔细阅读并同意", nil);
-    CGSize size = [str calculateSize:BoldSystemFontOfSize(9) maxWidth:kScreenWidth];
-    agreementBtn = [[UIButton alloc] initWithFrame:CGRectMake(inputTV.minX, passwordTipTF.maxY + Size(17),size.width +Size(20), Size(20))];
-    [agreementBtn setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
-    [agreementBtn setTitle:str forState:UIControlStateNormal];
-    agreementBtn.titleLabel.font = BoldSystemFontOfSize(9);
-    [agreementBtn setImage:[UIImage imageNamed:@"assets_protocolun"] forState:UIControlStateNormal];
-    [agreementBtn setImage:[UIImage imageNamed:@"assets_protocol"] forState:UIControlStateSelected];
-    agreementBtn.selected = NO;
-    [agreementBtn addTarget:self action:@selector(agreementBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:agreementBtn];
-    //协议内容
-    NSString *seeStr = Localized(@"服务条款", nil);
-    CGSize seesSize = [seeStr calculateSize:BoldSystemFontOfSize(9) maxWidth:kScreenWidth];
-    seeProtocol = [[UIButton alloc]initWithFrame:CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height)];
-    seeProtocol.titleLabel.font = BoldSystemFontOfSize(9);
-    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc]initWithString:Localized(@"服务条款", nil)];
-    [attStr addAttribute:NSForegroundColorAttributeName value:COLOR(56, 142, 218, 1) range:NSMakeRange(0, attStr.length)];
-    [seeProtocol setAttributedTitle:attStr forState:UIControlStateNormal];
-    [seeProtocol addTarget:self action:@selector(seeProtocol) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:seeProtocol];
-    
     /*****************导入钱包*****************/
-    importBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), agreementBtn.maxY +Size(13), kScreenWidth - 2*Size(20), Size(45))];
+    importBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), passwordTipTF.maxY +Size(35), kScreenWidth - 2*Size(20), Size(45))];
     [importBT darkBtnStyle:Localized(@"开始导入", nil)];
     [importBT addTarget:self action:@selector(beginImportAction) forControlEvents:UIControlEventTouchUpInside];
     importBT.userInteractionEnabled = NO;
@@ -206,12 +180,15 @@
         inputTV.frame = CGRectMake(importTipLb.minX, importTipLb.maxY +Size(18), importTipLb.width, KInputTVViewHeight);
         
         passwordDesLb.frame = CGRectMake(inputTV.minX, inputTV.maxY +Size(20), inputTV.width, KInputDesViewHeight);
-        passwordDesLb.text = Localized(@"keyStore密码", nil);
+        passwordDesLb.text = Localized(@"KeyStore密码*", nil);
+        NSMutableAttributedString *passwordStr = [[NSMutableAttributedString alloc] initWithString:passwordDesLb.text];
+        [passwordStr addAttribute:NSForegroundColorAttributeName value:TEXT_RED_COLOR range:NSMakeRange(passwordDesLb.text.length-1,1)];
+        passwordDesLb.attributedText = passwordStr;
         pswCell.frame = CGRectMake(inputTV.minX, passwordDesLb.maxY, inputTV.width, Size(36));
         passwordTF.frame = CGRectMake(inputTV.minX +Size(10), passwordDesLb.maxY, inputTV.width-Size(20), pswCell.height);
         passwordTF.placeholder = nil;
         passwordTF.secureTextEntry = YES;
-        passwordTF.placeholder = Localized(@"keyStore密码", nil);
+        passwordTF.placeholder = Localized(@"KeyStore密码", nil);
         passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
         re_pswCell.hidden = YES;
         re_passwordDesLb.hidden = YES;
@@ -220,38 +197,13 @@
         passwordTipDesLb.hidden = YES;
         passwordTipTF.hidden = YES;
         
-        agreementBtn.frame = CGRectMake(inputTV.minX, pswCell.maxY + Size(17),size.width +Size(20), Size(20));
-        seeProtocol.frame = CGRectMake(agreementBtn.maxX, agreementBtn.minY, seesSize.width, agreementBtn.height);
-        importBT.frame = CGRectMake(Size(20), agreementBtn.maxY +Size(13), kScreenWidth - 2*Size(20), Size(45));
-        
-        placeholderLb.text = Localized(@"keystore文本内容", nil);
+        importBT.frame = CGRectMake(Size(20), pswCell.maxY +Size(35), kScreenWidth - 2*Size(20), Size(45));
+        placeholderLb.text = Localized(@"Keystore文本内容", nil);
         
     }else if (_importWalletType == ImportWalletType_privateKey) {
 
         placeholderLb.text = Localized(@"明文私钥", nil);
     }
-}
-
-//协议
--(void)agreementBtnAction:(UIButton *)btn
-{
-    [self dismissKeyboardAction];
-    agreementBtn.selected = !agreementBtn.selected;
-    if (!agreementBtn.selected) {
-        [importBT darkBtnStyle:Localized(@"开始导入", nil)];
-        importBT.userInteractionEnabled = NO;
-    }else{
-        [importBT goldBigBtnStyle:Localized(@"开始导入", nil)];
-        importBT.userInteractionEnabled = YES;
-    }
-}
-//查看协议
--(void)seeProtocol
-{
-    CommonHtmlShowViewController *viewController = [[CommonHtmlShowViewController alloc]init];
-    viewController.titleStr = @"SEC钱包服务协议";
-    viewController.commonHtmlShowViewType = CommonHtmlShowViewType_RgsProtocol;
-    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma 导入钱包
@@ -310,15 +262,6 @@
             [self hudShowWithString:Localized(@"钱包个数超过限制", nil) delayTime:2];
             return;
         }
-    
-        //导入助记词
-        [self createLoadingView:Localized(@"导入钱包中···", nil)];
-        //添加计时器
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _timing = 5;
-            hasImportSuccess = NO;
-            _importTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countdown) userInfo:nil repeats:YES];
-        });
 
         SECBlockJSAPI *secAPI = [[SECBlockJSAPI alloc]init];
         [secAPI mnemonicToPrivKey:inputTV.text completion:^(NSString * privateKey) {
@@ -326,6 +269,8 @@
                 inputTVErrorLb.hidden = NO;
                 [inputTVErrorLb remindError:@"助记词有误" withY:inputTV.minY -KInputDesViewHeight];
                 inputTV.backgroundColor = REMIND_COLOR;
+                [self hiddenLoadingView];
+                return;
             }else{
                 inputTVErrorLb.hidden = YES;
                 inputTV.backgroundColor = DARK_COLOR;
@@ -369,6 +314,14 @@
                     }
                 }
                 
+                //导入助记词
+                [self createLoadingView:Localized(@"导入钱包中···", nil)];
+                //添加计时器
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    _timing = 5;
+                    hasImportSuccess = NO;
+                    _importTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countdown) userInfo:nil repeats:YES];
+                });
                 [HSEther hs_importWalletForPrivateKey:privateKey pwd:passwordTF.text block:^(NSString *address, NSString *keyStore, NSString *mnemonicPhrase, NSString *privateKey, BOOL suc, HSWalletError error) {
                     [self hiddenLoadingView];
                     hasImportSuccess = YES;
@@ -379,8 +332,8 @@
                         int i = arc4random() % 2;
                         NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
                         /*************默认钱包信息*************/
-                        NSArray *privateKeyArr = [privateKey componentsSeparatedByString:@"x"];
-                        WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyArr.lastObject andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:1];
+                        NSString *privateKeyStr = [privateKey componentsSeparatedByString:@"x"].lastObject;
+                        WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:1];
                         NSMutableData* data = [NSMutableData data];
                         NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
                         if (list.count > 0) {
@@ -450,7 +403,7 @@
                 inputTV.backgroundColor = REMIND_COLOR;
             }else if (error == HSWalletErrorKeyStoreValid) {
                 inputTVErrorLb.hidden = NO;
-                [inputTVErrorLb remindError:@"密码不正确" withY:inputTV.minY -KInputDesViewHeight];
+                [inputTVErrorLb remindError:@"keyStore解密失败" withY:inputTV.minY -KInputDesViewHeight];
                 inputTV.backgroundColor = REMIND_COLOR;
             }else if (error == HSWalletImportKeyStoreSuc) {
                 inputTVErrorLb.hidden = YES;
@@ -500,8 +453,8 @@
                 int i = arc4random() % 2;
                 NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
                 /*************默认钱包信息*************/
-                NSArray *privateKeyArr = [privateKey componentsSeparatedByString:@"x"];
-                WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyArr.lastObject andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:0];
+                NSString *privateKeyStr = [privateKey componentsSeparatedByString:@"x"].lastObject;
+                WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:0];
                 NSMutableData* data = [NSMutableData data];
                 NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
                 if (list.count > 0) {
@@ -636,8 +589,8 @@
                 int i = arc4random() % 2;
                   NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
                 /*************默认钱包信息*************/
-                NSArray *privateKeyArr = [privateKey componentsSeparatedByString:@"x"];
-                WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyArr.lastObject andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:0];
+                NSString *privateKeyStr = [privateKey componentsSeparatedByString:@"x"].lastObject;
+                WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:0];
                 NSMutableData* data = [NSMutableData data];
                 NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
                 if (list.count > 0) {
@@ -685,9 +638,9 @@
     RootViewController *controller = [[RootViewController alloc] init];
     AppDelegateInstance.window.rootViewController = controller;
     [AppDelegateInstance.window makeKeyAndVisible];
-    /*************导入钱包成功后删除之前代币数据缓存*************/
-    [CacheUtil clearTokenCoinTradeListCacheFile];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
+//    /*************导入钱包成功后删除之前代币数据缓存*************/
+//    [CacheUtil clearTokenCoinTradeListCacheFile];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
 }
 
 #pragma UITextFieldDelegate
@@ -713,6 +666,26 @@
         re_pswCell.contentView.backgroundColor = DARK_COLOR;
     }
 }
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (_importWalletType == ImportWalletType_keyStore) {
+        if (inputTV.text.length > 0 && passwordTF.text.length > 0) {
+            [importBT goldBigBtnStyle:Localized(@"开始导入", nil)];
+            importBT.userInteractionEnabled = YES;
+        }else{
+            [importBT darkBtnStyle:Localized(@"开始导入", nil)];
+            importBT.userInteractionEnabled = NO;
+        }
+    }else{
+        if (inputTV.text.length > 0 && passwordTF.text.length > 0 && re_passwordTF.text.length > 0) {
+            [importBT goldBigBtnStyle:Localized(@"开始导入", nil)];
+            importBT.userInteractionEnabled = YES;
+        }else{
+            [importBT darkBtnStyle:Localized(@"开始导入", nil)];
+            importBT.userInteractionEnabled = NO;
+        }
+    }
+}
 
 #pragma UITextViewDelegate
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
@@ -729,7 +702,24 @@
         placeholderLb.hidden = YES;
     }else{
         placeholderLb.hidden = NO;
-    }    
+    }
+    if (_importWalletType == ImportWalletType_keyStore) {
+        if (inputTV.text.length > 0 && passwordTF.text.length > 0) {
+            [importBT goldBigBtnStyle:Localized(@"开始导入", nil)];
+            importBT.userInteractionEnabled = YES;
+        }else{
+            [importBT darkBtnStyle:Localized(@"开始导入", nil)];
+            importBT.userInteractionEnabled = NO;
+        }
+    }else{
+        if (inputTV.text.length > 0 && passwordTF.text.length > 0 && re_passwordTF.text.length > 0) {
+            [importBT goldBigBtnStyle:Localized(@"开始导入", nil)];
+            importBT.userInteractionEnabled = YES;
+        }else{
+            [importBT darkBtnStyle:Localized(@"开始导入", nil)];
+            importBT.userInteractionEnabled = NO;
+        }
+    }
 }
 
 #pragma mark - 点击空白处收回键盘

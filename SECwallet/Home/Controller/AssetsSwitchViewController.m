@@ -118,8 +118,6 @@
     if (indexPath.section != [[AppDefaultUtil sharedInstance].defaultWalletIndex integerValue]) {
         /***********更新当前选中的钱包位置信息***********/
         [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:[NSString stringWithFormat:@"%ld",indexPath.section]];
-        /*************切换钱包后删除之前代币数据缓存*************/
-        [CacheUtil clearTokenCoinTradeListCacheFile];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
     }

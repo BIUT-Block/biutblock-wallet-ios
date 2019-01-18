@@ -10,9 +10,6 @@
 		1B09858B2176E7A400B8E994 /* AddressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B09858A2176E7A300B8E994 /* AddressListViewController.m */; };
 		1B0985902176E8E100B8E994 /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B09858F2176E8E100B8E994 /* AddressModel.m */; };
 		1B098593217703AD00B8E994 /* ManageAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B098592217703AD00B8E994 /* ManageAddressViewController.m */; };
-		1B09859C217835CA00B8E994 /* CollectionFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B098597217835C900B8E994 /* CollectionFlowLayout.m */; };
-		1B09859D217835CA00B8E994 /* CardPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B098598217835C900B8E994 /* CardPageView.m */; };
-		1B09859E217835CA00B8E994 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B098599217835C900B8E994 /* CollectionViewCell.m */; };
 		1B0985A221797C9400B8E994 /* JXMovableCellTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0985A121797C9400B8E994 /* JXMovableCellTableView.m */; };
 		1B30B6CF21CC87F2007CB54E /* CommonPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B30B6CE21CC87F2007CB54E /* CommonPageControl.m */; };
 		1B30B6D221CCCD76007CB54E /* CommonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B30B6D121CCCD76007CB54E /* CommonTableViewCell.m */; };
@@ -172,6 +169,8 @@
 		1B79567A21D2246A00EF26C8 /* CommonSidePullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B79567921D2246A00EF26C8 /* CommonSidePullView.m */; };
 		1B79568B21D7468500EF26C8 /* DiscoveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B79568A21D7468500EF26C8 /* DiscoveryViewController.m */; };
 		1B8A77C621366DE4003BF708 /* RgsProtocol.docx in Resources */ = {isa = PBXBuildFile; fileRef = 1B8A77C521366DE4003BF708 /* RgsProtocol.docx */; };
+		1B9192F021F185ED0010EC5C /* WalletListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9192EF21F185ED0010EC5C /* WalletListCollectionViewCell.m */; };
+		1B9192F621F1A1F20010EC5C /* WalletListFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9192F521F1A1F20010EC5C /* WalletListFlowLayout.m */; };
 		1BC7A13B21E72D9A004C3C21 /* DappModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC7A13A21E72D9A004C3C21 /* DappModel.m */; };
 		1BC7A13E21E73767004C3C21 /* TabBarIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC7A13D21E73766004C3C21 /* TabBarIconView.m */; };
 		1BD081AC21C2041E006E1EEA /* ethers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BD081AA21C2041E006E1EEA /* ethers.framework */; };
@@ -189,12 +188,6 @@
 		1B09858F2176E8E100B8E994 /* AddressModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressModel.m; sourceTree = "<group>"; };
 		1B098591217703AD00B8E994 /* ManageAddressViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManageAddressViewController.h; sourceTree = "<group>"; };
 		1B098592217703AD00B8E994 /* ManageAddressViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManageAddressViewController.m; sourceTree = "<group>"; };
-		1B098596217835C900B8E994 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
-		1B098597217835C900B8E994 /* CollectionFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionFlowLayout.m; sourceTree = "<group>"; };
-		1B098598217835C900B8E994 /* CardPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardPageView.m; sourceTree = "<group>"; };
-		1B098599217835C900B8E994 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
-		1B09859A217835C900B8E994 /* CollectionFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionFlowLayout.h; sourceTree = "<group>"; };
-		1B09859B217835C900B8E994 /* CardPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardPageView.h; sourceTree = "<group>"; };
 		1B0985A021797C9400B8E994 /* JXMovableCellTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXMovableCellTableView.h; sourceTree = "<group>"; };
 		1B0985A121797C9400B8E994 /* JXMovableCellTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXMovableCellTableView.m; sourceTree = "<group>"; };
 		1B30B6CD21CC87F2007CB54E /* CommonPageControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonPageControl.h; sourceTree = "<group>"; };
@@ -502,6 +495,10 @@
 		1B79568921D7468500EF26C8 /* DiscoveryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscoveryViewController.h; sourceTree = "<group>"; };
 		1B79568A21D7468500EF26C8 /* DiscoveryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscoveryViewController.m; sourceTree = "<group>"; };
 		1B8A77C521366DE4003BF708 /* RgsProtocol.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = RgsProtocol.docx; sourceTree = "<group>"; };
+		1B9192EE21F185ED0010EC5C /* WalletListCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalletListCollectionViewCell.h; sourceTree = "<group>"; };
+		1B9192EF21F185ED0010EC5C /* WalletListCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalletListCollectionViewCell.m; sourceTree = "<group>"; };
+		1B9192F421F1A1F20010EC5C /* WalletListFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalletListFlowLayout.h; sourceTree = "<group>"; };
+		1B9192F521F1A1F20010EC5C /* WalletListFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalletListFlowLayout.m; sourceTree = "<group>"; };
 		1BB8FFED214B89B5001BEEB8 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		1BC7A13921E72D9A004C3C21 /* DappModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DappModel.h; sourceTree = "<group>"; };
 		1BC7A13A21E72D9A004C3C21 /* DappModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DappModel.m; sourceTree = "<group>"; };
@@ -537,19 +534,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1B098595217835C900B8E994 /* CardPageView */ = {
-			isa = PBXGroup;
-			children = (
-				1B09859B217835C900B8E994 /* CardPageView.h */,
-				1B098598217835C900B8E994 /* CardPageView.m */,
-				1B098596217835C900B8E994 /* CollectionViewCell.h */,
-				1B098599217835C900B8E994 /* CollectionViewCell.m */,
-				1B09859A217835C900B8E994 /* CollectionFlowLayout.h */,
-				1B098597217835C900B8E994 /* CollectionFlowLayout.m */,
-			);
-			path = CardPageView;
-			sourceTree = "<group>";
-		};
 		1B09859F21797C9400B8E994 /* JXMovableCellTableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,6 +676,10 @@
 		1B65E6AC212BF5BC00BB8DE5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1B9192EE21F185ED0010EC5C /* WalletListCollectionViewCell.h */,
+				1B9192EF21F185ED0010EC5C /* WalletListCollectionViewCell.m */,
+				1B9192F421F1A1F20010EC5C /* WalletListFlowLayout.h */,
+				1B9192F521F1A1F20010EC5C /* WalletListFlowLayout.m */,
 				1B65E6B4212BF5BC00BB8DE5 /* TokenCoinSelectTableViewCell.h */,
 				1B65E6B0212BF5BC00BB8DE5 /* TokenCoinSelectTableViewCell.m */,
 				1B65E6B3212BF5BC00BB8DE5 /* TradeListTableViewCell.h */,
@@ -1094,7 +1082,6 @@
 			isa = PBXGroup;
 			children = (
 				1B09859F21797C9400B8E994 /* JXMovableCellTableView */,
-				1B098595217835C900B8E994 /* CardPageView */,
 				1B65E7A5212BF5C000BB8DE5 /* CALScanQRCode */,
 				1B65E7B1212BF5C000BB8DE5 /* Shove.OC */,
 				1B65E7BC212BF5C000BB8DE5 /* KLSwitch */,
@@ -1452,6 +1439,7 @@
 				1B65E84F212BF5C000BB8DE5 /* SDWebImageManager.m in Sources */,
 				1B65E83A212BF5C000BB8DE5 /* IQUIWindow+Hierarchy.m in Sources */,
 				1B65E871212BF5C100BB8DE5 /* UIWebView+JS.m in Sources */,
+				1B9192F021F185ED0010EC5C /* WalletListCollectionViewCell.m in Sources */,
 				1B65E82E212BF5C000BB8DE5 /* UIButton+AFNetworking.m in Sources */,
 				1B65E849212BF5C000BB8DE5 /* AFHTTPSessionManager.m in Sources */,
 				1B65E874212BF5C100BB8DE5 /* SizeUtil.m in Sources */,
@@ -1459,7 +1447,6 @@
 				1BEEF3F32193DC2A00075F19 /* CommonActivityIndicatorView.m in Sources */,
 				1B65E5FC212BEFB000BB8DE5 /* main.m in Sources */,
 				1BDB0A6C21ED741D00D85484 /* SECBlockJSAPI.swift in Sources */,
-				1B09859E217835CA00B8E994 /* CollectionViewCell.m in Sources */,
 				1B65E84B212BF5C000BB8DE5 /* MBProgressHUD.m in Sources */,
 				1B65E83C212BF5C000BB8DE5 /* IQUIView+Hierarchy.m in Sources */,
 				1B65E832212BF5C000BB8DE5 /* IQToolbar.m in Sources */,
@@ -1538,6 +1525,7 @@
 				1B65E83D212BF5C000BB8DE5 /* IQUIViewController+Additions.m in Sources */,
 				1B65E851212BF5C000BB8DE5 /* UIImageView+HighlightedWebCache.m in Sources */,
 				1B65E68C212BF55D00BB8DE5 /* GuideViewController.m in Sources */,
+				1B9192F621F1A1F20010EC5C /* WalletListFlowLayout.m in Sources */,
 				1B65E89A212BF5C100BB8DE5 /* VOContentLayer.m in Sources */,
 				1B65E87B212BF5C100BB8DE5 /* CALScanQRCodeTitleView.m in Sources */,
 				1B65E859212BF5C100BB8DE5 /* NSData+ImageContentType.m in Sources */,
@@ -1547,7 +1535,6 @@
 				1B65E87D212BF5C100BB8DE5 /* GTMBase64.m in Sources */,
 				1B65E811212BF5C000BB8DE5 /* TokenCoinModel.m in Sources */,
 				1B65E870212BF5C100BB8DE5 /* UIView+Category.m in Sources */,
-				1B09859D217835CA00B8E994 /* CardPageView.m in Sources */,
 				1B65E81F212BF5C000BB8DE5 /* UIScrollView+MJRefresh.m in Sources */,
 				1B65E858212BF5C100BB8DE5 /* SDWebImageDownloaderOperation.m in Sources */,
 				1B65E872212BF5C100BB8DE5 /* ColorUtil.m in Sources */,
@@ -1576,7 +1563,6 @@
 				1B65E839212BF5C000BB8DE5 /* IQNSArray+Sort.m in Sources */,
 				1B65E84E212BF5C000BB8DE5 /* MKAnnotationView+WebCache.m in Sources */,
 				1B0985A221797C9400B8E994 /* JXMovableCellTableView.m in Sources */,
-				1B09859C217835CA00B8E994 /* CollectionFlowLayout.m in Sources */,
 				1B65E68F212BF55D00BB8DE5 /* AppDelegate.m in Sources */,
 				1B69436D21DC9094005905D8 /* UILabel+Extension.m in Sources */,
 				1B65E861212BF5C100BB8DE5 /* ImportWalletViewController.m in Sources */,

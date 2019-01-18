@@ -1,18 +1,14 @@
 //
-//  CollectionViewCell.m
-//  CollectionCardPage
+//  WalletListCollectionViewCell.m
+//  SECwallet
 //
-//  Created by ymj_work on 16/5/22.
-//  Copyright © 2016年 ymj_work. All rights reserved.
+//  Created by 通证控股 on 2019/1/18.
+//  Copyright © 2019 通证控股. All rights reserved.
 //
 
-#import "CollectionViewCell.h"
+#import "WalletListCollectionViewCell.h"
 
-@interface CollectionViewCell ()
-
-@end
-
-@implementation CollectionViewCell
+@implementation WalletListCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -43,7 +39,7 @@
         _backupBT.titleLabel.font = SystemFontOfSize(10);
         [_backupBT setTitleColor:COLOR(1, 216, 108, 1) forState:UIControlStateNormal];
         [self.contentView addSubview:_backupBT];
-
+        
         //二维码
         _codeBT = [[UIButton alloc]initWithFrame:CGRectMake(_addressBT.minX, _addressBT.maxY +Size(10), Size(25), Size(25))];
         [self.contentView addSubview:_codeBT];
@@ -53,4 +49,3 @@
 }
 
 @end
-
