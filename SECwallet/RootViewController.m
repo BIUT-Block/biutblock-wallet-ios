@@ -60,11 +60,8 @@
         APP_DownloadUrl = [dataDic objectForKey:@"link"];
         //1不升级  2非强制升级 3强制升级
         if (_updateType == 2) {
-            //有app更新弹框
             [self updateVersionByMsg:msg andVersionName:versionName andIsMust:NO];
-            
         }else if (_updateType == 3) {
-            //有app更新弹框
             [self updateVersionByMsg:msg andVersionName:versionName andIsMust:YES];
         }
     }else{
@@ -87,18 +84,14 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (_updateType == 3 && buttonIndex == 0) {
-        //升级跳转
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
-        //立即重启
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             exit(0);
         });
         
     }else if (_updateType == 2 && buttonIndex == 1) {
-        //升级跳转
         [alertView dismissWithClickedButtonIndex:0 animated:YES];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
-        //立即重启
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             exit(0);
         });
@@ -140,9 +133,7 @@
     SettingViewController *vc3 = [[SettingViewController alloc] init];
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:vc3];
     
-    // 将子视图控制器放入数组
     NSArray *vcs = @[homeNav, mineNav];
-    // 添加标签控制器
     [self setViewControllers:vcs animated:YES];
     
 }

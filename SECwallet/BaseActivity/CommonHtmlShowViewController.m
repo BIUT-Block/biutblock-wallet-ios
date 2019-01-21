@@ -49,7 +49,7 @@
     
     _infoWebView = [[UIWebView alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY, titleLb.width, kScreenHeight -titleLb.maxY)];
     _infoWebView.backgroundColor = BACKGROUND_DARK_COLOR;
-    _infoWebView.scrollView.showsVerticalScrollIndicator = YES;
+    _infoWebView.scrollView.showsVerticalScrollIndicator = NO;
     _infoWebView.scrollView.showsHorizontalScrollIndicator = NO;
     _infoWebView.delegate = self;
     _infoWebView.opaque=NO;
@@ -236,7 +236,7 @@
     }else if (_commonHtmlShowViewType == CommonHtmlShowViewType_other) {
         _infoWebView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kScreenHeight -KNaviHeight);
         //分享按钮
-        UIButton *shareBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(45 +15), (KNaviHeight-Size(24))/2+Size(8), Size(45), Size(24))];
+        UIButton *shareBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth -Size(45 +15), KStatusBarHeight+(KNaviHeight-KStatusBarHeight-Size(24))/2, Size(45), Size(24))];
         [shareBT greenBorderBtnStyle:Localized(@"分享", nil) andBkgImg:@"smallRightBtn"];
         [shareBT addTarget:self action:@selector(shareAction) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:shareBT];

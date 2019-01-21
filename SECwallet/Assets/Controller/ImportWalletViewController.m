@@ -232,7 +232,7 @@
         }
         if ([NSString validatePassword:passwordTF.text] == NO) {
             passwordErrorLb.hidden = NO;
-            [passwordErrorLb remindError:@"请输入数字和字母组合密码" withY:passwordDesLb.minY];
+            [passwordErrorLb remindError:@"密码格式错误" withY:passwordDesLb.minY];
             pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
@@ -379,7 +379,7 @@
         }
         if ([NSString validatePassword:passwordTF.text] == NO) {
             passwordErrorLb.hidden = NO;
-            [passwordErrorLb remindError:@"请输入数字和字母组合密码" withY:passwordDesLb.minY];
+            [passwordErrorLb remindError:@"密码格式错误" withY:passwordDesLb.minY];
             pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{
@@ -507,7 +507,7 @@
         }
         if ([NSString validatePassword:passwordTF.text] == NO) {
             passwordErrorLb.hidden = NO;
-            [passwordErrorLb remindError:@"请输入数字和字母组合密码" withY:passwordDesLb.minY];
+            [passwordErrorLb remindError:@"密码格式错误" withY:passwordDesLb.minY];
             pswCell.contentView.backgroundColor = REMIND_COLOR;
             return;
         }else{

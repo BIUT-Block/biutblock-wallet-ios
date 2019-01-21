@@ -216,7 +216,7 @@
 "该地址已存在"="Address already exists";
 "请输入助记词"="Input Mnemonics";
 "请输入8~30位密码"="Input 8~30characters password";
-"请输入数字和字母组合密码"="Input a Numbers and letters password";
+"密码格式错误"="Format Error";
 "两次密码输入不一致，请重新输入！"="Two passwords are inconsistent";
 "助记词长度不够"="Mnemonics is error length";
 "助记词个数不够"="Mnemonics is error count";

@@ -10,6 +10,16 @@
 
 @implementation UIButton (Extension)
 
+-(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event
+{
+    CGRect bounds = self.bounds;
+    //扩大原热区直径至26，可以暴露个接口，用来设置需要扩大的半径。
+    CGFloat widthDelta = MAX(35, 0);
+    CGFloat heightDelta = MAX(35, 0);
+    bounds = CGRectInset(bounds, -0.5* widthDelta, -0.5* heightDelta);
+    return CGRectContainsPoint(bounds, point);
+}
+
 // 正常风格按钮
 -(void)customerBtnStyle:(NSString *)title andBkgImg:(NSString *)bkgImg{
     self.layer.masksToBounds = YES;

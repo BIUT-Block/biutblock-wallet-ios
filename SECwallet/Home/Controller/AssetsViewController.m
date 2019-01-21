@@ -34,7 +34,7 @@
     NSMutableArray *assetsList;
     
     UIButton *noNetworkBT;
-    BOOL hasGetDataInfo;   //是否获取了数据
+    BOOL connectNet;
     
     BOOL fromNotifi;
     UIButton *moreBT;
@@ -187,8 +187,10 @@
 }
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    int index = (scrollView.contentOffset.x+_walletListView.width/2)/(kScreenWidth -Size(40)+Size(5));
-    [self refreshWallet:index clearCache:YES];
+    if (![scrollView isMemberOfClass:[JXMovableCellTableView class]]) {
+        int index = (scrollView.contentOffset.x+_walletListView.width/2)/(kScreenWidth -Size(40)+Size(5));
+        [self refreshWallet:index clearCache:YES];
+    }
 }
 
 #pragma mark - JXMovableCellTableViewDataSource
@@ -351,9 +353,11 @@
         [archiver encodeObject:_walletList forKey:@"walletList"];
         [archiver finishEncoding];
         [data writeToFile:path atomically:YES];
-        
+
+        _walletListView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight -Size(35));
+        _pageControl.frame = CGRectMake(0, _walletListView.maxY, kScreenWidth, Size(36));
+        _infoTableView.frame = CGRectMake(Size(20), _pageControl.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
         [_walletListView reloadData];
-        
         /*************获取钱包代币信息*************/
         TokenCoinModel *model = [[TokenCoinModel alloc]init];
         model.icon = @"SEC";
@@ -364,7 +368,19 @@
                 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self hiddenLoadingView];
-        [self hudShowWithString:Localized(@"数据获取失败", nil) delayTime:1.5];
+        [self hudShowWithString:Localized(@"数据获取失败", nil) delayTime:2];
+        if (connectNet == 0) {
+            noNetworkBT.hidden = NO;
+            _walletListView.frame = CGRectMake(0, noNetworkBT.maxY, kScreenWidth, kHeaderHeight-Size(35));
+            _pageControl.frame = CGRectMake(0, _walletListView.maxY, kScreenWidth, Size(36));
+            _infoTableView.frame = CGRectMake(Size(20), _pageControl.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
+        }else{
+            noNetworkBT.hidden = YES;
+            _walletListView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight -Size(35));
+            _pageControl.frame = CGRectMake(0, _walletListView.maxY, kScreenWidth, Size(36));
+            _infoTableView.frame = CGRectMake(Size(20), _pageControl.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
+        }
+        
     }];
 }
 
@@ -378,11 +394,13 @@
         [self hiddenLoadingView];
         if (status == 0) {
             //无网络视图
+            connectNet = NO;
             noNetworkBT.hidden = NO;
             _walletListView.frame = CGRectMake(0, noNetworkBT.maxY, kScreenWidth, kHeaderHeight-Size(35));
             _pageControl.frame = CGRectMake(0, _walletListView.maxY, kScreenWidth, Size(36));
             _infoTableView.frame = CGRectMake(Size(20), _pageControl.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
         }else{
+            connectNet = YES;
             noNetworkBT.hidden = YES;
             _walletListView.frame = CGRectMake(0, KNaviHeight, kScreenWidth, kHeaderHeight -Size(35));
             _pageControl.frame = CGRectMake(0, _walletListView.maxY, kScreenWidth, Size(36));

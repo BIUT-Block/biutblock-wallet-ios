@@ -263,7 +263,7 @@
     }
     if ([NSString validatePassword:passwordTF.text] == NO) {
         passwordErrorLb.hidden = NO;
-        [passwordErrorLb remindError:@"请输入数字和字母组合密码" withY:passwordDesLb.minY];
+        [passwordErrorLb remindError:@"密码格式错误" withY:passwordDesLb.minY];
         pswCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{
@@ -301,7 +301,6 @@
             nameCell.contentView.backgroundColor = DARK_COLOR;
         }
     }
-    
     //判断钱包超过10个
     if (walletList.count == 10) {
         [self hudShowWithString:Localized(@"钱包个数超过限制", nil) delayTime:2];
