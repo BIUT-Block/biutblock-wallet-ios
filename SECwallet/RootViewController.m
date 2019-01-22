@@ -58,14 +58,13 @@
         NSString *msg = [dataDic objectForKey:@"describ"];
         _updateType = [[dataDic objectForKey:@"status"] intValue];
         APP_DownloadUrl = [dataDic objectForKey:@"link"];
+        NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         //1不升级  2非强制升级 3强制升级
-        if (_updateType == 2) {
+        if (_updateType == 2 && ![versionName isEqualToString:app_Version]) {
             [self updateVersionByMsg:msg andVersionName:versionName andIsMust:NO];
-        }else if (_updateType == 3) {
+        }else if (_updateType == 3 && ![versionName isEqualToString:app_Version]) {
             [self updateVersionByMsg:msg andVersionName:versionName andIsMust:YES];
         }
-    }else{
-        
     }
 }
 

@@ -122,7 +122,7 @@
     versionLb.textColor = TEXT_DARK_COLOR;
     versionLb.textAlignment = NSTextAlignmentCenter;
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    versionLb.text = [NSString stringWithFormat:@"%@：V%@",Localized(@"版本号", nil),app_Version];;
+    versionLb.text = [NSString stringWithFormat:@"%@：V%@",Localized(@"版本号", nil),app_Version];
     [self.view addSubview:versionLb];
     remindBT = [[UIButton alloc]initWithFrame:CGRectMake(0, versionLb.maxY, kScreenWidth, Size(20))];
     remindBT.titleLabel.font = SystemFontOfSize(10);
