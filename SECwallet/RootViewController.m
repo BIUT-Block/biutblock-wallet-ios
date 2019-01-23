@@ -134,7 +134,6 @@
     
     NSArray *vcs = @[homeNav, mineNav];
     [self setViewControllers:vcs animated:YES];
-    
 }
 
 #pragma mark - TabBarIconViewDelegate

@@ -5,7 +5,7 @@
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDisplayName</key>
-	<string>SEC钱包</string>
+	<string>SEC轻钱包</string>
 	<key>CFBundleExecutable</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleIdentifier</key>

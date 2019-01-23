@@ -180,6 +180,13 @@
     cell.codeBT.tag = 1000;
     return cell;
 }
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    WalletDetailViewController *viewController = [[WalletDetailViewController alloc]init];
+    viewController.walletModel = currentWallet;
+    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
+    [self presentViewController:navi animated:YES completion:nil];
+}
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     int index = (scrollView.contentOffset.x+_walletListView.width/2)/(kScreenWidth -Size(40));
@@ -380,7 +387,6 @@
             _pageControl.frame = CGRectMake(0, _walletListView.maxY, kScreenWidth, Size(36));
             _infoTableView.frame = CGRectMake(Size(20), _pageControl.maxY, kScreenWidth -Size(20 +20), kScreenHeight-kHeaderHeight-KTabbarHeight);
         }
-        
     }];
 }
 

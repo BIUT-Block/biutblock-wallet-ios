@@ -74,7 +74,7 @@
     UILabel *fileDataLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(8), Size(8), bkgView.width -Size(16), bkgView.height-Size(16))];
     fileDataLb.font = BoldSystemFontOfSize(12);
     fileDataLb.textColor = TEXT_BLACK_COLOR;
-    fileDataLb.numberOfLines = 3;
+    fileDataLb.numberOfLines = 4;
     fileDataLb.text = _walletModel.mnemonicPhrase;
     NSMutableAttributedString *msgStr1 = [[NSMutableAttributedString alloc] initWithString:fileDataLb.text];
     [msgStr1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr1.length)];

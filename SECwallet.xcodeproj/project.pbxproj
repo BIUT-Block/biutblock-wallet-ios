@@ -1725,11 +1725,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = TRW2PA4MPA;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SECwallet/3rd-party",
-					"$(PROJECT_DIR)/ethers.objc-master",
-					"$(PROJECT_DIR)/SECwallet/Utilities",
 					"$(PROJECT_DIR)/SECwallet/3rd-party/libEther",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu89;
@@ -1744,7 +1743,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SECwallet/3rd-party/libEther",
 				);
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tzkg.SECwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1769,11 +1768,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = TRW2PA4MPA;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SECwallet/3rd-party",
-					"$(PROJECT_DIR)/ethers.objc-master",
-					"$(PROJECT_DIR)/SECwallet/Utilities",
 					"$(PROJECT_DIR)/SECwallet/3rd-party/libEther",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu89;
@@ -1788,7 +1786,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SECwallet/3rd-party/libEther",
 				);
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tzkg.SECwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

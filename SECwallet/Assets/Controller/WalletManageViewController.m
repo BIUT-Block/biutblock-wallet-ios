@@ -12,6 +12,7 @@
 #import "WalletDetailViewController.h"
 #import "CreatWalletViewController.h"
 #import "ImportWalletManageViewController.h"
+#import "SelectEntryViewController.h"
 
 @interface WalletManageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -43,8 +44,7 @@
     [_infoTableView reloadData];
     
     if (_dataArrays.count == 0) {
-        CreatWalletViewController *viewController = [[CreatWalletViewController alloc] init];
-        viewController.isNoBack = YES;
+        SelectEntryViewController *viewController = [[SelectEntryViewController alloc] init];
         UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
         [self presentViewController:navi animated:YES completion:nil];
     }    

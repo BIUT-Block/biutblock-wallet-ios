@@ -297,7 +297,9 @@
             if (Poollist.count > 0) {
                 for (NSDictionary *dic in Poollist) {
                     TradeModel *model = [[TradeModel alloc]initWithDictionary:dic walletAddress:from];
-                    [_dataArrays addObject:model];
+                    if (!(model.status == 2 && model.type == 1)) {
+                        [_dataArrays addObject:model];
+                    }
                 }
             }
             if (_dataArrays.count > 0) {
@@ -344,7 +346,7 @@
     CGFloat frozenSum = 0;
     for (TradeModel *model in dataArrays) {
         if (model.status == 2) {
-            if (model.type == 1) {
+            if (model.type == 2) {
                 frozenSum += [model.sum doubleValue];
             }
         }
