@@ -58,7 +58,7 @@
     titleLb.text = Localized(@"钱包管理",nil);
     [self.view addSubview:titleLb];
     
-    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(Size(20), titleLb.maxY +Size(23), kScreenWidth -Size(20)*2, kScreenHeight-KNaviHeight -Size(35 +200 +5)) style:UITableViewStyleGrouped];
+    _infoTableView = [[UITableView alloc]initWithFrame:CGRectMake(Size(20), titleLb.maxY +Size(23), kScreenWidth -Size(20)*2, kScreenHeight-KNaviHeight -Size(35 +175)) style:UITableViewStyleGrouped];
     _infoTableView.showsVerticalScrollIndicator = NO;
     _infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _infoTableView.delegate = self;
@@ -67,11 +67,17 @@
     [self.view addSubview:_infoTableView];
     
     //底部视图按钮
-    UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight -Size(220), kScreenWidth, Size(220))];
+    UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight -Size(200), kScreenWidth, Size(200))];
     bottomView.backgroundColor = LightGreen_COLOR;
     [self.view addSubview:bottomView];
-    UIButton *importBT = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth/2 -Size(60))/2, Size(50), Size(60), Size(60))];
-    importBT.titleLabel.font = BoldSystemFontOfSize(10);
+    //设置阴影
+    CALayer *layer = [bottomView layer];
+    layer.shadowOffset = CGSizeMake(0, Size(3));
+    layer.shadowRadius = Size(5);
+    layer.shadowColor = [UIColor darkGrayColor].CGColor;
+    layer.shadowOpacity = Size(0.5);
+    UIButton *importBT = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth/2 -Size(60))/2, bottomView.minY +Size(20), Size(80), Size(80))];
+    importBT.titleLabel.font = BoldSystemFontOfSize(11);
     [importBT setImage:[UIImage imageNamed:@"importWallet"] forState:UIControlStateNormal];
     [importBT setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     [importBT setTitle:Localized(@"导入钱包",nil) forState:UIControlStateNormal];
@@ -79,16 +85,16 @@
     importBT.imageEdgeInsets = UIEdgeInsetsMake(-importBT.titleLabel.intrinsicContentSize.height-Size(20)/2, 0, 0, -importBT.titleLabel.intrinsicContentSize.width);
     [importBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     importBT.tag = 1000;
-    [bottomView addSubview:importBT];
+    [self.view addSubview:importBT];
     //描述
-    UILabel *desLb1 = [[UILabel alloc] initWithFrame:CGRectMake(0, importBT.maxY, kScreenWidth/2, Size(20))];
+    UILabel *desLb1 = [[UILabel alloc] initWithFrame:CGRectMake(0, importBT.maxY-Size(8), kScreenWidth/2, Size(20))];
     desLb1.textAlignment = NSTextAlignmentCenter;
     desLb1.textColor = TEXT_DARK_COLOR;
-    desLb1.font = SystemFontOfSize(8);
+    desLb1.font = SystemFontOfSize(9);
     desLb1.text = Localized(@"导入一个已存在钱包",nil);
-    [bottomView addSubview:desLb1];
+    [self.view addSubview:desLb1];
     UIButton *creatBT = [[UIButton alloc]initWithFrame:CGRectMake(kScreenWidth/2 +(kScreenWidth/2 -importBT.width)/2, importBT.minY, importBT.width, importBT.height)];
-    creatBT.titleLabel.font = BoldSystemFontOfSize(10);
+    creatBT.titleLabel.font = BoldSystemFontOfSize(11);
     [creatBT setImage:[UIImage imageNamed:@"createWallet"] forState:UIControlStateNormal];
     [creatBT setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     [creatBT setTitle:Localized(@"创建钱包",nil) forState:UIControlStateNormal];
@@ -96,19 +102,19 @@
     creatBT.imageEdgeInsets = UIEdgeInsetsMake(-creatBT.titleLabel.intrinsicContentSize.height-Size(20)/2, 0, 0, -creatBT.titleLabel.intrinsicContentSize.width);
     [creatBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     creatBT.tag = 1001;
-    [bottomView addSubview:creatBT];
+    [self.view addSubview:creatBT];
     //描述
     UILabel *desLb2 = [[UILabel alloc] initWithFrame:CGRectMake(desLb1.maxX, desLb1.minY, desLb1.width, desLb1.height)];
     desLb2.textAlignment = NSTextAlignmentCenter;
     desLb2.textColor = TEXT_DARK_COLOR;
-    desLb2.font = SystemFontOfSize(8);
+    desLb2.font = SystemFontOfSize(9);
     desLb2.text = Localized(@"创建一个新钱包",nil);
-    [bottomView addSubview:desLb2];
+    [self.view addSubview:desLb2];
     
     //中间线
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(kScreenWidth/2, importBT.minY, Size(0.5), Size(70))];
     line.backgroundColor = DIVIDE_LINE_COLOR;
-    [bottomView addSubview:line];
+    [self.view addSubview:line];
 }
 
 #pragma mark - Table view data source
@@ -144,7 +150,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return Size(42);
+    return Size(52);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

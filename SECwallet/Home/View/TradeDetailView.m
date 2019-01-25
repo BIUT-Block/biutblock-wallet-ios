@@ -58,22 +58,24 @@
     detailLb.text = Localized(@"交易详情", nil);
     [_infoView addSubview:detailLb];
     
-    NSArray *titArr =@[Localized(@"订单信息", nil),Localized(@"转入地址", nil),Localized(@"付款钱包", nil),Localized(@"金额", nil)];
-    NSArray *contentArr =@[Localized(@"转账", nil),[NSString addressToAsterisk:payAddress],[NSString addressToAsterisk:adress],[NSString stringWithFormat:@"%@ SEC",sum]];
+    NSArray *titArr =@[Localized(@"转入地址", nil),Localized(@"付款钱包", nil),Localized(@"金额", nil)];
+    NSArray *contentArr =@[payAddress,adress,[NSString stringWithFormat:@"%@ SEC\n",sum]];
     for (int i = 0; i< titArr.count; i++) {
-        UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), detailLb.maxY+Size(35) +Size(30)*i, Size(100), Size(30))];
+        UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), detailLb.maxY+Size(25) +Size(45)*i, Size(100), Size(20))];
         titLb.font = SystemFontOfSize(13);
         titLb.textColor = COLOR(147, 147, 148, 1);
         titLb.text = titArr[i];
         [_infoView addSubview:titLb];
-        UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titLb.maxX, titLb.minY, kScreenWidth -titLb.maxX -Size(20), titLb.height)];
+        
+        UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titLb.maxX, titLb.minY, kScreenWidth -titLb.maxX -Size(20), Size(35))];
         contentLb.font = SystemFontOfSize(13);
         contentLb.textColor = TEXT_BLACK_COLOR;
         contentLb.textAlignment = NSTextAlignmentRight;
+        contentLb.numberOfLines = 2;
         contentLb.text = contentArr[i];
         [_infoView addSubview:contentLb];
     }
-    
+
     /*****************确认*****************/
     UIButton *confirmBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), detailLb.maxY +Size(180), kScreenWidth - 2*Size(20), Size(45))];
     [confirmBT goldBigBtnStyle:Localized(@"确 认", nil)];

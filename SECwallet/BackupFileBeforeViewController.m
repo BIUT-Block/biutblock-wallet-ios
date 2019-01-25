@@ -63,11 +63,11 @@
     NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = Size(3);
     [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
-    [msgStr addAttribute:NSForegroundColorAttributeName value:COLOR(56, 142, 218, 1) range:NSMakeRange(45, 17)];
+    [msgStr addAttribute:NSForegroundColorAttributeName value:COLOR(56, 142, 218, 1) range:NSMakeRange(44, 17)];
     remindLb.attributedText = msgStr;
     [self.view addSubview:remindLb];
     
-    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(20), remindLb.width, Size(75))];
+    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(20), remindLb.width, Size(100))];
     bkgView.backgroundColor = DARK_COLOR;
     bkgView.layer.cornerRadius = Size(5);
     [self.view addSubview:bkgView];

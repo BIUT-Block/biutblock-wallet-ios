@@ -127,14 +127,14 @@
             secSumLb.text = contentArr[i];
             [self.view addSubview:secSumLb];
         }else if (i == 1) {
-            frozenLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY+Size(5), secSumLb.width, secSumLb.height)];
+            frozenLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY, secSumLb.width, secSumLb.height)];
             frozenLb.font = SystemFontOfSize(13);
             frozenLb.textColor = TEXT_GREEN_COLOR;
             frozenLb.textAlignment = NSTextAlignmentRight;
             frozenLb.text = contentArr[i];
             [self.view addSubview:frozenLb];
         }else if (i == 2) {
-            amountLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY+Size(5), secSumLb.width, secSumLb.height)];
+            amountLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.maxX, desLb.minY, secSumLb.width, secSumLb.height)];
             amountLb.font = SystemFontOfSize(13);
             amountLb.textColor = TEXT_GREEN_COLOR;
             amountLb.textAlignment = NSTextAlignmentRight;

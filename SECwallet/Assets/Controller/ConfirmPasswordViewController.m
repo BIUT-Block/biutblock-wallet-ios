@@ -62,7 +62,7 @@
     
     //密码
     UILabel *passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(tipLb.minX, tipLb.maxY +Size(25), tipLb.width, Size(25))];
-    passwordDesLb.font = BoldSystemFontOfSize(11);
+    passwordDesLb.font = BoldSystemFontOfSize(12);
     passwordDesLb.textColor = TEXT_BLACK_COLOR;
     passwordDesLb.text = Localized(@"密码*", nil);
     NSMutableAttributedString *passwordStr = [[NSMutableAttributedString alloc] initWithString:passwordDesLb.text];
@@ -70,7 +70,7 @@
     passwordDesLb.attributedText = passwordStr;
     [self.view addSubview:passwordDesLb];
     CommonTableViewCell *pswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    pswCell.frame = CGRectMake(passwordDesLb.minX, passwordDesLb.maxY, passwordDesLb.width, Size(36));
+    pswCell.frame = CGRectMake(passwordDesLb.minX, passwordDesLb.maxY, passwordDesLb.width, Size(42));
     [self.view addSubview:pswCell];
     passwordTF = [[UITextField alloc] initWithFrame:CGRectMake(pswCell.minX +Size(10), passwordDesLb.maxY, pswCell.width -Size(20), pswCell.height)];
     passwordTF.font = SystemFontOfSize(12);

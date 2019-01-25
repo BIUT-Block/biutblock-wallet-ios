@@ -40,8 +40,8 @@
     nameLb.text = Localized(@"SEC轻钱包", nil);
     [self.view addSubview:nameLb];
     
-    UIButton *creatBT = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth -Size(65))/2, nameLb.maxY+Size(55), Size(65), Size(65))];
-    creatBT.titleLabel.font = BoldSystemFontOfSize(11);
+    UIButton *creatBT = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth -Size(85))/2, nameLb.maxY+Size(55), Size(85), Size(85))];
+    creatBT.titleLabel.font = BoldSystemFontOfSize(12);
     [creatBT setImage:[UIImage imageNamed:@"createWallet"] forState:UIControlStateNormal];
     [creatBT setTitleColor:TEXT_GREEN_COLOR forState:UIControlStateNormal];
     [creatBT setTitle:Localized(@"创建钱包",nil) forState:UIControlStateNormal];
@@ -50,7 +50,7 @@
     [creatBT addTarget:self action:@selector(creatAction) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:creatBT];
     //描述
-    UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(0, creatBT.maxY, kScreenWidth, Size(20))];
+    UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(0, creatBT.maxY-Size(8), kScreenWidth, Size(20))];
     desLb.textAlignment = NSTextAlignmentCenter;
     desLb.textColor = TEXT_DARK_COLOR;
     desLb.font = SystemFontOfSize(10);
@@ -61,7 +61,7 @@
     bottomView.backgroundColor = BACKGROUND_DARK_COLOR;
     [self.view addSubview:bottomView];
     UIButton *importBT = [[UIButton alloc]initWithFrame:CGRectMake(creatBT.minX, Size(100), creatBT.width, creatBT.height)];
-    importBT.titleLabel.font = BoldSystemFontOfSize(11);
+    importBT.titleLabel.font = BoldSystemFontOfSize(12);
     [importBT setImage:[UIImage imageNamed:@"importWallet"] forState:UIControlStateNormal];
     [importBT setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
     [importBT setTitle:Localized(@"导入钱包",nil) forState:UIControlStateNormal];
@@ -70,7 +70,7 @@
     [importBT addTarget:self action:@selector(importAction) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:importBT];
     //描述
-    UILabel *desLb1 = [[UILabel alloc] initWithFrame:CGRectMake(0, importBT.maxY, kScreenWidth, desLb.height)];
+    UILabel *desLb1 = [[UILabel alloc] initWithFrame:CGRectMake(0, importBT.maxY-Size(8), kScreenWidth, desLb.height)];
     desLb1.textAlignment = NSTextAlignmentCenter;
     desLb1.textColor = TEXT_DARK_COLOR;
     desLb1.font = SystemFontOfSize(10);

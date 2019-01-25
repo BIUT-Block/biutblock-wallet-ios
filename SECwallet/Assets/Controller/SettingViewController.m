@@ -52,7 +52,9 @@
         NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         _updateType = [[dataDic objectForKey:@"status"] intValue];
         APP_DownloadUrl = [dataDic objectForKey:@"link"];
-        if (_updateType == 2 || _updateType == 3) {
+        NSString *versionName = [dataDic objectForKey:@"version"];
+        NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        if ((_updateType == 2 || _updateType == 3) && ![versionName isEqualToString:app_Version]) {
             remindBT.hidden = NO;
         }else{
             remindBT.hidden = YES;
@@ -68,7 +70,7 @@
     headerView.image = [UIImage imageNamed:@"walletHomeBg"];
     [self.view addSubview:headerView];
     //标题
-    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(25), Size(60), kScreenWidth, Size(30))];
+    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(25), Size(55), kScreenWidth, Size(35))];
     titLb.font = BoldSystemFontOfSize(20);
     titLb.textColor = TEXT_BLACK_COLOR;
     titLb.text = Localized(@"我的钱包",nil);
@@ -87,7 +89,7 @@
         UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(insert +(insert*2 +btWidth)*i, Size(122-70)/2, btWidth, btWidth-Size(3))];
         iv.image = [UIImage imageNamed:imgArr[i]];
         [btView addSubview:iv];
-        UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(iv.minX -Size(25), iv.maxY, Size(100), Size(35))];
+        UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(iv.minX -Size(50), iv.maxY, Size(150), Size(35))];
         lb.font = BoldSystemFontOfSize(11);
         lb.textColor = TEXT_BLACK_COLOR;
         lb.textAlignment = NSTextAlignmentCenter;
@@ -105,7 +107,7 @@
     
     //地址薄
     CommonTableViewCell *addressCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    addressCell.frame = CGRectMake(Size(20), btView.maxY +Size(52), kScreenWidth -Size(20 *2), Size(42));
+    addressCell.frame = CGRectMake(Size(20), btView.maxY +Size(52), kScreenWidth -Size(20 *2), Size(45));
     addressCell.contentView.backgroundColor = WHITE_COLOR;
     addressCell.smallIcon.image = [UIImage imageNamed:@"addressBook"];
     addressCell.staticTitleLb.text = Localized(@"地址薄",nil);

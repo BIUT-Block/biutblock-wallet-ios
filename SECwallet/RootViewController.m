@@ -54,10 +54,12 @@
     NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
     if (data != nil) {
         NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        NSString *versionName = [dataDic objectForKey:@"version"];
-        NSString *msg = [dataDic objectForKey:@"describ"];
-        _updateType = [[dataDic objectForKey:@"status"] intValue];
-        APP_DownloadUrl = [dataDic objectForKey:@"link"];
+        NSDictionary *dic = [[NSDictionary alloc]init];
+        dic = [dataDic objectForKey:@"ios"];
+        NSString *versionName = [dic objectForKey:@"version"];
+        NSString *msg = [dic objectForKey:@"describ"];
+        _updateType = [[dic objectForKey:@"status"] intValue];
+        APP_DownloadUrl = [dic objectForKey:@"link"];
         NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         //1不升级  2非强制升级 3强制升级
         if (_updateType == 2 && ![versionName isEqualToString:app_Version]) {
@@ -66,6 +68,20 @@
             [self updateVersionByMsg:msg andVersionName:versionName andIsMust:YES];
         }
     }
+}
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString
+{
+    if (jsonString == nil) {
+        return nil;
+    }
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
 }
 
 -(void)updateVersionByMsg:(NSString *)msg andVersionName:(NSString *)versionName andIsMust:(BOOL)isMust

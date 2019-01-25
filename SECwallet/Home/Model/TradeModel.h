@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "WalletModel.h"
-#import <ethers/ethers.h>
 
 @interface TradeModel : NSObject
 

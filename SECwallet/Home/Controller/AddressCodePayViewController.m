@@ -56,7 +56,7 @@
     
     //地址
     UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(65), titleLb.maxY +Size(30), kScreenWidth -Size(65)*2, Size(40))];
-    addressLb.font = SystemFontOfSize(10);
+    addressLb.font = SystemFontOfSize(11);
     addressLb.textColor = TEXT_DARK_COLOR;
     addressLb.numberOfLines = 2;
     addressLb.textAlignment = NSTextAlignmentCenter;
@@ -67,7 +67,7 @@
     cell.frame = CGRectMake(addressLb.minX, addressLb.maxY +Size(15), addressLb.width, Size(30));
     cell.contentView.backgroundColor = WHITE_COLOR;
     [self.view addSubview:cell];
-    sumErrorLb = [[UILabel alloc]init];
+    sumErrorLb = [[UILabel alloc]initWithFrame:CGRectMake(cell.minX, 0, cell.width, 0)];
     [self.view addSubview:sumErrorLb];
     sumTF = [[UITextField alloc]initWithFrame:CGRectMake(Size(10), 0, cell.width -Size(10 *2), cell.height)];
     sumTF.font = SystemFontOfSize(12);
@@ -107,7 +107,7 @@
     //限制输入小数点后八位
     if ([field.text floatValue] > [_walletModel.balance floatValue]) {
         sumErrorLb.hidden = NO;
-        [sumErrorLb remindError:@"超过最大输入值" withY:cell.minY -Size(20)];
+        [sumErrorLb remindError:@"超过最大输入值" withY:0];
         cell.contentView.backgroundColor = REMIND_COLOR;
         isError = YES;
     }else{
@@ -120,7 +120,7 @@
         NSString *decimalStr = [field.text componentsSeparatedByString:@"."].lastObject;
         if (decimalStr.length > 8) {
             sumErrorLb.hidden = NO;
-            [sumErrorLb remindError:@"小数点后只允许输入8位" withY:cell.minY -Size(20)];
+            [sumErrorLb remindError:@"小数点后只允许输入8位" withY:0];
             cell.contentView.backgroundColor = REMIND_COLOR;
             isError = YES;
             return;

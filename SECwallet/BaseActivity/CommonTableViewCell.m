@@ -14,7 +14,6 @@
 
 @property (nonatomic , strong) id object;
 
-@property (nonatomic, strong) UILabel *desLb;
 @property (nonatomic, strong) UILabel *titleLb;
 @property (nonatomic, strong) UILabel *contentLb;
 @property (nonatomic, strong) UILabel *detailLb;
@@ -43,51 +42,45 @@
     [self addSubview:_bkgIV];
     
     //图标
-    _bigIcon = [[UIImageView alloc] initWithFrame:CGRectMake(Size(15), (self.height -Size(17))/2+Size(2), Size(22), Size(17))];
+    _bigIcon = [[UIImageView alloc] initWithFrame:CGRectMake(Size(15), 0, Size(22), Size(17))];
     [self addSubview:_bigIcon];
     
-    _smallIcon = [[UIImageView alloc] initWithFrame:CGRectMake(Size(15), (self.height -Size(10))/2, Size(8), Size(10))];
+    _smallIcon = [[UIImageView alloc] initWithFrame:CGRectMake(Size(15), 0, Size(8), Size(10))];
     [self addSubview:_smallIcon];
     
     //标准
-    _staticTitleLb = [[UILabel alloc] initWithFrame:CGRectMake(_bigIcon.maxX +Size(15), 0, Size(100), self.height)];
+    _staticTitleLb = [[UILabel alloc] initWithFrame:CGRectMake(_bigIcon.maxX +Size(15), Size(3), Size(180), self.height)];
     _staticTitleLb.textColor = TEXT_BLACK_COLOR;
-    _staticTitleLb.font = SystemFontOfSize(12);
+    _staticTitleLb.font = BoldSystemFontOfSize(12);
     [self addSubview:_staticTitleLb];
-    
-    //描述
-    _desLb = [[UILabel alloc] initWithFrame:CGRectMake(_bigIcon.maxX +Size(15), _bigIcon.minY -Size(8), Size(100), Size(8))];
-    _desLb.textColor = TEXT_LightDark_COLOR;
-    _desLb.font = SystemFontOfSize(7);
-    [self addSubview:_desLb];
-    
+
     //标题
-    _titleLb = [[UILabel alloc] initWithFrame:CGRectMake(_desLb.minX, _desLb.maxY, Size(130), _desLb.height)];
+    _titleLb = [[UILabel alloc] initWithFrame:CGRectMake(_staticTitleLb.minX, Size(8), _staticTitleLb.width, Size(15))];
     _titleLb.textColor = TEXT_BLACK_COLOR;
-    _titleLb.font = BoldSystemFontOfSize(10);
+    _titleLb.font = BoldSystemFontOfSize(12);
     [self addSubview:_titleLb];
     
     //内容
-    _contentLb = [[UILabel alloc] initWithFrame:CGRectMake(_titleLb.minX, _titleLb.maxY, _titleLb.width, _titleLb.height)];
+    _contentLb = [[UILabel alloc] initWithFrame:CGRectMake(_titleLb.minX, _titleLb.maxY, _titleLb.width, Size(10))];
     _contentLb.textColor = TEXT_GREEN_COLOR;
-    _contentLb.font = SystemFontOfSize(7);
+    _contentLb.font = SystemFontOfSize(9);
     [self addSubview:_contentLb];
     
     //详情
     _detailLb = [[UILabel alloc] initWithFrame:CGRectMake(_contentLb.minX, _contentLb.maxY, _contentLb.width, _contentLb.height)];
     _detailLb.textColor = TEXT_DARK_COLOR;
-    _detailLb.font = SystemFontOfSize(8);
+    _detailLb.font = SystemFontOfSize(9);
     [self addSubview:_detailLb];
     
     //描述
-    _subDetailLb = [[UILabel alloc] initWithFrame:CGRectMake(self.width -Size(60), 0, Size(30), self.height)];
+    _subDetailLb = [[UILabel alloc] init];
     _subDetailLb.textColor = TEXT_GREEN_COLOR;
-    _subDetailLb.font = BoldSystemFontOfSize(8);
+    _subDetailLb.font = BoldSystemFontOfSize(10);
     _subDetailLb.textAlignment = NSTextAlignmentRight;
     [self addSubview:_subDetailLb];
     
     //图标
-    _accessoryIV = [[UIImageView alloc] initWithFrame:CGRectMake(_subDetailLb.maxX +Size(15), (self.height -Size(7))/2, Size(4), Size(7))];
+    _accessoryIV = [[UIImageView alloc] init];
     [self addSubview:_accessoryIV];
   
 }
@@ -95,13 +88,17 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
+    _bigIcon.frame = CGRectMake(Size(15), (self.height -Size(17))/2, Size(22), Size(17));
+    _smallIcon.frame= CGRectMake(Size(15), (self.height -Size(10))/2, Size(8), Size(10));
+    _accessoryIV.frame = CGRectMake(self.width -Size(20), (self.height -Size(7))/2, Size(4), Size(7));
+    
+    _subDetailLb.frame = CGRectMake(self.width -Size(70), 0, Size(40), self.height);
+    
     if ([self.object isMemberOfClass:[TradeModel class]]) {
         
         TradeModel *obj = self.object;
-        _titleLb.font = BoldSystemFontOfSize(10);
-        _contentLb.font = SystemFontOfSize(8);
-        _subDetailLb.frame = CGRectMake(self.width/2-Size(12), 0, self.width/2, self.height);
-        _subDetailLb.font = BoldSystemFontOfSize(10);
+        _subDetailLb.frame = CGRectMake(self.width/2-Size(12), Size(2), self.width/2, self.height);
         
         //类型（1转入 2转出）
         if (obj.type == 1) {
@@ -127,7 +124,6 @@
         
         WalletModel *obj = self.object;
         _bigIcon.image = [UIImage imageNamed:obj.walletIcon];
-        _desLb.text = Localized(@"钱包名称",nil);
         _titleLb.text = obj.walletName;
         _contentLb.text = [NSString stringWithFormat:@"%@ SEC",obj.balance];
         _detailLb.text = [NSString addressToAsterisk:obj.address];

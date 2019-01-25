@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define kTableCellHeight Size(40)
+#define kTableCellHeight Size(44)
 
 @interface TradeListTableViewCell : UITableViewCell
 

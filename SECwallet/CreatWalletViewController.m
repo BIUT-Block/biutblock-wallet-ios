@@ -77,7 +77,7 @@
     if (_isNoBack == YES) {
         backBT.hidden = YES;
     }
-    UIButton *importBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(70+20), KStatusBarHeight+Size(11), Size(70), Size(24))];
+    UIButton *importBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(70+20), KStatusBarHeight+Size(11), Size(80), Size(24))];
     [importBT greenBorderBtnStyle:Localized(@"导入钱包",nil) andBkgImg:@"centerRightBtn"];
     [importBT addTarget:self action:@selector(importAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:importBT];
@@ -88,11 +88,11 @@
     titleLb.text = Localized(@"创建钱包",nil);
     [self.view addSubview:titleLb];
     
-    UILabel *tipLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY, kScreenWidth -titleLb.minX*2, Size(35))];
+    UILabel *tipLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY, kScreenWidth -titleLb.minX*2, Size(50))];
     tipLb.font = SystemFontOfSize(9);
     tipLb.textColor = TEXT_BLACK_COLOR;
     tipLb.text = Localized(@"密码用于保护私钥和交易授权，强度非常重要。SEC钱包不存储密码，也无法帮您找回，请务必牢记。", nil);
-    tipLb.numberOfLines = 3;
+    tipLb.numberOfLines = 4;
     //设置行间距
     NSMutableAttributedString *msgStr = [[NSMutableAttributedString alloc] initWithString:tipLb.text];
     NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -102,7 +102,7 @@
     [self.view addSubview:tipLb];
     //钱包名
     nameDesLb = [[UILabel alloc] initWithFrame:CGRectMake(tipLb.minX, tipLb.maxY +Size(20), tipLb.width, Size(25))];
-    nameDesLb.font = BoldSystemFontOfSize(10);
+    nameDesLb.font = BoldSystemFontOfSize(11);
     nameDesLb.textColor = TEXT_BLACK_COLOR;
     nameDesLb.text = Localized(@"钱包名称*", nil);
     NSMutableAttributedString *nameStr = [[NSMutableAttributedString alloc] initWithString:nameDesLb.text];
@@ -123,7 +123,7 @@
     [self.view addSubview:walletNameTF];
     //密码
     passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(nameDesLb.minX, nameCell.maxY +Size(3), nameDesLb.width, nameDesLb.height)];
-    passwordDesLb.font = BoldSystemFontOfSize(10);
+    passwordDesLb.font = BoldSystemFontOfSize(11);
     passwordDesLb.textColor = TEXT_BLACK_COLOR;
     passwordDesLb.text = Localized(@"密码*", nil);
     NSMutableAttributedString *passwordStr = [[NSMutableAttributedString alloc] initWithString:passwordDesLb.text];
@@ -152,7 +152,7 @@
     
     //确认密码
     re_passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(passwordDesLb.minX, pswCell.maxY +Size(3), passwordDesLb.width, passwordDesLb.height)];
-    re_passwordDesLb.font = BoldSystemFontOfSize(10);
+    re_passwordDesLb.font = BoldSystemFontOfSize(11);
     re_passwordDesLb.textColor = TEXT_BLACK_COLOR;
     re_passwordDesLb.text = Localized(@"确认密码*", nil);
     NSMutableAttributedString *re_passwordStr = [[NSMutableAttributedString alloc] initWithString:re_passwordDesLb.text];
@@ -176,7 +176,7 @@
     
     //密码提示
     UILabel *passwordTipDesLb = [[UILabel alloc] initWithFrame:CGRectMake(re_passwordDesLb.minX, re_pswCell.maxY +Size(3), re_pswCell.width, re_passwordDesLb.height)];
-    passwordTipDesLb.font = BoldSystemFontOfSize(10);
+    passwordTipDesLb.font = BoldSystemFontOfSize(11);
     passwordTipDesLb.textColor = TEXT_BLACK_COLOR;
     passwordTipDesLb.text = Localized(@"密码提示", nil);
     [self.view addSubview:passwordTipDesLb];

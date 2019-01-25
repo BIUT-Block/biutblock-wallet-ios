@@ -12,7 +12,11 @@
 
 -(void)remindError:(NSString *)title withY:(CGFloat)y
 {
-    self.frame = CGRectMake(Size(100), y, kScreenWidth -Size(100 +20), Size(25));
+    if (y==0) {
+        self.frame = CGRectMake(Size(65), KStatusBarHeight+Size(130), kScreenWidth -Size(65)*2, Size(25));
+    }else{
+        self.frame = CGRectMake(Size(100), y, kScreenWidth -Size(100 +20), Size(25));
+    }
     self.font = SystemFontOfSize(9);
     self.textAlignment = NSTextAlignmentRight;
     self.textColor = TEXT_RED_COLOR;

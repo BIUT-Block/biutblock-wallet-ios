@@ -21,6 +21,8 @@
 #import "CommonPageControl.h"
 #import "JXMovableCellTableView.h"
 
+#import "BackupRemindViewController.h"
+
 #define kHeaderHeight    Size(195)
 
 @interface AssetsViewController ()<JXMovableCellTableViewDataSource,JXMovableCellTableViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIScrollViewDelegate>
@@ -306,6 +308,10 @@
     viewController.assetsList = assetsList;
     viewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:YES];
+    
+//    BackupRemindViewController *viewController = [[BackupRemindViewController alloc]init];
+//    viewController.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 -(void)refreshWallet:(int)page clearCache:(BOOL)clearCache

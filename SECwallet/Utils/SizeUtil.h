@@ -13,13 +13,8 @@
 
 #define Size(x) ((x)*kScreenWidth/320.f)  //屏幕适配
 
-#define SystemFontOfSize(x) ((IS_iPhone4 || IS_iPhone5) ? [UIFont systemFontOfSize:(x-2)] : [UIFont systemFontOfSize:x])  //正常字体
-#define BoldSystemFontOfSize(x) ((IS_iPhone4 || IS_iPhone5) ? [UIFont boldSystemFontOfSize:(x-2)] : [UIFont boldSystemFontOfSize:x])  //加粗字体
-
-//#define SystemFontOfSize(x) ((IS_iPhone4 || IS_iPhone5) ? [UIFont fontWithName:@"Lato Regular" size:(x-2)] : [UIFont fontWithName:@"Lato Regular" size:x])
-
-
-
+#define SystemFontOfSize(x) ((IS_iPhone4 || IS_iPhone5) ? [UIFont systemFontOfSize:(x-2)] : [UIFont systemFontOfSize:((x)*kScreenWidth/320.f)]) //正常字体
+#define BoldSystemFontOfSize(x) ((IS_iPhone4 || IS_iPhone5) ? [UIFont boldSystemFontOfSize:(x-2)] : [UIFont boldSystemFontOfSize:((x)*kScreenWidth/320.f)])  //加粗字体
 
 #define IS_iPhoneX (kScreenWidth == 375.f && kScreenHeight == 812.f ? YES : NO)
 

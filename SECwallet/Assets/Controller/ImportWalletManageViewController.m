@@ -50,7 +50,7 @@
     backBT.tag = 100;
     [self.view addSubview:backBT];
     
-    tipBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(100+20), KStatusBarHeight+Size(11), Size(100), Size(24))];
+    tipBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(100+20), KStatusBarHeight+Size(11), Size(110), Size(24))];
     [tipBT greenBorderBtnStyle:Localized(@"什么是助记词？",nil) andBkgImg:@"bigRightBtn"];
     [tipBT addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     tipBT.tag = 101;

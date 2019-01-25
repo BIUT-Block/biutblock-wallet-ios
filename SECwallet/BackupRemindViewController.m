@@ -32,7 +32,7 @@
 
 -(void)setupUI
 {
-    UIButton *backupBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(45+20), KStatusBarHeight+Size(11), Size(45), Size(24))];
+    UIButton *backupBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(45+20), KStatusBarHeight+Size(11), Size(55), Size(24))];
     [backupBT greenBorderBtnStyle:Localized(@"跳过",nil) andBkgImg:@"smallRightBtn"];
     [backupBT addTarget:self action:@selector(jumpAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backupBT];
@@ -47,23 +47,23 @@
     icon.image = [UIImage imageNamed:@"backupWallet"];
     [self.view addSubview:icon];
     
-    UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(0, icon.maxY +Size(55), kScreenWidth, Size(10))];
-    desLb.font = SystemFontOfSize(10);
+    UILabel *desLb = [[UILabel alloc]initWithFrame:CGRectMake(0, icon.maxY +Size(50), kScreenWidth, Size(15))];
+    desLb.font = SystemFontOfSize(11);
     desLb.textColor = TEXT_GREEN_COLOR;
     desLb.textAlignment = NSTextAlignmentCenter;
     desLb.text = Localized(@"最后一步", nil);
     [self.view addSubview:desLb];
-    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(0, desLb.maxY, kScreenWidth, Size(15))];
+    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(0, desLb.maxY, kScreenWidth, Size(20))];
     remindLb.font = BoldSystemFontOfSize(15);
     remindLb.textColor = TEXT_BLACK_COLOR;
     remindLb.textAlignment = NSTextAlignmentCenter;
     remindLb.text = Localized(@"立即备份您的钱包！", nil);
     [self.view addSubview:remindLb];
     
-    UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), remindLb.maxY, kScreenWidth -Size(20*2), Size(50))];
-    contentLb.font = SystemFontOfSize(10);
+    UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), remindLb.maxY, kScreenWidth -Size(20*2), Size(70))];
+    contentLb.font = SystemFontOfSize(11);
     contentLb.textColor = COLOR(85, 101, 110, 1);
-    contentLb.numberOfLines = 3;
+    contentLb.numberOfLines = 4;
     contentLb.text = Localized(@"备份钱包：导出[助记词]并抄写到安全的地方，千万不要保存到网络上。\n然后尝试转入，转出小额资产开始使用。", nil);
     [self.view addSubview:contentLb];
     contentLb.textAlignment = NSTextAlignmentCenter;

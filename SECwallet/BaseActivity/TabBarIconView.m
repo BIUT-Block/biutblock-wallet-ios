@@ -27,7 +27,7 @@
 {
     if (_textLabel == nil) {
         _textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _textLabel.font = SystemFontOfSize(8);
+        _textLabel.font = BoldSystemFontOfSize(8);
         _textLabel.textAlignment = NSTextAlignmentCenter;
         _textLabel.textColor = TEXT_DARK_COLOR;
         [self addSubview:_textLabel];
@@ -54,10 +54,10 @@
     
     if(selected){
         _textLabel.textColor = TEXT_GREEN_COLOR;
-        _iconButton.frame = CGRectMake((self.frame.size.width -kItemButtonHeight)/2, Size(8), kItemButtonHeight, kItemButtonHeight);
+        _iconButton.frame = CGRectMake((self.frame.size.width -kItemButtonHeight)/2, Size(5), kItemButtonHeight, kItemButtonHeight);
     } else {
         _textLabel.textColor = TEXT_DARK_COLOR;
-        _iconButton.frame = CGRectMake((self.frame.size.width -kItemButtonHeight)/2, Size(5), kItemButtonHeight, kItemButtonHeight);
+        _iconButton.frame = CGRectMake((self.frame.size.width -kItemButtonHeight)/2, Size(2), kItemButtonHeight, kItemButtonHeight);
     }
 }
 

@@ -40,13 +40,13 @@
     [self addSubview:_icon];
     
     //地址
-    _address = [[UILabel alloc] initWithFrame:CGRectMake(_icon.maxX +Size(10), _icon.minY, Size(120), Size(10))];
+    _address = [[UILabel alloc] initWithFrame:CGRectMake(_icon.maxX +Size(10), _icon.minY, Size(150), Size(10))];
     _address.font = BoldSystemFontOfSize(10);
     _address.textColor = TEXT_BLACK_COLOR;
     [self addSubview:_address];
     
     //时间
-    _time = [[UILabel alloc] initWithFrame:CGRectMake(_address.minX, _address.maxY, Size(200), _address.height)];
+    _time = [[UILabel alloc] initWithFrame:CGRectMake(_address.minX, _address.maxY+Size(5), Size(200), _address.height)];
     _time.textColor = TEXT_DARK_COLOR;
     _time.font = SystemFontOfSize(9);
     [self addSubview:_time];

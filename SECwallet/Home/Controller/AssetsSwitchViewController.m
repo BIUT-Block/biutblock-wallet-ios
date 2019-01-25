@@ -107,7 +107,6 @@
     if (indexPath.section == [[AppDefaultUtil sharedInstance].defaultWalletIndex integerValue]) {
         cell.bkgIV.frame = CGRectMake(0, 0, _infoTableView.width, Size(42));
         cell.bkgIV.image = [UIImage imageNamed:@"switchwallet"];
-        
         cell.staticTitleLb.textColor = WHITE_COLOR;
     }
     return cell;

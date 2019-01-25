@@ -42,7 +42,7 @@
 - (void)addSubView
 {
     //标题
-    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), Size(7), Size(200), Size(15))];
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), 0, Size(200), Size(22))];
     titleLb.textColor = TEXT_BLACK_COLOR;
     titleLb.font = BoldSystemFontOfSize(20);
     titleLb.text = Localized(@"地址薄",nil);

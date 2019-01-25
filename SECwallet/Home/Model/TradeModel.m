@@ -40,7 +40,7 @@
         NSInteger gasPrice = [[NSString jsonUtils:dictionary[@"GasPrice"]] integerValue];
         NSInteger gasUsed = [[NSString jsonUtils:dictionary[@"GasUsedByTxn"]] integerValue];
         NSInteger gas = gasPrice * gasUsed;  //CumulativeGasUsed
-        _gas = [NSString stringWithFormat:@"%@ SEC",[NSString decimal:[NSString stringWithFormat:@"%ld",gas] wei:18 withDigit:0]];
+        _gas = [NSString stringWithFormat:@"%@ SEC",[NSString stringWithFormat:@"%ld",gas]];
         _tradeNum = [NSString jsonUtils:dictionary[@"TxHash"]];
         if (_status == 2) {
             _blockNum = @"Not in Block yet";
@@ -49,8 +49,8 @@
         }
         
         _tip = [NSString jsonUtils:dictionary[@"InputData"]];
-        NSInteger timeNum = [[NSString jsonUtils:dictionary[@"TimeStamp"]] integerValue];
-        _time = [NSString convertTimeStampsToString:@(timeNum)];
+        NSInteger timeStamp = [[NSString jsonUtils:dictionary[@"TimeStamp"]] integerValue];
+        _time = [NSString convertTimeStampsToString:@(timeStamp)];
     }
     
     return self;

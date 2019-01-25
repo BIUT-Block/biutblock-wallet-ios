@@ -23,6 +23,8 @@
     NSMutableArray *_dataArrays;  //交易列表
     UIView *_noneListView;
     
+    UIView *greenLine;
+    
     BOOL connectNetwork;
     NSArray *recodeListCache;   //缓存的数据
 }
@@ -53,6 +55,8 @@
     [unarchiver finishDecoding];
     _walletModel = _walletList[[[AppDefaultUtil sharedInstance].defaultWalletIndex intValue]];
     nameLb.text = _walletModel.walletName;
+    CGSize size = [_walletModel.walletName calculateSize:BoldSystemFontOfSize(18) maxWidth:kScreenWidth];
+    greenLine.frame = CGRectMake(nameLb.minX, nameLb.maxY-Size(1.5 -0.5)/2, size.width +Size(0), Size(1.5));
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         // 延时加载，解决一个因为启动过快，AFN判断网络的类未启动完成导致判断网络无网络的Bug
         [self readTradeRecordListCache];
@@ -87,7 +91,7 @@
     //钱包名
     UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(5), Size(100), Size(10))];
     desLb.textColor = TEXT_LightDark_COLOR;
-    desLb.font = SystemFontOfSize(8);
+    desLb.font = SystemFontOfSize(9);
     desLb.text = Localized(@"钱包名称",nil);
     [self.view addSubview:desLb];
     nameLb = [[UILabel alloc] initWithFrame:CGRectMake(titleLb.minX, desLb.maxY, Size(100), Size(30))];
@@ -99,12 +103,12 @@
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(nameLb.minX, nameLb.maxY, kScreenWidth -nameLb.minX*2, Size(0.5))];
     line.backgroundColor = DIVIDE_LINE_COLOR;
     [self.view addSubview:line];
-    UIView *greenLine = [[UIView alloc]initWithFrame:CGRectMake(line.minX, line.minY-Size(1.5 -0.5)/2, Size(60), Size(1.5))];
+    greenLine = [[UIView alloc]initWithFrame:CGRectMake(line.minX, line.minY-Size(1.5 -0.5)/2, Size(0), Size(1.5))];
     greenLine.backgroundColor = TEXT_GREEN_COLOR;
     [self.view addSubview:greenLine];
     
     //交换钱包按钮
-    UIButton *exchangeBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(65 +20), desLb.maxY-Size(2), Size(65), Size(25))];
+    UIButton *exchangeBT = [[UIButton alloc] initWithFrame:CGRectMake(kScreenWidth -Size(75 +20), desLb.maxY-Size(2), Size(85), Size(25))];
     [exchangeBT greenBorderBtnStyle:Localized(@"切换钱包",nil) andBkgImg:@"centerRightBtn"];
     [exchangeBT addTarget:self action:@selector(exchangeAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:exchangeBT];
@@ -183,7 +187,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return Size(42);
+    return Size(45);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -236,6 +240,9 @@
             if (Poollist.count > 0) {
                 for (NSDictionary *dic in Poollist) {
                     TradeModel *model = [[TradeModel alloc]initWithDictionary:dic walletAddress:from];
+                    if (!(model.status == 2 && model.type == 1)) {
+                        [_dataArrays addObject:model];
+                    }
                     [_dataArrays addObject:model];
                 }
             }

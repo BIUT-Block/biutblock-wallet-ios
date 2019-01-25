@@ -51,7 +51,7 @@
 - (void)addSubView
 {
     //标题
-    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), Size(7), Size(200), Size(15))];
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), 0, Size(200), Size(22))];
     titleLb.textColor = TEXT_BLACK_COLOR;
     titleLb.font = BoldSystemFontOfSize(20);
     if (_manageAddressViewType == ManageAddressViewType_add) {
@@ -73,7 +73,7 @@
     nameErrorLb = [[UILabel alloc]init];
     [self.view addSubview:nameErrorLb];
     nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    nameCell.frame = CGRectMake(nameLb.minX, nameLb.maxY, nameLb.width, Size(36));
+    nameCell.frame = CGRectMake(nameLb.minX, nameLb.maxY, nameLb.width, Size(42));
     [self.view addSubview:nameCell];
     nameTF = [[UITextField alloc] initWithFrame:CGRectMake(Size(10), 0, nameLb.width-Size(20), nameCell.height)];
     nameTF.delegate = self;

@@ -88,7 +88,7 @@
     [inputTV addSubview:placeholderLb];
     //密码
     passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(inputTV.minX, inputTV.maxY +Size(3), inputTV.width, KInputDesViewHeight)];
-    passwordDesLb.font = BoldSystemFontOfSize(10);
+    passwordDesLb.font = BoldSystemFontOfSize(11);
     passwordDesLb.textColor = TEXT_BLACK_COLOR;
     passwordDesLb.text = Localized(@"密码*", nil);
     NSMutableAttributedString *passwordStr = [[NSMutableAttributedString alloc] initWithString:passwordDesLb.text];
@@ -117,7 +117,7 @@
     
     //确认密码
     re_passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(inputTV.minX, pswCell.maxY +Size(3), inputTV.width, KInputDesViewHeight)];
-    re_passwordDesLb.font = BoldSystemFontOfSize(10);
+    re_passwordDesLb.font = BoldSystemFontOfSize(11);
     re_passwordDesLb.textColor = TEXT_BLACK_COLOR;
     re_passwordDesLb.text = Localized(@"确认密码*", nil);
     NSMutableAttributedString *re_passwordStr = [[NSMutableAttributedString alloc] initWithString:re_passwordDesLb.text];
@@ -141,7 +141,7 @@
 
     //密码提示
     passwordTipDesLb = [[UILabel alloc] initWithFrame:CGRectMake(inputTV.minX, re_pswCell.maxY +Size(3), inputTV.width, KInputDesViewHeight)];
-    passwordTipDesLb.font = BoldSystemFontOfSize(10);
+    passwordTipDesLb.font = BoldSystemFontOfSize(11);
     passwordTipDesLb.textColor = TEXT_BLACK_COLOR;
     passwordTipDesLb.text = Localized(@"密码提示", nil);
     [self.view addSubview:passwordTipDesLb];

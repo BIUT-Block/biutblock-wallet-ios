@@ -10,9 +10,6 @@
 #import "CommonHtmlShowViewController.h"
 #import "TradeDetailView.h"
 #import "AddressListViewController.h"
-#import "ethers/Account.h"
-#import "ethers/JsonRpcProvider.h"
-#import "ethers/SecureData.h"
 #import "CommonTableViewCell.h"
 #import "ConfirmPasswordViewController.h"
 #import "SECwallet-Swift.h"
@@ -248,7 +245,6 @@
             moneyCell.contentView.backgroundColor = DARK_COLOR;
         }
     }
-    
     NSString *gasStr = [gasLb.text componentsSeparatedByString:@"sec"].firstObject;
     [self.tradeDetailView initTradeDetailViewWith:addressTF.text payAddress:_walletModel.address gasPrice:gasStr sum:moneyTF.text tokenName:_tokenCoinModel.name];
 }

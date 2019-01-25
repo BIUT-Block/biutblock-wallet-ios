@@ -92,15 +92,15 @@
             
         }else if (sidePullViewType == CommonSidePullViewType_privateKey) {
             
-            UILabel *tip1Lb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(125), _sidePullViewWidth, Size(20))];
-            tip1Lb.font = SystemFontOfSize(12);
+            UILabel *tip1Lb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(100), _sidePullViewWidth, Size(20))];
+            tip1Lb.font = BoldSystemFontOfSize(12);
             tip1Lb.textColor = TEXT_BLACK_COLOR;
             tip1Lb.text = Localized(@"导出私钥", nil);
             [self addSubview:tip1Lb];
             
-            UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip1Lb.minX, tip1Lb.maxY +Size(30), Size(146), Size(60))];
-            tip2Lb.font = SystemFontOfSize(10);
-            tip2Lb.numberOfLines = 4;
+            UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip1Lb.minX, tip1Lb.maxY +Size(30), Size(146), Size(100))];
+            tip2Lb.font = SystemFontOfSize(11);
+            tip2Lb.numberOfLines = 5;
             tip2Lb.textColor = COLOR(237, 28, 57, 1);
             tip2Lb.text = Localized(@"安全警告：privateKey未经加密且导出有风险。建议使用助记词或者Keystore进行备份", nil);
             [self addSubview:tip2Lb];
@@ -111,18 +111,18 @@
             [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
             tip2Lb.attributedText = msgStr;
             
-            UITextView *contentTV = [[UITextView alloc]initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY +Size(25), Size(146), Size(46))];
+            UITextView *contentTV = [[UITextView alloc]initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY +Size(25), Size(146), Size(66))];
             contentTV.userInteractionEnabled = NO;
             contentTV.backgroundColor = DARK_COLOR;
             contentTV.layer.borderWidth = Size(0.5);
             contentTV.layer.borderColor = COLOR(209, 210, 211, 1).CGColor;
             contentTV.layer.cornerRadius = Size(5);
-            contentTV.font = SystemFontOfSize(10);
+            contentTV.font = SystemFontOfSize(11);
             contentTV.textColor = TEXT_BLACK_COLOR;
             contentTV.text = _currentWallet.privateKey;
             [self addSubview:contentTV];
             
-            UIButton *copyBT = [[UIButton alloc] initWithFrame:CGRectMake(contentTV.minX, contentTV.maxY+Size(20), contentTV.width, Size(30))];
+            UIButton *copyBT = [[UIButton alloc] initWithFrame:CGRectMake(contentTV.minX, contentTV.maxY+Size(20), contentTV.width, Size(32))];
             [copyBT goldSmallBtnStyle:Localized(@"复制",nil)];
             copyBT.tag = 101;
             [copyBT addTarget:self action:@selector(copyAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -130,20 +130,20 @@
             
         }else if (sidePullViewType == CommonSidePullViewType_keyStore) {
             
-            UILabel *tip1Lb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(125), _sidePullViewWidth, Size(20))];
+            UILabel *tip1Lb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), Size(60), _sidePullViewWidth, Size(20))];
             tip1Lb.font = BoldSystemFontOfSize(12);
             tip1Lb.textColor = TEXT_BLACK_COLOR;
             tip1Lb.text = Localized(@"导出KeyStore", nil);
             [self addSubview:tip1Lb];
             
-            UILabel *tit1Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip1Lb.minX, tip1Lb.maxY+Size(30), Size(100), Size(15))];
+            UILabel *tit1Lb = [[UILabel alloc] initWithFrame:CGRectMake(tip1Lb.minX, tip1Lb.maxY+Size(20), Size(100), Size(15))];
             tit1Lb.font = BoldSystemFontOfSize(12);
             tit1Lb.textColor = TEXT_BLACK_COLOR;
             tit1Lb.text = Localized(@"离线保存", nil);
             [self addSubview:tit1Lb];
-            UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit1Lb.minX, tit1Lb.maxY, Size(240), Size(60))];
+            UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit1Lb.minX, tit1Lb.maxY, Size(240), Size(80))];
             tip2Lb.font = SystemFontOfSize(11);
-            tip2Lb.numberOfLines = 3;
+            tip2Lb.numberOfLines = 4;
             tip2Lb.textColor = COLOR(156, 173, 180, 1);
             tip2Lb.text = Localized(@"请将Keystore文件复制并粘贴到安全的离线位置进行保存。不要保存到电子邮件，记事本，网络，聊天App，这是非常危险的。", nil);
             [self addSubview:tip2Lb];
@@ -161,7 +161,7 @@
             [self addSubview:tit2Lb];
             UILabel *tip3Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit2Lb.minX, tit2Lb.maxY+Size(5), tip2Lb.width, tip2Lb.height)];
             tip3Lb.font = SystemFontOfSize(11);
-            tip3Lb.numberOfLines = 4;
+            tip3Lb.numberOfLines = 5;
             tip3Lb.textColor = COLOR(156, 173, 180, 1);
             tip3Lb.text = Localized(@"不要通过网络工具传输密钥库文件。一旦被黑客入侵，将导致无法弥补的资产损失。通过扫描QR码传输离线设备。", nil);
             [self addSubview:tip3Lb];
@@ -172,18 +172,18 @@
             [msgStr1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, msgStr1.length)];
             tip3Lb.attributedText = msgStr1;
             
-            UITextView *contentTV = [[UITextView alloc]initWithFrame:CGRectMake(tip3Lb.minX, tip3Lb.maxY +Size(10), Size(230), Size(85))];
+            UITextView *contentTV = [[UITextView alloc]initWithFrame:CGRectMake(tip3Lb.minX, tip3Lb.maxY +Size(10), Size(230), Size(170))];
             contentTV.userInteractionEnabled = NO;
             contentTV.backgroundColor = DARK_COLOR;
             contentTV.layer.borderWidth = Size(0.5);
             contentTV.layer.borderColor = COLOR(209, 210, 211, 1).CGColor;
             contentTV.layer.cornerRadius = Size(5);
-            contentTV.font = SystemFontOfSize(10);
+            contentTV.font = SystemFontOfSize(8);
             contentTV.textColor = TEXT_BLACK_COLOR;
             contentTV.text = _currentWallet.keyStore;
             [self addSubview:contentTV];
             
-            UIButton *copyBT = [[UIButton alloc] initWithFrame:CGRectMake(contentTV.minX, contentTV.maxY+Size(15), contentTV.width, Size(30))];
+            UIButton *copyBT = [[UIButton alloc] initWithFrame:CGRectMake(contentTV.minX, contentTV.maxY+Size(15), contentTV.width, Size(32))];
             [copyBT customerBtnStyle:Localized(@"复制Keystore",nil) andBkgImg:@"copyKeystore"];
             copyBT.tag = 102;
             [copyBT addTarget:self action:@selector(copyAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -202,7 +202,7 @@
             tit1Lb.textColor = TEXT_RED_COLOR;
             tit1Lb.text = Localized(@"请不要截图", nil);
             [self addSubview:tit1Lb];
-            UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit1Lb.minX, tit1Lb.maxY, tit1Lb.width, Size(85))];
+            UILabel *tip2Lb = [[UILabel alloc] initWithFrame:CGRectMake(tit1Lb.minX, tit1Lb.maxY+Size(10), tit1Lb.width, Size(85))];
             tip2Lb.font = SystemFontOfSize(10);
             tip2Lb.numberOfLines = 5;
             tip2Lb.textColor = TEXT_RED_COLOR;
@@ -215,7 +215,7 @@
             [msgStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, msgStr.length)];
             tip2Lb.attributedText = msgStr;
             
-            UIButton *gotBT = [[UIButton alloc] initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY+Size(50), tip2Lb.width, Size(30))];
+            UIButton *gotBT = [[UIButton alloc] initWithFrame:CGRectMake(tip2Lb.minX, tip2Lb.maxY+Size(50), tip2Lb.width, Size(32))];
             [gotBT customerBtnStyle:Localized(@"Got it",nil) andBkgImg:@"got_it"];
             [gotBT setTitleColor:TEXT_RED_COLOR forState:UIControlStateNormal];
             gotBT.tag = 103;

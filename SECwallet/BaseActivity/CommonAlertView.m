@@ -226,7 +226,7 @@
             UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), _alertTitleLabel.maxY +Size(10), kAlertWidth -Size(30), kContentHeight_remind)];
             msgLb.font = SystemFontOfSize(10);
             msgLb.textColor = COLOR(126, 145, 155, 1);
-            msgLb.numberOfLines = 3;
+            msgLb.numberOfLines = 4;
             msgLb.text = content;
             [self addSubview:msgLb];
             //设置行间距

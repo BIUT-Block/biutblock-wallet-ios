@@ -14,7 +14,7 @@
 #import "BackupFileBeforeViewController.h"
 #import "ConfirmPasswordViewController.h"
 
-#define kHeaderHeight    Size(212) +KStatusBarHeight
+#define kHeaderHeight    Size(202) +KStatusBarHeight
 
 @interface WalletDetailViewController ()<UITextFieldDelegate>
 {
@@ -78,7 +78,7 @@
     //标题
     UILabel *desLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(10), Size(100), Size(10))];
     desLb.textColor = TEXT_LightDark_COLOR;
-    desLb.font = SystemFontOfSize(8);
+    desLb.font = SystemFontOfSize(9);
     desLb.text = Localized(@"钱包名称",nil);
     [headerView addSubview:desLb];
     titLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.minX, desLb.maxY, kScreenWidth, Size(20))];
@@ -91,8 +91,8 @@
     headerIcon.image = [UIImage imageNamed:@"myWallet"];
     [headerView addSubview:headerIcon];
     //总资产
-    UILabel *totalSumLb = [[UILabel alloc]initWithFrame:CGRectMake(0, headerIcon.maxY +Size(20), kScreenWidth, Size(10))];
-    totalSumLb.font = BoldSystemFontOfSize(10);
+    UILabel *totalSumLb = [[UILabel alloc]initWithFrame:CGRectMake(0, headerIcon.maxY +Size(15), kScreenWidth, Size(15))];
+    totalSumLb.font = BoldSystemFontOfSize(12);
     totalSumLb.textColor = TEXT_GREEN_COLOR;
     totalSumLb.textAlignment = NSTextAlignmentCenter;
     totalSumLb.text = [NSString stringWithFormat:@"%@ SEC",_walletModel.balance];
@@ -100,22 +100,22 @@
     //地址
     UILabel *addressLb = [[UILabel alloc]initWithFrame:CGRectMake(0, totalSumLb.maxY, kScreenWidth, Size(10))];
     addressLb.textAlignment = NSTextAlignmentCenter;
-    addressLb.font = SystemFontOfSize(7);
+    addressLb.font = SystemFontOfSize(9);
     addressLb.textColor = TEXT_BLACK_COLOR;
     addressLb.text = _walletModel.address;
     [headerView addSubview:addressLb];
     
     //钱包名
     CommonTableViewCell *nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    nameCell.frame = CGRectMake(Size(20), headerView.maxY +Size(22), kScreenWidth -Size(20 *2), Size(36));
+    nameCell.frame = CGRectMake(Size(20), headerView.maxY +Size(22), kScreenWidth -Size(20 *2), Size(45));
     [self.view addSubview:nameCell];
     UILabel *nameDesLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15), 0, Size(85), nameCell.height)];
-    nameDesLb.font = BoldSystemFontOfSize(10);
+    nameDesLb.font = BoldSystemFontOfSize(11);
     nameDesLb.textColor = TEXT_BLACK_COLOR;
     nameDesLb.text = Localized(@"钱包名称",nil);
     [nameCell.contentView addSubview:nameDesLb];
     walletNameTF = [[UITextField alloc] initWithFrame:CGRectMake(nameDesLb.maxX, nameDesLb.minY, nameCell.width -Size(100 +10*2), nameCell.height)];
-    walletNameTF.font = SystemFontOfSize(10);
+    walletNameTF.font = SystemFontOfSize(12);
     walletNameTF.textColor = TEXT_BLACK_COLOR;
     //默认
     walletNameTF.text = _walletModel.walletName;
@@ -128,12 +128,12 @@
         pswTipCell.frame = CGRectMake(nameCell.minX, nameCell.maxY +Size(7), nameCell.width, nameCell.height);
         [self.view addSubview:pswTipCell];
         UILabel *pswTipDesLb = [[UILabel alloc]initWithFrame:CGRectMake(nameDesLb.minX, 0, nameDesLb.width, nameDesLb.height)];
-        pswTipDesLb.font = BoldSystemFontOfSize(10);
+        pswTipDesLb.font = BoldSystemFontOfSize(11);
         pswTipDesLb.textColor = TEXT_BLACK_COLOR;
         pswTipDesLb.text = Localized(@"密码提示",nil);
         [pswTipCell.contentView addSubview:pswTipDesLb];
         passwordDesTF = [[UITextField alloc] initWithFrame:CGRectMake(pswTipDesLb.maxX, pswTipDesLb.minY, walletNameTF.width, walletNameTF.height)];
-        passwordDesTF.font = SystemFontOfSize(10);
+        passwordDesTF.font = SystemFontOfSize(12);
         passwordDesTF.textColor = TEXT_DARK_COLOR;
         passwordDesTF.keyboardType = UIKeyboardTypeNamePhonePad;
         passwordDesTF.secureTextEntry = YES;

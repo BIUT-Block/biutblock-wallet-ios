@@ -116,12 +116,12 @@
     NSArray *titleArr1 = @[Localized(@"交易号", nil),Localized(@"区块", nil),Localized(@"交易时间", nil)];
     NSArray *contentArr1 = @[[NSString addressToAsterisk:_tradeModel.tradeNum],_tradeModel.blockNum,_tradeModel.time];
     for (int i = 0; i< titleArr1.count; i++) {
-        UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.minX, Size(15) +i*Size(25), Size(150), Size(25))];
+        UILabel *titleLb = [[UILabel alloc]initWithFrame:CGRectMake(desLb.minX, Size(15) +i*Size(25), Size(130), Size(25))];
         titleLb.font = BoldSystemFontOfSize(11);
         titleLb.textColor = TEXT_BLACK_COLOR;
         titleLb.text = titleArr1[i];
         [bottomView addSubview:titleLb];
-        UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.maxX, titleLb.minY, kScreenWidth-Size(150)-desLb.minX*2, Size(25))];
+        UILabel *contentLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.maxX, titleLb.minY, kScreenWidth-Size(130)-desLb.minX*2, Size(25))];
         contentLb.font = SystemFontOfSize(11);
         contentLb.textColor = TEXT_DARK_COLOR;
         contentLb.textAlignment = NSTextAlignmentRight;
