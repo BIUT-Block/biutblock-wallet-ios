@@ -318,7 +318,7 @@
                 [self createLoadingView:Localized(@"导入钱包中···", nil)];
                 //添加计时器
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    _timing = 5;
+                    _timing = 10;
                     hasImportSuccess = NO;
                     _importTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countdown) userInfo:nil repeats:YES];
                 });
@@ -390,7 +390,7 @@
         [self createLoadingView:Localized(@"导入钱包中···", nil)];
         //添加计时器
         dispatch_async(dispatch_get_main_queue(), ^{
-            _timing = 5;
+            _timing = 10;
             hasImportSuccess = NO;
             _importTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countdown) userInfo:nil repeats:YES];
         });
@@ -536,7 +536,7 @@
         [self createLoadingView:Localized(@"导入钱包中···", nil)];
         //添加计时器
         dispatch_async(dispatch_get_main_queue(), ^{
-            _timing = 5;
+            _timing = 10;
             hasImportSuccess = NO;
             _importTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countdown) userInfo:nil repeats:YES];
         });
@@ -638,9 +638,6 @@
     RootViewController *controller = [[RootViewController alloc] init];
     AppDelegateInstance.window.rootViewController = controller;
     [AppDelegateInstance.window makeKeyAndVisible];
-//    /*************导入钱包成功后删除之前代币数据缓存*************/
-//    [CacheUtil clearTokenCoinTradeListCacheFile];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletInfoUI object:nil];
 }
 
 #pragma UITextFieldDelegate

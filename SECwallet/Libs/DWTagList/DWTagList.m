@@ -11,7 +11,7 @@
 #define CORNER_RADIUS Size(12.0f)
 #define LABEL_MARGIN_DEFAULT Size(8.0f)
 #define BOTTOM_MARGIN_DEFAULT Size(8.0f)
-#define FONT_SIZE_DEFAULT Size(9)
+#define FONT_SIZE_DEFAULT Size(12)
 #define HORIZONTAL_PADDING_DEFAULT Size(8.0f)
 #define VERTICAL_PADDING_DEFAULT Size(5.0f)
 #define TEXT_SHADOW_COLOR [UIColor clearColor]
@@ -52,6 +52,7 @@
         self.textShadowColor = TEXT_SHADOW_COLOR;
         self.textShadowOffset = TEXT_SHADOW_OFFSET;
         self.showTagMenu = DEFAULT_SHOW_TAG_MENU;
+//        self.scrollEnabled = YES;
     }
     return self;
 }
@@ -181,7 +182,7 @@
             for (NSString *selectStr in selectTextArray) {
                 if ([selectStr isEqualToString:text]) {
                     [tagView setBackgroundColor:COLOR(56, 142, 218, 1)];
-                    [tagView setCornerRadius:Size(9)];
+                    [tagView setCornerRadius:Size(11)];
                     [tagView setBorderWidth:Size(0)];
                     [tagView setBorderColor:COLOR(56, 142, 218, 1).CGColor];
                     [tagView setTextColor:WHITE_COLOR];
@@ -198,10 +199,10 @@
         [self addSubview:tagView];
         
         if (!_viewOnly) {
-            [tagView.button addTarget:self action:@selector(touchDownInside:) forControlEvents:UIControlEventTouchDown];
+//            [tagView.button addTarget:self action:@selector(touchDownInside:) forControlEvents:UIControlEventTouchDown];
             [tagView.button addTarget:self action:@selector(touchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-            [tagView.button addTarget:self action:@selector(touchDragExit:) forControlEvents:UIControlEventTouchDragExit];
-            [tagView.button addTarget:self action:@selector(touchDragInside:) forControlEvents:UIControlEventTouchDragInside];
+//            [tagView.button addTarget:self action:@selector(touchDragExit:) forControlEvents:UIControlEventTouchDragExit];
+//            [tagView.button addTarget:self action:@selector(touchDragInside:) forControlEvents:UIControlEventTouchDragInside];
         }
     }
     
@@ -214,10 +215,10 @@
     return sizeFit;
 }
 
-- (void)scrollToBottomAnimated:(BOOL)animated
-{
-    [self setContentOffset: CGPointMake(0.0, self.contentSize.height - self.bounds.size.height + self.contentInset.bottom) animated: animated];
-}
+//- (void)scrollToBottomAnimated:(BOOL)animated
+//{
+////    [self setContentOffset: CGPointMake(0.0, self.contentSize.height - self.bounds.size.height + self.contentInset.bottom) animated: animated];
+//}
 
 - (void)touchDownInside:(id)sender
 {

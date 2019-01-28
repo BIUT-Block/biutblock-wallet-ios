@@ -321,43 +321,56 @@
         SECBlockJSAPI *secAPI = [[SECBlockJSAPI alloc]init];
         NSString *privateKeyStr = [privateKey componentsSeparatedByString:@"x"].lastObject;
         [secAPI privKeyToMnemonic:privateKeyStr completion:^(NSString * mnemonicPhrase) {
-            //随机生成钱包ICON
-            int i = arc4random() % 2;
-            NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
-            tempModel = [[WalletModel alloc]initWithWalletName:walletNameTF.text andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:0 andIsFromMnemonicImport:0];
-            
-            /*************先获取钱包列表将最新钱包排在末尾并设置为默认钱包*************/
-            NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
-            NSData* data2 = [NSData dataWithContentsOfFile:path];
-            NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data2];
-            NSMutableArray *list = [NSMutableArray array];
-            list = [unarchiver decodeObjectForKey:@"walletList"];
-            [unarchiver finishDecoding];
-            NSMutableData* data = [NSMutableData data];
-            NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-            if (list.count > 0) {
-                [list insertObject:tempModel atIndex:list.count];
-                [archiver encodeObject:list forKey:@"walletList"];
-                [archiver finishEncoding];
-                [data writeToFile:path atomically:YES];
-                [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:[NSString stringWithFormat:@"%ld",list.count-1]];
-            }else{
-                NSMutableArray *list1 = [NSMutableArray array];
-                [list1 insertObject:tempModel atIndex:0];
-                [archiver encodeObject:list1 forKey:@"walletList"];
-                [archiver finishEncoding];
-                [data writeToFile:path atomically:YES];
-                [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:@"0"];
+                        
+            NSArray *originalArr = [mnemonicPhrase componentsSeparatedByString:@" "];
+            NSMutableArray *resultArrM = [NSMutableArray array];
+            for (NSString *item in originalArr) {
+                if (![resultArrM containsObject:item]) {
+                    [resultArrM addObject:item];
+                }
             }
-            
-            CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"创建钱包", nil) contentText:Localized(@"钱包创建成功", nil) imageName:@"Check_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_Check_mark];
-            [alert show];
-            alert.leftBlock = ^() {
-                BackupRemindViewController *controller = [[BackupRemindViewController alloc]init];
-                controller.walletModel = tempModel;
-                UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:controller];
-                [self presentViewController:navi animated:YES completion:nil];
-            };
+            if ([originalArr isEqualToArray:resultArrM]) {
+                //随机生成钱包ICON
+                int i = arc4random() % 2;
+                NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
+                tempModel = [[WalletModel alloc]initWithWalletName:walletNameTF.text andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:0 andIsFromMnemonicImport:0];
+                
+                /*************先获取钱包列表将最新钱包排在末尾并设置为默认钱包*************/
+                NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
+                NSData* data2 = [NSData dataWithContentsOfFile:path];
+                NSKeyedUnarchiver* unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data2];
+                NSMutableArray *list = [NSMutableArray array];
+                list = [unarchiver decodeObjectForKey:@"walletList"];
+                [unarchiver finishDecoding];
+                NSMutableData* data = [NSMutableData data];
+                NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
+                if (list.count > 0) {
+                    [list insertObject:tempModel atIndex:list.count];
+                    [archiver encodeObject:list forKey:@"walletList"];
+                    [archiver finishEncoding];
+                    [data writeToFile:path atomically:YES];
+                    [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:[NSString stringWithFormat:@"%ld",list.count-1]];
+                }else{
+                    NSMutableArray *list1 = [NSMutableArray array];
+                    [list1 insertObject:tempModel atIndex:0];
+                    [archiver encodeObject:list1 forKey:@"walletList"];
+                    [archiver finishEncoding];
+                    [data writeToFile:path atomically:YES];
+                    [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:@"0"];
+                }
+                
+                CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"创建钱包", nil) contentText:[NSString stringWithFormat:@"%@\n",Localized(@"钱包创建成功", nil)] imageName:@"Check_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_Check_mark];
+                [alert show];
+                alert.leftBlock = ^() {
+                    BackupRemindViewController *controller = [[BackupRemindViewController alloc]init];
+                    controller.walletModel = tempModel;
+                    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:controller];
+                    [self presentViewController:navi animated:YES completion:nil];
+                };
+            }else{
+                //重新获取助记词
+                [self hudShowWithString:@"创建钱包失败，请重试！" delayTime:2];
+            }
         }];
     }];
 }

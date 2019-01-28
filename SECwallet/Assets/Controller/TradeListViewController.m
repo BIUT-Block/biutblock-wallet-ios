@@ -243,10 +243,21 @@
                     if (!(model.status == 2 && model.type == 1)) {
                         [_dataArrays addObject:model];
                     }
-                    [_dataArrays addObject:model];
                 }
             }
             if (_dataArrays.count > 0) {
+                //按照时间进行排序
+                NSArray *sortArray = [_dataArrays sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                    TradeModel *pModel1 = obj1;
+                    TradeModel *pModel2 = obj2;
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                    NSDate *date1 = [formatter dateFromString:pModel1.time];
+                    NSDate *date2 = [formatter dateFromString:pModel2.time];
+                    NSComparisonResult result = [date1 compare:date2];
+                    return result == NSOrderedAscending;
+                }];
+                _dataArrays = [NSMutableArray arrayWithArray:sortArray];
                 /*************保存交易记录*************/
                 NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletRecodeList"];
                 NSMutableData* data = [NSMutableData data];

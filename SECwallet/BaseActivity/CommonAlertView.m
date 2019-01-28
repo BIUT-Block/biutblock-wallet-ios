@@ -75,11 +75,11 @@
         if (alertViewType == CommonAlertViewType_exclamation_mark) {
             _alertViewHeight = kAlertHeight_exclamation_mark;
             //图片
-            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(38))/2, Size(35), Size(38), Size(38))];
+            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(50))/2, Size(35), Size(50), Size(50))];
             imageIV.image = [UIImage imageNamed:imageName];
             [self addSubview:imageIV];
             
-            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY +Size(10), kAlertWidth, kTitleHeight)];
+            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY, kAlertWidth, kTitleHeight)];
             _alertTitleLabel.font = BoldSystemFontOfSize(11);
             _alertTitleLabel.textColor = COLOR(230, 0, 44, 1);
             _alertTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -132,11 +132,11 @@
             
             _alertViewHeight = kAlertHeight_question_mark;
             //图片
-            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(38))/2, Size(20), Size(38), Size(38))];
+            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(50))/2, Size(20), Size(50), Size(50))];
             imageIV.image = [UIImage imageNamed:imageName];
             [self addSubview:imageIV];
             
-            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY +Size(10), kAlertWidth, kTitleHeight)];
+            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY, kAlertWidth, kTitleHeight)];
             _alertTitleLabel.font = BoldSystemFontOfSize(11);
             _alertTitleLabel.textColor = COLOR(46, 122, 210, 1);
             _alertTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -180,21 +180,20 @@
 
             _alertViewHeight = kAlertHeight_Check_mark;
             //图片
-            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(38))/2, Size(35), Size(38), Size(38))];
+            UIImageView *imageIV = [[UIImageView alloc] initWithFrame:CGRectMake((kAlertWidth -Size(50))/2, Size(35), Size(50), Size(50))];
             imageIV.image = [UIImage imageNamed:imageName];
             [self addSubview:imageIV];
             
-            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY +Size(10), kAlertWidth, kTitleHeight)];
+            _alertTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, imageIV.maxY, kAlertWidth, kTitleHeight)];
             _alertTitleLabel.font = BoldSystemFontOfSize(11);
             _alertTitleLabel.textColor = COLOR(42, 213, 129, 1);
             _alertTitleLabel.textAlignment = NSTextAlignmentCenter;
             [self addSubview:_alertTitleLabel];
             _alertTitleLabel.text = title;
             //内容
-            UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), _alertTitleLabel.maxY, kAlertWidth -Size(30), kContentHeight_Check_mark)];
+            UILabel *msgLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(15), _alertTitleLabel.maxY, kAlertWidth -Size(30), Size(20))];
             msgLb.font = SystemFontOfSize(14);
             msgLb.textColor = COLOR(126, 145, 155, 1);
-            msgLb.numberOfLines = 2;
             msgLb.text = content;
             [self addSubview:msgLb];
             //设置行间距

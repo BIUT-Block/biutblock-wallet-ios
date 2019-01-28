@@ -43,19 +43,19 @@
     [self.view addSubview:backBT];
     
     //标题
-    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(35), Size(200), Size(30))];
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(Size(20), backBT.maxY +Size(10), Size(200), Size(30))];
     titleLb.textColor = TEXT_BLACK_COLOR;
     titleLb.font = BoldSystemFontOfSize(20);
     titleLb.text = Localized(@"备份助记词",nil);
     [self.view addSubview:titleLb];
     
-    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(30), kScreenWidth, Size(20))];
+    UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titleLb.maxY +Size(5), kScreenWidth, Size(20))];
     titLb.font = SystemFontOfSize(11);
     titLb.textColor = TEXT_DARK_COLOR;
     titLb.text = Localized(@"确认你的钱包助记词", nil);
     [self.view addSubview:titLb];
     
-    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titLb.maxY +Size(10), kScreenWidth -Size(20)*2, Size(30))];
+    UILabel *remindLb = [[UILabel alloc]initWithFrame:CGRectMake(titleLb.minX, titLb.maxY +Size(5), kScreenWidth -Size(20)*2, Size(30))];
     remindLb.font = SystemFontOfSize(11);
     remindLb.textColor = TEXT_DARK_COLOR;
     remindLb.numberOfLines = 2;
@@ -67,25 +67,27 @@
     remindLb.attributedText = msgStr;
     [self.view addSubview:remindLb];
     
-    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(15), remindLb.width, Size(140))];
+    UIView *bkgView = [[UIView alloc]initWithFrame:CGRectMake(remindLb.minX, remindLb.maxY +Size(10), remindLb.width, Size(180))];
     bkgView.backgroundColor = DARK_COLOR;
     bkgView.layer.cornerRadius = Size(5);
     [self.view addSubview:bkgView];
-    _showTagList = [[DWTagList alloc]initWithFrame:CGRectMake(Size(30), bkgView.minY +Size(8), kScreenWidth - Size(30)*2, bkgView.height -Size(5*2))];
+    _showTagList = [[DWTagList alloc]initWithFrame:CGRectMake(Size(25), bkgView.minY +Size(5), kScreenWidth - Size(25)*2, bkgView.height -Size(5*2))];
     [_showTagList setTagBackgroundColor:COLOR(186, 187, 188, 1)];
-    _showTagList.cornerRadius = Size(9);
+    _showTagList.cornerRadius = Size(11);
     _showTagList.borderWidth = 0;
     _showTagList.textColor = WHITE_COLOR;
     [_showTagList setTagDelegate:self];
     _showTagList.showTagMenu = YES;
+    _showTagList.scrollEnabled = NO;
     [self.view addSubview:_showTagList];
     
-    _tagList = [[DWTagList alloc] initWithFrame:CGRectMake(titleLb.minX, bkgView.maxY +Size(10), kScreenWidth - titleLb.minX*2, Size(130))];
+    _tagList = [[DWTagList alloc] initWithFrame:CGRectMake(titleLb.minX, bkgView.maxY +Size(5), kScreenWidth - titleLb.minX*2, Size(170))];
     [_tagList setTagBackgroundColor:WHITE_COLOR];
     _tagList.cornerRadius = Size(5);
     _tagList.borderWidth = Size(0.5);
     _tagList.textColor = TEXT_GREEN_COLOR;
     _tagList.borderColor = TEXT_GREEN_COLOR;
+    _tagList.scrollEnabled = NO;
     NSArray *tagArr = [_walletModel.mnemonicPhrase componentsSeparatedByString:@" "];
     //打乱数组顺序
     tagArr = [tagArr sortedArrayUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
@@ -102,7 +104,7 @@
     [self.view addSubview:_tagList];
     
     /*****************确认*****************/
-    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(titleLb.minX, _tagList.maxY +Size(12), kScreenWidth -titleLb.minX*2, Size(45))];
+    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(titleLb.minX, _tagList.maxY +Size(8), kScreenWidth -titleLb.minX*2, Size(42))];
     [nextBT goldBigBtnStyle:Localized(@"确认", nil)];
     [nextBT addTarget:self action:@selector(comfirmAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBT];
@@ -115,9 +117,7 @@
         if (![_selectTagList containsObject:tagName]) {
             [_selectTagList addObject:tagName];
             [_showTagList setTags:_selectTagList andSelectTags:_selectTagList];
-            
             NSArray *tagArr = [_walletModel.mnemonicPhrase componentsSeparatedByString:@" "];
-            //打乱数组顺序
             tagArr = [tagArr sortedArrayUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
                 int seed = arc4random_uniform(2);
                 if (seed) {
@@ -133,7 +133,6 @@
         [_selectTagList removeObject:tagName];
         [_showTagList setTags:_selectTagList andSelectTags:_selectTagList];
         NSArray *tagArr = [_walletModel.mnemonicPhrase componentsSeparatedByString:@" "];
-        //打乱数组顺序
         tagArr = [tagArr sortedArrayUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
             int seed = arc4random_uniform(2);
             if (seed) {

@@ -302,13 +302,27 @@
                     }
                 }
             }
+            
             if (_dataArrays.count > 0) {
+                //按照时间进行排序
+                NSArray *sortArray = [_dataArrays sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                    TradeModel *pModel1 = obj1;
+                    TradeModel *pModel2 = obj2;
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                    NSDate *date1 = [formatter dateFromString:pModel1.time];
+                    NSDate *date2 = [formatter dateFromString:pModel2.time];
+                    NSComparisonResult result = [date1 compare:date2];
+                    return result == NSOrderedAscending;
+                }];
+                _dataArrays = [NSMutableArray arrayWithArray:sortArray];
+
                 /*************保存交易记录*************/
                 NSString *fileName = [NSString stringWithFormat:@"recodeList_%@",_tokenCoinModel.name];
                 NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:fileName];
                 NSMutableData* data = [NSMutableData data];
                 NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-                [archiver encodeObject:_dataArrays forKey:fileName];
+                [archiver encodeObject:sortArray forKey:fileName];
                 [archiver finishEncoding];
                 [data writeToFile:path atomically:YES];
                 _noneListView.hidden = YES;
