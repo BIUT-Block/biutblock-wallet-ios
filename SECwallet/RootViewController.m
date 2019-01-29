@@ -66,7 +66,7 @@
             [self updateVersionByMsg:msg andVersionName:versionName andIsMust:NO];
         }else if (_updateType == 3 && ![versionName isEqualToString:app_Version]) {
             [self updateVersionByMsg:msg andVersionName:versionName andIsMust:YES];
-        }
+        }        
     }
 }
 - (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString
@@ -87,29 +87,24 @@
 -(void)updateVersionByMsg:(NSString *)msg andVersionName:(NSString *)versionName andIsMust:(BOOL)isMust
 {
     if (isMust) {
-        UIAlertView* alertview =[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@V%@",Localized(@"发现新版本", nil),versionName] message:[NSString stringWithFormat:@"%@:\n%@\n%@",Localized(@"新版本特性", nil),msg, Localized(@"是否升级？", nil)] delegate:self cancelButtonTitle:nil otherButtonTitles:Localized(@"马上升级", nil), nil];
-        [alertview show];
-    }else{
-        UIAlertView* alertview =[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@V%@",Localized(@"发现新版本", nil),versionName] message:[NSString stringWithFormat:@"%@:\n%@\n%@",Localized(@"新版本特性", nil),msg, Localized(@"是否升级？", nil)] delegate:self cancelButtonTitle:Localized(@"稍后升级", nil) otherButtonTitles:Localized(@"马上升级", nil), nil];
-        [alertview show];
-    }
-}
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@V%@",Localized(@"发现新版本", nil),versionName] contentText:[NSString stringWithFormat:@"%@:\n%@",Localized(@"新版本特性", nil),msg] imageName:@"appIcon" leftButtonTitle:Localized(@"马上升级", nil) rightButtonTitle:nil alertViewType:CommonAlertViewType_question_mark];
+        [alert show];
+        alert.leftBlock = ^() {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                exit(0);
+            });
+        };
 
-#pragma mark UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (_updateType == 3 && buttonIndex == 0) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            exit(0);
-        });
-        
-    }else if (_updateType == 2 && buttonIndex == 1) {
-        [alertView dismissWithClickedButtonIndex:0 animated:YES];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            exit(0);
-        });
+    }else{
+        CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@V%@",Localized(@"发现新版本", nil),versionName] contentText:[NSString stringWithFormat:@"%@:\n%@",Localized(@"新版本特性", nil),msg] imageName:@"appIcon" leftButtonTitle:Localized(@"稍后升级", nil) rightButtonTitle:Localized(@"马上升级", nil) alertViewType:CommonAlertViewType_question_mark];
+        [alert show];
+        alert.rightBlock = ^() {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                exit(0);
+            });
+        };
     }
 }
 

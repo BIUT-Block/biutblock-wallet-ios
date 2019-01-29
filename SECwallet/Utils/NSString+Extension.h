@@ -48,4 +48,6 @@
 #pragma mark - 生成二维码
 + (UIImage *)twoDimensionCodeWithUrl:(NSString *)url;
 
++(int)checkIsHaveNumAndLetter:(NSString*)password;
+
 @end

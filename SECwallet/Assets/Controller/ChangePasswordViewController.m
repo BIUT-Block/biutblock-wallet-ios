@@ -20,6 +20,9 @@
     CommonTableViewCell *newpswCell;
     UITextField *newpasswordTF;    //新密码
     UILabel *placeholder;
+    UIView *level1View;
+    UIView *level2View;
+    UIView *level3View;
     
     UILabel *re_pswErrorLb;
     CommonTableViewCell *re_pswCell;
@@ -88,7 +91,25 @@
     passwordTF.secureTextEntry = YES;
     passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     [pswCell addSubview:passwordTF];
+    [passwordTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
+    //密码强度
+    CGFloat width = Size(18); CGFloat height = Size(5);
+    level3View = [[UIView alloc]initWithFrame:CGRectMake(pswCell.minX+Size(10), pswCell.maxY+Size(15-height)/2, width*3, height)];
+    level3View.layer.borderWidth = Size(1);
+    level3View.layer.borderColor = COLOR(210, 210, 210, 210).CGColor;
+    level3View.layer.cornerRadius = Size(3);
+    [self.view addSubview:level3View];
+    level2View = [[UIView alloc]initWithFrame:CGRectMake(level3View.minX, level3View.minY, width*2, height)];
+    level2View.layer.borderWidth = Size(1);
+    level2View.layer.borderColor = COLOR(210, 210, 210, 210).CGColor;
+    level2View.layer.cornerRadius = Size(3);
+    [self.view addSubview:level2View];
+    level1View = [[UIView alloc]initWithFrame:CGRectMake(level3View.minX, level3View.minY, width, height)];
+    level1View.layer.borderWidth = Size(1);
+    level1View.layer.borderColor = COLOR(210, 210, 210, 210).CGColor;
+    level1View.layer.cornerRadius = Size(3);
+    [self.view addSubview:level1View];
     //新密码
     newpswCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     newpswCell.frame = CGRectMake(pswCell.minX, pswCell.maxY +Size(15), pswCell.width, pswCell.height);
@@ -111,6 +132,7 @@
     newpasswordTF.secureTextEntry = YES;
     newpasswordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     [newpswCell addSubview:newpasswordTF];
+    [newpasswordTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     placeholder = [[UILabel alloc]initWithFrame:CGRectMake(newpasswordTF.minX, 0, newpasswordTF.width, newpasswordTF.height)];
     placeholder.font = SystemFontOfSize(7);
     placeholder.textColor = TEXT_LightDark_COLOR;
@@ -141,6 +163,7 @@
     re_passwordTF.secureTextEntry = YES;
     re_passwordTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     [re_pswCell addSubview:re_passwordTF];
+    [re_passwordTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     //密码提示
     CommonTableViewCell *pswTipCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -275,19 +298,6 @@
 }
 
 #pragma UITextFieldDelegate
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if (textField == passwordTipTF) {
-        //限制输入12位
-        if (range.length == 1 && string.length == 0) {
-            return YES;
-        }else if (passwordTipTF.text.length >= 12) {
-            passwordTipTF.text = [textField.text substringToIndex:12];
-            return NO;
-        }
-    }
-    return YES;
-}
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if (textField == passwordTF) {
@@ -303,6 +313,74 @@
 {
     if (textField == newpasswordTF && newpasswordTF.text.length == 0) {
         placeholder.hidden = NO;
+    }
+}
+
+-(void)textFieldDidChange:(UITextField *)textField
+{
+    if (textField == passwordTipTF) {
+        //限制输入12位
+        if (textField.text.length >= 12) {
+            passwordTipTF.text = [textField.text substringToIndex:12];
+        }
+    }else{
+        if (textField.text.length >= 30) {
+            textField.text = [textField.text substringToIndex:30];
+        }
+    }
+    if (textField == newpasswordTF) {
+        //密码强度
+        if (textField.text.length==0) {
+            [self pswStrengthLevel:0];
+        }else if ([NSString checkIsHaveNumAndLetter:textField.text] == 1) {
+            [self pswStrengthLevel:1];
+        }else if ([NSString checkIsHaveNumAndLetter:textField.text] == 2) {
+            if (textField.text.length<8) {
+                [self pswStrengthLevel:1];
+            }else if (textField.text.length>=8) {
+                [self pswStrengthLevel:2];
+            }
+        }else if ([NSString checkIsHaveNumAndLetter:textField.text] == 3) {
+            if (textField.text.length<8) {
+                [self pswStrengthLevel:1];
+            }else if (textField.text.length>=8 && textField.text.length<=12) {
+                [self pswStrengthLevel:2];
+            }else{
+                [self pswStrengthLevel:3];
+            }
+        }
+    }
+}
+-(void)pswStrengthLevel:(int)level
+{
+    if (level == 0) {
+        level1View.layer.borderColor = COLOR(210, 210, 210, 210).CGColor;
+        level1View.backgroundColor = WHITE_COLOR;
+        level2View.layer.borderColor = COLOR(210, 210, 210, 210).CGColor;
+        level2View.backgroundColor = WHITE_COLOR;
+        level3View.layer.borderColor = COLOR(210, 210, 210, 210).CGColor;
+        level3View.backgroundColor = WHITE_COLOR;
+    }else if (level == 1){
+        level1View.layer.borderColor = COLOR(239, 28, 56, 1).CGColor;
+        level1View.backgroundColor = COLOR(239, 28, 56, 1);
+        level2View.layer.borderColor = COLOR(210, 210, 210, 210).CGColor;
+        level2View.backgroundColor = WHITE_COLOR;
+        level3View.layer.borderColor = COLOR(210, 210, 210, 210).CGColor;
+        level3View.backgroundColor = WHITE_COLOR;
+    }else if (level == 2){
+        level1View.layer.borderColor = COLOR(239, 28, 56, 1).CGColor;
+        level1View.backgroundColor = COLOR(239, 28, 56, 1);
+        level2View.layer.borderColor = COLOR(244, 171, 54, 1).CGColor;
+        level2View.backgroundColor = COLOR(244, 171, 54, 1);
+        level3View.layer.borderColor = COLOR(210, 210, 210, 210).CGColor;
+        level3View.backgroundColor = WHITE_COLOR;
+    }else if (level == 3){
+        level1View.layer.borderColor = COLOR(239, 28, 56, 1).CGColor;
+        level1View.backgroundColor = COLOR(239, 28, 56, 1);
+        level2View.layer.borderColor = COLOR(244, 171, 54, 1).CGColor;
+        level2View.backgroundColor = COLOR(244, 171, 54, 1);
+        level3View.layer.borderColor = COLOR(41, 216, 147, 1).CGColor;
+        level3View.backgroundColor = COLOR(41, 216, 147, 1);
     }
 }
 

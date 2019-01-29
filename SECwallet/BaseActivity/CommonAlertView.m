@@ -22,7 +22,7 @@
 #define kContentHeight_Check_mark        Size(50)
 #define kContentHeight_remind            Size(60)
 
-#define kButtonWidth       Size(80)
+#define kButtonWidth       Size(90)
 #define kButtonHeight      Size(40)
 
 @interface CommonAlertView ()
@@ -101,14 +101,14 @@
             msgLb.textAlignment = NSTextAlignmentCenter;
             
             if (rigthTitle.length == 0) {
-                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -kButtonWidth)/2, kAlertHeight_exclamation_mark -kButtonHeight -Size(30), kButtonWidth, kButtonHeight)];
-                [_leftBtn setTitleColor:COLOR(45, 121, 209, 1) forState:UIControlStateNormal];
+                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -kButtonWidth)/2, kAlertHeight_exclamation_mark -kButtonHeight -Size(20), kButtonWidth, kButtonHeight)];
+                [_leftBtn setTitleColor:COLOR(42, 213, 129, 1) forState:UIControlStateNormal];
                 _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
                 [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
                 [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
                 [self addSubview:_leftBtn];
             }else{
-                int insert = (kAlertWidth -kButtonWidth*2)/2;
+                int insert = (kAlertWidth -kButtonWidth*2)/4;
                 _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(insert, kAlertHeight_exclamation_mark -kButtonHeight -Size(20), kButtonWidth, kButtonHeight)];
                 [_leftBtn setTitleColor:COLOR(126, 145, 155, 1) forState:UIControlStateNormal];
                 _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
@@ -116,11 +116,11 @@
                 [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
                 [self addSubview:_leftBtn];
                 //中间线
-                UIView *line = [[UIView alloc]initWithFrame:CGRectMake(_leftBtn.maxX, _leftBtn.minY, Size(0.6), kButtonHeight)];
+                UIView *line = [[UIView alloc]initWithFrame:CGRectMake(_leftBtn.maxX+insert, _leftBtn.minY, Size(0.6), kButtonHeight)];
                 line.backgroundColor = COLOR(198, 200, 201, 1);
                 [self addSubview:line];
                 
-                _rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(line.maxX, _leftBtn.minY, kButtonWidth, kButtonHeight)];
+                _rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(line.maxX+insert, _leftBtn.minY, kButtonWidth, kButtonHeight)];
                 [_rightBtn setTitleColor:COLOR(42, 213, 129, 1) forState:UIControlStateNormal];
                 _rightBtn.titleLabel.font = BoldSystemFontOfSize(15);
                 [_rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
@@ -157,24 +157,33 @@
             msgLb.attributedText = msgStr;
             msgLb.textAlignment = NSTextAlignmentCenter;
             
-            int insert = (kAlertWidth -kButtonWidth*2)/2;
-            _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(insert, kAlertHeight_question_mark -kButtonHeight -Size(20), kButtonWidth, kButtonHeight)];
-            [_leftBtn setTitleColor:COLOR(126, 145, 155, 1) forState:UIControlStateNormal];
-            _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
-            [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-            [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:_leftBtn];
-            //中间线
-            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(_leftBtn.maxX, _leftBtn.minY, Size(0.6), kButtonHeight)];
-            line.backgroundColor = COLOR(198, 200, 201, 1);
-            [self addSubview:line];
-            
-            _rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(line.maxX, _leftBtn.minY, kButtonWidth, kButtonHeight)];
-            [_rightBtn setTitleColor:COLOR(42, 213, 129, 1) forState:UIControlStateNormal];
-            _rightBtn.titleLabel.font = BoldSystemFontOfSize(15);
-            [_rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
-            [_rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:_rightBtn];
+            if (rigthTitle.length == 0) {
+                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake((kAlertWidth -kButtonWidth)/2, kAlertHeight_question_mark -kButtonHeight -Size(20), kButtonWidth, kButtonHeight)];
+                [_leftBtn setTitleColor:COLOR(42, 213, 129, 1) forState:UIControlStateNormal];
+                _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
+                [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
+                [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:_leftBtn];
+            }else{
+                int insert = (kAlertWidth -kButtonWidth*2)/4;
+                _leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(insert, kAlertHeight_question_mark -kButtonHeight -Size(20), kButtonWidth, kButtonHeight)];
+                [_leftBtn setTitleColor:COLOR(126, 145, 155, 1) forState:UIControlStateNormal];
+                _leftBtn.titleLabel.font = BoldSystemFontOfSize(15);
+                [_leftBtn setTitle:leftTitle forState:UIControlStateNormal];
+                [_leftBtn addTarget:self action:@selector(leftBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:_leftBtn];
+                //中间线
+                UIView *line = [[UIView alloc]initWithFrame:CGRectMake(_leftBtn.maxX+insert, _leftBtn.minY, Size(0.6), kButtonHeight)];
+                line.backgroundColor = COLOR(198, 200, 201, 1);
+                [self addSubview:line];
+                
+                _rightBtn = [[UIButton alloc]initWithFrame:CGRectMake(line.maxX+insert, _leftBtn.minY, kButtonWidth, kButtonHeight)];
+                [_rightBtn setTitleColor:COLOR(42, 213, 129, 1) forState:UIControlStateNormal];
+                _rightBtn.titleLabel.font = BoldSystemFontOfSize(15);
+                [_rightBtn setTitle:rigthTitle forState:UIControlStateNormal];
+                [_rightBtn addTarget:self action:@selector(rightBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [self addSubview:_rightBtn];                
+            }
             
         }else if (alertViewType == CommonAlertViewType_Check_mark) {
 
@@ -297,7 +306,7 @@
         layer.shadowOpacity = Size(0.3);
     }
     CAKeyframeAnimation* animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    animation.duration = 0.15f;// 动画时间
+    animation.duration = 0.1f;// 动画时间
     NSMutableArray *values = [NSMutableArray array];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 1.0)]];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
@@ -336,14 +345,14 @@
     _backView = nil;
     
     CAKeyframeAnimation* animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-    animation.duration = 0.2f;// 动画时间
+    animation.duration = 0.1f;// 动画时间
     NSMutableArray *values = [NSMutableArray array];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
     [values addObject:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 1.0)]];
     animation.values = values;
     [self.layer addAnimation:animation forKey:nil];
     
-    [UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.1f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.alpha = 0;
     } completion:^(BOOL finished) {
 //        [super removeFromSuperview];
