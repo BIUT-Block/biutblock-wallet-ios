@@ -18,7 +18,7 @@
 #define kTitleHeight       Size(25)
 
 #define kContentHeight_exclamation_mark  Size(50)
-#define kContentHeight_question_mark     Size(90)
+#define kContentHeight_question_mark     Size(100)
 #define kContentHeight_Check_mark        Size(50)
 #define kContentHeight_remind            Size(60)
 

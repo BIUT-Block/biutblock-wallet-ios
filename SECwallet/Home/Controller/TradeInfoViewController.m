@@ -129,14 +129,15 @@
         [bottomView addSubview:contentLb];
     }
 
-    UIButton *moreBT = [[UIButton alloc] initWithFrame:CGRectMake(0, kScreenHeight -Size(25+15), kScreenWidth, Size(25))];
-    moreBT.titleLabel.font = SystemFontOfSize(8);
-    [moreBT setTitleColor:COLOR(56, 142, 218, 1) forState:UIControlStateNormal];
-    [moreBT setImage:[UIImage imageNamed:@"sec1"] forState:UIControlStateNormal];
-    [moreBT setTitle:[NSString stringWithFormat:@"     %@",Localized(@"打开SEC浏览器查看更多详情",nil)] forState:UIControlStateNormal];
-    [moreBT addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:moreBT];
-
+    if (_tradeModel.status != 2) {
+        UIButton *moreBT = [[UIButton alloc] initWithFrame:CGRectMake(0, kScreenHeight -Size(25+15), kScreenWidth, Size(25))];
+        moreBT.titleLabel.font = SystemFontOfSize(8);
+        [moreBT setTitleColor:COLOR(56, 142, 218, 1) forState:UIControlStateNormal];
+        [moreBT setImage:[UIImage imageNamed:@"sec1"] forState:UIControlStateNormal];
+        [moreBT setTitle:[NSString stringWithFormat:@"     %@",Localized(@"打开SEC浏览器查看更多详情",nil)] forState:UIControlStateNormal];
+        [moreBT addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:moreBT];
+    }
 }
 
 #pragma 查看更多信息

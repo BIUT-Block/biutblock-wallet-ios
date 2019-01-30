@@ -168,7 +168,6 @@
 		1B79567721D1D1D900EF26C8 /* Localized.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B79567621D1D1D900EF26C8 /* Localized.m */; };
 		1B79567A21D2246A00EF26C8 /* CommonSidePullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B79567921D2246A00EF26C8 /* CommonSidePullView.m */; };
 		1B79568B21D7468500EF26C8 /* DiscoveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B79568A21D7468500EF26C8 /* DiscoveryViewController.m */; };
-		1B8A77C621366DE4003BF708 /* RgsProtocol.docx in Resources */ = {isa = PBXBuildFile; fileRef = 1B8A77C521366DE4003BF708 /* RgsProtocol.docx */; };
 		1B9192F021F185ED0010EC5C /* WalletListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9192EF21F185ED0010EC5C /* WalletListCollectionViewCell.m */; };
 		1B9192F621F1A1F20010EC5C /* WalletListFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9192F521F1A1F20010EC5C /* WalletListFlowLayout.m */; };
 		1BC7A13B21E72D9A004C3C21 /* DappModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC7A13A21E72D9A004C3C21 /* DappModel.m */; };
@@ -493,7 +492,6 @@
 		1B79567921D2246A00EF26C8 /* CommonSidePullView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommonSidePullView.m; sourceTree = "<group>"; };
 		1B79568921D7468500EF26C8 /* DiscoveryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscoveryViewController.h; sourceTree = "<group>"; };
 		1B79568A21D7468500EF26C8 /* DiscoveryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscoveryViewController.m; sourceTree = "<group>"; };
-		1B8A77C521366DE4003BF708 /* RgsProtocol.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = RgsProtocol.docx; sourceTree = "<group>"; };
 		1B9192EE21F185ED0010EC5C /* WalletListCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalletListCollectionViewCell.h; sourceTree = "<group>"; };
 		1B9192EF21F185ED0010EC5C /* WalletListCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalletListCollectionViewCell.m; sourceTree = "<group>"; };
 		1B9192F421F1A1F20010EC5C /* WalletListFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalletListFlowLayout.h; sourceTree = "<group>"; };
@@ -583,7 +581,6 @@
 				1B65E688212BF55C00BB8DE5 /* BackupFileBeforeViewController.m */,
 				1B65E67D212BF55B00BB8DE5 /* BackupFileViewController.h */,
 				1B65E687212BF55C00BB8DE5 /* BackupFileViewController.m */,
-				1B8A77C521366DE4003BF708 /* RgsProtocol.docx */,
 				1BDB0A6A21ED741D00D85484 /* SECBlockJSAPI.swift */,
 				1BDB0A6B21ED741D00D85484 /* SECSDK.bundle.js */,
 				1B6D253321E863D900632DB4 /* SECwallet-Bridging-Header.h */,
@@ -1400,7 +1397,6 @@
 				1BDB0A6D21ED741D00D85484 /* SECSDK.bundle.js in Resources */,
 				1B65E888212BF5C100BB8DE5 /* No.png in Resources */,
 				1B65E887212BF5C100BB8DE5 /* OK.png in Resources */,
-				1B8A77C621366DE4003BF708 /* RgsProtocol.docx in Resources */,
 				1B65E88E212BF5C100BB8DE5 /* 2.png in Resources */,
 				1B65E836212BF5C000BB8DE5 /* IQKeyboardManager.bundle in Resources */,
 				1B65E889212BF5C100BB8DE5 /* AssetsPickerChecked~iOS6@2x.png in Resources */,

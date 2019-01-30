@@ -16,10 +16,6 @@
 #define kTagItem 100
 
 @interface RootViewController ()<TabBarIconViewDelegate>
-{
-    int _updateType;     //1不升级  2升级 3强制升级
-    NSString *APP_DownloadUrl;
-}
 
 @end
 
@@ -56,16 +52,16 @@
         NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         NSDictionary *dic = [[NSDictionary alloc]init];
         dic = [dataDic objectForKey:@"ios"];
-        NSString *versionName = [dic objectForKey:@"version"];
+        AppDelegateInstance.versionName = [dic objectForKey:@"version"];
         NSString *msg = [dic objectForKey:@"describ"];
-        _updateType = [[dic objectForKey:@"status"] intValue];
-        APP_DownloadUrl = [dic objectForKey:@"link"];
+        AppDelegateInstance.updateType = [[dic objectForKey:@"status"] intValue];;
+        AppDelegateInstance.APP_DownloadUrl = [dic objectForKey:@"link"];
         NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         //1不升级  2非强制升级 3强制升级
-        if (_updateType == 2 && ![versionName isEqualToString:app_Version]) {
-            [self updateVersionByMsg:msg andVersionName:versionName andIsMust:NO];
-        }else if (_updateType == 3 && ![versionName isEqualToString:app_Version]) {
-            [self updateVersionByMsg:msg andVersionName:versionName andIsMust:YES];
+        if (AppDelegateInstance.updateType == 2 && ![AppDelegateInstance.versionName isEqualToString:app_Version]) {
+            [self updateVersionByMsg:msg andVersionName:AppDelegateInstance.versionName andIsMust:NO];
+        }else if (AppDelegateInstance.updateType == 3 && ![AppDelegateInstance.versionName isEqualToString:app_Version]) {
+            [self updateVersionByMsg:msg andVersionName:AppDelegateInstance.versionName andIsMust:YES];
         }        
     }
 }
@@ -90,7 +86,7 @@
         CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@V%@",Localized(@"发现新版本", nil),versionName] contentText:[NSString stringWithFormat:@"%@:\n%@",Localized(@"新版本特性", nil),msg] imageName:@"appIcon" leftButtonTitle:Localized(@"马上升级", nil) rightButtonTitle:nil alertViewType:CommonAlertViewType_question_mark];
         [alert show];
         alert.leftBlock = ^() {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:AppDelegateInstance.APP_DownloadUrl]];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 exit(0);
             });
@@ -100,7 +96,7 @@
         CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:[NSString stringWithFormat:@"%@V%@",Localized(@"发现新版本", nil),versionName] contentText:[NSString stringWithFormat:@"%@:\n%@",Localized(@"新版本特性", nil),msg] imageName:@"appIcon" leftButtonTitle:Localized(@"稍后升级", nil) rightButtonTitle:Localized(@"马上升级", nil) alertViewType:CommonAlertViewType_question_mark];
         [alert show];
         alert.rightBlock = ^() {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:AppDelegateInstance.APP_DownloadUrl]];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 exit(0);
             });

@@ -15,11 +15,6 @@
 #import "RootViewController.h"
 
 @interface SettingViewController ()
-{
-    int _updateType;     //1不升级  2升级 3强制升级
-    NSString *APP_DownloadUrl;
-    UIButton *remindBT;
-}
 
 @end
 
@@ -37,31 +32,6 @@
     /**************导航栏布局***************/
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     self.view.backgroundColor = COLOR(243, 244, 245, 1);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        //请求数据
-        [self checkVersion];
-    });
-}
-#pragma mark 版本检测
--(void)checkVersion
-{
-    NSURL *zoneUrl = [NSURL URLWithString:@"http://scan.secblock.io/publishversionapi"];
-    NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
-    NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
-    if (data != nil) {
-        NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        _updateType = [[dataDic objectForKey:@"status"] intValue];
-        APP_DownloadUrl = [dataDic objectForKey:@"link"];
-        NSString *versionName = [dataDic objectForKey:@"version"];
-        NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-        if ((_updateType == 2 || _updateType == 3) && ![versionName isEqualToString:app_Version]) {
-            remindBT.hidden = NO;
-        }else{
-            remindBT.hidden = YES;
-        }
-    }else{
-        remindBT.hidden = YES;
-    }
 }
 
 - (void)addContentView
@@ -126,19 +96,20 @@
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     versionLb.text = [NSString stringWithFormat:@"%@：V%@",Localized(@"版本号", nil),app_Version];
     [self.view addSubview:versionLb];
-    remindBT = [[UIButton alloc]initWithFrame:CGRectMake(0, versionLb.maxY, kScreenWidth, Size(20))];
-    remindBT.titleLabel.font = SystemFontOfSize(10);
-    [remindBT setTitleColor:TEXT_DARK_COLOR forState:UIControlStateNormal];
-    [remindBT setTitle:Localized(@"版本更新", nil) forState:UIControlStateNormal];
-    [remindBT addTarget:self action:@selector(updateAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:remindBT];
-    remindBT.hidden = YES;
+    if ((AppDelegateInstance.updateType == 2 || AppDelegateInstance.updateType == 3) && ![AppDelegateInstance.versionName isEqualToString:app_Version]) {
+        UIButton *remindBT = [[UIButton alloc]initWithFrame:CGRectMake(0, versionLb.maxY, kScreenWidth, Size(20))];
+        remindBT.titleLabel.font = SystemFontOfSize(10);
+        [remindBT setTitleColor:TEXT_DARK_COLOR forState:UIControlStateNormal];
+        [remindBT setTitle:Localized(@"版本更新", nil) forState:UIControlStateNormal];
+        [remindBT addTarget:self action:@selector(updateAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:remindBT];
+    }
 }
 
 -(void)updateAction
 {
     //升级跳转
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_DownloadUrl]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:AppDelegateInstance.APP_DownloadUrl]];
     //立即重启
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         exit(0);
