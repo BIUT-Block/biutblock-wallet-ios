@@ -76,7 +76,7 @@
     layer.shadowRadius = Size(5);
     layer.shadowColor = [UIColor darkGrayColor].CGColor;
     layer.shadowOpacity = Size(0.5);
-    UIButton *importBT = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth/2 -Size(60))/2, bottomView.minY +Size(20), Size(80), Size(80))];
+    UIButton *importBT = [[UIButton alloc]initWithFrame:CGRectMake((kScreenWidth/2 -Size(80))/2, bottomView.minY +Size(20), Size(80), Size(80))];
     importBT.titleLabel.font = BoldSystemFontOfSize(11);
     [importBT setImage:[UIImage imageNamed:@"importWallet"] forState:UIControlStateNormal];
     [importBT setTitleColor:TEXT_BLACK_COLOR forState:UIControlStateNormal];
