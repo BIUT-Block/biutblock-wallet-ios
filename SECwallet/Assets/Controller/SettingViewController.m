@@ -16,9 +16,6 @@
 
 @interface SettingViewController ()
 
-@property(nonatomic, assign) int allTicket;
-@property(nonatomic, strong) dispatch_semaphore_t ticketSemaphore;
-
 @end
 
 @implementation SettingViewController

@@ -17,6 +17,7 @@
 		1B379C1C212D553200255EEC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B379C1B212D553200255EEC /* CFNetwork.framework */; };
 		1B379C1E212D554400255EEC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B379C1D212D554400255EEC /* Foundation.framework */; };
 		1B379C69212D579500255EEC /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B379C68212D579500255EEC /* libicucore.tbd */; };
+		1B59F40F221D04A5009E9A98 /* UIControl+BtnQuickLimit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B59F40E221D04A5009E9A98 /* UIControl+BtnQuickLimit.m */; };
 		1B65E5FC212BEFB000BB8DE5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E5FB212BEFB000BB8DE5 /* main.m */; };
 		1B65E68A212BF55D00BB8DE5 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E67A212BF55B00BB8DE5 /* RootViewController.m */; };
 		1B65E68B212BF55D00BB8DE5 /* SelectEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B65E67B212BF55B00BB8DE5 /* SelectEntryViewController.m */; };
@@ -170,6 +171,8 @@
 		1B379C1D212D554400255EEC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1B379C1F212D560000255EEC /* libicucore.A.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.A.tbd; path = usr/lib/libicucore.A.tbd; sourceTree = SDKROOT; };
 		1B379C68212D579500255EEC /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		1B59F40D221D04A5009E9A98 /* UIControl+BtnQuickLimit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIControl+BtnQuickLimit.h"; sourceTree = "<group>"; };
+		1B59F40E221D04A5009E9A98 /* UIControl+BtnQuickLimit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIControl+BtnQuickLimit.m"; sourceTree = "<group>"; };
 		1B65E5E9212BEFAD00BB8DE5 /* SECwallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SECwallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B65E5FB212BEFB000BB8DE5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1B65E622212BEFE600BB8DE5 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -994,6 +997,8 @@
 				1B65E797212BF5C000BB8DE5 /* UIView+Category.m */,
 				1B65E796212BF5C000BB8DE5 /* UIButton+Extension.h */,
 				1B65E7A0212BF5C000BB8DE5 /* UIButton+Extension.m */,
+				1B59F40D221D04A5009E9A98 /* UIControl+BtnQuickLimit.h */,
+				1B59F40E221D04A5009E9A98 /* UIControl+BtnQuickLimit.m */,
 				1B69436B21DC9094005905D8 /* UILabel+Extension.h */,
 				1B69436C21DC9094005905D8 /* UILabel+Extension.m */,
 				1B65E79A212BF5C000BB8DE5 /* CacheUtil.h */,
@@ -1319,6 +1324,7 @@
 				1B65E86A212BF5C100BB8DE5 /* BaseViewController.m in Sources */,
 				1B65E825212BF5C000BB8DE5 /* MJRefreshFooterView.m in Sources */,
 				1B65E864212BF5C100BB8DE5 /* ImportWalletManageViewController.m in Sources */,
+				1B59F40F221D04A5009E9A98 /* UIControl+BtnQuickLimit.m in Sources */,
 				1B65E87D212BF5C100BB8DE5 /* GTMBase64.m in Sources */,
 				1B65E811212BF5C000BB8DE5 /* TokenCoinModel.m in Sources */,
 				1B65E870212BF5C100BB8DE5 /* UIView+Category.m in Sources */,
