@@ -124,6 +124,7 @@
     walletNameTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     walletNameTF.placeholder = Localized(@"例如：wallet01", nil);
     [self.view addSubview:walletNameTF];
+    [walletNameTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     //密码
     passwordDesLb = [[UILabel alloc] initWithFrame:CGRectMake(nameDesLb.minX, nameCell.maxY +Size(3), Size(60), nameDesLb.height)];
     passwordDesLb.font = BoldSystemFontOfSize(11);
@@ -212,6 +213,7 @@
     passwordTipTF.placeholder = Localized(@"选填", nil);
     passwordTipTF.delegate = self;
     [self.view addSubview:passwordTipTF];
+    [passwordTipTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 
     /*****************创建钱包*****************/
     creatBT = [[UIButton alloc] initWithFrame:CGRectMake(Size(20), passwordTipTF.maxY +Size(40), kScreenWidth - 2*Size(20), Size(45))];
@@ -442,7 +444,7 @@
                 };
             }else{
                 //重新获取助记词
-                [self hudShowWithString:@"创建钱包失败，请重试！" delayTime:2];
+                [self hudShowWithString:Localized(@"创建钱包失败，请重试！", nil)  delayTime:2];
             }
         }];
     }];

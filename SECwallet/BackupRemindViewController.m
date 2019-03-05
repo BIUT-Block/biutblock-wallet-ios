@@ -86,7 +86,7 @@
 {
     ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
     controller.walletModel = _walletModel;
-    [self presentViewController:controller animated:YES completion:nil];
+    [self.navigationController pushViewController:controller animated:YES];
     controller.sureBlock = ^() {
         BackupFileBeforeViewController *controller = [[BackupFileBeforeViewController alloc]init];
         controller.walletModel = _walletModel;

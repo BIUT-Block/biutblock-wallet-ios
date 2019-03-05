@@ -108,11 +108,12 @@
     [self dismissKeyboardAction];
     
     if ([passwordTF.text isEqualToString:_walletModel.loginPassword]) {
-        [self dismissViewControllerAnimated:YES completion:^{
+        [self.navigationController popViewControllerAnimated:YES];
+//        [self dismissViewControllerAnimated:YES completion:^{
             if (self.sureBlock) {
                 self.sureBlock();
             }
-        }];
+//        }];
     }else{
         CommonAlertView *alert = [[CommonAlertView alloc]initWithTitle:Localized(@"输入密码", nil) contentText:Localized(@"无效的密码\n请重新输入", nil) imageName:@"exclamation_mark" leftButtonTitle:@"OK" rightButtonTitle:nil alertViewType:CommonAlertViewType_exclamation_mark];
         [alert show];

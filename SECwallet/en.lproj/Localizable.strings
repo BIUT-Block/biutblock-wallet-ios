@@ -191,11 +191,8 @@
 "扫一扫"="Scan Code";
 "地址不正确，请重新扫描！"="Address is incorrect, please rescan!";
 "暂无记录"="No Record Found";
-"交易所"="Exchanges";
-"游戏"="Games";
 "分享"="Share";
 "打开SEC浏览器查看更多详情"="Enter SECBlock for more details";
-"钱包个数超过10个"="The limit number of wallets is 10";
 
 
 /****************HUD提示文本********************/
@@ -233,4 +230,5 @@
 "保存成功"="Successfully saved";
 "钱包已存在"="Wallet Exists";
 "请输入钱包名称"="Input Wallet Name";
-
+"钱包个数超过限制"="The number of wallets exceeded the limit";
+"创建钱包失败，请重试！"="Creat faild,Try again";

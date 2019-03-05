@@ -10,7 +10,7 @@
 
 #define HUDYOFFSET   kScreenHeight/Size(3.3)
 
-@interface BaseViewController ()<HTTPClientDelegate,MBProgressHUDDelegate>
+@interface BaseViewController ()<MBProgressHUDDelegate>
 {
     UIImageView *navigationImageView;
 }
@@ -83,51 +83,6 @@
     return [UIView new];
 }
 
-#pragma mark HTTPClientDelegate 网络数据回调代理
--(void) startRequest
-{
-    _isLoading = YES;
-    [self createLoadingView:nil];
-}
-
-// 返回成功
--(void) httpResponseSuccess:(NetWorkClient *)client dataTask:(NSURLSessionDataTask *)task didSuccessWithObject:(id)obj
-{
-    _isLoading  = NO;
-    [HUD hide:YES];
-    NSDictionary *dics = obj;
-    NSNumber *result_type = [dics objectForKey:@"status"];
-    
-    if ([result_type intValue] == 1) {
-        //返回成功
-        
-    }else {
-        // 错误返回码
-        NSString *msg = [dics objectForKey:@"msg"];
-        NSLog(@"%@", msg);
-        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hud_ok"]];
-        HUD.mode = MBProgressHUDModeCustomView;
-        [HUD hide:YES afterDelay:1]; // 延时2s消失
-        HUD.labelText = msg;
-    }
-}
-
-// 返回失败
--(void) httpResponseFailure:(NetWorkClient *)client dataTask:(NSURLSessionDataTask *)task didFailWithError:(NSError *)error
-{
-    [self hudShowWithString:@"通信超时，请重试" delayTime:1];
-    _isLoading  = NO;
-    [HUD hide:YES];
-}
-
-// 无可用的网络
--(void) networkError
-{
-    [self createHUD:MBProgressHUDModeText withMessage:@"网络繁忙" withDetailMessage:@"请检查您的网络设置" withDuration:1.5 withCompletionBlock:nil];
-    _isLoading  = NO;
-    [HUD hide:YES];
-}
-
 /** 显示提示信息 */
 - (void)hudShowWithString:(NSString *)str delayTime:(CGFloat)time{
     
@@ -153,20 +108,6 @@
     self.navigationItem.titleView = label;
 }
 
-#pragma mark -- 设置导航栏左边文字
-- (void)setNavgationLeftTitle:(NSString *)item withAction:(SEL)methot
-{
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithTitle:item
-                                                                 style:UIBarButtonItemStylePlain
-                                                                target:self
-                                                                action:methot];
-    leftItem.tintColor = BLACK_COLOR;
-    [leftItem setTitleTextAttributes:@{NSFontAttributeName:SystemFontOfSize(14)} forState:0];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-}
-
-
 #pragma mark -- 设置导航栏左边按钮图片
 - (void)setNavgationLeftImage:(UIImage *)image withAction:(SEL)methot
 {
@@ -176,31 +117,6 @@
                                                                             action:methot];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-}
-
-#pragma mark -- 设置导航栏右边按钮文字
-- (void)setNavgationRightTitle:(NSString *)item withAction:(SEL)methot
-{
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:item
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:methot];
-    rightItem.tintColor = BLACK_COLOR;
-    [rightItem setTitleTextAttributes:@{NSFontAttributeName:SystemFontOfSize(14)} forState:0];
-    self.navigationItem.rightBarButtonItem = rightItem;
-}
-
-#pragma mark -- 设置导航栏右边按钮图片
-- (void)setNavgationRightImage:(UIImage *)image withAction:(SEL)methot
-{
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:image
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:methot];
-    
-    self.navigationItem.rightBarButtonItem = rightItem;
-    [self.navigationItem.rightBarButtonItem setImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-
 }
 
 #pragma mark 显示请求数据的HUD，不执行方法

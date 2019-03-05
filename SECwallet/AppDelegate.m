@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import <Bugly/Bugly.h>
 #import "RootViewController.h"
 #include <objc/runtime.h>
 
@@ -41,8 +40,6 @@
     self.window.rootViewController = self.guideView;
     [self.window makeKeyAndVisible];
     
-    //Bugly sdk嵌入
-    [Bugly startWithAppId:kBuglyAppId];
     // 启动图片延时: 2秒
     [NSThread sleepForTimeInterval:2];
         

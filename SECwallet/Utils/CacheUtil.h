@@ -10,10 +10,6 @@
 
 @interface CacheUtil : NSObject
 
-+(NSString *) creatCacheFileName:(NSDictionary *) parameters;
-
-+(NSString *) creatCacheFileNameWithString:(NSString *) value;
-
 //清除代币交易记录缓存
 +(void) clearTokenCoinTradeListCacheFile;
 

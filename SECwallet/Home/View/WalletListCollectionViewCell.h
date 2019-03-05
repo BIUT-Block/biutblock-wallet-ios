@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface WalletListCollectionViewCell : UICollectionViewCell
 @property (nonatomic,strong) UIImageView *bkgIV;    //背景图
 @property (nonatomic,strong) UILabel* nameLb;
@@ -19,5 +17,3 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,strong) UIButton* backupBT;  //备份按钮
 @property (nonatomic,strong) UIButton *codeBT;
 @end
-
-NS_ASSUME_NONNULL_END

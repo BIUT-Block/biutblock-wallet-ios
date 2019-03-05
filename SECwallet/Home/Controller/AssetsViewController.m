@@ -13,15 +13,12 @@
 #import "AssetsSwitchViewController.h"
 #import "AddressCodePayViewController.h"
 #import "TradeDetailViewController.h"
-#import "TokenCoinListViewController.h"
 #import "WalletDetailViewController.h"
 
 #import "WalletListCollectionViewCell.h"
 #import "WalletListFlowLayout.h"
 #import "CommonPageControl.h"
 #import "JXMovableCellTableView.h"
-
-#import "BackupRemindViewController.h"
 
 #define kHeaderHeight    Size(195)
 
@@ -76,6 +73,7 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     self.view.backgroundColor = COLOR(241, 242, 243, 1);
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         //网络监听
         [self networkManager];
@@ -186,8 +184,8 @@
 {
     WalletDetailViewController *viewController = [[WalletDetailViewController alloc]init];
     viewController.walletModel = currentWallet;
-    UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-    [self presentViewController:navi animated:YES completion:nil];
+    viewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -308,10 +306,6 @@
     viewController.assetsList = assetsList;
     viewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:YES];
-    
-//    BackupRemindViewController *viewController = [[BackupRemindViewController alloc]init];
-//    viewController.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 -(void)refreshWallet:(int)page clearCache:(BOOL)clearCache
@@ -440,16 +434,16 @@
         {
             AddressCodePayViewController *viewController = [[AddressCodePayViewController alloc] init];
             viewController.walletModel = currentWallet;
-            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-            [self presentViewController:navi animated:YES completion:nil];
+            viewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:viewController animated:YES];
         }
             break;
         case 1001:
         {
             WalletDetailViewController *viewController = [[WalletDetailViewController alloc]init];
             viewController.walletModel = currentWallet;
-            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-            [self presentViewController:navi animated:YES completion:nil];
+            viewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:viewController animated:YES];
         }
             break;
         default:

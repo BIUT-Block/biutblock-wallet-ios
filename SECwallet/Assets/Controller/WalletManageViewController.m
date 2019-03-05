@@ -12,7 +12,6 @@
 #import "WalletDetailViewController.h"
 #import "CreatWalletViewController.h"
 #import "ImportWalletManageViewController.h"
-#import "SelectEntryViewController.h"
 
 @interface WalletManageViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -42,12 +41,7 @@
     _dataArrays = [unarchiver decodeObjectForKey:@"walletList"];
     [unarchiver finishDecoding];
     [_infoTableView reloadData];
-    
-    if (_dataArrays.count == 0) {
-        SelectEntryViewController *viewController = [[SelectEntryViewController alloc] init];
-        UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-        [self presentViewController:navi animated:YES completion:nil];
-    }    
+   
 }
 - (void)setupUI
 {
@@ -188,16 +182,16 @@
             //导入钱包
         {
             ImportWalletManageViewController *viewController = [[ImportWalletManageViewController alloc]init];
-            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-            [self presentViewController:navi animated:YES completion:nil];
+            viewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:viewController animated:YES];
         }
             break;
         case 1001:
             //创建钱包
         {
             CreatWalletViewController *viewController = [[CreatWalletViewController alloc] init];
-            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
-            [self presentViewController:navi animated:YES completion:nil];
+            viewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:viewController animated:YES];
         }
             break;
         default:

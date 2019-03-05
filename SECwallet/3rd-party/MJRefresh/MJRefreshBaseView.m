@@ -16,7 +16,6 @@
 {
     __weak UILabel *_statusLabel;
     __weak UIImageView *_arrowImage;
-    __weak CommonActivityIndicatorView *_activityView;
     BOOL _endingRefresh;
 }
 @end
@@ -40,31 +39,6 @@
     }
     return _statusLabel;
 }
-//
-///**
-// *  箭头图片
-// */
-//- (UIImageView *)arrowImage
-//{
-//    if (!_arrowImage) {
-//        UIImageView *arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:MJRefreshSrcName(@"arrow.png")]];
-//        arrowImage.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-//        [self addSubview:_arrowImage = arrowImage];
-//    }
-//    return _arrowImage;
-//}
-
-/**
- *  状态标签
- */
-- (CommonActivityIndicatorView *)activityView
-{
-    if (!_activityView) {
-        CommonActivityIndicatorView *activityView = [[CommonActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 35)];
-        [self addSubview:_activityView = activityView];
-    }
-    return _activityView;
-}
 
 #pragma mark - 初始化方法
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -83,10 +57,6 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    // 1.箭头
-    CGFloat arrowX = self.mj_width * 0.5;
-    // 2.指示器
-    self.activityView.center = CGPointMake(arrowX, -self.mj_height/2 +47);
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
@@ -222,21 +192,13 @@
                 _endingRefresh = YES;
                 
                 [UIView animateWithDuration:MJRefreshSlowAnimationDuration * 0.6 animations:^{
-                    self.activityView.alpha = 0.0;
                 } completion:^(BOOL finished) {
-                    // 停止转圈圈
-                    [self.activityView stopAnimating];
-                    
-                    // 恢复alpha
-                    self.activityView.alpha = 1.0;
+
                 }];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJRefreshSlowAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 等头部回去
                     // 显示箭头
                     self.arrowImage.hidden = NO;
-                    
-                    // 停止转圈圈
-                    [self.activityView stopAnimating];
-                    
+            
                     // 设置文字
                     [self settingLabelText];
                     
@@ -248,9 +210,6 @@
             } else {
                 // 显示箭头
                 self.arrowImage.hidden = NO;
-                
-                // 停止转圈圈
-                [self.activityView stopAnimating];
             }
 			break;
         }
@@ -260,8 +219,6 @@
             
 		case MJRefreshStateRefreshing:
         {
-            // 开始转圈圈
-			[self.activityView startAnimating];
             // 隐藏箭头
 			self.arrowImage.hidden = YES;
             

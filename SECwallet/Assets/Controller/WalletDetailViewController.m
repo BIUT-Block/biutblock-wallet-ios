@@ -13,6 +13,7 @@
 #import "AddressCodePayViewController.h"
 #import "BackupFileBeforeViewController.h"
 #import "ConfirmPasswordViewController.h"
+#import "SelectEntryViewController.h"
 
 #define kHeaderHeight    Size(202) +KStatusBarHeight
 
@@ -202,7 +203,7 @@
         //导出私钥
         ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
         controller.walletModel = _walletModel;
-        [self presentViewController:controller animated:YES completion:nil];
+        [self.navigationController pushViewController:controller animated:YES];
         controller.sureBlock = ^() {
             CommonSidePullView *privateKeySidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_privateKey];
             [self.view addSubview:privateKeySidePullView];
@@ -213,8 +214,9 @@
         //导入KeyStore
         ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
         controller.walletModel = _walletModel;
-        [self presentViewController:controller animated:YES completion:nil];
+        [self.navigationController pushViewController:controller animated:YES];
         controller.sureBlock = ^() {
+            
             CommonSidePullView *keystoreRemindSidePullView = [[CommonSidePullView alloc]initWithWidth:Size(190) sidePullViewType:CommonSidePullViewType_keyStoreRemind];
             [self.view addSubview:keystoreRemindSidePullView];
             [keystoreRemindSidePullView show];
@@ -232,7 +234,7 @@
 {
     ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
     controller.walletModel = _walletModel;
-    [self presentViewController:controller animated:YES completion:nil];
+    [self.navigationController pushViewController:controller animated:YES];
     controller.sureBlock = ^() {
         NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
         NSData* datapath = [NSData dataWithContentsOfFile:path];
@@ -263,8 +265,12 @@
         [[AppDefaultUtil sharedInstance] setDefaultWalletIndex:@"0"];
         if (list.count > 0) {
             [[NSNotificationCenter defaultCenter] postNotificationName:NotificationUpdateWalletPageView object:nil];
+            [self backAction];
+        }else{
+            SelectEntryViewController *viewController = [[SelectEntryViewController alloc] init];
+            UINavigationController *navi = [[UINavigationController alloc]initWithRootViewController:viewController];
+            [self presentViewController:navi animated:YES completion:nil];
         }
-        [self backAction];
     };
 }
 
@@ -320,7 +326,7 @@
 {
     ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
     controller.walletModel = _walletModel;
-    [self presentViewController:controller animated:YES completion:nil];
+    [self.navigationController pushViewController:controller animated:YES];
     controller.sureBlock = ^() {
         BackupFileBeforeViewController *controller = [[BackupFileBeforeViewController alloc]init];
         controller.walletModel = _walletModel;
@@ -353,7 +359,7 @@
     [unarchiver finishDecoding];
     for (WalletModel *model in walletList) {
         if ([walletNameTF.text isEqualToString:model.walletName] && ![walletNameTF.text isEqualToString:_walletModel.walletName]) {
-            [self hudShowWithString:Localized(@"钱包名已存在", nil) delayTime:1.5];
+            [self hudShowWithString:Localized(@"钱包已存在", nil) delayTime:1.5];
         }
     }
 }

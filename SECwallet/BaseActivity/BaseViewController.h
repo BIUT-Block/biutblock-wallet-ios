@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NetWorkClient.h"
 #import "MBProgressHUD.h"
 #import "LoadingView.h"
 
 @interface BaseViewController : UIViewController
 {
-    NetWorkClient *_requestClient;
     MBProgressHUD *HUD; //透明提示框
     BOOL _isLoading;
 }
@@ -27,27 +25,9 @@
 - (void)setNavgationItemTitle:(NSString *)string;
 
 /**
- 设置导航栏左边按钮文字
- */
-- (void)setNavgationLeftTitle:(NSString *)item withAction:(SEL)methot;
-
-/**
  设置导航栏左边按钮图片
  */
 - (void)setNavgationLeftImage:(UIImage *)image withAction:(SEL)methot;
-
-/**
- 设置导航栏右边按钮文字
- */
-- (void)setNavgationRightTitle:(NSString *)item withAction:(SEL)methot;
-
-/**
- 设置导航栏右边按钮图片
- */
-- (void)setNavgationRightImage:(UIImage *)image withAction:(SEL)methot;
-
-// 返回成功
--(void) httpResponseSuccess:(NetWorkClient *)client dataTask:(NSURLSessionDataTask *)task didSuccessWithObject:(id)obj;
 
 
 // 显示请求数据的HUD，并执行请求数据的方法

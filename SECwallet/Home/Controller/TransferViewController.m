@@ -254,7 +254,7 @@
 {
     ConfirmPasswordViewController *controller = [[ConfirmPasswordViewController alloc]init];
     controller.walletModel = _walletModel;
-    [self presentViewController:controller animated:YES completion:nil];
+    [self.navigationController pushViewController:controller animated:YES];
     controller.sureBlock = ^() {
         /***************************开始转账****************************/
         [self createLoadingView:Localized(@"正在转账...", nil)];

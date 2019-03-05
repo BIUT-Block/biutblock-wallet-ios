@@ -10,30 +10,6 @@
 
 @implementation CacheUtil
 
-+(NSString *) creatCacheFileName:(NSDictionary *) parameters
-{
-    NSArray *parameterNames = [parameters allKeys];
-    
-    NSString *cacheName = @"";
-    
-    for (int i = 0; i < [parameters count]; i++) {
-        NSString *_key = parameterNames[i];
-        NSString * _value = parameters[_key];
-        
-        cacheName = [NSString stringWithFormat:@"%@%@=%@", cacheName, _key, _value];
-        if (i < ([parameters count] - 1)) {
-            cacheName = [cacheName stringByAppendingString:@"&"];
-        }
-    }
-    
-    return [cacheName md5];
-}
-
-+(NSString *) creatCacheFileNameWithString:(NSString *) value
-{
-    return [value md5];
-}
-
 +(void) clearTokenCoinTradeListCacheFile
 {
     NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletRecodeList"];

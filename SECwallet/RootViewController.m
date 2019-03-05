@@ -9,7 +9,6 @@
 
 #import "RootViewController.h"
 #import "TabBarIconView.h"
-#import "DiscoveryViewController.h"
 #import "AssetsViewController.h"
 #import "SettingViewController.h"
 

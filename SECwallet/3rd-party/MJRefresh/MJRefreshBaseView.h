@@ -6,7 +6,6 @@
 //  Copyright (c) 2013年 itcast. All rights reserved.
 
 #import <UIKit/UIKit.h>
-#import "CommonActivityIndicatorView.h"
 @class MJRefreshBaseView;
 
 #pragma mark - 控件的刷新状态
@@ -34,7 +33,6 @@ typedef enum {
 #pragma mark - 内部的控件
 @property (nonatomic, weak, readonly) UILabel *statusLabel;
 @property (nonatomic, weak, readonly) UIImageView *arrowImage;
-@property (nonatomic, weak, readonly) CommonActivityIndicatorView *activityView;
 
 #pragma mark - 回调
 /**
