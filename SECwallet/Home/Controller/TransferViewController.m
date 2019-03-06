@@ -29,6 +29,8 @@
     
     UITextField *remarkTF;   //备注
     UILabel *gasLb;
+    
+    UIButton *nextBT;
 }
 
 @property (nonatomic, strong) TradeDetailView *tradeDetailView;
@@ -144,10 +146,11 @@
     remarkTF.textColor = TEXT_BLACK_COLOR;
     [markCell addSubview:remarkTF];
     
-    UIButton *nextBT = [[UIButton alloc] initWithFrame:CGRectMake(markCell.minX, markCell.maxY +Size(40), markCell.width, Size(45))];
-    [nextBT goldBigBtnStyle:Localized(@"下一步", nil)];
+    nextBT = [[UIButton alloc] initWithFrame:CGRectMake(markCell.minX, markCell.maxY +Size(40), markCell.width, Size(45))];
+    [nextBT darkBtnStyle:Localized(@"下一步", nil)];
     [nextBT addTarget:self action:@selector(nextAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBT];
+    nextBT.userInteractionEnabled = NO;
     
 }
 
@@ -163,6 +166,13 @@
             addressTF.frame = CGRectMake(0, 0, kScreenWidth -Size(15 +45), Size(36));
             [addressContentView setContentSize:CGSizeMake(kScreenWidth -Size(15 +45), Size(36))];
         }
+    }
+    if (addressTF.text.length > 0 && moneyTF.text.length > 0) {
+        [nextBT goldBigBtnStyle:Localized(@"下一步", nil)];
+        nextBT.userInteractionEnabled = YES;
+    }else{
+        [nextBT darkBtnStyle:Localized(@"下一步", nil)];
+        nextBT.userInteractionEnabled = NO;
     }
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField

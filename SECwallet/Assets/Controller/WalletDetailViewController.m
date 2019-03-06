@@ -110,7 +110,7 @@
     CommonTableViewCell *nameCell = [[CommonTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     nameCell.frame = CGRectMake(Size(20), headerView.maxY +Size(22), kScreenWidth -Size(20 *2), Size(45));
     [self.view addSubview:nameCell];
-    UILabel *nameDesLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15), 0, Size(85), nameCell.height)];
+    UILabel *nameDesLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(15), 0, Size(100), nameCell.height)];
     nameDesLb.font = BoldSystemFontOfSize(11);
     nameDesLb.textColor = TEXT_BLACK_COLOR;
     nameDesLb.text = Localized(@"钱包名称",nil);
@@ -170,6 +170,9 @@
     CGFloat padddingLeft = Size(20);
     CGFloat btWidth = (kScreenWidth -padddingLeft*2 -Size(10))/2;
     CGFloat btY = pswTipCell.maxY +Size(7) +(nameCell.height +Size(7))*3 +Size(30);
+    if (_walletModel.passwordTip.length >0) {
+        btY = pswTipCell.maxY +Size(7) +(nameCell.height +Size(7))*3 +Size(15);
+    }
     //备份按钮
     if ((_walletModel.isBackUpMnemonic == NO && _walletModel.mnemonicPhrase.length > 0) || _walletModel.isFromMnemonicImport == YES) {
         UIButton *backupBT = [[UIButton alloc]initWithFrame:CGRectMake(padddingLeft, btY, btWidth, Size(45))];

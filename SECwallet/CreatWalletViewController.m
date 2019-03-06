@@ -405,10 +405,6 @@
                 }
             }
             if ([originalArr isEqualToArray:resultArrM]) {
-                //随机生成钱包ICON
-                int i = arc4random() % 2;
-                NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
-                tempModel = [[WalletModel alloc]initWithWalletName:walletNameTF.text andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:0 andIsFromMnemonicImport:0];
                 
                 /*************先获取钱包列表将最新钱包排在末尾并设置为默认钱包*************/
                 NSString* path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"walletList"];
@@ -417,6 +413,16 @@
                 NSMutableArray *list = [NSMutableArray array];
                 list = [unarchiver decodeObjectForKey:@"walletList"];
                 [unarchiver finishDecoding];
+                
+                //分配钱包ICON
+                NSString *iconStr;
+                if ((list.count +1)%2 != 0) {
+                    iconStr = @"wallet0";
+                }else{
+                    iconStr = @"wallet1";
+                }
+                tempModel = [[WalletModel alloc]initWithWalletName:walletNameTF.text andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:0 andIsFromMnemonicImport:0];
+                
                 NSMutableData* data = [NSMutableData data];
                 NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
                 if (list.count > 0) {
@@ -464,6 +470,7 @@
     [walletNameTF resignFirstResponder];
     [passwordTF resignFirstResponder];
     [re_passwordTF resignFirstResponder];
+    [passwordTipTF resignFirstResponder];
 
 }
 

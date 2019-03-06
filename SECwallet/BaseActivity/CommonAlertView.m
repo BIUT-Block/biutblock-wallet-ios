@@ -368,7 +368,7 @@
     if (!_backView) {
         _backView = [[UIView alloc] initWithFrame:topVC.view.bounds];
         _backView.backgroundColor = BLACK_COLOR;
-        _backView.alpha = 0.0f;
+        _backView.alpha = 0.6f;
         _backView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
     [topVC.view addSubview:_backView];

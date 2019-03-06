@@ -355,9 +355,13 @@
                     if (error == HSWalletImportPrivateKeySuc) {
                         //导入无须判断重名
                         NSString *nameStr = @"New Import";
-                        //随机生成钱包ICON
-                        int i = arc4random() % 2;
-                        NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
+                        //分配钱包ICON
+                        NSString *iconStr;
+                        if ((list.count +1)%2 != 0) {
+                            iconStr = @"wallet0";
+                        }else{
+                            iconStr = @"wallet1";
+                        }
                         /*************默认钱包信息*************/
                         NSString *privateKeyStr = [privateKey componentsSeparatedByString:@"x"].lastObject;
                         WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:1];
@@ -476,9 +480,13 @@
                 }
 
                 NSString *nameStr = @"New Import";
-                //随机生成钱包ICON
-                int i = arc4random() % 2;
-                NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
+                //分配钱包ICON
+                NSString *iconStr;
+                if ((list.count +1)%2 != 0) {
+                    iconStr = @"wallet0";
+                }else{
+                    iconStr = @"wallet1";
+                }
                 /*************默认钱包信息*************/
                 NSString *privateKeyStr = [privateKey componentsSeparatedByString:@"x"].lastObject;
                 WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:0];
@@ -612,9 +620,13 @@
                 }
                 
                 NSString *nameStr = @"New Import";
-                //随机生成钱包ICON
-                int i = arc4random() % 2;
-                  NSString *iconStr = [NSString stringWithFormat:@"wallet%d",i];
+                //分配钱包ICON
+                NSString *iconStr;
+                if ((list.count +1)%2 != 0) {
+                    iconStr = @"wallet0";
+                }else{
+                    iconStr = @"wallet1";
+                }
                 /*************默认钱包信息*************/
                 NSString *privateKeyStr = [privateKey componentsSeparatedByString:@"x"].lastObject;
                 WalletModel *model = [[WalletModel alloc]initWithWalletName:nameStr andWalletPassword:passwordTF.text andLoginPassword:passwordTF.text andPasswordTip:passwordTipTF.text andAddress:address andMnemonicPhrase:mnemonicPhrase andPrivateKey:privateKeyStr andKeyStore:keyStore andBalance:@"0" andBalance_CNY:@"0" andWalletIcon:iconStr andTokenCoinList:@[@"SEC"] andIsBackUpMnemonic:1 andIsFromMnemonicImport:0];

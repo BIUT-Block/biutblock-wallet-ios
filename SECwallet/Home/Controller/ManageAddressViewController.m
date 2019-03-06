@@ -25,6 +25,8 @@
     UITextField *phoneTF;      //电话
     UITextField *emailTF;      //邮箱
     UITextField *remarkTF;     //备注
+    
+    UIButton *saveBtn;
 }
 
 @end
@@ -169,14 +171,15 @@
     }
     [markCell addSubview:remarkTF];
     
-    UIButton *saveBtn = [[UIButton alloc] initWithFrame:CGRectMake(markCell.minX, markCell.maxY +Size(45), kScreenWidth - 2*markCell.minX, Size(45))];
+    saveBtn = [[UIButton alloc] initWithFrame:CGRectMake(markCell.minX, markCell.maxY +Size(45), kScreenWidth - 2*markCell.minX, Size(45))];
     if (_manageAddressViewType == ManageAddressViewType_add) {
-        [saveBtn goldBigBtnStyle:Localized(@"确认新增", nil)];
+        [saveBtn darkBtnStyle:Localized(@"确认新增", nil)];
     }else{
-        [saveBtn goldBigBtnStyle:Localized(@"保存修改", nil)];
+        [saveBtn darkBtnStyle:Localized(@"保存修改", nil)];
     }
     [saveBtn addTarget:self action:@selector(saveAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:saveBtn];
+    saveBtn.userInteractionEnabled = NO;
 }
 
 #pragma UITextFieldDelegate
@@ -191,6 +194,22 @@
             addressTF.frame = CGRectMake(Size(0), 0, kScreenWidth -Size(15 +45), addressContentView.height);
             [addressContentView setContentSize:CGSizeMake(kScreenWidth -Size(15 +45), addressTF.height)];
         }
+    }
+    
+    if (nameTF.text.length > 0 && addressTF.text.length > 0) {
+        if (_manageAddressViewType == ManageAddressViewType_add) {
+            [saveBtn goldBigBtnStyle:Localized(@"确认新增", nil)];
+        }else{
+            [saveBtn goldBigBtnStyle:Localized(@"保存修改", nil)];
+        }
+        saveBtn.userInteractionEnabled = YES;
+    }else{
+        if (_manageAddressViewType == ManageAddressViewType_add) {
+            [saveBtn darkBtnStyle:Localized(@"确认新增", nil)];
+        }else{
+            [saveBtn darkBtnStyle:Localized(@"保存修改", nil)];
+        }
+        saveBtn.userInteractionEnabled = NO;
     }
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
