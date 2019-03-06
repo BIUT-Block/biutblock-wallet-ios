@@ -225,9 +225,9 @@
         moneyErrorLb.hidden = YES;
         moneyCell.contentView.backgroundColor = DARK_COLOR;
     }
-    if ([moneyTF.text doubleValue] == 0) {
+    if ([moneyTF.text doubleValue] <= 0) {
         moneyErrorLb.hidden = NO;
-        [moneyErrorLb remindError:@"转账金额不能为零" withY:moneyDesLb.minY];
+        [moneyErrorLb remindError:@"转账金额有误" withY:moneyDesLb.minY];
         moneyCell.contentView.backgroundColor = REMIND_COLOR;
         return;
     }else{

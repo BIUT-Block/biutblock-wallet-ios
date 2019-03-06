@@ -203,7 +203,7 @@
 "号码格式不正确，请重新输入"="The Phone No is incorrect,Try again";
 "同一地址之间不能转账"="No transfer between the same address";
 "请输入转账金额"="Input transfer amount";
-"转账金额不能为零"="The transfer amount cannot be zero";
+"转账金额有误"="The transfer amount is incorrect";
 "余额不足"="Insufficient balance";
 "小数点后只允许输入8位"="Only allow 8 bits after decimal point";
 
