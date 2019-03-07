@@ -234,13 +234,13 @@
     UIPasteboard * pastboard = [UIPasteboard generalPasteboard];
     if (sender.tag == 100) {
         pastboard.string = _currentWallet.address;
-        [self hudShowWithString:Localized(@"已复制", nil) delayTime:2];
+        [self hudShowWithString:Localized(@"已复制", nil) delayTime:1];
     }else if (sender.tag == 101) {
         pastboard.string = _currentWallet.privateKey;
-        [self hudShowWithString:Localized(@"已复制", nil) delayTime:2];
+        [self hudShowWithString:Localized(@"已复制", nil) delayTime:1];
     }else if (sender.tag == 102) {
         pastboard.string = _currentWallet.keyStore;
-        [self hudShowWithString:Localized(@"已复制", nil) delayTime:2];
+        [self hudShowWithString:Localized(@"已复制", nil) delayTime:1];
     }else if (sender.tag == 103) {
         [self removeFromSuperview];
         if (self.dismissBlock) {

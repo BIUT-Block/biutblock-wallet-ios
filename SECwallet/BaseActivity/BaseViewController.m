@@ -127,8 +127,8 @@
     }
     _loadingView = [[LoadingView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     _loadingView.labelText = message==nil?Localized(@"加载中...", nil):message;
-    [_loadingView showLoadingViewOnly];
-    [AppDelegateInstance.window addSubview:_loadingView];
+    [_loadingView showLoadingViewOnly];    
+    [self.view addSubview:_loadingView];
 }
 
 #pragma mark  隐藏请求数据的HUD

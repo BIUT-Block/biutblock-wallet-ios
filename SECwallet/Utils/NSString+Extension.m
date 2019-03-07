@@ -45,7 +45,6 @@
 // 密码验证
 + (BOOL)validatePassword:(NSString *)password
 {
-//    NSString *passwordRegex = @"^[a-zA-Z0-9]{8,30}+$";
     //特殊字符仅包括：~`@#$%^&*-_=+|\?/()<>[]{},.;'!"
     NSString *passwordRegex = @"^[a-zA-Z0-9~!/@#$%^&#$%^&amp;*()-_=+\\|[{}];:\'\",&#$%^&amp;*()-_=+\\|[{}];:\'\",&lt;.&#$%^&amp;*()-_=+\\|[{}];:\'\",&lt;.&gt;/?]{8,30}+$";
     NSPredicate *passwordPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", passwordRegex];
