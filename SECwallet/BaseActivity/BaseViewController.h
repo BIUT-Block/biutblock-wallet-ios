@@ -36,13 +36,6 @@
 // 隐藏请求数据的HUD
 - (void)hiddenLoadingView;
 
-
-//创建一个HUD，执行请求完数据之后的block
-- (void)createHUD:(MBProgressHUDMode)mode withMessage:(NSString *)message withDetailMessage:(NSString *)msg withDuration:(float)duration withCompletionBlock:(void(^)(void))completionBlock;
-
-//创建一个有偏移的HUD，执行请求完数据之后的block
-- (void)createOffsetHUD:(MBProgressHUDMode)mode withMessage:(NSString *)message withDetailMessage:(NSString *)msg withDuration:(float)duration offsetY:(float)offsetY withCompletionBlock:(void(^)(void))completionBlock;
-
 /** 显示提示信息 */
 - (void)hudShowWithString:(NSString *)str delayTime:(CGFloat)time;
 

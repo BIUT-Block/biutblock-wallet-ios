@@ -10,8 +10,7 @@
 #import <arpa/inet.h>
 #import <ifaddrs.h>
 
-#define KEY_FIRST_LANCHER       @"FirstLancher"           // 记录用户是否第一次登录，YES为是，NO为否
-#define KEY_DefaultWalletIndex  @"defaultWalletIndex"     // 默认钱包位置
+#define KEY_DefaultWalletIndex  @"defaultWalletIndex"  
 
 @interface AppDefaultUtil()
 
@@ -23,27 +22,9 @@
     static AppDefaultUtil *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        
         _sharedClient = [[AppDefaultUtil alloc] init];
-        
     });
-    
     return _sharedClient;
-}
-
-// 设置用户是否第一次登录
--(void) setFirstLancher:(BOOL)value
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:value forKey:KEY_FIRST_LANCHER];
-    [defaults synchronize];
-}
-
-// 设置用户是否第一次登登录
--(BOOL) isFirstLancher
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [defaults boolForKey:KEY_FIRST_LANCHER];
 }
 
 // 判断用户是否创建了钱包

@@ -64,8 +64,5 @@
     }
     [self setLanguage:languageCode];
 }
-/*  升级ios9之后，使得原本支持中英文的app出现闪退，中英文混乱的问题！大家不要慌，原因是升级之后中英文目录名字改了。在真机上，中文资源目录名由zh-Hans---->zh-Hans-CN，英文资源目录名由en---->en-CN，ios9模拟器上面的中英文资源目录名和真机上面的不一样，分别是zh-Hans-US，en-US。
- */
-
 
 @end

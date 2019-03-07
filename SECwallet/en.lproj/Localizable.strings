@@ -201,7 +201,7 @@
 "请输入收款人钱包地址"="Input Payee Wallet Address";
 "地址不正确，请重新输入"="The address is incorrect,Try again";
 "号码格式不正确，请重新输入"="The Phone No is incorrect,Try again";
-"同一地址之间不能转账"="No transfer between the same address";
+"同一地址之间不能转账"="transfer address is the same";
 "请输入转账金额"="Input transfer amount";
 "转账金额有误"="The transfer amount is incorrect";
 "余额不足"="Insufficient balance";

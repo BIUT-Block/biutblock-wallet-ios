@@ -64,20 +64,6 @@
         }        
     }
 }
-- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString
-{
-    if (jsonString == nil) {
-        return nil;
-    }
-    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *err;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
-    if(err) {
-        NSLog(@"json解析失败：%@",err);
-        return nil;
-    }
-    return dic;
-}
 
 -(void)updateVersionByMsg:(NSString *)msg andVersionName:(NSString *)versionName andIsMust:(BOOL)isMust
 {
@@ -132,11 +118,11 @@
 
 - (void)loadViewControllers
 {
-    AssetsViewController *vc2 = [[AssetsViewController alloc] init];
-    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:vc2];
+    AssetsViewController *vc1 = [[AssetsViewController alloc] init];
+    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:vc1];
     
-    SettingViewController *vc3 = [[SettingViewController alloc] init];
-    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:vc3];
+    SettingViewController *vc2 = [[SettingViewController alloc] init];
+    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:vc2];
     
     NSArray *vcs = @[homeNav, mineNav];
     [self setViewControllers:vcs animated:YES];

@@ -59,7 +59,7 @@
     [_infoView addSubview:detailLb];
     
     NSArray *titArr =@[Localized(@"转入地址", nil),Localized(@"付款钱包", nil),Localized(@"金额", nil)];
-    NSArray *contentArr =@[payAddress,adress,[NSString stringWithFormat:@"%@ SEC\n",sum]];
+    NSArray *contentArr =@[adress,payAddress,[NSString stringWithFormat:@"%@ SEC\n",sum]];
     for (int i = 0; i< titArr.count; i++) {
         UILabel *titLb = [[UILabel alloc]initWithFrame:CGRectMake(Size(20), detailLb.maxY+Size(25) +Size(45)*i, Size(100), Size(20))];
         titLb.font = SystemFontOfSize(13);

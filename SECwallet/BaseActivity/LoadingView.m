@@ -66,9 +66,6 @@
 	@autoreleasepool {
         #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 		[targetForExecution performSelector:methodForExecution withObject:objectForExecution];
-        //[targetForExecution performSelector:methodForExecution withObject:objectForExecution];
-		//[self performSelectorOnMainThread:methodForExecution withObject:nil waitUntilDone:NO];
-        //[targetForExecution performSelectorOnMainThread:methodForExecution withObject:nil waitUntilDone:NO];
 	}
 }
 

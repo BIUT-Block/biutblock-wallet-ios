@@ -15,12 +15,6 @@
  */
 + (instancetype)sharedInstance;
 
-// 设置用户是否第一次登录
--(void) setFirstLancher:(BOOL)value;
-
-// 获取用户是第一次登录
--(BOOL) isFirstLancher;
-
 // 判断用户是否创建了钱包
 -(BOOL) hasCreatWallet;
 

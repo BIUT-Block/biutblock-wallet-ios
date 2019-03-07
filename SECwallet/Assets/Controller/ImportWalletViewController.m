@@ -417,6 +417,12 @@
             passwordErrorLb.hidden = YES;
             pswCell.contentView.backgroundColor = DARK_COLOR;
         }
+        //判断钱包超过10个
+        if (walletList.count == 10) {
+            [self hudShowWithString:Localized(@"钱包个数超过限制", nil) delayTime:2];
+            return;
+        }
+        
         //导入KeyStore
         [self createLoadingView:Localized(@"导入钱包中···", nil)];
         //添加计时器
@@ -567,6 +573,12 @@
             re_passwordErrorLb.hidden = YES;
             re_pswCell.contentView.backgroundColor = DARK_COLOR;
         }
+        //判断钱包超过10个
+        if (walletList.count == 10) {
+            [self hudShowWithString:Localized(@"钱包个数超过限制", nil) delayTime:2];
+            return;
+        }
+        
         //导入私钥
         [self createLoadingView:Localized(@"导入钱包中···", nil)];
         //添加计时器
